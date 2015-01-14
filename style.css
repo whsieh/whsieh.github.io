@@ -1,0 +1,13 @@
+@font-face {
+    font-family: hellogoodbye;
+    src: url("font/hellogoodbye.otf");
+}
+
+#viewBox {
+    position: absolute;
+    width: 100%;
+    height: 75%;
+    top: 0px;
+    left: 0px;
+    opacity: 0;
+}
