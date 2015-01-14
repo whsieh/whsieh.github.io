@@ -1,4 +1,4 @@
-var init = function () {
+$(document).ready(function () {
 
     var sin = Math.sin,
         cos = Math.cos,
@@ -6,20 +6,15 @@ var init = function () {
         PI = Math.PI;
 
     var sceneWidth = window.innerWidth,
-        sceneHeight = window.innerHeight;
+        sceneHeight = 0.75*window.innerHeight;
 
     var lastMouseX = -1;
     var lastMouseY = -1;
-    var navigationBarInitialized = false;
     var cubeBoundingBox = {
         xi: 0.39 * sceneWidth,
         yi: 0.17 * sceneHeight,
         xf: 0.6 * sceneWidth,
         yf: 0.55 * sceneHeight
-    }
-
-    printMousePositions = function() {
-        console.log("(" + lastMouseX + "," + lastMouseY + ")");
     }
 
     var forwardTiltAngle = PI / 6;
@@ -33,7 +28,7 @@ var init = function () {
     var initialRotationVector = new THREE.Vector3(0, 0, 0);
 
     var scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(60, sceneWidth/sceneHeight, 0.1, 1000);
+    var camera = new THREE.PerspectiveCamera(60, sceneWidth/sceneHeight, 0.1, 1000);
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(sceneWidth, sceneHeight);
@@ -43,25 +38,33 @@ var init = function () {
     document.body.appendChild(viewBox);
     renderer.domElement.id = "viewBox";
 
-    function incrementTextureCountOnTextureLoad() {
+    var incrementTextureCountOnTextureLoad = function() {
         loadedTexturesCount++;
         if (loadedTexturesCount == totalTexturesCount) {
-            // Initial rendering sequence
-            $("#viewBox").animate({ opacity: 1 });
-            snapCubeToRotation(forwardTiltAngle, initialRotationAmountY, 0, function() {
-                // Begin tracking mouse positions
-                viewBox.onmousemove = function(e) {
-                    lastMouseX = e.pageX;
-                    lastMouseY = e.pageY;
-                    if (cubeBoundingBox.xi < lastMouseX && lastMouseX < cubeBoundingBox.xf
-                        && cubeBoundingBox.yi < lastMouseY && lastMouseY < cubeBoundingBox.yf
-                        && !navigationBarInitialized) {
-                        navigationBarInitialized = true;
-
-                    }
-                }
-            });
+            didFinishLoadingTextures()
         }
+    }
+
+    var didFinishLoadingTextures = function() {
+        // Initial rendering sequence
+        $("#viewBox").animate({ opacity: 1 });
+        snapCubeToRotation(forwardTiltAngle, initialRotationAmountY, 0, function() {
+            $("#navigationPanel").animate({opacity: 0.7}, 250, function() {
+                console.log("Initialization finished.");
+                $("#about-control").hover(function() {
+                    snapCubeToRotation(PI / 6, 0, 0)
+                });
+                $("#contact-control").hover(function() {
+                    snapCubeToRotation(2 * PI / 3, 0, 0)
+                });
+                $("#projects-control").hover(function() {
+                    snapCubeToRotation(PI / 6, PI / 2, 0)
+                });
+                $("#resume-control").hover(function() {
+                    snapCubeToRotation(-PI / 3, 0, 0)
+                });
+            })
+        });
     }
 
     var faceMaterials = [
@@ -91,7 +94,7 @@ var init = function () {
         })
     ];
 
-    cube = new THREE.Mesh(new THREE.BoxGeometry(10, 10, 10), new THREE.MeshFaceMaterial(faceMaterials));
+    var cube = new THREE.Mesh(new THREE.BoxGeometry(10, 10, 10), new THREE.MeshFaceMaterial(faceMaterials));
     scene.add(cube);
 
     var ambientLight = new THREE.AmbientLight(0xFFFFFF);
@@ -99,18 +102,18 @@ var init = function () {
 
     camera.position.z = 20;
 
-    function beginAnimation() {
+    var beginAnimation = function() {
         console.log("Beginning animation...");
         isAnimationActive = true;
         animate();
     }
 
-    function endAnimation() {
+    var endAnimation = function() {
         console.log("Ending animation...");
         isAnimationActive = false;
     }
 
-    function updateRotations() {
+    var updateRotations = function() {
         if (!shouldRotateCube) // add zoom later
             endAnimation();
 
@@ -125,14 +128,14 @@ var init = function () {
                 shouldRotateCube = false;
                 rotationReachedCallback = null;
             } else {
-                cube.rotation.x += 0.15 * (targetRotationVector.x - cube.rotation.x);
-                cube.rotation.y += 0.15 * (targetRotationVector.y - cube.rotation.y);
-                cube.rotation.z += 0.15 * (targetRotationVector.z - cube.rotation.z);
+                cube.rotation.x += 0.1 * (targetRotationVector.x - cube.rotation.x);
+                cube.rotation.y += 0.1 * (targetRotationVector.y - cube.rotation.y);
+                cube.rotation.z += 0.1 * (targetRotationVector.z - cube.rotation.z);
             }
         }
     }
 
-    function renormalizeAngle(theta) {
+    var renormalizeAngle = function(theta) {
         while (theta > PI)
             theta -= 2*PI;
 
@@ -152,11 +155,11 @@ var init = function () {
         }
     }
 
-    function vector3AsString(v) {
+    var vector3AsString = function(v) {
         return "<" + v.x + "," + v.y + "," + v.z + ">";
     }
 
-    function animate() {
+    var animate = function() {
         updateRotations();
         renderer.render(scene, camera);
         if (isAnimationActive)
@@ -166,4 +169,4 @@ var init = function () {
     window.onresize = function() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
-}
+});
