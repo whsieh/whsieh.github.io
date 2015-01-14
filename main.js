@@ -23,8 +23,8 @@ $(function() {
     var rotationReachedCallback;
     var targetRotationVector = new THREE.Vector3(0, 0, 0);
     var initialRotationVector = new THREE.Vector3(0, 0, 0);
-    var targetZoomDistance = 0
-    var initialZoomDistance = 0
+    var targetZoomDistance = 0;
+    var initialZoomDistance = 0;
 
     // Stores key rotation angles and distances for each state.
     var rotationAngles = {
@@ -44,13 +44,14 @@ $(function() {
             "hover": new THREE.Vector3(forwardTiltAngle - PI / 2, 0, 0),
             "zoomed": new THREE.Vector3(-PI / 2, 0, 0)
         }
-    }
+    };
     var closeZDistance = 12;
     var farZDistance = 0;
 
     // Tracks UI state.
     var isInZoomedMode = false;
     var selectedFaceId = "#about-control";
+    var currentPanelId = "";
 
     // Three.js objects.
     var scene = new THREE.Scene();
@@ -89,9 +90,19 @@ $(function() {
         }
     }
 
+    var showPanel = function(panelId) {
+        currentPanelId = panelId;
+        $(panelId).show();
+    }
+
+    var hideCurrentPanel = function() {
+        $(currentPanelId).hide();
+        currentPanelId = "";
+    }
+
     /**
      * Fade the viewBox in while running the initial "spinning"
-     * animation sequence.
+     * animation sequence. Bind user interaction callbacks here.
      */
     var didFinishLoadingTextures = function() {
         // Initial rendering sequence
@@ -102,6 +113,7 @@ $(function() {
                     $(controlElementId).hover(function(event) {
                         if (!isInZoomedMode) {
                             var elementId = "#" + event.target.id;
+                            selectedFaceId = elementId;
                             var angles = rotationAngles[elementId];
                             rotateToEulerAngles(angles["hover"].x, angles["hover"].y, angles["hover"].z);
                             $(elementId).css({opacity: 1});
@@ -123,6 +135,15 @@ $(function() {
                         $("#navigationControls").animate({top: "100%", opacity: 0}, 250, function() {
                             $("#zoomedControls").animate({top: "40%", opacity: 1}, 250, function() {
                                 isInZoomedMode = true;
+                                if (selectedFaceId == "#about-control") {
+                                    showPanel("#about-panel");
+                                } else if (selectedFaceId == "#projects-control") {
+                                    showPanel("#projects-panel");
+                                } else if (selectedFaceId == "#resume-control") {
+                                    showPanel("#resume-panel");
+                                } else if (selectedFaceId == "#contact-control") {
+                                    showPanel("#contact-panel");
+                                }
                             });
                         });
                     });
@@ -133,6 +154,7 @@ $(function() {
                     $("#back-control").css({opacity: 0.7});
                 });
                 $("#back-control").click(function() {
+                    hideCurrentPanel();
                     var angles = rotationAngles[selectedFaceId];
                     rotateToEulerAngles(angles["hover"].x, angles["hover"].y, angles["hover"].z);
                     zoomToDistance(farZDistance);
