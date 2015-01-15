@@ -132,8 +132,19 @@ $(function() {
                         rotateToEulerAngles(angles["zoomed"].x, angles["zoomed"].y, angles["zoomed"].z);
                         zoomToDistance(closeZDistance);
                         $("#viewBox").animate({opacity: 0.1}, 500);
-                        $("#navigationControls").animate({top: "100%", opacity: 0}, 250, function() {
-                            $("#zoomedControls").animate({top: "40%", opacity: 1}, 250, function() {
+                        var panelHeight = $("#navigationPanel").height();
+                        $("#navigationControls").animate({opacity: 0}, 250);
+                        $("#navigationControls").css({
+                            "-webkit-transition": "0.25s ease-in-out",
+                            "-webkit-transform": "translateY(" + panelHeight + "px)",
+                        });
+                        setTimeout(function() {
+                            $("#zoomedControls").css({
+                                opacity: 1,
+                                "-webkit-transition": "0.25s ease-in-out",
+                                "-webkit-transform": "translateY(-" + (0.6 * panelHeight) + "px)",
+                            });
+                            setTimeout(function() {
                                 isInZoomedMode = true;
                                 if (selectedFaceId == "#about-control") {
                                     showPanel("#about-panel");
@@ -144,8 +155,18 @@ $(function() {
                                 } else if (selectedFaceId == "#contact-control") {
                                     showPanel("#contact-panel");
                                 }
-                            });
-                        });
+                                $("#zoomedControls").css({
+                                    top: "40%",
+                                    "-webkit-transition": "none",
+                                    "-webkit-transform": "none",
+                                });
+                                $("#navigationControls").css({
+                                    top: "100%",
+                                    "-webkit-transition": "none",
+                                    "-webkit-transform": "none",
+                                });
+                            }, 250);
+                        }, 250);
                     });
                 }
                 $("#back-control").hover(function() {
@@ -159,11 +180,32 @@ $(function() {
                     rotateToEulerAngles(angles["hover"].x, angles["hover"].y, angles["hover"].z);
                     zoomToDistance(farZDistance);
                     $("#viewBox").animate({opacity: 1}, 500);
-                    $("#zoomedControls").animate({top: "100%", opacity: 0}, 250, function() {
-                        $("#navigationControls").animate({top: "0%", opacity: 1}, 250, function() {
-                            isInZoomedMode = false;
-                        });
+                    var panelHeight = $("#navigationPanel").height();
+                    $("#zoomedControls").animate({opacity: 0}, 250);
+                    $("#zoomedControls").css({
+                        "-webkit-transition": "0.25s ease-in-out",
+                        "-webkit-transform": "translateY(" + (0.6 * panelHeight) + "px)"
                     });
+                    setTimeout(function() {
+                        $("#navigationControls").css({
+                            opacity: 1,
+                            "-webkit-transition": "0.25s ease-in-out",
+                            "-webkit-transform": "translateY(-" + panelHeight + "px)",
+                        });
+                        setTimeout(function() {
+                            isInZoomedMode = false;
+                            $("#zoomedControls").css({
+                                top: "100%",
+                                "-webkit-transition": "none",
+                                "-webkit-transform": "none",
+                            });
+                            $("#navigationControls").css({
+                                top: "0%",
+                                "-webkit-transition": "none",
+                                "-webkit-transform": "none",
+                            });
+                        }, 250);
+                    }, 250);
                 });
             });
         });
@@ -173,24 +215,19 @@ $(function() {
         new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture("face_graph.png", null, incrementTextureCountOnTextureLoad),
             transparent: true
-        }),
-        new THREE.MeshLambertMaterial({
+        }), new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture("face_projects.png", null, incrementTextureCountOnTextureLoad),
             transparent: true
-        }),
-        new THREE.MeshLambertMaterial({
+        }), new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture("face_contact.png", null, incrementTextureCountOnTextureLoad),
             transparent: true
-        }),
-        new THREE.MeshLambertMaterial({
+        }), new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture("face_resume.png", null, incrementTextureCountOnTextureLoad),
             transparent: true
-        }),
-        new THREE.MeshLambertMaterial({
+        }), new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture("face_whsieh.png", null, incrementTextureCountOnTextureLoad),
             transparent: true
-        }),
-        new THREE.MeshLambertMaterial({
+        }), new THREE.MeshLambertMaterial({
             map: THREE.ImageUtils.loadTexture("face_empty.png", null, incrementTextureCountOnTextureLoad),
             transparent: true
         })
