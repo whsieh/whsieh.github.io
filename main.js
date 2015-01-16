@@ -5,6 +5,8 @@ $(function() {
             , cos = Math.cos
             , pow = Math.pow
             , abs = Math.abs
+            , max = Math.max
+            , min = Math.min
             , PI = Math.PI;
 
         console.log("Window dimensions are " + window.innerWidth + ", " + window.innerHeight);
@@ -57,14 +59,38 @@ $(function() {
         var isCurrentlyZoomingOut = false;
 
         // Three.js objects.
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer();
         renderer.setSize(sceneWidth, sceneHeight);
         renderer.setClearColor(0xFFFFFF, 1);
         var viewBox = renderer.domElement;
         document.body.appendChild(viewBox);
         renderer.domElement.id = "viewBox";
+
+        var resetContentPanelDimensions = function() {
+            var contentPanelWidth = max(sceneWidth / 2, 600);
+            $(".content-panel").css({
+                width: contentPanelWidth,
+                left: (sceneWidth - contentPanelWidth) / 2
+            });
+        }
+        $(window).resize(function(event) {
+            setTimeout(function() {
+                sceneWidth = window.innerWidth;
+                sceneHeight = 0.8 * window.innerHeight;
+                $("#viewBox").css({
+                    width: sceneWidth,
+                    height: sceneHeight
+                });
+                renderer.render(scene, camera);
+                resetContentPanelDimensions();
+            }, 100);
+        });
+        // Want smooth animation in beginning, so delay the size update.
+        setTimeout(function() {
+            resetContentPanelDimensions();
+        }, 800);
 
         var zoomToDistance = function(targetZoom, animationComplete) {
             shouldZoomCube = cube.position.z != targetZoom;
@@ -317,10 +343,10 @@ $(function() {
 
         var renormalizeAngle = function(theta) {
             while (theta > PI)
-                theta -= 2*PI;
+                theta -= 2 * PI;
 
             while (theta < -PI)
-                theta += 2*PI;
+                theta += 2 * PI;
 
             return theta;
         }

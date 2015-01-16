@@ -61,14 +61,15 @@
     overflow: auto;
     top: 10%;
     left: 25%;
-    display: none;
     width: 50%;
+    display: none;
     height: 70%;
     padding-left: 10px;
     padding-right: 10px;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 18px;
     text-align: justify;
+    z-index: 1000;
 }
 
 .panel-title {
