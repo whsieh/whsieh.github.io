@@ -1,3 +1,4 @@
 *.sublime-*
 *.xcf
 .DS_Store
+**/**/*.mp4

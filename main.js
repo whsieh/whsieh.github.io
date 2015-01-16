@@ -54,6 +54,7 @@ $(function() {
         var isInZoomedMode = false;
         var selectedFaceId = "#about-control";
         var currentPanelId = "";
+        var isCurrentlyZoomingOut = false;
 
         // Three.js objects.
         var scene = new THREE.Scene();
@@ -88,7 +89,7 @@ $(function() {
         var incrementTextureCountOnTextureLoad = function() {
             loadedTexturesCount++;
             if (loadedTexturesCount == totalTexturesCount) {
-                didFinishLoadingTextures()
+                didFinishLoadingTextures();
             }
         }
 
@@ -133,7 +134,7 @@ $(function() {
                             var angles = rotationAngles[elementId];
                             rotateToEulerAngles(angles["zoomed"].x, angles["zoomed"].y, angles["zoomed"].z);
                             zoomToDistance(closeZDistance);
-                            $("#viewBox").animate({opacity: 0.1}, 500);
+                            $("#viewBox").animate({opacity: 0.08}, 500);
                             var panelHeight = $("#navigationPanel").height();
                             $("#navigationControls").animate({opacity: 0}, 250);
                             $("#navigationControls").css({
@@ -145,6 +146,11 @@ $(function() {
                                     opacity: 1,
                                     "-webkit-transition": "0.25s ease-in-out",
                                     "-webkit-transform": "translateY(-" + (0.6 * panelHeight) + "px)",
+                                });
+                                $("#navigationControls").css({
+                                    top: "100%",
+                                    "-webkit-transition": "none",
+                                    "-webkit-transform": "none",
                                 });
                                 setTimeout(function() {
                                     isInZoomedMode = true;
@@ -162,11 +168,6 @@ $(function() {
                                         "-webkit-transition": "none",
                                         "-webkit-transform": "none",
                                     });
-                                    $("#navigationControls").css({
-                                        top: "100%",
-                                        "-webkit-transition": "none",
-                                        "-webkit-transform": "none",
-                                    });
                                 }, 250);
                             }, 250);
                         });
@@ -177,60 +178,76 @@ $(function() {
                         $("#back-control").css({opacity: 0.7});
                     });
                     $("#back-control").click(function() {
-                        hideCurrentPanel();
-                        var angles = rotationAngles[selectedFaceId];
-                        rotateToEulerAngles(angles["hover"].x, angles["hover"].y, angles["hover"].z);
-                        zoomToDistance(farZDistance);
-                        $("#viewBox").animate({opacity: 1}, 500);
-                        var panelHeight = $("#navigationPanel").height();
-                        $("#zoomedControls").animate({opacity: 0}, 250);
-                        $("#zoomedControls").css({
-                            "-webkit-transition": "0.25s ease-in-out",
-                            "-webkit-transform": "translateY(" + (0.6 * panelHeight) + "px)"
-                        });
-                        setTimeout(function() {
-                            $("#navigationControls").css({
-                                opacity: 1,
-                                "-webkit-transition": "0.25s ease-in-out",
-                                "-webkit-transform": "translateY(-" + panelHeight + "px)",
-                            });
-                            setTimeout(function() {
-                                isInZoomedMode = false;
-                                $("#zoomedControls").css({
-                                    top: "100%",
-                                    "-webkit-transition": "none",
-                                    "-webkit-transform": "none",
-                                });
-                                $("#navigationControls").css({
-                                    top: "0%",
-                                    "-webkit-transition": "none",
-                                    "-webkit-transform": "none",
-                                });
-                            }, 250);
-                        }, 250);
+                        zoomOutFromContentPanel();
                     });
+                    window.onkeypress = function(event) {
+                        // Either the ESC or DEL key was pressed.
+                        if (event.charCode == 27 || event.charCode == 8) {
+                            event.preventDefault();
+                            zoomOutFromContentPanel();
+                        }
+                    }
                 });
             });
         }
 
+        var zoomOutFromContentPanel = function() {
+            if (isCurrentlyZoomingOut || !isInZoomedMode)
+                return;
+
+            isCurrentlyZoomingOut = true;
+            hideCurrentPanel();
+            var angles = rotationAngles[selectedFaceId];
+            rotateToEulerAngles(angles["hover"].x, angles["hover"].y, angles["hover"].z);
+            zoomToDistance(farZDistance);
+            $("#viewBox").animate({opacity: 1}, 500);
+            var panelHeight = $("#navigationPanel").height();
+            $("#zoomedControls").animate({opacity: 0}, 250);
+            $("#zoomedControls").css({
+                "-webkit-transition": "0.25s ease-in-out",
+                "-webkit-transform": "translateY(" + (0.6 * panelHeight) + "px)"
+            });
+            setTimeout(function() {
+                $("#navigationControls").css({
+                    opacity: 1,
+                    "-webkit-transition": "0.25s ease-in-out",
+                    "-webkit-transform": "translateY(-" + panelHeight + "px)",
+                });
+                $("#zoomedControls").css({
+                    top: "100%",
+                    "-webkit-transition": "none",
+                    "-webkit-transform": "none",
+                });
+                setTimeout(function() {
+                    isInZoomedMode = false;
+                    isCurrentlyZoomingOut = false;
+                    $("#navigationControls").css({
+                        top: "0%",
+                        "-webkit-transition": "none",
+                        "-webkit-transform": "none",
+                    });
+                }, 250);
+            }, 250);
+        }
+
         var faceMaterials = [
             new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture("face_graph.png", null, incrementTextureCountOnTextureLoad),
+                map: THREE.ImageUtils.loadTexture("textures/face_graph.png", null, incrementTextureCountOnTextureLoad),
                 transparent: true
             }), new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture("face_projects.png", null, incrementTextureCountOnTextureLoad),
+                map: THREE.ImageUtils.loadTexture("textures/face_projects.png", null, incrementTextureCountOnTextureLoad),
                 transparent: true
             }), new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture("face_contact.png", null, incrementTextureCountOnTextureLoad),
+                map: THREE.ImageUtils.loadTexture("textures/face_contact.png", null, incrementTextureCountOnTextureLoad),
                 transparent: true
             }), new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture("face_resume.png", null, incrementTextureCountOnTextureLoad),
+                map: THREE.ImageUtils.loadTexture("textures/face_resume.png", null, incrementTextureCountOnTextureLoad),
                 transparent: true
             }), new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture("face_whsieh.png", null, incrementTextureCountOnTextureLoad),
+                map: THREE.ImageUtils.loadTexture("textures/face_whsieh.png", null, incrementTextureCountOnTextureLoad),
                 transparent: true
             }), new THREE.MeshLambertMaterial({
-                map: THREE.ImageUtils.loadTexture("face_empty.png", null, incrementTextureCountOnTextureLoad),
+                map: THREE.ImageUtils.loadTexture("textures/face_empty.png", null, incrementTextureCountOnTextureLoad),
                 transparent: true
             })
         ];
@@ -244,7 +261,7 @@ $(function() {
         var beginAnimation = function() {
             if (isAnimationActive) {
                console.log("Animation already in progress!");
-               return
+               return;
             }
             console.log("Beginning animation...");
             isAnimationActive = true;
@@ -271,7 +288,7 @@ $(function() {
                 shouldZoomCube = false;
                 zoomReachedCallback = null;
             } else {
-                cube.position.z += 0.15 * (targetZoomDistance - cube.position.z)
+                cube.position.z += 0.15 * (targetZoomDistance - cube.position.z);
             }
         }
 

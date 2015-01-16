@@ -1,0 +1,52 @@
+.img-responsive,
+.bootstrap-thumbnail > img,
+.bootstrap-thumbnail a > img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.img-rounded {
+  border-radius: 6px;
+}
+.img-thumbnail {
+  padding: 4px;
+  line-height: 1.42857143;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
+.img-circle {
+  border-radius: 50%;
+}
+.bootstrap-thumbnail {
+  display: block;
+  padding: 4px;
+  margin-bottom: 20px;
+  line-height: 1.42857143;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-transition: border 0.2s ease-in-out;
+  -o-transition: border 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
+}
+.bootstrap-thumbnail > img,
+.bootstrap-thumbnail a > img {
+  margin-left: auto;
+  margin-right: auto;
+}
+a.bootstrap-thumbnail:hover,
+a.bootstrap-thumbnail:focus,
+a.bootstrap-thumbnail.active {
+  border-color: #337ab7;
+}
+.bootstrap-thumbnail .caption {
+  padding: 9px;
+  color: #333333;
+}

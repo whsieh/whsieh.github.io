@@ -67,12 +67,13 @@
     padding-left: 10px;
     padding-right: 10px;
     font-family: "Source Sans Pro", sans-serif;
+    font-size: 18px;
     text-align: justify;
 }
 
 .panel-title {
     position: fixed;
-    font-size: 22px;
+    font-size: 24px;
     width: 100%;
     background-color: #FFFFFF;
     z-index: 100;
@@ -80,6 +81,29 @@
     margin-top: 0px;
 }
 
-.first-content-p {
+.first-content-element {
     padding-top: 30px;
+}
+
+.project-thumbnail {
+    width: 200px;
+    height: 200px;
+    display: inline;
+    float: left;
+    margin-right: 15px;
+}
+
+.project-description {
+    margin-left: 10px;
+    margin-top: 0px;
+    height: 175px;
+}
+
+.project-section {
+    margin-top: 50px;
+    display: block;
+}
+
+.project-title {
+    margin-bottom: 5px;
 }
