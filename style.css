@@ -73,6 +73,7 @@
 }
 
 .panel-title {
+    -webkit-transform: translateZ(0); /* Fixed for Chrome */
     position: fixed;
     font-size: 24px;
     width: 100%;
