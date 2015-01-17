@@ -1,0 +1,132 @@
+<!-- These separate gallery/info pages should be extremely simple and content-focused! -->
+
+<html>
+
+<title>Wenson Hsieh - QWOP AI</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro">
+    <script type="text/javascript" src="../../lib/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="../../2013/app/js/lib/Box2d-min.js"></script>
+    <script type="text/javascript" src="../../2013/app/js/neuralnet-min.js"></script>
+    <style>
+    .content {
+        width: 60%;
+        text-align: justify;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 25px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #title {
+        text-align: center;
+        font-size: 75px;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+
+    #subtitle {
+        text-align: center;
+        font-size: 40px;
+        padding-bottom: 15px;
+    }
+
+    .heading {
+        text-align: center;
+        font-size: 40px;
+        padding-top: 15px;
+    }
+
+    .caption {
+        text-align: justify;
+        font-family: "Source Sans Pro", sans-serif;
+        font-size: 20px;
+    }
+
+    .figure {
+        width: 50%;
+        left: 25%;
+        position: relative;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .youtube-embed {
+        width: 800px;
+        height: 480px;
+        left: calc(50% - 400px);
+        position: relative;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    #controlPanel {
+        width: 320px;
+        height: 120px;
+        left: calc(50% - 160px);
+        position: relative;
+        margin-bottom: 50px;
+    }
+
+    button {
+        max-width: 150px;
+        margin-bottom: 10px;
+    }
+
+    canvas {
+        border-radius:15px;
+        border:15px solid #14140f;
+        width: 1054px;
+        left: calc(50% - 527px);
+        position: relative;
+        margin-top: 25px;
+    }
+
+    input {
+        max-width: 100px;
+        display: inline-block;
+    }
+    </style>
+<body>
+    <h1 class="content" id="title">QWOP-AI</h1>
+    <h1 class="content" id="subtitle">Summer 2013</h1>
+    <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim dignissim sapien, et dapibus elit imperdiet pulvinar. Curabitur condimentum massa non felis faucibus, nec aliquam nisi facilisis. Fusce vitae ultricies eros, lacinia tempus risus. Sed in nisl purus. Nullam volutpat rutrum nisl at varius. Mauris commodo turpis non felis iaculis egestas. Nunc aliquam, velit eu viverra convallis, dolor tortor cursus diam, in laoreet sapien nisi at augue. Nulla at iaculis ex. Suspendisse vitae orci at justo sollicitudin semper sit amet sed sem.</p>
+    <!-- Whoa, I never realized how awful this was... -->
+    <canvas id="canvas"></canvas>
+    <div id="controlPanel" class="well">
+        <button onclick="startAI()" id="startbtn">Start AI</button>
+        <button onclick="stopAI()" id="stopbtn">Stop AI</button>
+        <button onclick="resetRunner()" id="resetbtn">Reset Ragdoll</button><br>
+        <input class="content" id="nn_chk" type="checkbox" checked="checked">Use Neural Network</input><br>
+        <input class="content" id="qt_chk" type="checkbox" checked="checked" style="margin-bottom: 50px;">Use Q-Table</input>
+        <script type="text/javascript" src="../../2013/app/js/game-min.js"></script>
+        <script type="text/javascript" src="../../2013/app/js/walk-neural-min.js"></script>
+    </div>
+    <script>
+        $("#nn_chk").click( function() {
+            if ($("#nn_chk").is(":checked")) {
+                NN_WEIGHT = 10
+            } else {
+                NN_WEIGHT = 0
+            }
+        });
+        $("#qt_chk").click( function() {
+            if ($("#qt_chk").is(":checked")) {
+                QT_WEIGHT = 1
+            } else {
+                QT_WEIGHT = 0
+            }
+        });
+    </script>
+
+    <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim dignissim sapien, et dapibus elit imperdiet pulvinar. Curabitur condimentum massa non felis faucibus, nec aliquam nisi facilisis. Fusce vitae ultricies eros, lacinia tempus risus. Sed in nisl purus. Nullam volutpat rutrum nisl at varius.</p>
+    <iframe class="youtube-embed" src="http://www.youtube.com/embed/GQZDbkftIPU" frameborder="0" allowfullscreen></iframe>
+    <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim dignissim sapien, et dapibus elit imperdiet pulvinar. Curabitur condimentum massa non felis faucibus, nec aliquam nisi facilisis. Fusce vitae ultricies eros, lacinia tempus risus. Sed in nisl purus. Nullam volutpat rutrum nisl at varius.</p>
+    <iframe class="youtube-embed" src="http://www.youtube.com/embed/CwXmYhZDAPE" frameborder="0" allowfullscreen></iframe>
+    <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim dignissim sapien, et dapibus elit imperdiet pulvinar. Curabitur condimentum massa non felis faucibus, nec aliquam nisi facilisis. Fusce vitae ultricies eros, lacinia tempus risus. Sed in nisl purus. Nullam volutpat rutrum nisl at varius.</p>
+    <iframe class="youtube-embed" src="http://www.youtube.com/embed/AWJ_C5loliU" frameborder="0" allowfullscreen></iframe>
+    <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim dignissim sapien, et dapibus elit imperdiet pulvinar. Curabitur condimentum massa non felis faucibus, nec aliquam nisi facilisis. Fusce vitae ultricies eros, lacinia tempus risus. Sed in nisl purus. Nullam volutpat rutrum nisl at varius.</p>
+    <iframe class="youtube-embed" src="http://www.youtube.com/embed/Bz45tpIq3BU" frameborder="0" allowfullscreen></iframe>
+    <p class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim dignissim sapien, et dapibus elit imperdiet pulvinar. Curabitur condimentum massa non felis faucibus, nec aliquam nisi facilisis. Fusce vitae ultricies eros, lacinia tempus risus. Sed in nisl purus. Nullam volutpat rutrum nisl at varius.</p>
+    <iframe class="youtube-embed" src="http://www.youtube.com/embed/9DCMMOEolN0" frameborder="0" allowfullscreen></iframe>
