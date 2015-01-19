@@ -113,3 +113,24 @@
 .project-title {
     margin-bottom: 5px;
 }
+
+.code {
+    font-family: "Source Code Pro";
+}
+
+.subtitle {
+    margin-bottom: 0px;
+}
+
+.subcontent {
+    margin-top: 8px;
+}
+
+p>a {
+    color: #428BCA;
+    text-decoration: none;
+}
+
+p>a:hover {
+    text-decoration: underline;
+}

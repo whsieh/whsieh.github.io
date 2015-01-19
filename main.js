@@ -59,9 +59,9 @@ $(function() {
         var isCurrentlyZoomingOut = false;
 
         // Three.js objects.
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000);
-        renderer = new THREE.WebGLRenderer();
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000);
+        var renderer = new THREE.WebGLRenderer();
         renderer.setSize(sceneWidth, sceneHeight);
         renderer.setClearColor(0xFFFFFF, 1);
         var viewBox = renderer.domElement;
