@@ -58,7 +58,7 @@
 
 .content-panel {
     position: fixed;
-    overflow: scroll;
+    overflow-y: auto;
     top: 10%;
     left: 25%;
     width: 50%;
