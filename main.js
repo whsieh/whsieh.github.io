@@ -69,7 +69,7 @@ $(function() {
         renderer.domElement.id = "viewBox";
 
         var resetContentPanelDimensions = function() {
-            var contentPanelWidth = max(sceneWidth / 2, 600);
+            var contentPanelWidth = max(sceneWidth / 2, 640);
             $(".content-panel").css({
                 width: contentPanelWidth,
                 left: (sceneWidth - contentPanelWidth) / 2
