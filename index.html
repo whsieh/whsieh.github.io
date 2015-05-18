@@ -1,165 +1,171 @@
 <html>
-
 <title>Wenson Hsieh</title>
 <head>
+    <!-- Stylesheets and fonts -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="lib/bootstrap-thumbnail.css">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Source+Code+Pro">
+    <!-- Javascripts -->
     <script type="text/javascript" src="lib/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="lib/three.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.ico">
-
+</head>
 <body>
-    <div id="navigationPanel">
-        <div id="navigationControls">
-            <a id="about-control" class="navigationControl">ABOUT</a>
-            <span class="control-separator">/</span>
-            <a id="projects-control" class="navigationControl">PROJECTS</a>
-            <span class="control-separator">/</span>
-            <a id="resume-control" class="navigationControl">RESUME</a>
-            <span class="control-separator">/</span>
-            <a id="contact-control" class="navigationControl">CONTACT</a>
+    <div id="mainview-container">
+        <div id="navigationPanel">
+            <div id="navigationControls">
+                <a id="about-control" class="navigationControl">ABOUT</a>
+                <span class="control-separator">/</span>
+                <a id="projects-control" class="navigationControl">PROJECTS</a>
+                <span class="control-separator">/</span>
+                <a id="resume-control" class="navigationControl">RESUME</a>
+                <span class="control-separator">/</span>
+                <a id="contact-control" class="navigationControl">CONTACT</a>
+            </div>
+            <div id="zoomedControls">
+                <a id="back-control" class="navigationControl">[BACK]</a>
+            </div>
         </div>
-        <div id="zoomedControls">
-            <a id="back-control" class="navigationControl">[BACK]</a>
+        <div id="about-panel" class="content-panel">
+            <h3 class="panel-title">About me</h3>
+            <p class="first-content-element">Hi. My name is Wenson, and I'm a new graduate from UC Berkeley where I studied Electrical Engineering and Computer Science. Among other things, I have a budding interest in web design, graph theory, social data analysis, and machine learning. Thus far, I have written large projects in Python, Javascript, C++, Java, Ruby and Swift.</p>
+            <p>I initially learned to program in Java and built my first apps using Java2D, Swing, and applets. My earliest example is <a href="http://github.com/whsieh/warscribe" target="_blank">Warscribe</a>, a D&amp;D character and stat tracking application I wrote for my friends to simplify combat. It is currently preserved in all its hard-coded glory on my Github. I eventually moved on to using web technologies. Near the end of summer 2012, I was wrapping up <a href="http://github.com/whsieh/DyGraph" target="_blank">DyGraph</a>, a social network visualization app written in Java when I realized how difficult it was to share Java programs with others. After I decided that Java applets were too cumbersome of a solution, I looked to other means of rendering my social graph on the web.</p>
+            <p>It wasn't long before I stumbled upon the HTML5 <span class="code">&lt;canvas&gt;</span> element. At the time, it was a godsend &mdash; not only was the API reminiscent of Java2D, but it also lacked the overhead of having to interface with a large and complex UI framework like Swing. Though I never finished the Javascript port of DyGraph, I repurposed much of the graph layout code for the first version of my <a href="http://whsieh.github.io/pweb-whsieh" target="_blank">personal website</a> in 2013, with a single canvas element covering the entire window and a few hundred lines of Javascript running in the background. It was, at the very least, a unique first attempt at web design. That same summer, I extended my knowledge of web design from the front end to the back end by building a web app with my friend and fellow CS student <a href="http://jeremybassi.com" target="_blank">Jeremy Bassi</a>. Couplr is a Facebook app that lets users anonymously match their friends in hypothetical romantic relationships and also check who they have been matched with. Using node.js and MongoDB on the server, jQuery on the client and socket.io in between, we brought our idea to life while learning the technology stack on the fly.</p>
+            <p>Fast forward to summer 2014. When I joined Apple as an intern on the WebKit team, I wasn't sure what to expect. My first experience working at a big company in a large and complex codebase was, if nothing else, intimidating. Over the course of the next few weeks, I honed my strengths and picked up many valuable skills, some of which I didn't even know I needed. I learned to navigate the huge WebKit codebase by communicating often with my team, zeroing in on the confusions I had and asking the right questions to clear those confusions. In the latter half of my internship, I brushed up on my public speaking skills when I presented my project twice, a process which required numerous rehearsals.</p>
+            <p>Check out the projects section to see some of my selected works, or visit my <a href="http://github.com/whsieh" target="_blank">Github</a> to see all of my projects.</p>
+        </div>
+
+        <div id="projects-panel" class="content-panel">
+            <h3 class="panel-title">My projects</h3>
+            <p class="first-content-element">Below are a few of my projects. While I built the raytracer for a computer graphics class, the others are side projects I worked on mostly over winter or summer breaks. Click on each thumbnail to learn more about the project.</p>
+            <div class="project-section">
+                <a href="http://whsieh.github.io/raytracer" target="_blank">
+                    <img src="thumb/raytracer.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">Raytracer, Fall 2014</h4>
+                <p class="project-description">Built from scratch in C++ using Eigen, a linear algebra library. Outputs an image given a scene file that describes the objects, lighting, and camera in a 3D scene. Renders explicitly defined object primitives (i.e. triangles and spheres) as well as more complex objets contained parsed from .obj files. Bonus features include anti-aliasing, skyboxes, and optimized raytracing via AABB trees.</p>
+            </div>
+            <div class="project-section">
+                <a href="http://whsieh.github.io/tron" target="_blank">
+                    <img src="thumb/tron.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">Tron, Spring 2014</h4>
+                <p class="project-description">Written in 20 hours along with Leo Kam and <a href="http://kevinwu.io" target="_blank">Kevin Wu</a> for the Spring 2014 CSUA Hackathon where we won first place. Tron is a 3D driving game in the browser that the user controls by steering with his/her hands. I wrote the algorithm to track the positions of the user's hands using webcam. Click the thumbnail to check out the project, hosted on my friend's website.</p>
+            </div>
+            <div class="project-section">
+                <a href="http://whsieh.github.io/qwop-ai" target="_blank">
+                    <img src="thumb/qwop.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">QWOP AI, Summer 2013</h4>
+                <p class="project-description">A Javascript walking game inspired by <a href="http://www.foddy.net/Athletics.html" target="_blank">qwop</a>, as well as an AI designed to learn how to walk (mostly) on its own. I found the most success using a combination of reinforcement learning and neural networks. Click the thumbnail to check out the game, the final AI, and a blooper reel of local minima my AI encountered.</p>
+            </div>
+            <div class="project-section">
+                <a href="http://whsieh.github.io/pweb-whsieh" target="_blank">
+                    <img src="thumb/pweb.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">Personal website, Summer 2013</h4>
+                <p class="project-description">The first version of my personal website in 2013, and one of my first attempts at web design. Repurposing graph visualization algorithms from DyGraph, I wanted to give my website a unique style. In contrast to the sleek lines and bright gradients of web 2.0, I went with an intentionally washed-out and hand-drawn look. The art has largely transfered over to this iteration of my personal website.</p>
+            </div>
+            <div class="project-section">
+                <a href="http://couplr.herokuapp.com" target="_blank">
+                    <img src="thumb/couplr.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">Couplr, Summer 2013</h4>
+                <p class="project-description">Couplr is my first web app. It's a Facebook app that lets users anonymously match their friends together in hypothetical romantic relationships, and also see who they've been matched with. I worked with my friend and fellow CS student <a href="http://jeremybassi.com" target="_blank">Jeremy Bassi</a> on this project. I focused on the back-end, as well as the "compatibility" algorithms used to present possible pairings between a user's friends.</p>
+            </div>
+            <div class="project-section">
+                <a href="gomoku.jar" target="_blank">
+                    <img src="thumb/gomoku.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">Gomoku AI, Winter 2012</h4>
+                <p class="project-description">A simple AI for a game I enjoyed playing as a kid. The objective of Gomoku is to lay 5 pieces in a straight line in any direction. Using heuristics derived from my own strategies at the game, I implemented a game tree search to mimic the way I play the game. Click the thumbnail to download the program as an executable .jar and play against my AI.</p>
+            </div>
+            <div class="project-section">
+                <a href="http://github.com/whsieh/DyGraph" target="_blank">
+                    <img src="thumb/dygraph.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title">DyGraph, Summer 2012</h4>
+                <p class="project-description">A Java application to visualize a user's Facebook friend network as a graph. This is not only one of my largest solo projects at ~8000 lines, but also my earliest. The project involved using the Facebook API to scrape information from users' walls, update a graph with the information, draw the graph in a 2D context, and then animate it via force-directed layout.</p>
+            </div>
+        </div>
+
+        <div id="resume-panel" class="content-panel">
+            <h3 class="panel-title">My resume</h3>
+            <p class="first-content-element">Download the full PDF <a href="resume.pdf" target="_blank">here</a>.</p>
+
+            <h4 class="subtitle">Education</h4>
+            <p>University of California, Berkeley
+                <br>B.S. Electrical Engineering and Computer Science
+                <br>Regents and Chancellors Scholar
+                <br>Member of EECS honors society Eta Kappa Nu
+                <br>Overall GPA: 3.84
+            </p>
+
+            <h4 class="subtitle">Work Experience</h4>
+            <p class="subcontent">
+                <b>WebKit Software Engineering Intern at Apple, Inc.</b>
+                <br>May 2014 - August 2014
+                <br><i>C++, Objective C, Javascript</i>
+                <ul>
+                    <li>Implemented snap points, a W3C spec allowing web developers to specify content snapping in scrollable areas using CSS.</li>
+                    <li>Updated CSS parser to recognize and store snap point properties and information.</li>
+                    <li>Added support for snap points on iOS, and prototyped snap points on OSX.</li>
+                </ul>
+            </p>
+            <p class="subcontent">
+                <b>Research Intern</b>
+                <br>June 2013 - May 2014
+                <br><i>Python, C++, C</i>
+                <ul>
+                    <li>Analyzed large brain network data (over 10^5 vertices and 10^8 edges) using path length and clustering.</li>
+                    <li>Developed sparse graph framework in Python, using Scipy, Numpy, Matplotlib and C.</li>
+                    <li>Sped core algorithms by more than 100x over pure Python code by writing C extensions.</li>
+                </ul>
+            </p>
+
+            <h4 class="subtitle">Personal Projects</h4>
+            <p class="subcontent">
+                <b>Tron</b>
+                <br>Spring 2014
+                <br><i>Javascript, WebGL</i>
+                <ul>
+                    <li>Web-based 3D driving game controlled by the user's gestures, built in 20 hours.</li>
+                    <li>Won first place at the CSUA Spring 2014 Hackathon.</li>
+                    <li>Wrote code to capture and interpret gestures in a browser via webcam.</li>
+                </ul>
+            </p>
+            <p class="subcontent">
+                <b>Couplr</b>
+                <br>Summer 2013
+                <br><i>node.js, Express, jQuery, MongoDB</i>
+                <ul>
+                    <li>Facebook app that lets users upvote or downvote potential matches between friends.</li>
+                    <li>Developed accurate match suggestion algorithm based on Facebook activity in user's social network.</li>
+                    <li>Built back end using MongoDB, node.js. Cached user data to ensure fast retrieval of social graphs.</li>
+                </ul>
+            </p>
+            <p class="subcontent">
+                <b>QWOP AI</b>
+                <br>Summer 2013
+                <br><i>HTML5, Javascript</i>
+                <ul>
+                    <li>Built physics-based walking simulator in Javascript and HTML canvas.</li>
+                    <li>Developed AI from scratch to learn QWOP using feature-based Q-learning and neural networks.</li>
+                </ul>
+            </p>
+        </div>
+
+        <div id="contact-panel" class="content-panel">
+            <h3 class="panel-title">Contact me</h3>
+            <p class="first-content-element">Preferred email: whsieh@berkeley.edu</p>
+            <p>Alternate email: whsieh256@gmail.com</p>
+            <p>Phone: 925-998-7943</p>
+            <p>Github: <a href="http://github.com/whsieh" target="_about">github.com/whsieh</a></p>
+            <p>LinkedIn: <a href="http://www.linkedin.com/in/whsieh" target="_about">linkedin.com/in/whsieh</a></p>
         </div>
     </div>
-    <div id="about-panel" class="content-panel">
-        <h3 class="panel-title">About me</h3>
-        <p class="first-content-element">Hi. My name is Wenson, and I'm a fourth-year EECS major at UC Berkeley. When I'm not butting heads against problem sets, I like to brainstorm ideas for small projects and hacks. When I'm not doing either of the above, I'm busy implementing one of these ideas. Among other things, I have a budding interest in web design, graph theory, social data analysis, and machine learning. Thus far, I have written large projects in Python, Javascript, C++, Java, and Swift.</p>
-        <p>I initially learned to program in Java and built my first apps using Java2D, Swing, and applets. My earliest example is <a href="http://github.com/whsieh/warscribe" target="_blank">Warscribe</a>, a D&amp;D character and stat tracking application I wrote for my friends to simplify combat. It is currently preserved in all its hard-coded glory on my Github. I eventually moved on to using web technologies. Near the end of summer 2012, I was wrapping up <a href="http://github.com/whsieh/DyGraph" target="_blank">DyGraph</a>, a social network visualization app written in Java when I realized how difficult it was to share Java programs with others. After I decided that Java applets were too cumbersome of a solution, I looked to other means of rendering my social graph on the web.</p>
-        <p>It wasn't long before I stumbled upon the HTML5 <span class="code">&lt;canvas&gt;</span> element. At the time, it was a godsend &mdash; not only was the API reminiscent of Java2D, but it also lacked the overhead of having to interface with a large and complex UI framework like Swing. Though I never finished the Javascript port of DyGraph, I repurposed much of the graph layout code for the first version of my <a href="2013/index.html" target="_blank">personal website</a> in 2013, with a single canvas element covering the entire window and a few hundred lines of Javascript running in the background. It was, at the very least, a unique first attempt at web design. That same summer, I extended my knowledge of web design from the front end to the back end by building a web app with my friend and fellow CS student <a href="http://jeremybassi.com" target="_blank">Jeremy Bassi</a>. Couplr is a Facebook app that lets users anonymously match their friends in hypothetical romantic relationships and also check who they have been matched with. Using node.js and MongoDB on the server, jQuery on the client and socket.io in between, we brought our idea to life while learning the technology stack on the fly.</p>
-        <p>Fast forward to summer 2014. When I joined Apple as an intern on the WebKit team, I wasn't sure what to expect. My first experience working at a big company in a large and complex codebase was, if nothing else, intimidating. Over the course of the next few weeks, I honed my strengths and picked up many valuable skills, some of which I didn't even know I needed. I learned to navigate the huge WebKit codebase by communicating often with my team, zeroing in on the confusions I had and asking the right questions to clear those confusions. In the latter half of my internship, I brushed up on my public speaking skills when I presented my project twice, a process which required numerous rehearsals.</p>
-        <p>I'm currently wrapping up my time at Berkeley, taking classes on machine learning and software engineering in my last semester. Check out the projects section to see some of my selected works, or visit my <a href="http://github.com/whsieh" target="_blank">Github</a> to see all of my projects.</p>
-    </div>
-
-    <div id="projects-panel" class="content-panel">
-        <h3 class="panel-title">My projects</h3>
-        <p class="first-content-element">Below are a few of my projects. While I built the raytracer for a computer graphics class, the others are side projects I worked on mostly over winter or summer breaks. Click on each thumbnail to learn more about the project.</p>
-        <div class="project-section">
-            <a href="projects/raytracer/showcase.html" target="_blank">
-                <img src="projects/raytracer/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">Raytracer, Fall 2014</h4>
-            <p class="project-description">Built from scratch in C++ using Eigen, a linear algebra library. Outputs an image given a scene file that describes the objects, lighting, and camera in a 3D scene. Renders explicitly defined object primitives (i.e. triangles and spheres) as well as more complex objets contained parsed from .obj files. Bonus features include anti-aliasing, skyboxes, and optimized raytracing via AABB trees.</p>
-        </div>
-        <div class="project-section">
-            <a href="http://kevinwu.io/tron" target="_blank">
-                <img src="projects/tron/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">Tron, Spring 2014</h4>
-            <p class="project-description">Written in 20 hours along with Leo Kam and <a href="http://kevinwu.io" target="_blank">Kevin Wu</a> for the Spring 2014 CSUA Hackathon where we won first place. Tron is a 3D driving game in the browser that the user controls by steering with his/her hands. I wrote the algorithm to track the positions of the user's hands using webcam. Click the thumbnail to check out the project, hosted on my friend's website.</p>
-        </div>
-        <div class="project-section">
-            <a href="projects/qwop_ai/showcase.html" target="_blank">
-                <img src="projects/qwop_ai/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">QWOP AI, Summer 2013</h4>
-            <p class="project-description">A Javascript walking game inspired by <a href="http://www.foddy.net/Athletics.html" target="_blank">qwop</a>, as well as an AI designed to learn how to walk (mostly) on its own. I found the most success using a combination of reinforcement learning and neural networks. Click the thumbnail to check out the game, the final AI, and a blooper reel of local minima my AI encountered.</p>
-        </div>
-        <div class="project-section">
-            <a href="2013/index.html" target="_blank">
-                <img src="projects/pweb_old/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">Personal website, Summer 2013</h4>
-            <p class="project-description">The first version of my personal website in 2013, and one of my first attempts at web design. Repurposing graph visualization algorithms from DyGraph, I wanted to give my website a unique style. In contrast to the sleek lines and bright gradients of web 2.0, I went with an intentionally washed-out and hand-drawn look. The art has largely transfered over to this iteration of my personal website.</p>
-        </div>
-        <div class="project-section">
-            <a href="http://couplr.herokuapp.com" target="_blank">
-                <img src="projects/couplr/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">Couplr, Summer 2013</h4>
-            <p class="project-description">Couplr is my first big web app. It's a Facebook app that lets users anonymously match their friends together in hypothetical romantic relationships, and also see who they've been matched with. I worked with my friend and fellow CS student <a href="http://jeremybassi.com" target="_blank">Jeremy Bassi</a> on this project. I focused on the back-end, as well as the "compatibility" algorithms used to present possible pairings between a user's friends.</p>
-        </div>
-        <div class="project-section">
-            <a href="projects/gomoku_ai/gomoku.jar" target="_blank">
-                <img src="projects/gomoku_ai/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">Gomoku AI, Winter 2012</h4>
-            <p class="project-description">A simple AI for a game I enjoyed playing as a kid. The objective of Gomoku is to lay 5 pieces in a straight line in any direction. Using heuristics derived from my own strategies at the game, I implemented a game tree search to mimic the way I play the game. Click the thumbnail to download the program as an executable .jar and play against my AI.</p>
-        </div>
-        <div class="project-section">
-            <a href="http://github.com/whsieh/DyGraph" target="_blank">
-                <img src="projects/dygraph/img/thumb.png" class="project-thumbnail bootstrap-thumbnail"/>
-            </a>
-            <h4 class="project-title">DyGraph, Summer 2012</h4>
-            <p class="project-description">A Java application to visualize a user's Facebook friend network as a graph. This is not only one of my largest solo projects at ~8000 lines, but also my earliest. The project involved using the Facebook API to scrape information from users' walls, update a graph with the information, draw the graph in a 2D context, and then animate it via force-directed layout.</p>
-        </div>
-    </div>
-
-    <div id="resume-panel" class="content-panel">
-        <h3 class="panel-title">My resume</h3>
-        <p class="first-content-element">Download the full PDF <a href="resume.pdf" target="_blank">here</a>.</p>
-
-        <h4 class="subtitle">Education</h4>
-        <p>University of California, Berkeley
-            <br>B.S. Electrical Engineering and Computer Science
-            <br>Regents and Chancellors Scholar
-            <br>Member of EECS honors society Eta Kappa Nu
-            <br>Overall GPA: 3.84
-        </p>
-
-        <h4 class="subtitle">Work Experience</h4>
-        <p class="subcontent">
-            <b>WebKit Software Engineering Intern at Apple, Inc.</b>
-            <br>May 2014 - August 2014
-            <br><i>C++, Objective C, Javascript</i>
-            <ul>
-                <li>Implemented snap points, a W3C spec allowing web developers to specify content snapping in scrollable areas using CSS.</li>
-                <li>Updated CSS parser to recognize and store snap point properties and information.</li>
-                <li>Added support for snap points on iOS, and prototyped snap points on OSX.</li>
-            </ul>
-        </p>
-        <p class="subcontent">
-            <b>Research Intern</b>
-            <br>June 2013 - May 2014
-            <br><i>Python, C++, C</i>
-            <ul>
-                <li>Analyzed large brain network data (over 10^5 vertices and 10^8 edges) using path length and clustering.</li>
-                <li>Developed sparse graph framework in Python, using Scipy, Numpy, Matplotlib and C.</li>
-                <li>Sped core algorithms by more than 100x over pure Python code by writing C extensions.</li>
-            </ul>
-        </p>
-
-        <h4 class="subtitle">Personal Projects</h4>
-        <p class="subcontent">
-            <b>Tron</b>
-            <br>Spring 2014
-            <br><i>Javascript, WebGL</i>
-            <ul>
-                <li>Web-based 3D driving game controlled by the user's gestures, built in 20 hours.</li>
-                <li>Won first place at the CSUA Spring 2014 Hackathon.</li>
-                <li>Wrote code to capture and interpret gestures in a browser via webcam.</li>
-            </ul>
-        </p>
-        <p class="subcontent">
-            <b>Couplr</b>
-            <br>Summer 2013
-            <br><i>node.js, Express, jQuery, MongoDB</i>
-            <ul>
-                <li>Facebook app that lets users upvote or downvote potential matches between friends.</li>
-                <li>Developed accurate match suggestion algorithm based on Facebook activity in user's social network.</li>
-                <li>Built back end using MongoDB, node.js. Cached user data to ensure fast retrieval of social graphs.</li>
-            </ul>
-        </p>
-        <p class="subcontent">
-            <b>QWOP AI</b>
-            <br>Summer 2013
-            <br><i>HTML5, Javascript</i>
-            <ul>
-                <li>Built physics-based walking simulator in Javascript and HTML canvas.</li>
-                <li>Developed AI from scratch to learn QWOP using feature-based Q-learning and neural networks.</li>
-            </ul>
-        </p>
-    </div>
-
-    <div id="contact-panel" class="content-panel">
-        <h3 class="panel-title">Contact me</h3>
-        <p class="first-content-element">Preferred email: whsieh@berkeley.edu</p>
-        <p>Alternate email: whsieh256@gmail.com</p>
-        <p>Phone: 925-998-7943</p>
-        <p>Github: <a href="http://github.com/whsieh" target="_about">github.com/whsieh</a></p>
-        <p>LinkedIn: <a href="http://www.linkedin.com/in/whsieh" target="_about">linkedin.com/in/whsieh</a></p>
-    </div>
+</body>
+</html>

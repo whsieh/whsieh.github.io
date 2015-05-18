@@ -3,6 +3,10 @@
     src: url("font/hellogoodbye.otf");
 }
 
+body {
+    overflow: hidden;
+}
+
 #viewBox {
     position: absolute;
     top: 0px;

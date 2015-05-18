@@ -1,5 +1,6 @@
 $(function() {
-    setTimeout(function () {
+
+    var initializeBoxAnimation = function() {
         // For convenience.
         var sin = Math.sin
             , cos = Math.cos
@@ -9,7 +10,6 @@ $(function() {
             , min = Math.min
             , PI = Math.PI;
 
-        console.log("Window dimensions are " + window.innerWidth + ", " + window.innerHeight);
         // Stores the viewport dimensions.
         var sceneWidth = window.innerWidth,
             sceneHeight = 0.8 * window.innerHeight;
@@ -65,7 +65,7 @@ $(function() {
         renderer.setSize(sceneWidth, sceneHeight);
         renderer.setClearColor(0xFFFFFF, 1);
         var viewBox = renderer.domElement;
-        document.body.appendChild(viewBox);
+        $("#mainview-container").append(viewBox);
         renderer.domElement.id = "viewBox";
 
         var resetContentPanelDimensions = function() {
@@ -286,16 +286,13 @@ $(function() {
 
         var beginAnimation = function() {
             if (isAnimationActive) {
-               console.log("Animation already in progress!");
                return;
             }
-            console.log("Beginning animation...");
             isAnimationActive = true;
             animate();
         }
 
         var endAnimation = function() {
-            console.log("Ending animation...");
             isAnimationActive = false;
         }
 
@@ -366,5 +363,7 @@ $(function() {
         window.onresize = function() {
             renderer.setSize(window.innerWidth, window.innerHeight);
         }
-    }, 250);
+    }
+
+    setTimeout(initializeBoxAnimation, 250);
 });
