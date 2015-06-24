@@ -99,19 +99,22 @@ body {
     margin-right: 15px;
 }
 
-.project-thumbnail:hover {
-    opacity: 0.8;
-}
-
 .project-description {
     margin-left: 10px;
     margin-top: 0px;
     height: 175px;
 }
 
+#projects-panel {
+    -webkit-overflow-scrolling: touch;
+    -webkit-scroll-snap-type: mandatory;
+    -webkit-scroll-snap-destination: 0 10%;
+}
+
 .project-section {
     margin-top: 50px;
     display: block;
+    -webkit-scroll-snap-coordinate: 0 0;
 }
 
 .project-title {
