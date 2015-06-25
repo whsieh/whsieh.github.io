@@ -137,7 +137,7 @@ $(function() {
             // Initial rendering sequence
             $("#viewBox").animate({ opacity: 1 }, 400);
             rotateToEulerAngles(forwardTiltAngle, initialRotationAmountY, 0, function() {
-                $("#navigationPanel").animate({opacity: 0.7}, 200, function() {
+                $("#navigationPanel").animate({opacity: 1}, 200, function() {
                     for (var controlElementId in rotationAngles) {
                         $(controlElementId).hover(function(event) {
                             if (!isInZoomedMode) {
@@ -145,18 +145,18 @@ $(function() {
                                 selectedFaceId = elementId;
                                 var angles = rotationAngles[elementId];
                                 rotateToEulerAngles(angles["hover"].x, angles["hover"].y, angles["hover"].z);
-                                $(elementId).css({opacity: 1});
+                                $(elementId).css({opacity: 0.7});
                             }
                         }, function(event) {
                             if (!isInZoomedMode) {
                                 var elementId = "#" + event.target.id;
-                                $(elementId).css({opacity: 0.7});
+                                $(elementId).css({opacity: 1});
                             }
                         })
                         $(controlElementId).click(function(event) {
                             var elementId = "#" + event.target.id;
                             selectedFaceId = elementId;
-                            $(elementId).css({opacity: 0.7});
+                            $(elementId).css({opacity: 1});
                             var angles = rotationAngles[elementId];
                             rotateToEulerAngles(angles["zoomed"].x, angles["zoomed"].y, angles["zoomed"].z);
                             zoomToDistance(closeZDistance);
@@ -199,9 +199,9 @@ $(function() {
                         });
                     }
                     $("#back-control").hover(function() {
-                        $("#back-control").css({opacity: 1});
-                    }, function() {
                         $("#back-control").css({opacity: 0.7});
+                    }, function() {
+                        $("#back-control").css({opacity: 1});
                     });
                     $("#back-control").click(function() {
                         zoomOutFromContentPanel();
