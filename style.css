@@ -141,7 +141,7 @@ ul {
     margin-top: 5px;
 }
 
-p>a {
+p>a, h4>a {
     color: #428BCA;
     text-decoration: none;
 }

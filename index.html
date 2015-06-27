@@ -41,68 +41,82 @@
 
         <div id="projects-panel" class="content-panel">
             <h3 class="panel-title">My Projects</h3>
-            <p class="first-content-element">Below are a few of my projects. While I built the raytracer for a computer graphics class, the others are side projects I worked on mostly over winter or summer breaks. Click on each thumbnail to learn more about the project.</p>
+            <p class="first-content-element">Below are a few of my projects, most of which are side projects I worked on over winter or summer breaks. Click on a thumbnail to learn more, and feel free to reach out to me regarding any one of the projects. You can find me email in the "Contact" section.</p>
+            <div class="project-section">
+                <a href="http://whsieh.github.io/gender-ml" target="_blank">
+                    <img src="thumb/gender-ml.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title"><a href="http://whsieh.github.io/gender-ml" target="_blank">gender-ml, Spring 2015</a></h4>
+                <p class="project-description">A webservice that maps first names to predicted genders (male or female). Uses a linear SVM on the back end fitted to 9000 names in my training dataset. I wrote this as a completely free alternative to existing gender prediction APIs that rate-limit or otherwise cap requests. I use an optimized version of this in Couplr to draw intelligent samples from a social network.</p>
+            </div>
+            <div class="project-section">
+                <a href="http://penpal-gladiators.herokuapp.com" target="_blank">
+                    <img src="thumb/penpal.png" class="project-thumbnail bootstrap-thumbnail"/>
+                </a>
+                <h4 class="project-title"><a href="http://penpal-gladiators.herokuapp.com" target="_blank">Penpal Gladiators, Spring 2015</a></h4>
+                <p class="project-description">A web app created in 8 weeks for CS169 that pairs users with opposing political opinions together into chatrooms where they can debate about hot-button issues. Users select topics of interest and answer a brief survey upon registration. Using this data, we match users together to optimize the chance of good debate. All features were developed using TDD, with C0 test coverage of over 95%.</p>
+            </div>
             <div class="project-section">
                 <a href="http://whsieh.github.io/raytracer" target="_blank">
                     <img src="thumb/raytracer.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">Raytracer, Fall 2014</h4>
+                <h4 class="project-title"><a href="http://whsieh.github.io/raytracer" target="_blank">Raytracer, Fall 2014</a></h4>
                 <p class="project-description">Built from scratch in C++ using Eigen, a linear algebra library. Outputs an image given a scene file that describes the objects, lighting, and camera in a 3D scene. Renders explicitly defined object primitives (i.e. triangles and spheres) as well as more complex objets contained parsed from .obj files. Bonus features include anti-aliasing, skyboxes, and optimized raytracing via AABB trees.</p>
             </div>
             <div class="project-section">
                 <a href="http://whsieh.github.io/tron" target="_blank">
                     <img src="thumb/tron.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">Tron, Spring 2014</h4>
-                <p class="project-description">Written in 20 hours along with Leo Kam and <a href="http://kevinwu.io" target="_blank">Kevin Wu</a> for the Spring 2014 CSUA Hackathon where we won first place. Tron is a 3D driving game in the browser that the user controls by steering with his/her hands. I wrote the algorithm to track the positions of the user's hands using webcam. Click the thumbnail to check out the project, hosted on my friend's website.</p>
+                <h4 class="project-title"><a href="http://whsieh.github.io/tron" target="_blank">Tron, Spring 2014</a></h4>
+                <p class="project-description">Written in 20 hours along with Leo Kam and <a href="http://kevinwu.io" target="_blank">Kevin Wu</a> for the Spring 2014 CSUA Hackathon where we won first place. Tron is a 3D driving game in the browser that the user controls by steering with his/her hands. I wrote the algorithm to track the positions of the user's hands using webcam. Click the thumbnail to check out the project.</p>
             </div>
             <div class="project-section">
                 <a href="http://whsieh.github.io/qwop-ai" target="_blank">
                     <img src="thumb/qwop.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">QWOP AI, Summer 2013</h4>
+                <h4 class="project-title"><a href="http://whsieh.github.io/qwop-ai" target="_blank">QWOP AI, Summer 2013</a></h4>
                 <p class="project-description">A Javascript walking game inspired by <a href="http://www.foddy.net/Athletics.html" target="_blank">qwop</a>, as well as an AI designed to learn how to walk (mostly) on its own. I found the most success using a combination of reinforcement learning and neural networks. Click the thumbnail to check out the game, the final AI, and a blooper reel of local minima my AI encountered.</p>
             </div>
             <div class="project-section">
                 <a href="http://whsieh.github.io/pweb-whsieh" target="_blank">
                     <img src="thumb/pweb.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">Personal website, Summer 2013</h4>
+                <h4 class="project-title"><a href="http://whsieh.github.io/pweb-whsieh" target="_blank">Personal website, Summer 2013</a></h4>
                 <p class="project-description">The first version of my personal website in 2013, and one of my first attempts at web design. Repurposing graph visualization algorithms from DyGraph, I wanted to give my website a unique style. In contrast to the sleek lines and bright gradients of web 2.0, I went with an intentionally washed-out and hand-drawn look. The art has largely transfered over to this iteration of my personal website.</p>
             </div>
             <div class="project-section">
                 <a href="http://couplr.herokuapp.com" target="_blank">
                     <img src="thumb/couplr.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">Couplr, Summer 2013</h4>
+                <h4 class="project-title"><a href="http://couplr.herokuapp.com" target="_blank">Couplr, Summer 2013</a></h4>
                 <p class="project-description">Couplr is my first web app. It's a Facebook app that lets users anonymously match their friends together in hypothetical romantic relationships, and also see who they've been matched with. I worked with my friend and fellow CS student <a href="http://jeremybassi.com" target="_blank">Jeremy Bassi</a> on this project. I focused on the back-end, as well as the "compatibility" algorithms used to present possible pairings between a user's friends.</p>
             </div>
             <div class="project-section">
                 <a href="gomoku.jar" target="_blank">
                     <img src="thumb/gomoku.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">Gomoku AI, Winter 2012</h4>
+                <h4 class="project-title"><a href="gomoku.jar" target="_blank">Gomoku AI, Winter 2012</a></h4>
                 <p class="project-description">A simple AI for a game I enjoyed playing as a kid. The objective of Gomoku is to lay 5 pieces in a straight line in any direction. Using heuristics derived from my own strategies at the game, I implemented a game tree search to mimic the way I play the game. Click the thumbnail to download the program as an executable .jar and play against my AI.</p>
             </div>
             <div class="project-section">
                 <a href="http://github.com/whsieh/DyGraph" target="_blank">
                     <img src="thumb/dygraph.png" class="project-thumbnail bootstrap-thumbnail"/>
                 </a>
-                <h4 class="project-title">DyGraph, Summer 2012</h4>
+                <h4 class="project-title"><a href="http://github.com/whsieh/DyGraph" target="_blank">DyGraph, Summer 2012</a></h4>
                 <p class="project-description">A Java application to visualize a user's Facebook friend network as a graph. This is not only one of my largest solo projects at ~8000 lines, but also my earliest. The project involved using the Facebook API to scrape information from users' walls, update a graph with the information, draw the graph in a 2D context, and then animate it via force-directed layout.</p>
             </div>
         </div>
 
         <div id="resume-panel" class="content-panel">
             <h3 class="panel-title">My Resume</h3>
-            <p class="first-content-element">Download the full PDF <a href="resume.pdf" target="_blank">here</a>.</p>
+            <p class="first-content-element">Download the full PDF <a href="resume.pdf" target="_blank">here</a>. My college transcript is also online <a href="transcript.pdf" target="_blank">here</a>.</p>
 
             <h4 class="subtitle">Education</h4>
             <p>University of California, Berkeley
                 <br>B.S. Electrical Engineering and Computer Science
                 <br>Regents and Chancellors Scholar
                 <br>Member of EECS honors society Eta Kappa Nu
-                <br>Overall GPA: 3.84
+                <br>Overall GPA: 3.86
             </p>
 
             <h4 class="subtitle">Work Experience</h4>
