@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <script>
+        function onload() {
+            var currentScrollSnapCoordinate = "0% 0%";
+            var toggleCoordinates = document.getElementById("toggle-coordinates");
+
+            var gallery = document.getElementById("gallery");
+            var elements = document.getElementsByClassName("vertical");
+
+            toggleCoordinates.onclick = function() {
+                if (currentScrollSnapCoordinate == "0% 0%")
+                    currentScrollSnapCoordinate = "0 50%";
+                else
+                    currentScrollSnapCoordinate = "0% 0%";
+
+                for (var index = 0; index < elements.length; ++index)
+                    elements[index].style.webkitScrollSnapCoordinate = currentScrollSnapCoordinate;
+
+                toggleCoordinates.textContent = "coordinates: " + currentScrollSnapCoordinate;
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        #gallery {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-scroll-snap-type: mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .vertical {
+            width: 100%;
+            height: 600px;
+            text-align: center;
+            -webkit-scroll-snap-coordinate: 0% 0%;
+        }
+
+        #test-message {
+            padding-top: 100px;
+        }
+
+        #toggle-buttons {
+            position: fixed;
+            float: left;
+            font-size: 10px;
+        }
+
+        .toggle {
+            width: 95px;
+            height: 40px;
+            border-radius: 25px;
+            border: 1px black solid;
+            background-color: white;
+            display: block;
+        }
+
+        #test {
+            position: fixed;
+            right: 25px;
+            top: 25px;
+        }
+
+        #child00 { background-color: #DD0000; }
+        #child01 { background-color: #FF6666; }
+        #child02 { background-color: #00DD00; }
+        #child03 { background-color: #66FF66; }
+        #child04 { background-color: #0000DD; }
+        #child05 { background-color: #6666FF; }
+    </style>
+</head>
+
+<body onload="onload();">
+    <div id="gallery">
+        <div id="child00" class="vertical"></div>
+        <div id="child01" class="vertical"></div>
+        <div id="child02" class="vertical"></div>
+        <div id="child03" class="vertical"></div>
+        <div id="child04" class="vertical"></div>
+        <div id="child05" class="vertical"></div>
+    </div>
+    <div id="toggle-buttons">
+        <button class="toggle" id="toggle-coordinates">coordinates: 0% 0%</button>
+    </div>
+    <p id="test">snap-changed-elements.html</p>
+</body>
+
+</html>

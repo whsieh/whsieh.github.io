@@ -1,0 +1,124 @@
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #container {
+            width: 600px;
+            height: 600px;
+            position: relative;
+            overflow: scroll;
+            border: 1px black solid;
+            margin: 0 auto;
+            -webkit-scroll-snap-type: mandatory;
+            -webkit-scroll-snap-destination: 0% 0%;
+        }
+
+        .block {
+            position: absolute;
+            -webkit-scroll-snap-coordinate: 0% 0%;
+        }
+
+        /* Dimensions */
+        #block1, #block2, #block3, #block4, #block5, #block7, #block8 {
+            width: 1500px;
+        }
+
+        #block1, #block2, #block3, #block4, #block6, #block7, #block8, #block9 {
+            height: 1500px;
+        }
+
+        #block6, #block9 {
+            width: 3000px;
+        }
+
+        #block5 {
+            height: 3000px;
+        }
+
+        /* Positions */
+        #block1, #block2, #block3, #block4 {
+            top: 0px;
+        }
+
+        #block5, #block6, #block7 {
+            top: 1500px;
+        }
+
+        #block8, #block9 {
+            top: 3000px;
+        }
+
+        #block1, #block5 {
+            left: 0px;
+        }
+
+        #block2, #block6, #block8 {
+            left: 1500px;
+        }
+
+        #block3, #block9 {
+            left: 3000px;
+        }
+
+        #block4, #block7 {
+            left: 4500px;
+        }
+
+        /* Colors */
+        #block1 {
+            background-color: blue;
+        }
+
+        #block2 {
+            background-color: green;
+        }
+
+        #block3 {
+            background-color: white;
+        }
+
+        #block4 {
+            background-color: purple;
+        }
+
+        #block5 {
+            background-color: teal;
+        }
+
+        #block6 {
+            background-color: orange;
+        }
+
+        #block7 {
+            background-color: yellow;
+        }
+
+        #block8 {
+            background-color: red;
+        }
+
+        #block9 {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="block" id="block1"></div>
+        <div class="block" id="block2"></div>
+        <div class="block" id="block3"></div>
+        <div class="block" id="block4"></div>
+        <div class="block" id="block5"></div>
+        <div class="block" id="block6"></div>
+        <div class="block" id="block7"></div>
+        <div class="block" id="block8"></div>
+        <div class="block" id="block9"></div>
+    </div>
+</body>
+
+</html>
