@@ -1,0 +1,36 @@
+<html>
+<head>
+    <style>
+    body {
+        margin: 0;
+    }
+    
+    #main {
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+
+    <script>
+    var colors = ["red", "green", "blue", "aqua", "yellow", "fuchsia"];
+    function setup() {
+        var main = document.getElementById("main");
+
+        function randomColor() {
+            return colors[Math.round(Math.random() * colors.length)];
+        }
+        
+        function setBackgroundToRandomColor() {
+            main.style.backgroundColor = randomColor();
+            requestAnimationFrame(setBackgroundToRandomColor);
+        }
+
+        setBackgroundToRandomColor();
+    }
+    </script>
+</head>
+
+<body onload="setup()">
+    <div id="main"></div>
+</body>
+</html>
