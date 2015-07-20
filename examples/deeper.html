@@ -8,11 +8,8 @@
 
     iframe {
         position: absolute;
-        width: 100px;
-        height: 100px;
-    }
-    a {
-        position: fixed;
+        width: 400px;
+        height: 400px;
     }
     </style>
 
@@ -20,7 +17,7 @@
     var width = window.orientation == undefined ? window.innerWidth : screen.width;
     var height = window.orientation == undefined ? window.innerHeight : screen.height;
     console.log([width, height])
-    var maxNumFrames = 100;
+    var maxNumFrames = 5;
     var currentIFrameIndex = 0;
     var maxNumFramesReached = false;
 
@@ -29,9 +26,9 @@
 
         function makeRandomFrame() {
             var iframe = document.createElement("iframe");
-            iframe.src = "epilepsy.html";
-            iframe.style.left = Math.round(Math.random() * (width - 100)) + "px";
-            iframe.style.top = Math.round(Math.random() * (height - 100)) + "px";
+            iframe.src = "iframes.html";
+            iframe.style.left = Math.round(Math.random() * (width - 400)) + "px";
+            iframe.style.top = Math.round(Math.random() * (height - 400)) + "px";
             document.body.appendChild(iframe);
             return iframe;
         }
@@ -49,7 +46,7 @@
             replaceOrAddRandomFrameInBody();
             setTimeout(function() {
                 requestAnimationFrame(animate);
-            }, maxNumFramesReached ? 1000 : 200);
+            }, 1000);
         }
 
         animate();
@@ -58,7 +55,6 @@
 </head>
 
 <body onload="setup()">
-    <a href="epilepsy.html">¯\_(ツ)_/¯</a>
 </body>
 
 </html>
