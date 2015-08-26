@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <script>
+    function openWindow() {
+        window.open("layerhost-crash.html#auxillary");
+    }
+
+    function tryToCrash() {
+        var div = document.getElementById("test");
+        div.style.webkitTransform = "translateY(1px)";
+        div.style.webkitTransition = "1s ease-in-out";
+        setTimeout(function() {
+            div.style.webkitTransform = "none";
+            div.style.webkitTransition = "none";
+            setTimeout(function() {
+                window.close();
+            }, 0);
+        }, 100);
+    }
+
+    function setup() {
+        if (location.href.indexOf("auxillary") == -1) {
+            document.body.addEventListener("click", openWindow);
+            document.body.addEventListener("touchend", openWindow);
+        } else
+            setTimeout(tryToCrash, 100);
+    }
+    </script>
+
+    <style>
+    #test {
+        background-color: blue;
+        width: 10px;
+        height: 10px;
+    }
+    </style>
+<head>
+
+<body onload="setup();">
+    <div id="test"></div>
+</body>
+
+</html>
