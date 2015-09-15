@@ -1,0 +1,48 @@
+<html>
+<head>
+    <script>
+    function load() {
+        var container = document.getElementById("container");
+        setTimeout(function() {
+            container.style.display = "none";
+        }, 60);
+    }
+    </script>
+    <style>
+    body {
+        margin: 2em;
+    }
+
+    #container {
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+        width: 400px;
+        height: 400px;
+    }
+
+    .cell {
+        width: 400px;
+        height: 400px;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .blue {
+        background-color: blue;
+    }
+    </style>
+</head>
+
+<body onload="load()">
+    <div id="container">
+        <div class="cell red"></div>
+        <div class="cell blue"></div>
+        <div class="cell red"></div>
+        <div class="cell blue"></div>
+        <div class="cell red"></div>
+        <div class="cell blue"></div>
+    </div>
+</body>
+</html>
