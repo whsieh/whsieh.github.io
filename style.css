@@ -108,8 +108,9 @@ body {
 }
 
 #projects-panel {
-    -webkit-scroll-snap-type: mandatory;
-    -webkit-scroll-snap-destination: 0 10%;
+    /* Uncomment when https://bugs.webkit.org/show_bug.cgi?id=147215 ships... */
+    /* -webkit-scroll-snap-type: mandatory; */
+    /* -webkit-scroll-snap-destination: 0 10%; */
 }
 
 .project-section {
