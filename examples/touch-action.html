@@ -1,16 +1,15 @@
 <html>
-<!-- <meta name="viewport" content="width = device-width"> -->
+<meta name="viewport" content="width = device-width">
 
 <head>
     <script>
-    var attachTouchListeners = true;
+    var attachTouchListeners = false;
     var timestamp;
-    var clickCounts = {"none": 0, "manipulation": 0, "auto": 0};
+    var clickCounts = {"manipulation": 0, "auto": 0};
 
     function setup() {
-        bindTouchAndClickHandlers(document.getElementById("none"), handleTouchEnd, handleSyntheticClick);
-        bindTouchAndClickHandlers(document.getElementById("manipulation"), handleTouchEnd, handleSyntheticClick);
         bindTouchAndClickHandlers(document.getElementById("auto"), handleTouchEnd, handleSyntheticClick);
+        bindTouchAndClickHandlers(document.getElementById("manipulation"), handleTouchEnd, handleSyntheticClick);
     }
 
     function bindTouchAndClickHandlers(element, ontouchend, onclick) {
@@ -59,14 +58,10 @@
 </head>
 
 <body onload="setup()">
-    <!-- <p>The top button has <code>-webkit-touch-action: manipulation</code> while the bottom one doesn't. Double-tapping in the top button should generate two click events, and should not cause us to zoom in. However, double tapping in the second button should still trigger zoom and should not generate any clicks. There should also be the normal ~350ms delay when tapping on the second button.</p> -->
-    <h2>With <code>-webkit-touch-action: none</code></h2>
-    <button id="none">Click count: 0</button>
-    <h2>With <code>-webkit-touch-action: manipulation</code></h2>
-    <button id="manipulation">Click count: 0</button>
     <h2>With <code>-webkit-touch-action: auto</code></h2>
     <button id="auto">Click count: 0</button>
-    <h1 id="delay-log">Delay:</h1>
+    <h2>With <code>-webkit-touch-action: manipulation</code></h2>
+    <button id="manipulation">Click count: 0</button>
 </body>
 
 </html>

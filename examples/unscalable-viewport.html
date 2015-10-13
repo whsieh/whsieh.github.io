@@ -1,5 +1,5 @@
 <html>
-<meta name="viewport" content="width = device-width, user-scalable = no">
+<meta id="viewport-data" name="viewport" content="user-scalable = no">
 
 <head>
     <script>
@@ -27,6 +27,13 @@
         document.getElementById("delay-log").textContent = "Delay: " + delay + " ms";
         event.target.style.backgroundColor = "#22FF22";
     }
+
+    function makeViewportScalable(userScalable) {
+        var viewportTag = document.getElementById("viewport-data");
+        var scalableValue = userScalable ? "yes" : "no";
+        viewportTag.setAttribute("content", "user-scalable=" + scalableValue);
+        document.getElementById("viewport-log").textContent = "The viewport is " + (userScalable ? "scalable." : "not scalable.")
+    }
     </script>
 
     <style>
@@ -34,14 +41,19 @@
         margin: 0;
     }
 
-    button {
+    #target {
         margin: 10px;
-        width: 100vh;
-        height: 50vh;
+        width: 250px;
+        height: 250px;
         border-radius: 10px;
         background-color: #22FF22;
         margin-bottom: 10px;
-        font-size: 30px;
+        font-size: 20px;
+    }
+
+    #viewport-button {
+        width: 150px;
+        height: 25px;
     }
     </style>
 </head>
@@ -49,6 +61,9 @@
 <body onload="setup()">
     <button id="target">Click count: 0</button>
     <h1 id="delay-log">Delay:</h1>
+    <button class="viewport-button" onclick="makeViewportScalable(false)">Make viewport unscalable</button>
+    <button class="viewport-button" onclick="makeViewportScalable(true)">Make viewport scalable</button>
+    <h1 id="viewport-log">The viewport is scalable.</h1>
 </body>
 
 </html>
