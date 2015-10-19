@@ -1,13 +1,12 @@
 <html>
-<meta id="viewport-data" name="viewport" content="">
-
 <head>
     <script>
     var timestamp;
-    var clickCount = 0;
+    var clickCount = { "target": 0, "giant-target": 0 };
 
     function setup() {
         bindTouchAndClickHandlers(document.getElementById("target"), handleTouchEnd, handleSyntheticClick);
+        bindTouchAndClickHandlers(document.getElementById("giant-target"), handleTouchEnd, handleSyntheticClick);
     }
 
     function bindTouchAndClickHandlers(element, ontouchend, onclick) {
@@ -21,18 +20,11 @@
     }
 
     function handleSyntheticClick(event) {
-        clickCount++;
-        event.target.textContent = "Click count: " + clickCount;
+        clickCount[event.target.id]++;
+        event.target.textContent = "Click count: " + clickCount[event.target.id];
         var delay = Number(new Date()) - timestamp;
         document.getElementById("delay-log").textContent = "Delay: " + delay + " ms";
         event.target.style.backgroundColor = "#22FF22";
-    }
-
-    function makeViewportScalable(userScalable) {
-        var viewportTag = document.getElementById("viewport-data");
-        var scalableValue = userScalable ? "yes" : "no";
-        viewportTag.setAttribute("content", "user-scalable=" + scalableValue);
-        document.getElementById("viewport-log").textContent = "The viewport is " + (userScalable ? "scalable." : "not scalable.")
     }
     </script>
 
@@ -41,29 +33,30 @@
         margin: 0;
     }
 
-    #target {
+    #target, #giant-target {
         margin: 10px;
-        width: 250px;
-        height: 250px;
         border-radius: 10px;
         background-color: #22FF22;
         margin-bottom: 10px;
         font-size: 20px;
     }
 
-    #viewport-button {
-        width: 150px;
-        height: 25px;
+    #target {
+        width: 200px;
+        height: 200px;
+    }
+
+    #giant-target {
+        width: 800px;
+        height: 800px;
     }
     </style>
 </head>
 
 <body onload="setup()">
     <button id="target">Click count: 0</button>
+    <button id="giant-target">Click count: 0</button>
     <h1 id="delay-log">Delay:</h1>
-    <button class="viewport-button" onclick="makeViewportScalable(false)">Make viewport unscalable</button>
-    <button class="viewport-button" onclick="makeViewportScalable(true)">Make viewport scalable</button>
-    <h1 id="viewport-log">The viewport is scalable.</h1>
 </body>
 
 </html>

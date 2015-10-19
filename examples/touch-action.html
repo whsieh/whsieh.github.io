@@ -1,5 +1,5 @@
 <html>
-<meta name="viewport" content="width = device-width">
+<meta name="viewport" content="width = device-width, user-scalable = yes">
 
 <head>
     <script>
@@ -46,21 +46,19 @@
     }
 
     #none {
-        -webkit-touch-action: none;
         touch-action: none;
     }
 
     #manipulation {
-        -webkit-touch-action: manipulation;
         touch-action: manipulation;
     }
     </style>
 </head>
 
 <body onload="setup()">
-    <h2>With <code>-webkit-touch-action: auto</code></h2>
+    <h2><code>touch-action: auto</code></h2>
     <button id="auto">Click count: 0</button>
-    <h2>With <code>-webkit-touch-action: manipulation</code></h2>
+    <h2><code>touch-action: manipulation</code></h2>
     <button id="manipulation">Click count: 0</button>
 </body>
 

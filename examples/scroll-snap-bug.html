@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script>
+        var framecount = 0;
+        function oscillateBarWidth() {
+            var panels = document.getElementsByClassName("panel");
+            framecount++;
+            for (var i = 0; i < panels.length; ++i) {
+                var framewidth = 10 * Math.sin(framecount * 2 * Math.PI / 100) + 50;
+                panels[i].style.width = framewidth + "%";
+            }
+            requestAnimationFrame(oscillateBarWidth);
+        }
+
+        function runTest() {
+            oscillateBarWidth();
+        }
+        </script>
+        <style>
+        body {
+            margin:0;
+            -webkit-scroll-snap-type: mandatory;
+            -webkit-scroll-snap-points-y: repeat(100vh);
+        }
+
+        .panel {
+            height: 100vh;
+            background: purple;
+            width: 50%;
+        }
+        </style>
+    </head>
+    <body onload="runTest()">
+        <div class="panel" style="background: red"></div>
+        <div class="panel" style="background: green"></div>
+        <div class="panel" style="background: blue"></div>
+    </body>
+</html>
+
