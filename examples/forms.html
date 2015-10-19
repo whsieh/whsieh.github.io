@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <script>
+        function onload() {
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++)
+                inputs[i].onclick = inputs[i].focus;
+
+            inputs[0].focus();
+        }
+    </script>
+</head>
+
+<body onload="onload()">
+    <p>Checkboxes</p>
+    <input type="checkbox" style="font-size: 7px;" />
+    <input id="second" type="checkbox" style="font-size: 13px;" />
+    <input type="checkbox" style="font-size: 16px;" />
+
+    <p>Radio buttons</p>
+    <input type="radio" name="testing" style="font-size: 7px;" />
+    <input type="radio" name="testing" style="font-size: 13px;" />
+    <input type="radio" name="testing" style="font-size: 16px;" />
+
+    <p>Standard buttons</p>
+    <input type="button" value="Regular button" style="font-size: 1em;"></input>
+    <input type="button" value="Regular button" style="font-size: 1em;"></input>
+    <input type="button" value="Regular button" style="font-size: 1em;"></input>
+
+    <p>Search fields</p>
+    <input onfocus="foo()" type="search" results="5"></input>
+    <input type="search" placeholder="keyword"></input>
+
+    <p>Select</p>
+    <select name="select">
+        <option value="value1">First</option> 
+        <option value="value2">Second</option>
+        <option value="value3">Third</option>
+    </select>
+
+    <p>Sliders</p>
+    <input value="0" type="range" name="points" min="0" max="10">
+    <input value="0" type="range" name="points" min="0" max="10" style="-webkit-appearance: slider-vertical;">
+</body>
+
+</html>
