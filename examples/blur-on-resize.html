@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta name="viewport" content="width = device-width, user-scalable = no">
+    <script>
+        var count = 0;
+        function setup() {
+            window.onresize = function() {
+                document.getElementById("resize-count").textContent = String(++count);
+                document.getElementById("window-height").textContent = String(window.innerHeight);
+            }
+            setTimeout(function() {
+                document.getElementById("window-height").textContent = String(window.innerHeight);
+            }, 500);
+        }
+    </script>
+
+    <style>
+        input:focus {
+            outline: none;
+            border: 1px solid #4D90FE;
+        }
+
+        input {
+            margin-top: 500px;
+        }
+
+        body {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body onload="setup()">
+    <input />
+    <div>Number of resize events: <span id="resize-count">0</span></div>
+    <div>window.innerHeight = <span id="window-height"></span></div>
+</body>
+</html>
