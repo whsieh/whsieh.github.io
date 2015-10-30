@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <meta name="viewport" content="user-scalable = no, width = device-width">
+        <script>
+            function setup() {
+               document.addEventListener("click", function() { console.log("You clicked the document.") }); /* Removing this makes the problem disappear. */
+               document.getElementById("safe-region").addEventListener("click", function() { console.log("You clicked the green stuff.") });
+            }
+        </script>
+        <style>
+        body {
+            margin: 0;
+            height: 100px; /* Removing this make the problem disappear. */
+        }
+
+        #safe-region {
+            height: 100px;
+            position: absolute;
+            background-color: lightgreen;
+            padding: 50px;
+            font-size: 20px;
+        }
+
+        html {
+            margin: 0;
+            background-color: pink;
+        }
+
+        input {
+            display: block; /* Removing this makes the problem disappear. */
+            width: 100%; /* For aesthetics only. */
+        }
+        </style>
+    </head>
+    <body onload="setup()">
+        <input id="textfield">
+        <div id="safe-region">Tapping the green region (i.e. the body) won't show the keyboard. Tapping the pink region will!</div>
+    </body>
+</html>
