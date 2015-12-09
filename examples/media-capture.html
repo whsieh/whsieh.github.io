@@ -1,0 +1,34 @@
+<html>
+
+<head>
+<script>
+function LOG(obj) {
+    document.body.appendChild(document.createTextNode(String(obj)));
+}
+
+function setup() {
+    navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+    }).then(function(stream) {
+        LOG("The request was granted!");
+        document.querySelector("video").srcObject = stream;
+    }).catch(function() {
+        LOG("The request was denied.");
+    });
+}
+</script>
+
+<style>
+video {
+    width: 400px;
+    height: 300px;
+    border: 1px blue dashed;
+}
+</style>
+</head>
+
+<body onload="setup()">
+    <video id="stream"></video>
+</body>
+</html>

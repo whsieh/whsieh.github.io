@@ -1,0 +1,59 @@
+<html>
+<meta name="viewport" content="initial-scale=1, width=350">
+
+<head>
+    <script>
+        var touchActionProperty = "auto";
+
+        function toggleTouchAction() {
+            touchActionProperty = touchActionProperty == "auto" ? "manipulation" : "auto";
+
+            var allInputs = document.getElementsByTagName("input");
+            for (var index = 0; index < allInputs.length; index++)
+                allInputs[index].style.touchAction = touchActionProperty;
+
+            document.getElementsByTagName("select")[0].style.touchAction = touchActionProperty;
+
+            document.getElementById("current-touch-action").textContent = touchActionProperty;
+        }
+    </script>
+    <style>
+    input {
+        margin-left: 15px;
+    }
+    #toggle-touch-action {
+        margin-top: 10vh;
+    }
+    </style>
+</head>
+
+<body>
+    <p>Checkboxes</p>
+    <input type="checkbox" style="font-size: 7px;" />
+    <input id="second" type="checkbox" style="font-size: 13px;" />
+    <input type="checkbox" style="font-size: 16px;" />
+
+    <p>Radio buttons</p>
+    <input type="radio" name="testing" style="font-size: 7px;" />
+    <input type="radio" name="testing" style="font-size: 13px;" />
+    <input type="radio" name="testing" style="font-size: 16px;" />
+
+    <p>Standard button</p>
+    <input type="button" value="Regular button" style="font-size: 1em;"></input>
+
+    <p>Search field</p>
+    <input onfocus="foo()" type="search" results="5"></input>
+
+    <p>Select</p>
+    <select name="select">
+        <option value="value1">First</option> 
+        <option value="value2">Second</option>
+        <option value="value3">Third</option>
+    </select>
+
+    <br>
+    <input type="button" id="toggle-touch-action" onclick="toggleTouchAction()" value="Toggle touch-action"></input>
+    <div>Currently, <code>touch-action</code> is <code><span id="current-touch-action">auto</span></code></div>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+    body {
+        margin: 0;
+    }
+
+    #sidebar {
+        background: #fff;
+        position: fixed;
+        top: 0; left: 0; bottom: 0;
+        width: 200px;
+        overflow-x: scroll;
+    }
+
+    .main-content {
+        width: calc(100% - 200px);
+        padding-left: 200px;
+    }
+
+    .tall-content {
+        height: 2000px;
+    }
+
+    .gray {
+        background-image: -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            color-stop(0, #888888),
+            color-stop(1, #FFFFFF)
+        );
+    }
+
+    .red {
+        background-image: -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            color-stop(0, #FF8888),
+            color-stop(1, #FF0000)
+        );
+    }
+    </style>
+    <script>
+    function scrollBodyTo(scrollTop) {
+        $(document.body).animate({
+            scrollTop: scrollTop
+        }, 500);
+    }
+    </script>
+</head>
+<body>
+    <div id="sidebar">
+        <div class="gray tall-content">
+            <a href="javascript:scrollBodyTo(0)">Scroll to beginning</a>
+            <br>
+            <a href="javascript:scrollBodyTo(document.body.scrollHeight - innerHeight)">Scroll to end</a>
+        </div>
+    </div>
+
+    <div class="red tall-content main-content"></div>
+</body>
+</html>
