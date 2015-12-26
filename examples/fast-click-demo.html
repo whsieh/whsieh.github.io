@@ -2,6 +2,7 @@
 <meta name="viewport" content="width=device-width, user-scalable=no">
 
 <head>
+    
     <script>
     var timestamp;
     var startTime = 0;
@@ -35,7 +36,7 @@
     <style>
     body {
         margin: 20px;
-        font-size: 20px;
+        font: 20px "Helvetica Neue", Helvetica, sans-serif;
         text-align: center;
     }
 
@@ -45,13 +46,29 @@
         font-size: 20px;
         margin: 2em auto;
     }
+    
+    h1 {
+        padding-top: 2em;
+        font-weight: normal;
+        letter-spacing: -0.025em;
+        color: #444444;
+    }
+    
+    code {
+        color: #777777;
+        font-family: Menlo;
+    }
+
+    a:active {
+        color: green;
+    }
     </style>
 </head>
 
-<body onload="setup()">
-<code>&lt;meta name="viewport" content="width=device-width"&gt;</code>
+<body>
+<h1>Fast-tapping enabled</h1>
 <button id="target">Click count: 0</button>
-<h1>Fast-clicking enabled</h1>
+<code>&lt;meta name="viewport" content="width=device-width"&gt;</code>
 </body>
 
 </html>
