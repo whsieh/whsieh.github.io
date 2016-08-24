@@ -1,0 +1,40 @@
+<html>
+
+<head>
+<meta name="viewport" content="initial-scale=1.0, width=device-width">
+<style>
+    body {
+        width: 50%;
+    }
+
+    #unzoomable {
+        opacity: 0.5;
+    }
+</style>
+<script>
+    var lastTouchTimestamp = null;
+    function setup() {
+        document.querySelector("#unzoomable").addEventListener("touchstart", function(event) {
+            var firstTapTimestamp = event.timeStamp;
+            var elapsedTime = firstTapTimestamp - (lastTouchTimestamp || firstTapTimestamp);
+            lastTouchTimestamp = firstTapTimestamp;
+            
+            if (!elapsedTime || elapsedTime > 350) {
+                event.target.click();
+                return;
+            }
+
+            event.preventDefault();
+        });
+    }
+</script>
+</head>
+
+<body onload=setup()>
+    <img src="./kitty.jpg"></img>
+    <img id="unzoomable" src="./kitty.jpg"></img>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in. Sed at porttitor purus, in placerat justo. Mauris at augue ac purus viverra molestie. Fusce ultrices ante at pellentesque lobortis <a href="rtl-date-input.html">eget pellentesque est</a>. Sed pellentesque, ipsum eu semper mollis, arcu lectus dignissim enim, in maximus tortor ligula id ipsum. Nulla dignissim diam a mi tempor porta. Etiam tempor ac augue non dapibus.</p>
+    <video controls width="200" height="150"><source src="./test.mp4"></video>
+</body>
+
+</html>

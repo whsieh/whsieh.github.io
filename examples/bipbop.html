@@ -1,0 +1,20 @@
+<head>
+    <style>
+        video {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+    <script>
+        function setup() {
+            var video = document.querySelector("video");
+            video.volume = 0.01;
+            setTimeout(function() {
+                video.pause();
+            }, 3000);
+        }
+    </script>
+</head>
+<body onload=setup()>
+    <video autoplay controls src="bipbop.mp4"></video>
+</body>
