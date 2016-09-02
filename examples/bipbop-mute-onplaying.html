@@ -1,0 +1,16 @@
+<head>
+    <style>
+        video {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+    <script>
+        function muteVideo() {
+            document.querySelector("video").muted = true;
+        }
+    </script>
+</head>
+<body onload>
+    <video autoplay loop controls src="bipbop.mp4" onplaying=muteVideo()></video>
+</body>
