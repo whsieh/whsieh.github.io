@@ -1,0 +1,55 @@
+<head>
+    <style>
+        body {
+            font-family: -apple-system;
+            font-size: 10px;
+        }
+        video {
+            width: 640px;
+            height: 480px;
+        }
+        div {
+            margin-top: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #11DD11;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+        }
+        input {
+            margin-top: 20px;
+        }
+    </style>
+    <script type="text/javascript">
+        function video() {
+            return document.querySelector("video");
+        }
+        function marker() {
+            return document.querySelector("div");
+        }
+        function skipButton() {
+            return document.querySelector("input");
+        }
+        function setup() {
+            video().volume = 0.01;
+            video().isAdvertisement = true;
+        }
+        function stopAd() {
+            if (!video().isAdvertisement)
+                return;
+
+            video().isAdvertisement = false;
+            video().src = "bipbop30s.mp4";
+            marker().style.backgroundColor = "#DD1111";
+            marker().textContent = "Not ad";
+            skipButton().remove();
+            setTimeout(() => video().play(), 500);
+        }
+    </script>
+</head>
+<body onload=setup()>
+    <video id="first" autoplay controls src="bipbop.mp4" onended=stopAd()></video>
+    <div>Ad</div>
+    <input type="button" value="Skip Ad" onclick=stopAd()></input>
+</body>
