@@ -1,0 +1,39 @@
+<head>
+    <style>
+        video {
+            width: 600px;
+            height: 400px;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        p {
+            top: 425px;
+        }
+
+        .offscreen {
+            top: -600px;
+            left: -400px;
+            position: absolute;
+        }
+    </style>
+    <script>
+        function setup() {
+            document.querySelector("video").volume = 0.01;
+        }
+
+        function blip() {
+            var video = document.querySelector("video");
+            video.classList.add("offscreen");
+            setTimeout(function() {
+                video.classList.remove("offscreen");
+            }, 33);
+        }
+    </script>
+</head>
+<body onload=setup()>
+    <video autoplay loop controls src="bipbop.mp4"></video>
+    <p><a href="javascript:void(0)" onclick=blip()>Blip the video<a/></p>
+</body>
