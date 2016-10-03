@@ -1,0 +1,41 @@
+<html>
+
+<head>
+<style>
+    #rich, #console {
+        width: 100%;
+        height: 360px;
+        border: 1px #CCCCCC solid;
+        margin-top: 16px;
+    }
+
+    #console {
+        overflow: scroll;
+        background-color: #F6F6F6;
+    }
+</style>
+<script type="text/javascript">
+    var inputEvents = [];
+    var lastEvent;
+
+    function input(event) {
+        let console = document.querySelector("#console");
+        let output = document.createElement("code");
+        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName} id=\"${event.target.id}\""> received InputEvent(inputType: \"${event.inputType}\")`;
+        let lineBreak = document.createElement("br");
+        console.appendChild(output);
+        console.appendChild(lineBreak);
+        console.scrollTop = 1000000;
+
+        inputEvents.push(event);
+        lastEvent = event;
+    }
+</script>
+</head>
+
+<body>
+<div id="rich" contenteditable oninput=input(event)></div>
+<div id="console" contenteditable></div>
+</body>
+
+</html>
