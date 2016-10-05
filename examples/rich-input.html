@@ -2,16 +2,17 @@
 
 <head>
 <style>
-    #rich, #console {
+    #rich, #input-console, #before-input-console {
         width: 100%;
-        height: 360px;
+        height: 30%;
         border: 1px #CCCCCC solid;
         margin-top: 16px;
     }
 
-    #console {
+    #input-console, #before-input-console {
         overflow: scroll;
         background-color: #F6F6F6;
+
     }
 </style>
 <script type="text/javascript">
@@ -19,23 +20,42 @@
     var lastEvent;
 
     function input(event) {
-        let console = document.querySelector("#console");
+        let inputConsole = document.querySelector("#input-console");
         let output = document.createElement("code");
-        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName} id=\"${event.target.id}\""> received InputEvent(inputType: \"${event.inputType}\")`;
+        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName} id=\"${event.target.id}\">: type: \"${event.type}\", inputType: \"${event.inputType}\"`;
         let lineBreak = document.createElement("br");
-        console.appendChild(output);
-        console.appendChild(lineBreak);
-        console.scrollTop = 1000000;
+        inputConsole.appendChild(output);
+        inputConsole.appendChild(lineBreak);
+        inputConsole.scrollTop = 1000000;
 
         inputEvents.push(event);
         lastEvent = event;
     }
+
+    function beforeInput(event) {
+        let beforeInputConsole = document.querySelector("#before-input-console");
+        let output = document.createElement("code");
+        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName} id=\"${event.target.id}\">: type: \"${event.type}\", inputType: \"${event.inputType}\"`;
+        let lineBreak = document.createElement("br");
+        beforeInputConsole.appendChild(output);
+        beforeInputConsole.appendChild(lineBreak);
+        beforeInputConsole.scrollTop = 1000000;
+    }
+
+    function keydown(event) {
+        if (event.which != 75 || !event.metaKey)
+            return;
+
+        document.querySelector("#input-console").innerHTML = "";
+        document.querySelector("#before-input-console").innerHTML = "";
+    }
 </script>
 </head>
 
-<body>
-<div id="rich" contenteditable oninput=input(event)></div>
-<div id="console" contenteditable></div>
+<body onkeydown=keydown(event)>
+<div id="rich" contenteditable oninput=input(event) onbeforeinput=beforeInput(event)></div>
+<div id="input-console"></div>
+<div id="before-input-console"></div>
 </body>
 
 </html>
