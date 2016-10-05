@@ -2,17 +2,43 @@
 
 <head>
 <style>
+    body {
+        overflow: hidden;
+        margin: 8;
+    }
+
+    #container {
+        width: 80vw;
+        height: 98vh;
+        margin-left: 18vw;
+    }
+
+    #panel {
+        width: 17vw;
+        height: 98vh;
+        position: fixed;
+    }
+
     #rich, #input-console, #before-input-console {
         width: 100%;
-        height: 30%;
+        height: 32%;
         border: 1px #CCCCCC solid;
-        margin-top: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    #input-console, #before-input-console {
+        margin-top: 1%;
     }
 
     #input-console, #before-input-console {
         overflow: scroll;
         background-color: #F6F6F6;
+    }
 
+    select {
+        width: 100%;
+        height: 100%;
     }
 </style>
 <script type="text/javascript">
@@ -40,6 +66,13 @@
         beforeInputConsole.appendChild(output);
         beforeInputConsole.appendChild(lineBreak);
         beforeInputConsole.scrollTop = 1000000;
+
+        if (!event.inputType)
+            return;
+
+        let option = document.querySelector(`#prevent-${event.inputType}`);
+        if (option.selected)
+            event.preventDefault();
     }
 
     function keydown(event) {
@@ -53,9 +86,56 @@
 </head>
 
 <body onkeydown=keydown(event)>
-<div id="rich" contenteditable oninput=input(event) onbeforeinput=beforeInput(event)></div>
-<div id="input-console"></div>
-<div id="before-input-console"></div>
+<div id="panel">
+    <select name="preventDefaultTypes" multiple>
+        <option id="prevent-insertText">insertText</option>
+        <option id="prevent-insertReplacementText">insertReplacementText</option>
+        <option id="prevent-insertLineBreak">insertLineBreak</option>
+        <option id="prevent-insertParagraph">insertParagraph</option>
+        <option id="prevent-insertOrderedList">insertOrderedList</option>
+        <option id="prevent-insertUnorderedList">insertUnorderedList</option>
+        <option id="prevent-insertHorizontalRule">insertHorizontalRule</option>
+        <option id="prevent-insertFromYank">insertFromYank</option>
+        <option id="prevent-insertFromDrop">insertFromDrop</option>
+        <option id="prevent-insertFromPaste">insertFromPaste</option>
+        <option id="prevent-insertCompositionText">insertCompositionText</option>
+        <option id="prevent-insertFromComposition">insertFromComposition</option>
+        <option id="prevent-deleteWordForward">deleteWordForward</option>
+        <option id="prevent-deleteWordBackward">deleteWordBackward</option>
+        <option id="prevent-deleteSoftLineForward">deleteSoftLineForward</option>
+        <option id="prevent-deleteSoftLineBackward">deleteSoftLineBackward</option>
+        <option id="prevent-deleteEntireSoftLine">deleteEntireSoftLine</option>
+        <option id="prevent-deleteHardLineForward">deleteHardLineForward</option>
+        <option id="prevent-deleteHardLineBackward">deleteHardLineBackward</option>
+        <option id="prevent-deleteCompositionText">deleteCompositionText</option>
+        <option id="prevent-deleteByComposition">deleteByComposition</option>
+        <option id="prevent-deleteByDrag">deleteByDrag</option>
+        <option id="prevent-deleteByCut">deleteByCut</option>
+        <option id="prevent-deleteContent">deleteContent</option>
+        <option id="prevent-deleteContentBackward">deleteContentBackward</option>
+        <option id="prevent-deleteContentForward">deleteContentForward</option>
+        <option id="prevent-historyUndo">historyUndo</option>
+        <option id="prevent-historyRedo">historyRedo</option>
+        <option id="prevent-insertTranspose">insertTranspose</option>
+        <option id="prevent-formatBold">formatBold</option>
+        <option id="prevent-formatItalic">formatItalic</option>
+        <option id="prevent-formatUnderline">formatUnderline</option>
+        <option id="prevent-formatStrikeThrough">formatStrikeThrough</option>
+        <option id="prevent-formatSuperscript">formatSuperscript</option>
+        <option id="prevent-formatSubscript">formatSubscript</option>
+        <option id="prevent-formatJustifyCenter">formatJustifyCenter</option>
+        <option id="prevent-formatJustifyRight">formatJustifyRight</option>
+        <option id="prevent-formatJustifyLeft">formatJustifyLeft</option>
+        <option id="prevent-formatIndent">formatIndent</option>
+        <option id="prevent-formatOutdent">formatOutdent</option>
+        <option id="prevent-formatRemove">formatRemove</option>
+    </select>
+</div>
+<div id="container">
+    <div id="rich" contenteditable oninput="input(event)" onbeforeinput="beforeInput(event)"></div>
+    <div id="input-console"></div>
+    <div id="before-input-console"></div>
+</div>
 </body>
 
 </html>
