@@ -67,6 +67,9 @@
         beforeInputConsole.appendChild(lineBreak);
         beforeInputConsole.scrollTop = 1000000;
 
+        if (document.querySelector("#prevent-everything").selected)
+            event.preventDefault();
+
         if (!event.inputType)
             return;
 
@@ -129,6 +132,7 @@
         <option id="prevent-formatIndent">formatIndent</option>
         <option id="prevent-formatOutdent">formatOutdent</option>
         <option id="prevent-formatRemove">formatRemove</option>
+        <option id="prevent-everything">EVERYTHING!</option>
     </select>
 </div>
 <div id="container">
