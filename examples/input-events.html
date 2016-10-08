@@ -64,8 +64,7 @@
     function input(event) {
         let inputConsole = document.querySelector("#input-console");
         let output = document.createElement("code");
-        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName} id="${event.target.id}">:
-            type: "${event.type}", inputType: "${event.inputType}", data: "${event.data}"`;
+        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName}>: inputType: "${event.inputType}", data: "${event.data}"`;
         let lineBreak = document.createElement("br");
         inputConsole.appendChild(output);
         inputConsole.appendChild(lineBreak);
@@ -78,8 +77,7 @@
     function beforeInput(event) {
         let beforeInputConsole = document.querySelector("#before-input-console");
         let output = document.createElement("code");
-        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName} id="${event.target.id}">:
-            type: "${event.type}", inputType: "${event.inputType}", data: "${event.data}"`;
+        output.textContent = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName}>: inputType: "${event.inputType}", data: "${event.data}"`;
         let lineBreak = document.createElement("br");
         beforeInputConsole.appendChild(output);
         beforeInputConsole.appendChild(lineBreak);
