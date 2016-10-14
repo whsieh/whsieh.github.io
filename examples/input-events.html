@@ -87,6 +87,8 @@
         output.textContent = inputEventToString(event);
         if (preventDefaultIfNecessary(event))
             output.style.color = "#FF6666";
+        else if (!event.cancelable)
+            output.style.color = "#6666FF";
 
         let lineBreak = document.createElement("br");
         beforeInputConsole.appendChild(output);
@@ -95,6 +97,9 @@
     }
 
     function preventDefaultIfNecessary(event) {
+        if (!event.cancelable)
+            return false;
+
         if (document.querySelector("#prevent-everything").selected) {
             event.preventDefault();
             return true;
@@ -134,7 +139,6 @@
         <option id="prevent-insertFromYank">insertFromYank</option>
         <option id="prevent-insertFromDrop">insertFromDrop</option>
         <option id="prevent-insertFromPaste">insertFromPaste</option>
-        <option id="prevent-insertCompositionText">insertCompositionText</option>
         <option id="prevent-insertFromComposition">insertFromComposition</option>
         <option id="prevent-deleteWordForward">deleteWordForward</option>
         <option id="prevent-deleteWordBackward">deleteWordBackward</option>
@@ -143,7 +147,6 @@
         <option id="prevent-deleteEntireSoftLine">deleteEntireSoftLine</option>
         <option id="prevent-deleteHardLineForward">deleteHardLineForward</option>
         <option id="prevent-deleteHardLineBackward">deleteHardLineBackward</option>
-        <option id="prevent-deleteCompositionText">deleteCompositionText</option>
         <option id="prevent-deleteByComposition">deleteByComposition</option>
         <option id="prevent-deleteByDrag">deleteByDrag</option>
         <option id="prevent-deleteByCut">deleteByCut</option>
