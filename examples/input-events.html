@@ -85,20 +85,30 @@
         let beforeInputConsole = document.querySelector("#before-input-console");
         let output = document.createElement("code");
         output.textContent = inputEventToString(event);
+        if (preventDefaultIfNecessary(event))
+            output.style.color = "#FF6666";
+
         let lineBreak = document.createElement("br");
         beforeInputConsole.appendChild(output);
         beforeInputConsole.appendChild(lineBreak);
         beforeInputConsole.scrollTop = 1000000;
+    }
 
-        if (document.querySelector("#prevent-everything").selected)
+    function preventDefaultIfNecessary(event) {
+        if (document.querySelector("#prevent-everything").selected) {
             event.preventDefault();
+            return true;
+        }
 
-        if (!event.inputType)
-            return;
+        if (event.inputType) {
+            let option = document.querySelector(`#prevent-${event.inputType}`);
+            if (option.selected) {
+                event.preventDefault();
+                return true;
+            }
+        }
 
-        let option = document.querySelector(`#prevent-${event.inputType}`);
-        if (option.selected)
-            event.preventDefault();
+        return false;
     }
 
     function keydown(event) {
