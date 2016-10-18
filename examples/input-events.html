@@ -60,12 +60,12 @@
     var lastEvent;
 
     function inputEventToString(event) {
-        var result = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName}>: inputType: "${event.inputType}", data: "${event.data}"`;
-        if (event.dataTransfer)
-            result += ` dataTransfer: "${event.dataTransfer.getData("text/html")}"`
-        else
-            result += ` dataTransfer: "${event.dataTransfer}"`
-        return result;
+        var result = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName}>: inputType: "${event.inputType}", data: "${event.data}", targetRanges: [ `;
+        var targetRangeStrings = [];
+        for (let targetRange of event.getTargetRanges())
+            targetRangeStrings.push(`(${targetRange.startContainer.nodeName}@${targetRange.startOffset} : ${targetRange.endContainer.nodeName}@${targetRange.endOffset})`);
+
+        return result + targetRangeStrings.join(", ") + " ]";
     }
 
     function input(event) {
