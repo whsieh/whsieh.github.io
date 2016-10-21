@@ -61,6 +61,9 @@
 
     function inputEventToString(event) {
         var result = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName}>: inputType: "${event.inputType}", data: "${event.data}", targetRanges: [ `;
+        if (!event.getTargetRanges)
+            return result + "null ]";
+
         var targetRangeStrings = [];
         for (let targetRange of event.getTargetRanges())
             targetRangeStrings.push(`(${targetRange.startContainer.nodeName}[${targetRange.startOffset}] : ${targetRange.endContainer.nodeName}[${targetRange.endOffset}])`);
