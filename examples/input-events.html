@@ -52,29 +52,64 @@
 
     select {
         width: 100%;
-        height: 100%;
+        height: 75%;
+    }
+
+    .attribute {
+        color: #FF3333;
     }
 </style>
 <script type="text/javascript">
     var inputEvents = [];
     var lastEvent;
 
-    function inputEventToString(event) {
-        var result = `[${(Date.now() / 1000).toFixed(3)}] <${event.target.tagName}>: inputType: "${event.inputType}", data: "${event.data}", targetRanges: [ `;
+    function targetRangesToStringForEvent(event) {
         if (!event.getTargetRanges)
-            return result + "null ]";
+            return "(null)";
 
         var targetRangeStrings = [];
-        for (let targetRange of event.getTargetRanges())
-            targetRangeStrings.push(`(${targetRange.startContainer.nodeName}[${targetRange.startOffset}] : ${targetRange.endContainer.nodeName}[${targetRange.endOffset}])`);
+        for (let range of event.getTargetRanges())
+            targetRangeStrings.push(`(${range.startContainer.nodeName}:${range.startOffset}, ${range.endContainer.nodeName}:${range.endOffset})`);
+        return targetRangeStrings.length ? targetRangeStrings.join(", ") : "()";
+    }
 
-        return result + targetRangeStrings.join(", ") + " ]";
+    function htmlEscapedString(s) {
+        let div = document.createElement("div");
+        div.textContent = s;
+        return div.innerHTML;
+    }
+
+    function dataToStringForEvent(event) {
+        return event.data ? `"${htmlEscapedString(event.data)}"` : "(null)";
+    }
+
+    function dataTransferToStringForEvent(event) {
+        if (!event.dataTransfer)
+            return "(null)";
+
+        if (event.dataTransfer.items)
+            return `(${event.dataTransfer.items.length} items)`
+
+        return `plain="${htmlEscapedString(event.dataTransfer.getData('text/plain'))}", HTML=${htmlEscapedString(event.dataTransfer.getData('text/html'))}`;
+    }
+
+    function inputEventToString(event) {
+        var result = `[${(Date.now() / 1000).toFixed(3)}] <b>(${event.target.tagName})</b>`;
+        if (showInputType.checked)
+            result += `  <span class="attribute">inputType</span> "${event.inputType}"`;
+        if (showData.checked)
+            result += `  <span class="attribute">data</span> ${dataToStringForEvent(event)}`;
+        if (showDataTransfer.checked)
+            result += `  <span class="attribute">dataTransfer</span> ${dataTransferToStringForEvent(event)}`;
+        if (showTargetRanges.checked)
+            result += `  <span class="attribute">targetRanges</span> ${targetRangesToStringForEvent(event)}`;
+        return result;
     }
 
     function input(event) {
         let inputConsole = document.querySelector("#input-console");
         let output = document.createElement("code");
-        output.textContent = inputEventToString(event);
+        output.innerHTML = inputEventToString(event);
         let lineBreak = document.createElement("br");
         inputConsole.appendChild(output);
         inputConsole.appendChild(lineBreak);
@@ -87,7 +122,7 @@
     function beforeInput(event) {
         let beforeInputConsole = document.querySelector("#before-input-console");
         let output = document.createElement("code");
-        output.textContent = inputEventToString(event);
+        output.innerHTML = inputEventToString(event);
         if (preventDefaultIfNecessary(event))
             output.style.color = "#FF6666";
         else if (!event.cancelable)
@@ -174,6 +209,13 @@
         <option id="prevent-formatRemove">formatRemove</option>
         <option id="prevent-everything">EVERYTHING!</option>
     </select>
+    <div id="show-options">
+        <p><code>Log output options</code></p>
+        <div><input type="checkbox" id="showInputType" checked><code> inputType</code></input></div>
+        <div><input type="checkbox" id="showTargetRanges" checked><code> getTargetRanges</code></input></div>
+        <div><input type="checkbox" id="showData" checked><code> data</code></input></div>
+        <div><input type="checkbox" id="showDataTransfer" checked><code> dataTransfer</code></input></div>
+    </div>
 </div>
 <div id="container">
     <div id="rich" contenteditable oninput="input(event)" onbeforeinput="beforeInput(event)"></div>
