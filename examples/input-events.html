@@ -97,13 +97,13 @@
     function inputEventToString(event) {
         var result = `[${(Date.now() / 1000).toFixed(3)}] <b>(${event.target.tagName})</b>`;
         if (showInputType.checked)
-            result += `  <span class="attribute">inputType</span> "${event.inputType}"`;
+            result += `  <span class="attribute"><b>inputType</b></span> "${event.inputType}"`;
         if (showData.checked)
-            result += `  <span class="attribute">data</span> ${dataToStringForEvent(event)}`;
+            result += `  <span class="attribute"><b>data</b></span> ${dataToStringForEvent(event)}`;
         if (showDataTransfer.checked)
-            result += `  <span class="attribute">dataTransfer</span> ${dataTransferToStringForEvent(event)}`;
+            result += `  <span class="attribute"><b>dataTransfer</b></span> ${dataTransferToStringForEvent(event)}`;
         if (showTargetRanges.checked)
-            result += `  <span class="attribute">targetRanges</span> ${targetRangesToStringForEvent(event)}`;
+            result += `  <span class="attribute"><b>targetRanges</b></span> ${targetRangesToStringForEvent(event)}`;
         return result;
     }
 
