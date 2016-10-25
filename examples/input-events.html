@@ -220,11 +220,17 @@
     </div>
 </div>
 <div id="container">
-    <div id="rich" contenteditable oninput="input(event)" onbeforeinput="beforeInput(event)"></div>
-    <textarea id="plain" contenteditable oninput="input(event)" onbeforeinput="beforeInput(event)"></textarea>
+    <div id="rich" contenteditable></div>
+    <textarea id="plain"></textarea>
     <div id="before-input-console"></div>
     <div id="input-console"></div>
 </div>
+<script>
+    rich.addEventListener("input", input);
+    plain.addEventListener("input", input);
+    rich.addEventListener("beforeinput", beforeInput);
+    plain.addEventListener("beforeinput", beforeInput);
+</script>
 </body>
 
 </html>
