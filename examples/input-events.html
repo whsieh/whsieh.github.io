@@ -146,7 +146,7 @@
 
         if (event.inputType) {
             let option = document.querySelector(`#prevent-${event.inputType}`);
-            if (option.selected) {
+            if (option && option.selected) {
                 event.preventDefault();
                 return true;
             }
