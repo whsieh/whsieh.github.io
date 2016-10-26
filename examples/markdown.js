@@ -37,8 +37,26 @@ function handleBeforeInput(event) {
         shouldPreventDefault = true;
     }
 
-    if (shouldPreventDefault)
+    if (shouldPreventDefault) {
+        flashMessage(`Intercepted "${event.inputType}"`);
         event.preventDefault();
+    }
+}
+
+function flashMessage(message) {
+    let div = document.createElement("div");
+    let code = document.createElement("code");
+    code.textContent = message;
+    div.appendChild(code);
+    div.classList.add("flash");
+    div.addEventListener("transitionend", function() {
+        div.remove();
+    });
+    setTimeout(function() {
+        div.classList.add("flash-begin");
+    }, 100);
+
+    editor.appendChild(div);
 }
 
 function shouldHTMLTextBeBolded(html) {
