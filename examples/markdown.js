@@ -37,6 +37,10 @@ function handleBeforeInput(event) {
         shouldPreventDefault = true;
     }
 
+    if (event.inputType === "deleteContentBackward") {
+        shouldPreventDefault = tryToPerformSmartDelete(event.getTargetRanges()[0]);
+    }
+
     if (shouldPreventDefault) {
         flashMessage(`Intercepted "${event.inputType}"`);
         event.preventDefault();
@@ -135,4 +139,46 @@ function surroundSelectionWithString(s) {
     newRange.setStart(start, startOffset + s.length);
     newRange.setEnd(end, endOffset + (start == end ? s.length : 0));
     getSelection().addRange(newRange);
+}
+
+function tryToPerformSmartDelete(deletionRange) {
+    let currentRange = getSelection().getRangeAt(0)
+        , startOffset = currentRange.startOffset
+        , endOffset = currentRange.endOffset
+        , text = currentRange.startContainer;
+
+    if (!currentRange.collapsed)
+        return false;
+
+    if (currentRange.startContainer != currentRange.endContainer)
+        return false;
+
+    if (deletionRange.startContainer != deletionRange.endContainer || deletionRange.startOffset != deletionRange.endOffset - 1)
+        return false;
+
+    let content = text.textContent;
+    let textToDelete = content.substring(deletionRange.startOffset, deletionRange.endOffset);
+    if (textToDelete !== "*" && textToDelete !== "_")
+        return false;
+
+    let indexOfBeginningMatch = content.lastIndexOf(textToDelete, deletionRange.startOffset - 1);
+    if (indexOfBeginningMatch === -1 || indexOfBeginningMatch === deletionRange.startOffset)
+        return false;
+
+    let remainingText = content.substring(0, indexOfBeginningMatch)
+        + content.substring(indexOfBeginningMatch + textToDelete.length, deletionRange.startOffset)
+        + content.substring(deletionRange.endOffset);
+
+    if (!remainingText.length)
+        return false;
+
+    text.textContent = remainingText;
+    getSelection().removeAllRanges();
+    let newRange = document.createRange();
+    let newCaretPosition = deletionRange.endOffset - (2 * textToDelete.length);
+    newRange.setStart(text, newCaretPosition);
+    newRange.setEnd(text, newCaretPosition);
+    getSelection().addRange(newRange);
+
+    return true;
 }
