@@ -47,8 +47,10 @@ function shouldHTMLTextBeBolded(html) {
     // For now, mark the entire text as bold only if all parts of it are bold.
     for (var i = 0; i < div.childElementCount; i++) {
         let child = div.children[i];
-        if (lower(child.style.fontWeight) !== "bold" && lower(getComputedStyle(child).fontWeight) !== "bold" && lower(child.tagName) !== "b")
-            return false;
+        if (lower(child.style.fontWeight) !== "bold" && lower(getComputedStyle(child).fontWeight) !== "bold" && lower(child.tagName) !== "b") {
+            if (!child.childElementCount || !shouldHTMLTextBeBolded(child.innerHTML))
+                return false;
+        }
     }
     return !!div.childElementCount;
 }
@@ -59,8 +61,10 @@ function shouldHTMLTextBeItalicized(html) {
     // For now, mark the entire text as bold only if all parts of it are bold.
     for (var i = 0; i < div.childElementCount; i++) {
         let child = div.children[i];
-        if (lower(child.tagName) !== "i")
-            return false;
+        if (lower(child.tagName) !== "i") {
+            if (!child.childElementCount || !shouldHTMLTextBeItalicized(child.innerHTML))
+                return false;
+        }
     }
     return !!div.childElementCount;
 }
@@ -71,8 +75,10 @@ function shouldHTMLTextBeUnderlined(html) {
     // For now, mark the entire text as bold only if all parts of it are bold.
     for (var i = 0; i < div.childElementCount; i++) {
         let child = div.children[i];
-        if (lower(child.tagName) !== "u")
-            return false;
+        if (lower(child.tagName) !== "u" && lower(child.style.textDecoration) !== "underline") {
+            if (!child.childElementCount || !shouldHTMLTextBeUnderlined(child.innerHTML))
+                    return false;
+        }
     }
     return !!div.childElementCount;
 }
