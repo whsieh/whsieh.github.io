@@ -161,7 +161,7 @@ function tryToPerformSmartDelete(deletionRange) {
     if (textToDelete !== "*" && textToDelete !== "_")
         return false;
 
-    let indexOfBeginningMatch = content.lastIndexOf(textToDelete, deletionRange.startOffset - 1);
+    let indexOfBeginningMatch = content.lastIndexOf(textToDelete, deletionRange.startOffset - textToDelete.length - 1);
     if (indexOfBeginningMatch === -1 || indexOfBeginningMatch === deletionRange.startOffset)
         return false;
 
