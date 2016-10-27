@@ -8,15 +8,15 @@
     }
 
     #container {
-        width: calc(100vw - 175px);
+        width: calc(100vw - 225px);
         height: 98vh;
         margin: 0;
         padding: 0;
-        margin-left: 158px;
+        margin-left: 200px;
     }
 
     #panel {
-        width: 150px;
+        width: 200px;
         height: 98vh;
         position: fixed;
         margin: 0;
@@ -51,13 +51,20 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    select {
+    #preventDefaultTypes {
         width: 100%;
         height: 70%;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+        font-size: 12px;
     }
 
     .attribute {
         color: #FF3333;
+    }
+
+    #show-options {
+        font-size: 12px;
     }
 </style>
 <script type="text/javascript">
@@ -94,10 +101,17 @@
         return `plain="${htmlEscapedString(event.dataTransfer.getData('text/plain'))}", HTML=${htmlEscapedString(event.dataTransfer.getData('text/html'))}`;
     }
 
+    function inputTypeToStringForEvent(event) {
+        if (!event.inputType)
+            return "(null)";
+
+        return `"${event.inputType}"`;
+    }
+
     function inputEventToString(event) {
         var result = `[${(Date.now() / 1000).toFixed(3)}] <b>(${event.target.tagName})</b>`;
         if (showInputType.checked)
-            result += `  <span class="attribute"><b>inputType</b></span> "${event.inputType}"`;
+            result += `  <span class="attribute"><b>inputType</b></span> ${inputTypeToStringForEvent(event)}`;
         if (showData.checked)
             result += `  <span class="attribute"><b>data</b></span> ${dataToStringForEvent(event)}`;
         if (showDataTransfer.checked)
@@ -139,14 +153,14 @@
         if (!event.cancelable)
             return false;
 
-        if (document.querySelector("#prevent-everything").selected) {
+        if (document.querySelector("#prevent-everything").checked) {
             event.preventDefault();
             return true;
         }
 
         if (event.inputType) {
             let option = document.querySelector(`#prevent-${event.inputType}`);
-            if (option && option.selected) {
+            if (option && option.checked) {
                 event.preventDefault();
                 return true;
             }
@@ -167,50 +181,50 @@
 
 <body onkeydown=keydown(event)>
 <div id="panel">
-    <p><code>Prevent default</code></p>
-    <select name="preventDefaultTypes" multiple>
-        <option id="prevent-insertText">insertText</option>
-        <option id="prevent-insertReplacementText">insertReplacementText</option>
-        <option id="prevent-insertLineBreak">insertLineBreak</option>
-        <option id="prevent-insertParagraph">insertParagraph</option>
-        <option id="prevent-insertOrderedList">insertOrderedList</option>
-        <option id="prevent-insertUnorderedList">insertUnorderedList</option>
-        <option id="prevent-insertHorizontalRule">insertHorizontalRule</option>
-        <option id="prevent-insertFromYank">insertFromYank</option>
-        <option id="prevent-insertFromDrop">insertFromDrop</option>
-        <option id="prevent-insertFromPaste">insertFromPaste</option>
-        <option id="prevent-insertFromComposition">insertFromComposition</option>
-        <option id="prevent-deleteWordForward">deleteWordForward</option>
-        <option id="prevent-deleteWordBackward">deleteWordBackward</option>
-        <option id="prevent-deleteSoftLineForward">deleteSoftLineForward</option>
-        <option id="prevent-deleteSoftLineBackward">deleteSoftLineBackward</option>
-        <option id="prevent-deleteEntireSoftLine">deleteEntireSoftLine</option>
-        <option id="prevent-deleteHardLineForward">deleteHardLineForward</option>
-        <option id="prevent-deleteHardLineBackward">deleteHardLineBackward</option>
-        <option id="prevent-deleteByComposition">deleteByComposition</option>
-        <option id="prevent-deleteByDrag">deleteByDrag</option>
-        <option id="prevent-deleteByCut">deleteByCut</option>
-        <option id="prevent-deleteContent">deleteContent</option>
-        <option id="prevent-deleteContentBackward">deleteContentBackward</option>
-        <option id="prevent-deleteContentForward">deleteContentForward</option>
-        <option id="prevent-historyUndo">historyUndo</option>
-        <option id="prevent-historyRedo">historyRedo</option>
-        <option id="prevent-insertTranspose">insertTranspose</option>
-        <option id="prevent-formatBold">formatBold</option>
-        <option id="prevent-formatItalic">formatItalic</option>
-        <option id="prevent-formatUnderline">formatUnderline</option>
-        <option id="prevent-formatForecolor">formatForecolor</option>
-        <option id="prevent-formatStrikeThrough">formatStrikeThrough</option>
-        <option id="prevent-formatSuperscript">formatSuperscript</option>
-        <option id="prevent-formatSubscript">formatSubscript</option>
-        <option id="prevent-formatJustifyCenter">formatJustifyCenter</option>
-        <option id="prevent-formatJustifyRight">formatJustifyRight</option>
-        <option id="prevent-formatJustifyLeft">formatJustifyLeft</option>
-        <option id="prevent-formatIndent">formatIndent</option>
-        <option id="prevent-formatOutdent">formatOutdent</option>
-        <option id="prevent-formatRemove">formatRemove</option>
-        <option id="prevent-everything">EVERYTHING!</option>
-    </select>
+    <div id="preventDefaultTypes">
+        <p><code>Prevent default</code></p>
+        <div><input type="checkbox" id="prevent-insertText"><code> insertText</code></input></div>
+        <div><input type="checkbox" id="prevent-insertReplacementText"><code> insertReplacementText</code></input></div>
+        <div><input type="checkbox" id="prevent-insertLineBreak"><code> insertLineBreak</code></input></div>
+        <div><input type="checkbox" id="prevent-insertParagraph"><code> insertParagraph</code></input></div>
+        <div><input type="checkbox" id="prevent-insertOrderedList"><code> insertOrderedList</code></input></div>
+        <div><input type="checkbox" id="prevent-insertUnorderedList"><code> insertUnorderedList</code></input></div>
+        <div><input type="checkbox" id="prevent-insertHorizontalRule"><code> insertHorizontalRule</code></input></div>
+        <div><input type="checkbox" id="prevent-insertFromYank"><code> insertFromYank</code></input></div>
+        <div><input type="checkbox" id="prevent-insertFromDrop"><code> insertFromDrop</code></input></div>
+        <div><input type="checkbox" id="prevent-insertFromPaste"><code> insertFromPaste</code></input></div>
+        <div><input type="checkbox" id="prevent-insertFromComposition"><code> insertFromComposition</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteWordForward"><code> deleteWordForward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteWordBackward"><code> deleteWordBackward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteSoftLineForward"><code> deleteSoftLineForward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteSoftLineBackward"><code> deleteSoftLineBackward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteEntireSoftLine"><code> deleteEntireSoftLine</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteHardLineForward"><code> deleteHardLineForward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteHardLineBackward"><code> deleteHardLineBackward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteByComposition"><code> deleteByComposition</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteByDrag"><code> deleteByDrag</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteByCut"><code> deleteByCut</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteContent"><code> deleteContent</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteContentBackward"><code> deleteContentBackward</code></input></div>
+        <div><input type="checkbox" id="prevent-deleteContentForward"><code> deleteContentForward</code></input></div>
+        <div><input type="checkbox" id="prevent-historyUndo"><code> historyUndo</code></input></div>
+        <div><input type="checkbox" id="prevent-historyRedo"><code> historyRedo</code></input></div>
+        <div><input type="checkbox" id="prevent-insertTranspose"><code> insertTranspose</code></input></div>
+        <div><input type="checkbox" id="prevent-formatBold"><code> formatBold</code></input></div>
+        <div><input type="checkbox" id="prevent-formatItalic"><code> formatItalic</code></input></div>
+        <div><input type="checkbox" id="prevent-formatUnderline"><code> formatUnderline</code></input></div>
+        <div><input type="checkbox" id="prevent-formatForecolor"><code> formatForecolor</code></input></div>
+        <div><input type="checkbox" id="prevent-formatStrikeThrough"><code> formatStrikeThrough</code></input></div>
+        <div><input type="checkbox" id="prevent-formatSuperscript"><code> formatSuperscript</code></input></div>
+        <div><input type="checkbox" id="prevent-formatSubscript"><code> formatSubscript</code></input></div>
+        <div><input type="checkbox" id="prevent-formatJustifyCenter"><code> formatJustifyCenter</code></input></div>
+        <div><input type="checkbox" id="prevent-formatJustifyRight"><code> formatJustifyRight</code></input></div>
+        <div><input type="checkbox" id="prevent-formatJustifyLeft"><code> formatJustifyLeft</code></input></div>
+        <div><input type="checkbox" id="prevent-formatIndent"><code> formatIndent</code></input></div>
+        <div><input type="checkbox" id="prevent-formatOutdent"><code> formatOutdent</code></input></div>
+        <div><input type="checkbox" id="prevent-formatRemove"><code> formatRemove</code></input></div>
+        <div><input type="checkbox" id="prevent-everything"><code> EVERYTHING</code></input></div>
+    </div>
     <div id="show-options">
         <p><code>Log output options</code></p>
         <div><input type="checkbox" id="showInputType" checked><code> inputType</code></input></div>
