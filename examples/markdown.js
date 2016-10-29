@@ -2,12 +2,19 @@
 let stringByInsertingStringAtIndex = (stringToInsert, index, fullString) => fullString.substring(0, index) + stringToInsert + fullString.substring(index);
 let lower = (s) => s ? s.toLowerCase() : null;
 
+// Global state.
+var inputEventsEnabled = true;
+
 function load() {
     editor.addEventListener("beforeinput", handleBeforeInput);
+    toggle.addEventListener("click", toggleInputEventOverrides);
     editor.focus();
 }
 
 function handleBeforeInput(event) {
+    if (!inputEventsEnabled)
+        return;
+
     var shouldPreventDefault = false;
     if (event.inputType === "formatBold") {
         surroundSelectionWithString("**")
@@ -42,16 +49,17 @@ function handleBeforeInput(event) {
     }
 
     if (shouldPreventDefault) {
-        flashMessage(`Intercepted "${event.inputType}"`);
+        flashMessage(`Intercepted "${event.inputType}"`, "#00C853");
         event.preventDefault();
     }
 }
 
-function flashMessage(message) {
+function flashMessage(message, color) {
     let div = document.createElement("div");
     let code = document.createElement("code");
     code.textContent = message;
     div.appendChild(code);
+    div.style.color = color;
     div.classList.add("flash");
     div.addEventListener("transitionend", function() {
         div.remove();
@@ -136,6 +144,15 @@ function surroundSelectionWithString(s) {
     // Then, reset the selection to the the contents of the surrounded text.
     getSelection().removeAllRanges();
     let newRange = document.createRange();
+
+    // HACK If the caret is at the beginning of a line in the editor, the start and end nodes will be the <div>, since
+    // the text node did not exist before inserting the text content. We adjust the start and end nodes here to use the
+    // first text node instead of the parent div.
+    if (start.nodeName == "DIV")
+        start = start.childNodes[0];
+    if (end.nodeName == "DIV")
+        end = end.childNodes[0];
+
     newRange.setStart(start, startOffset + s.length);
     newRange.setEnd(end, endOffset + (start == end ? s.length : 0));
     getSelection().addRange(newRange);
@@ -181,4 +198,11 @@ function tryToPerformSmartDelete(deletionRange) {
     getSelection().addRange(newRange);
 
     return true;
+}
+
+function toggleInputEventOverrides() {
+    toggle.classList.remove(inputEventsEnabled ? "on" : "off");
+    toggle.classList.add(inputEventsEnabled ? "off" : "on");
+    inputEventsEnabled = !inputEventsEnabled;
+    flashMessage(`${inputEventsEnabled ? "Enabled" : "Disabled"} input events`, inputEventsEnabled ? "#00C853" : "#F44336");
 }

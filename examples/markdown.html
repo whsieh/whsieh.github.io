@@ -21,10 +21,9 @@
     }
 
     .flash {
-        color: green;
         position: absolute;
         bottom: 100px;
-        right: 100px;
+        left: 100px;
         font-size: 20px;
         transition: 2s cubic-bezier(0.5, 0, 0, 0);
     }
@@ -33,11 +32,30 @@
         transform: translateY(-25px);
         opacity: 0;
     }
+
+    #toggle {
+        border-radius: 50%;
+        position: fixed;
+        right: 13px;
+        top: 13px;
+        width: 28px;
+        height: 28px;
+        transition: 0.1s ease-in-out;
+    }
+
+    .on {
+        background-color: #00C853;
+    }
+
+    .off {
+        background-color: #F44336;
+    }
     </style>
     <script src="markdown.js"></script>
 </head>
 
 <body onload=load()>
+<div id="toggle" class="on"></div>
 <code>
 <div id="editor" contenteditable>
 # This is a markdown editor!
