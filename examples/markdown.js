@@ -49,15 +49,22 @@ function handleBeforeInput(event) {
     }
 
     if (event.inputType === "insertFromPaste" || event.inputType == "insertFromDrop") {
+        let shouldSelectAll = event.inputType == "insertFromDrop";
         let htmlText = event.dataTransfer.getData("text/html");
-        let surroundingText = "";
-        if (shouldHTMLTextBeBolded(htmlText))
-            surroundingText = "**";
-        else if (shouldHTMLTextBeItalicized(htmlText))
-            surroundingText = "*";
-        else if (shouldHTMLTextBeUnderlined(htmlText))
-            surroundingText = "__";
-        insertTextAtSelection(`${surroundingText}${event.dataTransfer.getData("text/plain")}${surroundingText}`, event.inputType == "insertFromDrop");
+        if (shouldHTMLTextBeInsertedAsUnorderedList(htmlText))
+            insertMarkdownListWithLinePrefix(htmlText, shouldSelectAll, (i) => "- ");
+        else if (shouldHTMLTextBeInsertedAsOrderedList(htmlText))
+            insertMarkdownListWithLinePrefix(htmlText, shouldSelectAll, (i) => `${i + 1}. `);
+        else {
+            let surroundingText = "";
+            if (shouldHTMLTextBeBolded(htmlText))
+                surroundingText = "**";
+            else if (shouldHTMLTextBeItalicized(htmlText))
+                surroundingText = "*";
+            else if (shouldHTMLTextBeUnderlined(htmlText))
+                surroundingText = "__";
+            insertTextAtSelection(`${surroundingText}${event.dataTransfer.getData("text/plain")}${surroundingText}`, shouldSelectAll);
+        }
         shouldPreventDefault = true;
     }
 
@@ -85,7 +92,7 @@ function flashMessage(message, color) {
         div.classList.add("flash-begin");
     }, 100);
 
-    editor.appendChild(div);
+    document.body.appendChild(div);
 }
 
 function shouldHTMLTextBeBolded(html) {
@@ -130,6 +137,65 @@ function shouldHTMLTextBeUnderlined(html) {
     return !!div.childElementCount;
 }
 
+function shouldHTMLTextBeInsertedAsUnorderedList(html) {
+    let div = document.createElement("div");
+    div.innerHTML = html;
+    return div.childElementCount == 1 && div.children[0].nodeName === "UL";
+}
+
+function shouldHTMLTextBeInsertedAsOrderedList(html) {
+    let div = document.createElement("div");
+    div.innerHTML = html;
+    return div.childElementCount == 1 && div.children[0].nodeName === "OL";
+}
+
+function splitHTMLTextByListItemNodes(html) {
+    let div = document.createElement("div");
+    div.innerHTML = html;
+    let list = div.children[0];
+    let result = [];
+    for (let i = 0; i < list.childElementCount; i++) {
+        let child = list.children[i];
+        result.push(child.textContent);
+    }
+    return result;
+}
+
+function insertMarkdownListWithLinePrefix(htmlText, andSelectAll, getPrefixForLineAtIndex) {
+    getSelection().deleteFromDocument();
+    let lines = splitHTMLTextByListItemNodes(htmlText);
+    if (!lines.length)
+        return;
+
+    let range = getSelection().getRangeAt(0)
+        , start = range.startContainer
+        , end = range.endContainer;
+
+    let firstDiv = null
+        , lastDiv = null;
+    for (var i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        let div = document.createElement("div");
+        div.appendChild(document.createTextNode(getPrefixForLineAtIndex(i) + line));
+        editor.appendChild(div);
+        lastDiv = div;
+        if (!firstDiv)
+            firstDiv = div;
+    }
+
+    if (!firstDiv.previousSibling.textContent.length)
+        firstDiv.previousSibling.remove();
+
+    getSelection().removeAllRanges();
+    let newRange = document.createRange();
+    if (andSelectAll)
+        newRange.setStart(firstDiv, 0);
+    else
+        newRange.setStart(lastDiv, 1);
+    newRange.setEnd(lastDiv, 1);
+    getSelection().addRange(newRange);
+}
+
 function tryToPrependTextAtSelection(s) {
     let range = getSelection().getRangeAt(0)
         , start = range.startContainer
@@ -139,12 +205,12 @@ function tryToPrependTextAtSelection(s) {
 
     if (start != end) {
         // FIXME: Support prepending for multi-line selections.
-        return;
+        return false;
     }
 
     if (start.nodeName == "DIV") {
         insertTextAtSelection(s, false);
-        return;
+        return true;
     }
 
     start.textContent = stringByInsertingStringAtIndex(s, 0, start.textContent);
@@ -153,6 +219,7 @@ function tryToPrependTextAtSelection(s) {
     newRange.setStart(start, startOffset + s.length);
     newRange.setEnd(end, endOffset + (start == end ? s.length : 0));
     getSelection().addRange(newRange);
+    return true;
 }
 
 function insertTextAtSelection(s, andSelectAll) {
