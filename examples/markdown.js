@@ -31,6 +31,23 @@ function handleBeforeInput(event) {
         shouldPreventDefault = true;
     }
 
+    if (event.inputType === "formatJustifyLeft" || event.inputType === "formatJustifyCenter" || event.inputType === "formatJustifyRight") {
+        // It doesn't make sense to align markdown content to the left/center/right.
+        shouldPreventDefault = true;
+    }
+
+    if (event.inputType === "insertOrderedList") {
+        // FIXME: We should inspect the selection here and insert "2.", "3.", etc. if the selection already succeeds an
+        // ordered list item.
+        tryToPrependTextAtSelection("1. ");
+        shouldPreventDefault = true;
+    }
+
+    if (event.inputType === "insertUnorderedList") {
+        tryToPrependTextAtSelection("- ");
+        shouldPreventDefault = true;
+    }
+
     if (event.inputType === "insertFromPaste" || event.inputType == "insertFromDrop") {
         let htmlText = event.dataTransfer.getData("text/html");
         let surroundingText = "";
@@ -113,7 +130,32 @@ function shouldHTMLTextBeUnderlined(html) {
     return !!div.childElementCount;
 }
 
-function insertTextAtSelection(s, selectAll) {
+function tryToPrependTextAtSelection(s) {
+    let range = getSelection().getRangeAt(0)
+        , start = range.startContainer
+        , end = range.endContainer
+        , startOffset = range.startOffset
+        , endOffset = range.endOffset;
+
+    if (start != end) {
+        // FIXME: Support prepending for multi-line selections.
+        return;
+    }
+
+    if (start.nodeName == "DIV") {
+        insertTextAtSelection(s, false);
+        return;
+    }
+
+    start.textContent = stringByInsertingStringAtIndex(s, 0, start.textContent);
+    getSelection().removeAllRanges();
+    let newRange = document.createRange();
+    newRange.setStart(start, startOffset + s.length);
+    newRange.setEnd(end, endOffset + (start == end ? s.length : 0));
+    getSelection().addRange(newRange);
+}
+
+function insertTextAtSelection(s, andSelectAll) {
     let currentRange = getSelection().getRangeAt(0);
     getSelection().deleteFromDocument();
     let range = getSelection().getRangeAt(0);
@@ -122,7 +164,7 @@ function insertTextAtSelection(s, selectAll) {
 
     getSelection().removeAllRanges();
     let newRange = document.createRange();
-    if (selectAll)
+    if (andSelectAll)
         newRange.setStart(textNode, 0);
     else
         newRange.setStart(textNode, s.length);
