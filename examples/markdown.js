@@ -68,9 +68,11 @@ function handleBeforeInput(event) {
         shouldPreventDefault = true;
     }
 
-    if (event.inputType === "deleteContentBackward") {
+    if (event.inputType === "deleteContentBackward")
         shouldPreventDefault = tryToPerformSmartDelete(event.getTargetRanges()[0]);
-    }
+
+    if (event.inputType === "insertParagraph")
+        shouldPreventDefault = tryToPerformSmartNewline();
 
     if (shouldPreventDefault) {
         flashMessage(`Intercepted "${event.inputType}"`, "#00C853");
@@ -93,6 +95,40 @@ function flashMessage(message, color) {
     }, 100);
 
     document.body.appendChild(div);
+}
+
+function tryToPerformSmartNewline() {
+    let range = getSelection().getRangeAt(0)
+        , start = range.startContainer
+        , end = range.endContainer;
+
+    if (start != end)
+        return false;
+
+    var prefixToInsert = null;
+    if (start.textContent.indexOf("-") == 0)
+        prefixToInsert = "-\u00A0";
+    else {
+        let searchResult = start.textContent.match(/^([0-9]+)\./);
+        if (searchResult && searchResult.length > 1)
+             prefixToInsert = `${parseInt(searchResult[1]) + 1}.\u00A0`;
+    }
+
+    if (!prefixToInsert)
+        return false;
+
+    getSelection().deleteFromDocument();
+    let div = document.createElement("div");
+    let text = document.createTextNode(prefixToInsert);
+    div.appendChild(text);
+    range.insertNode(div);
+
+    getSelection().removeAllRanges();
+    let newRange = document.createRange();
+    newRange.setStart(text, text.textContent.length);
+    newRange.setEnd(text, text.textContent.length);
+    getSelection().addRange(newRange);
+    return true;
 }
 
 function shouldHTMLTextBeBolded(html) {
@@ -171,20 +207,17 @@ function insertMarkdownListWithLinePrefix(htmlText, andSelectAll, getPrefixForLi
         , start = range.startContainer
         , end = range.endContainer;
 
-    let firstDiv = null
-        , lastDiv = null;
-    for (var i = 0; i < lines.length; i++) {
+    var firstDiv = null;
+    var lastDiv = null;
+    for (var i = lines.length - 1; i >= 0; i--) {
         let line = lines[i];
         let div = document.createElement("div");
         div.appendChild(document.createTextNode(getPrefixForLineAtIndex(i) + line));
-        editor.appendChild(div);
-        lastDiv = div;
-        if (!firstDiv)
-            firstDiv = div;
+        range.insertNode(div);
+        firstDiv = div;
+        if (!lastDiv)
+            lastDiv = div;
     }
-
-    if (!firstDiv.previousSibling.textContent.length)
-        firstDiv.previousSibling.remove();
 
     getSelection().removeAllRanges();
     let newRange = document.createRange();
