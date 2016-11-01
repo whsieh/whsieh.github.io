@@ -9,6 +9,13 @@
         margin-left: 10vw;
     }
     </style>
+    <script>
+    let write = s => output.innerHTML += s + "<br>";
+    function changed()
+    {
+        write(`Selected state: [ ${first.selected} ${second.selected} ${third.selected} ]`);
+    }
+    </script>
 </head>
 
 <body>
@@ -58,12 +65,14 @@
 </select>
 
 <form>
-    <select name="ios[]" multiple size="11">
-        <option>iPhone 6s</option>
-        <option>iPhone 6</option>
-        <option>iPhone 5s</option>
+    <select name="ios[]" multiple size="11" onchange=changed()>
+        <option id="first">First</option>
+        <option id="second">Second</option>
+        <option id="third">Third</option>
     </select>
 </form>
+
+<div id="output"></div>
 </body>
 
 </html>
