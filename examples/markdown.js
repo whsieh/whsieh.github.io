@@ -39,12 +39,12 @@ function handleBeforeInput(event) {
     if (event.inputType === "insertOrderedList") {
         // FIXME: We should inspect the selection here and insert "2.", "3.", etc. if the selection already succeeds an
         // ordered list item.
-        tryToPrependTextAtSelection("1. ");
+        prependTextAtSelection((i) => (i + 1) + ". ");
         shouldPreventDefault = true;
     }
 
     if (event.inputType === "insertUnorderedList") {
-        tryToPrependTextAtSelection("- ");
+        prependTextAtSelection((i) => "- ");
         shouldPreventDefault = true;
     }
 
@@ -229,30 +229,52 @@ function insertMarkdownListWithLinePrefix(htmlText, andSelectAll, getPrefixForLi
     getSelection().addRange(newRange);
 }
 
-function tryToPrependTextAtSelection(s) {
+function prependTextAtSelection(textAtIndex) {
     let range = getSelection().getRangeAt(0)
         , start = range.startContainer
         , end = range.endContainer
         , startOffset = range.startOffset
         , endOffset = range.endOffset;
 
-    if (start != end) {
-        // FIXME: Support prepending for multi-line selections.
-        return false;
+    if (start == end) {
+        let text = textAtIndex(0);
+        if (start.nodeName == "DIV")
+            insertTextAtSelection(text, false);
+        else {
+            start.textContent = stringByInsertingStringAtIndex(text, 0, start.textContent);
+            getSelection().removeAllRanges();
+            let newRange = document.createRange();
+            newRange.setStart(start, startOffset + text.length);
+            newRange.setEnd(end, endOffset + (start == end ? text.length : 0));
+            getSelection().addRange(newRange);
+        }
+        return;
     }
 
-    if (start.nodeName == "DIV") {
-        insertTextAtSelection(s, false);
-        return true;
-    }
+    // The selection spans multiple nodes.
+    // First, find all nodes between the start and end nodes (FIXME: this is an insane hack. We ought to take elements
+    // at different heights in the DOM tree into account here).
+    let startDiv = start.parentElement == editor ? start : start.parentElement;
+    let endDiv = end.parentElement == editor ? end : end.parentElement;
+    if (startDiv.parentElement != endDiv.parentElement)
+        return;
 
-    start.textContent = stringByInsertingStringAtIndex(s, 0, start.textContent);
-    getSelection().removeAllRanges();
+    let children = [];
+    let currentChild = startDiv;
+    for (let currentChild = startDiv; currentChild && currentChild != endDiv; currentChild = currentChild.nextElementSibling)
+        children.push(currentChild);
+    children.push(endDiv);
+
+    // Then, prepend text to each child element.
+    for (let i = 0; i < children.length; i++)
+        children[i].textContent = textAtIndex(i) + children[i].textContent;
+
+    // Lastly, adjust the selection so that all affected nodes are selected.
     let newRange = document.createRange();
-    newRange.setStart(start, startOffset + s.length);
-    newRange.setEnd(end, endOffset + (start == end ? s.length : 0));
+    newRange.setStart(children[0], 0);
+    newRange.setEnd(children[children.length - 1], 1);
+    getSelection().removeAllRanges();
     getSelection().addRange(newRange);
-    return true;
 }
 
 function insertTextAtSelection(s, andSelectAll) {
