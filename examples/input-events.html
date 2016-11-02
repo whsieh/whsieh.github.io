@@ -26,6 +26,10 @@
         overflow: hidden;
     }
 
+    .wrapper {
+        padding: 5px;
+    }
+
     #rich, #input-console, #before-input-console {
         width: 100%;
         border: 1px #CCCCCC solid;
@@ -37,12 +41,15 @@
         height: 20%;
     }
 
+    #rich:focus {
+        outline-width: 0;
+    }
+
     textarea {
         width: 100%;
         margin: 0;
         padding: 0;
         height: 10%;
-        margin-top: 1%;
     }
 
     #input-console, #before-input-console {
@@ -237,8 +244,8 @@
     </div>
 </div>
 <div id="container">
-    <div id="rich" contenteditable></div>
-    <textarea id="plain"></textarea>
+    <div class="wrapper"><div id="rich" contenteditable></div></div>
+    <div class="wrapper"><textarea id="plain"></textarea></div>
     <div id="before-input-console"></div>
     <div id="input-console"></div>
 </div>
