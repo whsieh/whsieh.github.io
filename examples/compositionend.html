@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input id="plain"></input>
+    <div id="rich" contenteditable style="border: 1px dashed"></div>
+    <div id="output"></div>
+    <script type="text/javascript">
+        let write = s => output.innerHTML += `${s}<br>`;
+        plain.addEventListener("compositionend", logCompositionEnd);
+        rich.addEventListener("compositionend", logCompositionEnd);
+        plain.focus();
+        function logCompositionEnd(event)
+        {
+            write(`PASS: Dispatched compositionend on &lt;${event.target.tagName} id="${event.target.id}"&gt;`);
+        }
+    </script>
+</body>
+</html>
