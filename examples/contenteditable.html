@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .editable {
+            width: 300px;
+            height: 50px;
+            border: dashed 1px;
+            margin: 25px auto;
+        }
+    </style>
+</head>
+<body>
+
+<code>spellcheck disabled</code>
+<div class="editable" contenteditable spellcheck="false"></div>
+<div><input class="editable" spellcheck="false"></input></div>
+
+<code>autocomplete disabled</code>
+<div class="editable" contenteditable autocomplete="off"></div>
+<div><input class="editable" autocomplete="off"></input></div>
+
+<code>autocapitalize disabled</code>
+<div class="editable" contenteditable autocapitalize="off"></div>
+<div><input class="editable" autocapitalize="off"></input></div>
+
+<code>autocorrect disabled</code>
+<div class="editable" contenteditable autocorrect="off"></div>
+<div><input class="editable" autocorrect="off"></input></div>
+
+<code>default contenteditable</code>
+<div class="editable" contenteditable></div>
+<div><input class="editable"></input></div>
+
+</body>
+</html>
