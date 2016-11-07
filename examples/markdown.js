@@ -3,15 +3,21 @@ let stringByInsertingStringAtIndex = (stringToInsert, index, fullString) => full
 let lower = (s) => s ? s.toLowerCase() : null;
 
 // Global state.
+let markdownOutputUpdateDelay = 500;
 var inputEventsEnabled = true;
+var updateMarkdownOutputTaskID = 0;
+var lastMarkdownOutputUpdateTime = 0;
 
 function load() {
     editor.addEventListener("beforeinput", handleBeforeInput);
     toggle.addEventListener("click", toggleInputEventOverrides);
     editor.focus();
+
+    updateMarkdownOutput();
 }
 
 function handleBeforeInput(event) {
+    scheduleMarkdownOutputUpdate();
     if (!inputEventsEnabled)
         return;
 
@@ -27,7 +33,7 @@ function handleBeforeInput(event) {
     }
 
     if (event.inputType === "formatUnderline") {
-        surroundSelectionWithString("__");
+        surroundSelectionWithString("_");
         shouldPreventDefault = true;
     }
 
@@ -62,7 +68,7 @@ function handleBeforeInput(event) {
             else if (shouldHTMLTextBeItalicized(htmlText))
                 surroundingText = "*";
             else if (shouldHTMLTextBeUnderlined(htmlText))
-                surroundingText = "__";
+                surroundingText = "_";
             insertTextAtSelection(`${surroundingText}${event.dataTransfer.getData("text/plain")}${surroundingText}`, shouldSelectAll);
         }
         shouldPreventDefault = true;
@@ -369,4 +375,24 @@ function toggleInputEventOverrides() {
     toggle.classList.add(inputEventsEnabled ? "off" : "on");
     inputEventsEnabled = !inputEventsEnabled;
     flashMessage(`${inputEventsEnabled ? "Enabled" : "Disabled"} input events`, inputEventsEnabled ? "#00C853" : "#F44336");
+}
+
+function scheduleMarkdownOutputUpdate() {
+    let currentTime = new Date().getTime();
+    if (updateMarkdownOutputTaskID) {
+        clearTimeout(updateMarkdownOutputTaskID);
+        updateMarkdownOutputTaskID = 0;
+    }
+
+    if (currentTime - lastMarkdownOutputUpdateTime > markdownOutputUpdateDelay)
+        updateMarkdownOutputTaskID = setTimeout(updateMarkdownOutput, 0);
+    else
+        updateMarkdownOutputTaskID = setTimeout(updateMarkdownOutput, markdownOutputUpdateDelay);
+}
+
+function updateMarkdownOutput() {
+    // FIXME: This awful whitespace hackery should not be necessary.
+    let source = editor.innerText.replace(/\u00A0/g, " ").replace(/\n/g, "\n\n").replace(/\n+$/, "");
+    output.innerHTML = micromarkdown.parse(source).replace(/<br\/><br\/>/g, "</br>");
+    lastMarkdownOutputUpdateTime = new Date().getTime();
 }

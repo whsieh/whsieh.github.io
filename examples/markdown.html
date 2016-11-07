@@ -1,19 +1,49 @@
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <style>
     body {
         margin: 50px;
         background-color: #F8F8F8;
+        overflow: hidden;
+    }
+
+    #editor-label {
+        position: absolute;
+        right: 75px;
+        top: calc(50% - 40px);
+        color: gray;
+        font-size: 16px;
+    }
+
+    #output-label {
+        position: absolute;
+        right: 75px;
+        top: calc(100% - 85px);
+        color: gray;
+        font-size: 16px;
+    }
+
+    #editor, #output {
+        padding: 50px;
+        width: calc(100% - 100px);
+        user-select: none;
+        background-color: white;
+        overflow: auto;
+        border-right: 1px solid #DFDFDF;
+        border-bottom: 1px solid #DFDFDF;
     }
 
     #editor {
-        padding: 50px;
-        width: calc(100% - 100px);
-        height: calc(100% - 100px);
-        user-select: none;
+        height: calc(50% - 100px);
         font-size: 20px;
-        background-color: white;
-        box-shadow: 1px 1px 1px 1px #DDDDDD;
+    }
+
+    #output {
+        height: calc(50% - 125px);
+        font-size: 16px;
+        margin-top: 25px;
+        font-family: "Open Sans", sans-serif;
     }
 
     #editor:focus {
@@ -52,6 +82,7 @@
     }
     </style>
     <script src="markdown.js"></script>
+    <script src="lib/micro-markdown.js"></script>
 </head>
 
 <body onload=load()>
@@ -59,8 +90,11 @@
 <code>
 <div id="editor" contenteditable>
     <div>This is a markdown editor!</div>
-    <div>Try bolding, italicizing or underlining</div>
+    <div>Try bolding, italicizing, or underlining.</div>
 </div>
 </code>
+<div id="output"></div>
+<div id="editor-label"><code>SOURCE</code></div>
+<div id="output-label"><code>OUTPUT</code></div>
 </body>
 </html>
