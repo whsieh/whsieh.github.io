@@ -7,13 +7,38 @@ let markdownOutputUpdateDelay = 500;
 var inputEventsEnabled = true;
 var updateMarkdownOutputTaskID = 0;
 var lastMarkdownOutputUpdateTime = 0;
+var isOutputAreaExpanded = true;
 
 function load() {
     editor.addEventListener("beforeinput", handleBeforeInput);
     toggle.addEventListener("click", toggleInputEventOverrides);
+    outputToggle.addEventListener("click", toggleOutputArea);
     editor.focus();
 
     updateMarkdownOutput();
+}
+
+function toggleOutputArea() {
+    if (isOutputAreaExpanded) {
+        editor.style.height = "calc(100% - 155px)";
+        output.style.height = "0px";
+        output.style.paddingTop = "0px";
+        output.style.paddingBottom = "0px";
+        output.style.color = "white";
+        output.style.marginTop = "55px";
+        editorLabel.style.top = "calc(100% - 145px)";
+        outputToggle.innerHTML = "<code>+ OUTPUT</code>"
+    } else {
+        editor.style.height = "calc(50% - 100px)";
+        output.style.height = "calc(50% - 125px)";
+        output.style.paddingTop = "50px";
+        output.style.paddingBottom = "50px";
+        output.style.color = "black";
+        output.style.marginTop = "25px";
+        editorLabel.style.top = "calc(50% - 40px)";
+        outputToggle.innerHTML = "<code>- OUTPUT</code>"
+    }
+    isOutputAreaExpanded = !isOutputAreaExpanded;
 }
 
 function handleBeforeInput(event) {

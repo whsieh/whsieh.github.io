@@ -8,20 +8,25 @@
         overflow: hidden;
     }
 
-    #editor-label {
+    #editorLabel {
         position: absolute;
         right: 75px;
         top: calc(50% - 40px);
         color: gray;
         font-size: 16px;
+        transition: 0.25s ease-in-out;
+        -webkit-user-select: none;
     }
 
-    #output-label {
+    #outputToggle {
         position: absolute;
         right: 75px;
         top: calc(100% - 85px);
         color: gray;
         font-size: 16px;
+        cursor: pointer;
+        transition: 0.25s ease-in-out;
+        -webkit-user-select: none;
     }
 
     #editor, #output {
@@ -32,6 +37,7 @@
         overflow: auto;
         border-right: 1px solid #DFDFDF;
         border-bottom: 1px solid #DFDFDF;
+        transition: 0.25s ease-in-out;
     }
 
     #editor {
@@ -94,7 +100,7 @@
 </div>
 </code>
 <div id="output"></div>
-<div id="editor-label"><code>SOURCE</code></div>
-<div id="output-label"><code>OUTPUT</code></div>
+<div id="editorLabel"><code>SOURCE</code></div>
+<div id="outputToggle"><code>- OUTPUT</code></div>
 </body>
 </html>
