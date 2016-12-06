@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+                scroll-snap-type: y mandatory;
+                -webkit-scroll-snap-type: mandatory;
+                scroll-padding: 100px;
+            }
+
+            ::-webkit-scrollbar {
+                /*display: none;*/
+            }
+
+            .colorBox {
+                height: 100vh;
+                width: 100vw;
+                float: left;
+                scroll-snap-align: center;
+                -webkit-scroll-snap-coordinate: 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="background-color: red;" class="colorBox"></div>
+        <div style="background-color: green;" class="colorBox"></div>
+        <div style="background-color: blue;" class="colorBox"></div>
+        <div style="background-color: aqua;" class="colorBox"></div>
+        <div style="background-color: yellow;" class="colorBox"></div>
+        <div style="background-color: fuchsia;" class="colorBox"></div>
+    </body>
+</html>
