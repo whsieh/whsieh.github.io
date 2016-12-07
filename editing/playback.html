@@ -6,16 +6,17 @@ body {
 }
 
 #overlay {
-    width: 320px;
+    width: 300px;
     height: calc(100% - 32px);
     position: fixed;
     right: 16px;
     top: 16px;
     background-color: rgba(255, 255, 255, 0.75);
+    transition: 0.25s ease-in-out;
 }
 
 #updateInfoPanel {
-    height: calc(90% - 20px);
+    height: calc(90% - 30px);
     overflow: scroll;
     white-space: nowrap;
     padding: 10px;
@@ -42,7 +43,7 @@ details {
 }
 
 #updateMarker {
-    width: 50%;
+    width: 80%;
     margin: 20px 0;
     border-top: 1px red dashed;
 }
@@ -90,6 +91,10 @@ summary {
 a:visited, a:link {
     text-decoration: none;
     color: red;
+}
+
+#toggleOverlayButton {
+    margin-top: 10px;
 }
 
 #upload {
@@ -195,9 +200,17 @@ window.onload = () => {
             if (0 <= currentIndex && currentIndex <= numberOfUpdates) {
                 let currentUpdateDetails = detailsElementAtIndex(currentIndex);
                 updateInfoPanel.insertBefore(updateMarker, currentUpdateDetails);
-                if (updateMarker.offsetTop < updateInfoPanel.scrollTop
-                    || updateInfoPanel.scrollTop + updateInfoPanel.clientHeight < updateMarker.offsetTop)
+                if (updateMarker.offsetTop < updateInfoPanel.scrollTop || updateInfoPanel.scrollTop + updateInfoPanel.clientHeight < updateMarker.offsetTop)
                 updateMarker.scrollIntoView();
+            }
+        }
+
+        function openAllDetailsUnderElement(element) {
+            for (let child of Array.from(element.children)) {
+                if (child.tagName === "DETAILS")
+                    child.open = true;
+
+                openAllDetailsUnderElement(child);
             }
         }
 
@@ -228,6 +241,9 @@ window.onload = () => {
                     <button disabled id="previousButton">&lt;</button><button disabled id="nextButton">&gt;</button>
                 </div>
                 <div id="progressLabel">-/-</div>
+                <div>
+                    <button id="toggleOverlayButton">Toggle overlay</button>
+                </div>
             </div>
         </code>`;
         document.body.appendChild(overlay);
@@ -245,6 +261,12 @@ window.onload = () => {
             summary.insertBefore(indexElement, summary.childNodes[0]);
             detailsElement.id = `updateInfo-${index}`;
             detailsElement.classList.add("updateInfo");
+            detailsElement.addEventListener("click", (event) => {
+                if (event.altKey && !detailsElement.open)
+                    openAllDetailsUnderElement(detailsElement);
+
+                EditingHistory.context.applyCurrentSelectionState(getSelection());
+            });
             updateInfoPanel.append(detailsElement);
         });
         let updateMarker = document.createElement("div");
@@ -261,6 +283,18 @@ window.onload = () => {
             EditingHistory.context.previous();
             EditingHistory.context.applyCurrentSelectionState(getSelection());
             updateOverlay();
+        });
+
+        let isOverlayExpanded = false;
+        toggleOverlayButton.addEventListener("click", () => {
+            if (isOverlayExpanded) {
+                overlay.style.width = "300px";
+                toggleOverlayButton.value = "Expand overlay";
+            } else {
+                overlay.style.width = "50%";
+                toggleOverlayButton.value = "Collapse overlay";
+            }
+            isOverlayExpanded = !isOverlayExpanded;
         });
 
         document.addEventListener("keydown", event => {
