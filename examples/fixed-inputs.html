@@ -1,0 +1,66 @@
+<html>
+<meta name="viewport" content="width=device-width">
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .floating {
+            position: fixed;
+            background-color: red;
+            opacity: 0.25;
+            width: 100px;
+            height: 100px;
+        }
+
+        input {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+        }
+
+        #content {
+            height: 500vh;
+            background-image: -webkit-gradient(
+                linear,
+                left top,
+                left bottom,
+                color-stop(0, #888888),
+                color-stop(1, #FFFFFF)
+            );
+        }
+
+        #top-div {
+            top: 0;
+            left: calc(50% - 50px);
+        }
+
+        #left-div {
+            top: calc(50% - 50px);
+            left: 0;
+        }
+
+        #right-div {
+            top: calc(50% - 50px);
+            right: 0;
+        }
+
+        #bottom-div {
+            bottom: 0;
+            left: calc(50% - 50px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="top-div" class="floating"><input id="top-input"></input></div>
+    <div id="left-div" class="floating"><input id="left-input"></input></div>
+    <div id="right-div" class="floating"><input id="right-input"></input></div>
+    <div id="bottom-div" class="floating"><input id="bottom-input"></input></div>
+    <div id="content"></div>
+</body>
+
+</html>
