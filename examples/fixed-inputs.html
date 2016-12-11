@@ -15,11 +15,19 @@
         }
 
         input {
-            width: 80px;
-            height: 80px;
+            width: 100%;
+            height: 50px;
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 0;
+            left: 0;
+        }
+
+        p {
+            width: 100%;
+            height: 50px;
+            position: absolute;
+            top: 50px;
+            left: 0;
         }
 
         #content {
@@ -56,10 +64,10 @@
 </head>
 
 <body>
-    <div id="top-div" class="floating"><input id="top-input"></input></div>
-    <div id="left-div" class="floating"><input id="left-input"></input></div>
-    <div id="right-div" class="floating"><input id="right-input"></input></div>
-    <div id="bottom-div" class="floating"><input id="bottom-input"></input></div>
+    <div id="top-div" class="floating"><input id="top-input"></input><p>top</p></div>
+    <div id="left-div" class="floating"><input id="left-input"></input><p>left</p></div>
+    <div id="right-div" class="floating"><input id="right-input"></input><p>right</p></div>
+    <div id="bottom-div" class="floating"><input id="bottom-input"></input><p>bottom</p></div>
     <div id="content"></div>
 </body>
 
