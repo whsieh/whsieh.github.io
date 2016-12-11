@@ -9,9 +9,8 @@
         .floating {
             position: fixed;
             background-color: red;
-            opacity: 0.25;
-            width: 100px;
-            height: 70px;
+            width: 150px;
+            height: 150px;
             text-align: center;
         }
 
@@ -19,23 +18,14 @@
             width: 100%;
             height: 50px;
             position: absolute;
-            top: 0;
             left: 0;
-        }
-
-        .floating > div {
-            width: 100%;
-            height: 20px;
-            position: absolute;
-            top: 50px;
-            left: 0;
-            z-index: 1;
+            bottom: 0;
         }
 
         .absolute-input {
             left: calc(50% - 50px);
             position: absolute;
-            width: 100px;
+            width: 150px;
             height: 50px;
         }
 
@@ -89,10 +79,10 @@
 </head>
 
 <body>
-    <div id="top-div" class="floating"><input id="top-input"></input><div>top</div></div>
-    <div id="left-div" class="floating"><input id="left-input"></input><div>left</div></div>
-    <div id="right-div" class="floating"><input id="right-input"></input><div>right</div></div>
-    <div id="bottom-div" class="floating"><input id="bottom-input"></input><div>bottom</div></div>
+    <div id="top-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="top-input"></input></div>
+    <div id="left-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="left-input"></input></div>
+    <div id="right-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="right-input"></input></div>
+    <div id="bottom-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="bottom-input"></input></div>
     <div id="content">
         <input id="absolute-input-1" class="absolute-input"></input>
         <input id="absolute-input-2" class="absolute-input"></input>
