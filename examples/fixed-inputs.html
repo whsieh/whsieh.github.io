@@ -11,10 +11,11 @@
             background-color: red;
             opacity: 0.25;
             width: 100px;
-            height: 100px;
+            height: 70px;
+            text-align: center;
         }
 
-        input {
+        .floating > input {
             width: 100%;
             height: 50px;
             position: absolute;
@@ -22,12 +23,36 @@
             left: 0;
         }
 
-        p {
+        .floating > div {
             width: 100%;
-            height: 50px;
+            height: 20px;
             position: absolute;
             top: 50px;
             left: 0;
+            z-index: 1;
+        }
+
+        .absolute-input {
+            left: calc(50% - 50px);
+            position: absolute;
+            width: 100px;
+            height: 50px;
+        }
+
+        #absolute-input-1 {
+            top: 50%;
+        }
+
+        #absolute-input-2 {
+            top: 150%;
+        }
+
+        #absolute-input-3 {
+            top: 250%;
+        }
+
+        #absolute-input-4 {
+            top: 350%;
         }
 
         #content {
@@ -64,11 +89,16 @@
 </head>
 
 <body>
-    <div id="top-div" class="floating"><input id="top-input"></input><p>top</p></div>
-    <div id="left-div" class="floating"><input id="left-input"></input><p>left</p></div>
-    <div id="right-div" class="floating"><input id="right-input"></input><p>right</p></div>
-    <div id="bottom-div" class="floating"><input id="bottom-input"></input><p>bottom</p></div>
-    <div id="content"></div>
+    <div id="top-div" class="floating"><input id="top-input"></input><div>top</div></div>
+    <div id="left-div" class="floating"><input id="left-input"></input><div>left</div></div>
+    <div id="right-div" class="floating"><input id="right-input"></input><div>right</div></div>
+    <div id="bottom-div" class="floating"><input id="bottom-input"></input><div>bottom</div></div>
+    <div id="content">
+        <input id="absolute-input-1" class="absolute-input"></input>
+        <input id="absolute-input-2" class="absolute-input"></input>
+        <input id="absolute-input-3" class="absolute-input"></input>
+        <input id="absolute-input-4" class="absolute-input"></input>
+    </div>
 </body>
 
 </html>
