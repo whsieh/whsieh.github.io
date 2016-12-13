@@ -4,6 +4,7 @@
     <style>
         body {
             margin: 0;
+            text-align: center;
         }
 
         .floating {
@@ -22,7 +23,7 @@
             bottom: 0;
         }
 
-        .absolute-input {
+        .absolute {
             left: calc(50% - 50px);
             position: absolute;
             width: 150px;
@@ -43,6 +44,18 @@
 
         #absolute-input-4 {
             top: 350%;
+        }
+
+        #absolute-div-1 {
+            top: 100%;
+        }
+
+        #absolute-div-2 {
+            top: 200%;
+        }
+
+        #absolute-div-3 {
+            top: 300%;
         }
 
         #content {
@@ -84,10 +97,13 @@
     <div id="right-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="right-input"></input></div>
     <div id="bottom-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="bottom-input"></input></div>
     <div id="content">
-        <input id="absolute-input-1" class="absolute-input"></input>
-        <input id="absolute-input-2" class="absolute-input"></input>
-        <input id="absolute-input-3" class="absolute-input"></input>
-        <input id="absolute-input-4" class="absolute-input"></input>
+        <input id="absolute-input-1" class="absolute"></input>
+        <div id="absolute-div-1" class="absolute">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+        <input id="absolute-input-2" class="absolute"></input>
+        <div id="absolute-div-2" class="absolute">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+        <input id="absolute-input-3" class="absolute"></input>
+        <div id="absolute-div-3" class="absolute">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+        <input id="absolute-input-4" class="absolute"></input>
     </div>
 </body>
 
