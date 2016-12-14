@@ -5,9 +5,6 @@
             body {
                 overflow-x: hidden;
                 padding: 0px;
-                -webkit-scroll-snap-type: mandatory;
-                -webkit-scroll-snap-points-y: elements;
-                -webkit-scroll-snap-destination: 50% 50%;
             }
             .single-horizontal,
             .multi-horizontal {
@@ -30,6 +27,7 @@
                 -webkit-scroll-snap-type: mandatory;
                 -webkit-scroll-snap-points-x: elements;
                 -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
             }
             #center-snap {
                 width: 740px;
@@ -44,30 +42,15 @@
                 -webkit-scroll-snap-points-x: elements;
                 -webkit-scroll-snap-destination: 50% 50%;
                 -webkit-overflow-scrolling: touch;
-            }
-            #multi-snap {
-                width: 405px;
-                height: 543px;
-                margin-right: auto;
-                margin-left: auto;
-                margin-top: 600px;
-                margin-bottom: 400px;
-                overflow-x: auto;
-                overflow-y: auto;
-                white-space: nowrap;
-                -webkit-scroll-snap-type: mandatory;
-                -webkit-scroll-snap-points-x: repeat(135px);
-                -webkit-scroll-snap-points-y: repeat(181px);
-                -webkit-overflow-scrolling: touch;
-            }
-            .example {
-                -webkit-scroll-snap-coordinate: 50% 50%;
+                scroll-snap-type: x mandatory;
             }
             .wide {
                 -webkit-scroll-snap-coordinate: 50% 50%;
+                scroll-snap-align: center;
             }
             .single-horizontal {
                 -webkit-scroll-snap-coordinate: 0% 0%;
+                scroll-snap-align: start;
             }
         </style>
     </head>
@@ -79,43 +62,16 @@
         </div>
 
         <div id="center-snap" class="example">
-            <img id="icon00" class="wide" src="images/album/album-wide-0.png"/>
-            <img id="icon01" class="wide" src="images/album/album-wide-1.png"/>
-            <img id="icon02" class="wide" src="images/album/album-wide-2.png"/>
-            <img id="icon03" class="wide" src="images/album/album-wide-3.png"/>
-            <img id="icon04" class="wide" src="images/album/album-wide-4.png"/>
-            <img id="icon05" class="wide" src="images/album/album-wide-5.png"/>
-            <img id="icon06" class="wide" src="images/album/album-wide-6.png"/>
-            <img id="icon07" class="wide" src="images/album/album-wide-7.png"/>
-            <img id="icon08" class="wide" src="images/album/album-wide-8.png"/>
-            <img id="icon09" class="wide" src="images/album/album-wide-9.png"/>
+            <img id="icon00" class="wide" src="images/albums/album-wide-0.png"/>
+            <img id="icon01" class="wide" src="images/albums/album-wide-1.png"/>
+            <img id="icon02" class="wide" src="images/albums/album-wide-2.png"/>
+            <img id="icon03" class="wide" src="images/albums/album-wide-3.png"/>
+            <img id="icon04" class="wide" src="images/albums/album-wide-4.png"/>
+            <img id="icon05" class="wide" src="images/albums/album-wide-5.png"/>
+            <img id="icon06" class="wide" src="images/albums/album-wide-6.png"/>
+            <img id="icon07" class="wide" src="images/albums/album-wide-7.png"/>
+            <img id="icon08" class="wide" src="images/albums/album-wide-8.png"/>
+            <img id="icon09" class="wide" src="images/albums/album-wide-9.png"/>
         </div>
-
-        <div id="multi-snap" class="example">
-            <img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/>
-            <br>
-            <img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/>
-            <br>
-            <img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/>
-            <br>
-            <img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/>
-            <br>
-            <img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/>
-            <br>
-            <img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/>
-            <br>
-            <img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/>
-            <br>
-            <img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/>
-            <br>
-            <img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/>
-            <br>
-            <img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/>
-            <br>
-            <img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/>
-            <br>
-            <img id="icon07" class="multi-horizontal" src="images/albums/07.png"/><img id="icon08" class="multi-horizontal" src="images/albums/08.png"/><img id="icon09" class="multi-horizontal" src="images/albums/09.png"/><img id="icon10" class="multi-horizontal" src="images/albums/10.png"/><img id="icon11" class="multi-horizontal" src="images/albums/11.png"/><img id="icon12" class="multi-horizontal" src="images/albums/12.png"/><img id="icon13" class="multi-horizontal" src="images/albums/13.png"/><img id="icon14" class="multi-horizontal" src="images/albums/14.png"/><img id="icon01" class="multi-horizontal" src="images/albums/01.png"/><img id="icon06" class="multi-horizontal" src="images/albums/06.png"/><img id="icon02" class="multi-horizontal" src="images/albums/02.png"/><img id="icon03" class="multi-horizontal" src="images/albums/03.png"/><img id="icon04" class="multi-horizontal" src="images/albums/04.png"/><img id="icon05" class="multi-horizontal" src="images/albums/05.png"/>
-        </div>
-
     </body>
 </html>
