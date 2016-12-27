@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <style>
+            body, html {
+                width: 100%;
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                overflow-x: none;
+                overflow-y: scroll;
+                scroll-snap-type: y proximity;
+            }
+
+            .area {
+                height: 1000px;
+                width: 100%;
+                float: left;
+                scroll-snap-align: start;
+
+            }
+        </style>
+    </head>
+    <body>
+        <div class="area" style="background-image: linear-gradient(white, red);"></div>
+        <div class="area" style="background-image: linear-gradient(white, green);"></div>
+        <div class="area" style="background-image: linear-gradient(white, blue);"></div>
+        <div class="area" style="background-image: linear-gradient(white, aqua);"></div>
+        <div class="area" style="background-image: linear-gradient(white, yellow);"></div>
+        <div class="area" style="background-image: linear-gradient(white, fuchsia);"></div>
+    </body>
+</html>
