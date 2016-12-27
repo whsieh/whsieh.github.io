@@ -30,13 +30,25 @@
             scroll-snap-align: none start;
             -webkit-scroll-snap-coordinate: 0% 0%;
             scroll-snap-coordinate: 0% 0%;
-            padding: 50px 100px;
+            padding: 5px 10px;
             margin-left: auto;
             margin-right: auto;
             border-right: 1px solid #DFDFDF;
             border-bottom: 1px solid #DFDFDF;
             max-width: 600px;
             background-color: white;
+        }
+
+        @media (max-width: 600px) {
+            .section {
+                padding: 5px 10px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .section {
+                padding: 50px 100px;
+            }
         }
     </style>
     </head>
