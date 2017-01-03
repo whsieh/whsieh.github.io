@@ -1,0 +1,81 @@
+<style>
+    .quote {
+        padding-top: 5px;
+        padding-right: 5px;
+        padding-bottom: 5px;
+        padding-left: 12px;
+        border-left: 5px lightblue solid;
+        color: gray;
+        background-color: #EFFEFE;
+    }
+
+    #editor {
+        width: 480px;
+        height: 320px;
+        border: 1px solid #DFDFDF;
+        border-radius: 4px;
+        padding: 10px;
+        outline: none;
+        overflow: scroll;
+        font-family: -apple-system;
+    }
+
+    #editor > p:first-child {
+        margin-top: 0;
+    }
+
+    #editor > p:last-child {
+        margin-bottom: 0;
+    }
+
+    #editor > p,
+    .quote > p {
+        margin: 8px auto;
+    }
+</style>
+<body>
+    <div id=editor contenteditable>
+        <p>This is some regular content.</p>
+        <p>This text should be fully editable.</p>
+        <div class="quote">
+            <p>This is some quoted content.</p>
+            <p>You should only be able to change the format of this text.</p>
+        </div>
+        <p>This is some more regular content.</p>
+        <p>This text should also be fully editable.</p>
+    </div>
+</body>
+<script>
+    document.body.onload = () => {
+        editor.addEventListener("beforeinput", event => {
+            if (event.inputType.indexOf("format") === 0) {
+                // Allow all formatting changes to pass through.
+                return;
+            }
+
+            let selection = getSelection();
+            if ((selection.rangeCount && rangeStartsOrEndsInQuote(selection.getRangeAt(0)))
+                || (event.inputType.indexOf("delete") === 0 && rangeStartsOrEndsInQuote(event.getTargetRanges()[0]))) {
+                // Do not allow an event to pass through if the selected range begins or ends in a quote, or if
+                // deleting would cause content to be merged into a quoted region.
+                event.preventDefault();
+            }
+        });
+
+        function rangeStartsOrEndsInQuote(range) {
+            // Works for both StaticRanges and regular Ranges.
+            return nodeIsInsideQuote(range.startContainer) || nodeIsInsideQuote(range.endContainer);
+        }
+
+        function nodeIsInsideQuote(node) {
+            let parent = node.parentElement;
+            while (parent) {
+                if (parent.classList.contains("quote"))
+                    return true;
+
+                parent = parent.parentElement;
+            }
+            return false;
+        }
+    };
+</script>
