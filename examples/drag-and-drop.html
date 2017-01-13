@@ -8,25 +8,24 @@
             font-family: -apple-system;
         }
 
+        body {
+            display: flex;
+            margin: 0;
+        }
+
         #output {
-            position: fixed;
-            top: 0;
-            right: 0;
             width: 150px;
-            height: 100%;
-            padding-left: 10px;
+            min-width: 150px;
+            padding: 10px;
             border-left: 1px solid black;
+            background-color: #EFEFEF;
             overflow: scroll;
-            z-index: 100;
+            -webkit-overflow-scrolling: touch;
         }
 
         #editor {
-            width: calc(100% - 150px);
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 10px;
+            flex-grow: 1;
+            padding: 15px;
         }
     </style>
     <script>
@@ -36,8 +35,10 @@
 
         function appendText(text) {
              lastTextNode = document.createTextNode(text);
+             let code = document.createElement("code");
              let container = document.createElement("div");
-             container.appendChild(lastTextNode);
+             code.appendChild(lastTextNode);
+             container.appendChild(code);
              output.appendChild(container);
         }
 
@@ -49,9 +50,21 @@
         }
 
         function handleDragEvent(event) {
+            updateEditorForDragEvent(event);
+            updateOutputForDragEvent(event);
+        }
+
+        function updateEditorForDragEvent(event) {
+            if (event.type === "dragenter")
+                editor.style.border = "10px dashed #AFFFAF";
+            if (event.type === "dragleave" || event.type === "drop")
+                editor.style.border = "";
+        }
+
+        function updateOutputForDragEvent(event) {
             if (lastDragEvent && lastDragEvent.type === event.type) {
                 lastEventCount++;
-                setText(`${lastDragEvent.type} x ${lastEventCount}`);
+                setText(`${lastDragEvent.type} (${lastEventCount})`);
                 lastDragEvent = event;
                 output.scrollTop = output.clientHeight;
                 return;
@@ -59,17 +72,14 @@
 
             lastDragEvent = event;
             lastEventCount = 1;
-            appendText(`${event.type} x ${lastEventCount}`);
+            appendText(event.type);
             output.scrollTop = output.scrollHeight;
         }
 
         function setup() {
-            editor.addEventListener("dragend", handleDragEvent);
             editor.addEventListener("dragenter", handleDragEvent);
-            editor.addEventListener("dragexit", handleDragEvent);
-            editor.addEventListener("dragleave", handleDragEvent);
             editor.addEventListener("dragover", handleDragEvent);
-            editor.addEventListener("dragstart", handleDragEvent);
+            editor.addEventListener("dragleave", handleDragEvent);
             editor.addEventListener("drop", handleDragEvent);
         }
     </script>
