@@ -8,6 +8,10 @@
             font-family: -apple-system;
         }
 
+        * {
+            pointer-events: none;
+        }
+
         body {
             display: flex;
             margin: 0;
@@ -26,13 +30,25 @@
         #editor {
             flex-grow: 1;
             background-color: white;
-            border: 10px dashed white;
+            pointer-events: auto;
+            padding: 10px;
+        }
+
+        #target {
+            position: fixed;
+            border: 20px red solid;
+            border-radius: 50%;
+            opacity: 0;
+            box-sizing: border-box;
         }
     </style>
     <script>
         let lastTextNode = null;
         let lastDragEvent = null;
         let lastEventCount = 0;
+        let isShowingTarget = false;
+        const smallTargetSize = 40;
+        const largeTargetSize = 160;
 
         function appendText(text) {
              lastTextNode = document.createTextNode(text);
@@ -51,15 +67,24 @@
         }
 
         function handleDragEvent(event) {
-            updateEditorForDragEvent(event);
+            updateTargetForDragEvent(event);
             updateOutputForDragEvent(event);
         }
 
-        function updateEditorForDragEvent(event) {
-            if (event.type === "dragenter")
-                editor.style.border = "10px dashed #AFFFAF";
-            if (event.type === "dragleave" || event.type === "drop")
-                editor.style.border = "10px dashed white";
+        function updateTargetForDragEvent(event) {
+            if (event.type === "dragenter") {
+                target.style.transition = "";
+                Target.show();
+                Target.move(event.clientX, event.clientY);
+            }
+
+            if (event.type === "dragleave" || event.type === "drop") {
+                target.style.transition = "0.25s ease-out";
+                Target.hide();
+            }
+
+            if (event.type === "dragover")
+                Target.move(event.clientX, event.clientY);
         }
 
         function updateOutputForDragEvent(event) {
@@ -83,10 +108,43 @@
             editor.addEventListener("dragleave", handleDragEvent);
             editor.addEventListener("drop", handleDragEvent);
         }
+
+        window.Target = {
+            hide: () => {
+                if (!isShowingTarget)
+                    return;
+
+                let rect = target.getBoundingClientRect();
+                target.style.width = smallTargetSize;
+                target.style.height = smallTargetSize;
+                target.style.top = Math.round(rect.top + (largeTargetSize - smallTargetSize) / 2);
+                target.style.left = Math.round(rect.left + (largeTargetSize - smallTargetSize) / 2);
+                target.style.opacity = 0;
+                isShowingTarget = false;
+            },
+            show: () => {
+                if (isShowingTarget)
+                    return;
+
+                let rect = target.getBoundingClientRect();
+                target.style.width = largeTargetSize;
+                target.style.height = largeTargetSize;
+                target.style.top = Math.round(rect.top + (smallTargetSize - largeTargetSize) / 2);
+                target.style.left = Math.round(rect.left + (smallTargetSize - largeTargetSize) / 2);
+                target.style.opacity = 0.25;
+                isShowingTarget = true;
+            },
+            move: (x, y) => {
+                let rect = target.getBoundingClientRect();
+                target.style.left = x - rect.width / 2;
+                target.style.top = y - rect.height / 2;
+            }
+        }
     </script>
 </head>
 <body onload=setup()>
     <div contenteditable id="editor"></div>
     <div id="output"></div>
+    <div id="target"></div>
 </body>
 </html>
