@@ -14,8 +14,8 @@
         }
 
         #output {
-            width: 150px;
-            min-width: 150px;
+            width: 125px;
+            min-width: 125px;
             padding: 10px;
             border-left: 1px solid black;
             background-color: #EFEFEF;
@@ -25,7 +25,8 @@
 
         #editor {
             flex-grow: 1;
-            padding: 15px;
+            background-color: white;
+            border: 10px dashed white;
         }
     </style>
     <script>
@@ -58,7 +59,7 @@
             if (event.type === "dragenter")
                 editor.style.border = "10px dashed #AFFFAF";
             if (event.type === "dragleave" || event.type === "drop")
-                editor.style.border = "";
+                editor.style.border = "10px dashed white";
         }
 
         function updateOutputForDragEvent(event) {
