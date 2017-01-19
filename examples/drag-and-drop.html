@@ -32,6 +32,8 @@
             background-color: white;
             pointer-events: auto;
             padding: 10px;
+            -webkit-overflow-scrolling: touch;
+            overflow: scroll;
         }
 
         #target {
@@ -67,7 +69,7 @@
         }
 
         function handleDragEvent(event) {
-            updateTargetForDragEvent(event);
+            // updateTargetForDragEvent(event);
             updateOutputForDragEvent(event);
         }
 
