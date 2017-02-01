@@ -3,8 +3,13 @@
 <head>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <style>
-        body, html {height: 100%;}
+    html {
+        /* make root element fill the viewport exactly */
+        height: 100%;
+    }
     body {
+        /* make body element (including its 100px of margin) fill parent exactly */
+        height: calc(100% - 100px);
         margin: 50px;
         background-color: #F8F8F8;
         overflow: hidden;
