@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      #editor { outline: 1px solid red }
+    </style>
+    <script>
+      (function() {
+        addEventListener("input", function() {})
+
+        addEventListener("DOMContentLoaded", function() {
+          var editor = getEditor()
+          var mutationObserver = new MutationObserver(render)
+          var config = {
+            childList: true,
+            attributes: true,
+            characterData: true,
+            subtree: true
+          }
+
+          editor.focus()
+          render()
+
+          function render() {
+            stop()
+            replaceContents(editor)
+            moveCursor(editor, 1)
+            start()
+          }
+
+          function start() {
+            mutationObserver.observe(editor, config)
+          }
+
+          function stop() {
+            mutationObserver.disconnect()
+          }
+        })
+
+        function getEditor() {
+          return document.getElementById("editor")
+        }
+
+        function replaceContents(editor) {
+          editor.innerHTML = editor.innerHTML
+        }
+
+        function moveCursor(editor, offset) {
+          var block = editor.firstElementChild
+          var range = createCollapsedRange(block, offset)
+          setSelectedRange(range)
+        }
+
+        function setSelectedRange(range) {
+          var selection = window.getSelection()
+          selection.removeAllRanges()
+          selection.addRange(range)
+        }
+
+        function createCollapsedRange(container, offset) {
+          var range = document.createRange()
+          range.setStart(container, offset)
+          range.setEnd(container, offset)
+          return range
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="editor" contenteditable><div><br></div></div>
+  </body>
+</html>
