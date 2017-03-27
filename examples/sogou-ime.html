@@ -1,0 +1,53 @@
+<style>
+    #editor, #output {
+        width: 100%;
+        height: 50%;
+        font-size: 16px;
+    }
+
+    #leftOutput, #rightOutput {
+        width: 50%;
+        height: 100%;
+        font-size: 20px;
+    }
+</style>
+<div id="editor" contenteditable></div>
+<div id="output">
+    <textarea id="leftOutput" readonly></textarea><textarea id="rightOutput" readonly></textarea>
+</div>
+<script>
+    editor.addEventListener("compositionstart", event => {
+        leftOutput.value += "compositionstart\n";
+        leftOutput.scrollTop = 1000000;
+    });
+
+    editor.addEventListener("compositionupdate", event => {
+        leftOutput.value += "compositionupdate\n";
+        leftOutput.scrollTop = 1000000;
+    });
+
+    editor.addEventListener("compositionend", event => {
+        leftOutput.value += "compositionend\n\n";
+        leftOutput.scrollTop = 1000000;
+    });
+
+    editor.addEventListener("input", event => {
+        rightOutput.value += `input(${event.inputType}, ${event.data ? event.data : ""})\n`;
+        rightOutput.scrollTop = 1000000;
+    });
+
+    editor.addEventListener("beforeinput", event => {
+        rightOutput.value += `beforeinput(${event.inputType}, ${event.data ? event.data : ""})\n`;
+        rightOutput.scrollTop = 1000000;
+    });
+
+    editor.addEventListener("keydown", event => {
+        rightOutput.value += `keydown(${event.keyCode})\n`;
+        rightOutput.scrollTop = 1000000;
+    });
+
+    editor.addEventListener("keyup", event => {
+        rightOutput.value += `keyup(${event.keyCode})\n`;
+        rightOutput.scrollTop = 1000000;
+    });
+</script>
