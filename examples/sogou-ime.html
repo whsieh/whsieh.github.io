@@ -50,4 +50,9 @@
         rightOutput.value += `keyup(${event.keyCode})\n`;
         rightOutput.scrollTop = 1000000;
     });
+
+    editor.addEventListener("keypress", event => {
+        rightOutput.value += `keypress(${event.keyCode})\n`;
+        rightOutput.scrollTop = 1000000;
+    });
 </script>
