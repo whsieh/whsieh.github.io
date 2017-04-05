@@ -1,0 +1,97 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: -apple-system;
+    }
+
+    #container {
+        width: 100vw;
+        height: 300px;
+        position: absolute;
+    }
+
+    #controls {
+        top: 300px;
+        width: 100vw;
+        height: 100px;
+        position: absolute;
+    }
+
+    #outer {
+        box-sizing: border-box;
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%; height: 100%;
+        left: 0; top: 0;
+        overflow-x: auto; overflow-y: hidden;
+        position: absolute;
+        white-space: nowrap;
+
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: mandatory;
+        -webkit-scroll-snap-type: mandatory;
+    }
+
+    .inner {
+        display: flex;
+        align-items: center;
+        flex: 0 0 100%;
+        width: 100%; height: 100%;
+
+        scroll-snap-align: start;
+        -webkit-scroll-snap-coordinate: 0 0;
+    }
+
+    #fixed {
+        position: fixed;
+        top: 0; right: 0;
+        width: 5em; height: 5em;
+        background-color: white;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 20px;
+    }
+    </style>
+</head>
+<div id="container">
+    <div id="outer" class="outer">
+        <div id="inner1" class="inner" style="background-color: red"></div>
+        <div id="inner2" class="inner" style="background-color: green"></div>
+        <div id="inner3" class="inner" style="background-color: blue"></div>
+    </div>
+</div>
+<div id="controls">
+    <div><p>To reproduce the bug, first tap on 'Scroll to the right' until the green box is mostly in view.</p></div>
+    <div><p>Then, tap 'Toggle the fixed div' to show or hide the white box.</p></div>
+    <div><p>On iOS 10.2, this would cause us to snap to the green box.</p></div>
+    <div><p>However, in 10.3, this jumps us back to the red box.</p></div>
+    <div style="margin-top: 1em;">
+        <a id="scrollRight" href="javascript:void(0)">Scroll to the right</a>
+        <span style="margin: 0 1em;">&nbsp;</span>
+        <a id="toggleFixed" href="javascript:void(0)">Toggle the fixed div</a>
+        <span style="margin: 0 1em;">&nbsp;</span>
+        <a id="scrollLeft" href="javascript:void(0)">Scroll to the left</a>
+    </div>
+</div>
+<div id="fixed"></div>
+<script>
+toggleFixed.addEventListener("click", () => {
+    if (fixed.style.display === "none")
+        fixed.style.display = "block";
+    else
+        fixed.style.display = "none";
+});
+
+scrollRight.addEventListener("click", () => {
+    setTimeout(() => outer.scrollLeft += 100, 100);
+});
+
+scrollLeft.addEventListener("click", () => {
+    setTimeout(() => outer.scrollLeft -= 100, 100);
+});
+</script>
