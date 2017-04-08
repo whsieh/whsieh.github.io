@@ -1,0 +1,20 @@
+<style>
+    img, #target {
+        width: 200px;
+        height: 200px;
+    }
+    #target {
+        border: 1px blue dashed;
+    }
+</style>
+<p>Image in link: </p><a href="https://www.webkit.org"><img src="images/webkit.png"></img></a>
+<p>Only image: </p><img src="images/webkit.png"></img>
+<div id="target"></div>
+<script>
+    target.addEventListener("dragenter", event => event.preventDefault());
+    target.addEventListener("dragover", event => event.preventDefault());
+    target.addEventListener("drop", event => {
+        target.innerHTML = `The text data is '${event.dataTransfer.getData("text/plain")}'`;
+        event.preventDefault();
+    });
+</script>
