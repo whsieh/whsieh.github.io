@@ -1,5 +1,94 @@
-<head>
-    <meta name="apple-mobile-web-app-capable" content="YES">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<input type="file" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+    font-family: -apple-system;
+}
+
+h3 {
+    border-bottom: 5px #E4E4E4 solid;
+    display: inline-block;
+}
+
+#media > img, #media > video {
+    width: 200px;
+    height: 200px;
+    margin-left: 1em;
+    border: 1px lightgray solid;
+}
+
+#media {
+    width: 220px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+#right {
+    width: calc(100% - 240px);
+}
+
+#media, #text {
+    height: 220px;
+    padding: 10px;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+</style>
+<div><h3>Single file</h3></div>
+<input type="file" id="single"></input>
+<div><h3>Multiple files</h3></div>
+<input type="file" id="multiple" multiple></input>
+
+<div id="container">
+    <div id="left">
+        <div><h3>Uploaded media</h3></div>
+        <div id="media"></div>
+    </div>
+    <div id="right">
+        <div><h3>Uploaded text</h3></div>
+        <div id="text"></div>
+    </div>
+</div>
+<div><h3>Uploaded file info</h3></div>
+<div id="output"></div>
+
+<script>
+    [single, multiple].forEach((input) => {
+        input.addEventListener("change", () => {
+            output.innerHTML = "";
+            media.innerHTML = "";
+            text.innerHTML = "";
+
+            if (!input.files)
+                return true;
+
+            let outputHTML = "";
+            for (let file of input.files) {
+                outputHTML += `<code><div id="nameDisplay">The file name is: "${file.name}"</div></code>
+                    <code><div id="sizeDisplay">The file size is: ${file.size} bytes</div></code>
+                    <code><div id="typeDisplay">The content type is: ${file.type}</div></code>
+                    <br>`;
+            }
+            output.innerHTML = outputHTML;
+
+            Array.from(input.files).map(file => {
+                let mimeType = file.type;
+                if (mimeType.indexOf("image") !== -1)
+                    media.insertAdjacentHTML("beforeend", `<img src="${URL.createObjectURL(file)}"></img>`);
+                else if (mimeType.indexOf("video") !== -1)
+                    media.insertAdjacentHTML("beforeend", `<video controls src="${URL.createObjectURL(file)}"></video>`);
+                else {
+                    let matchResult = event.target.result.match(/^data:.*base64,(.*)$/);
+                    if (matchResult.length == 2)
+                        text.insertAdjacentText("beforeend", atob(matchResult[1]));
+                }
+            });
+            return true;
+        });
+    });
+</script>
