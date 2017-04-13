@@ -83,9 +83,9 @@ h3 {
                 else if (mimeType.indexOf("video") !== -1)
                     media.insertAdjacentHTML("beforeend", `<video controls src="${URL.createObjectURL(file)}"></video>`);
                 else {
-                    let matchResult = event.target.result.match(/^data:.*base64,(.*)$/);
-                    if (matchResult.length == 2)
-                        text.insertAdjacentText("beforeend", atob(matchResult[1]));
+                    let reader = new FileReader();
+                    reader.addEventListener("load", event => text.insertAdjacentText("beforeend", event.target.result));
+                    reader.readAsText(file);
                 }
             });
             return true;
