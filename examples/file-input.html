@@ -38,11 +38,30 @@ h3 {
     flex-wrap: wrap;
     justify-content: left;
 }
+
+#droparea {
+    margin-top: 1em;
+    width: 480px;
+    height: 320px;
+    background-color: white;
+    border: 1em #DDD dashed;
+}
+
+#droptext {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 290px;
+    font-size: 30px;
+    color: #DDD;
+    pointer-events: none;
+}
 </style>
 <div><h3>Single file</h3></div>
 <input type="file" id="single"></input>
 <div><h3>Multiple files</h3></div>
 <input type="file" id="multiple" multiple></input>
+<div><h3>Custom drop area</h3></div>
+<div id="droparea"><h1 id="droptext">Drop something here</h1></div>
 
 <div id="container">
     <div id="left">
@@ -58,37 +77,62 @@ h3 {
 <div id="output"></div>
 
 <script>
+    ["dragover", "dragenter", "drop"].forEach(name => droparea.addEventListener(name, event => event.preventDefault()));
+
+    droparea.addEventListener("dragenter", event => {
+        droparea.style.borderColor = "#8E8";
+        droptext.style.color = "#8E8";
+    });
+
+    droparea.addEventListener("dragleave", event => {
+        droparea.style.borderColor = "#EFEFEF";
+        droptext.style.color = "#EFEFEF";
+    });
+
+    droparea.addEventListener("drop", event => {
+        droparea.style.borderColor = "#EFEFEF";
+        droptext.style.color = "#EFEFEF";
+        updateOutputForFiles(event.dataTransfer.files);
+    });
+
+    function updateOutputForFiles(files)
+    {
+        files = Array.from(files);
+
+        output.innerHTML = "";
+        media.innerHTML = "";
+        text.innerHTML = "";
+
+        if (!files)
+            return true;
+
+        let outputHTML = "";
+        for (let file of files) {
+            outputHTML += `<code><div id="nameDisplay">The file name is: "${file.name}"</div></code>
+                <code><div id="sizeDisplay">The file size is: ${file.size} bytes</div></code>
+                <code><div id="typeDisplay">The content type is: ${file.type}</div></code>
+                <br>`;
+        }
+        output.innerHTML = outputHTML;
+
+        files.map(file => {
+            let mimeType = file.type;
+            if (mimeType.indexOf("image") !== -1)
+                media.insertAdjacentHTML("beforeend", `<img src="${URL.createObjectURL(file)}"></img>`);
+            else if (mimeType.indexOf("video") !== -1)
+                media.insertAdjacentHTML("beforeend", `<video controls src="${URL.createObjectURL(file)}"></video>`);
+            else {
+                let reader = new FileReader();
+                reader.addEventListener("load", event => text.insertAdjacentText("beforeend", event.target.result));
+                reader.readAsText(file);
+            }
+        });
+        return true;
+    }
+
     [single, multiple].forEach((input) => {
         input.addEventListener("change", () => {
-            output.innerHTML = "";
-            media.innerHTML = "";
-            text.innerHTML = "";
-
-            if (!input.files)
-                return true;
-
-            let outputHTML = "";
-            for (let file of input.files) {
-                outputHTML += `<code><div id="nameDisplay">The file name is: "${file.name}"</div></code>
-                    <code><div id="sizeDisplay">The file size is: ${file.size} bytes</div></code>
-                    <code><div id="typeDisplay">The content type is: ${file.type}</div></code>
-                    <br>`;
-            }
-            output.innerHTML = outputHTML;
-
-            Array.from(input.files).map(file => {
-                let mimeType = file.type;
-                if (mimeType.indexOf("image") !== -1)
-                    media.insertAdjacentHTML("beforeend", `<img src="${URL.createObjectURL(file)}"></img>`);
-                else if (mimeType.indexOf("video") !== -1)
-                    media.insertAdjacentHTML("beforeend", `<video controls src="${URL.createObjectURL(file)}"></video>`);
-                else {
-                    let reader = new FileReader();
-                    reader.addEventListener("load", event => text.insertAdjacentText("beforeend", event.target.result));
-                    reader.readAsText(file);
-                }
-            });
-            return true;
+            return updateOutputForFiles(input.files);
         });
     });
 </script>
