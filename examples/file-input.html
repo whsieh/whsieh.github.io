@@ -46,22 +46,13 @@ h3 {
     background-color: white;
     border: 1em #DDD dashed;
 }
-
-#droptext {
-    text-align: center;
-    vertical-align: middle;
-    line-height: 290px;
-    font-size: 30px;
-    color: #DDD;
-    pointer-events: none;
-}
 </style>
 <div><h3>Single file</h3></div>
 <input type="file" id="single"></input>
 <div><h3>Multiple files</h3></div>
 <input type="file" id="multiple" multiple></input>
 <div><h3>Custom drop area</h3></div>
-<div id="droparea"><h1 id="droptext">Drop something here</h1></div>
+<div id="droparea"></div>
 
 <div id="container">
     <div id="left">
@@ -77,22 +68,23 @@ h3 {
 <div id="output"></div>
 
 <script>
-    ["dragover", "dragenter", "drop"].forEach(name => droparea.addEventListener(name, event => event.preventDefault()));
-
     droparea.addEventListener("dragenter", event => {
         droparea.style.borderColor = "#8E8";
-        droptext.style.color = "#8E8";
+        event.preventDefault();
+    });
+
+    droparea.addEventListener("dragover", event => {
+        event.preventDefault();
     });
 
     droparea.addEventListener("dragleave", event => {
         droparea.style.borderColor = "#EFEFEF";
-        droptext.style.color = "#EFEFEF";
     });
 
     droparea.addEventListener("drop", event => {
         droparea.style.borderColor = "#EFEFEF";
-        droptext.style.color = "#EFEFEF";
         updateOutputForFiles(event.dataTransfer.files);
+        event.preventDefault();
     });
 
     function updateOutputForFiles(files)
