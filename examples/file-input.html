@@ -9,7 +9,7 @@ h3 {
     display: inline-block;
 }
 
-#media > img, #media > video {
+#media > img, #media > video, #media > embed {
     width: 200px;
     height: 200px;
     margin-left: 1em;
@@ -113,7 +113,9 @@ h3 {
                 media.insertAdjacentHTML("beforeend", `<img src="${URL.createObjectURL(file)}"></img>`);
             else if (mimeType.indexOf("video") !== -1)
                 media.insertAdjacentHTML("beforeend", `<video controls src="${URL.createObjectURL(file)}"></video>`);
-            else {
+            else if (mimeType.indexOf("pdf") !== -1)
+                media.insertAdjacentHTML("beforeend", `<embed src="${URL.createObjectURL(file)}" ></embed>`);
+            else if (mimeType.indexOf("text") !== -1) {
                 let reader = new FileReader();
                 reader.addEventListener("load", event => text.insertAdjacentText("beforeend", event.target.result));
                 reader.readAsText(file);
