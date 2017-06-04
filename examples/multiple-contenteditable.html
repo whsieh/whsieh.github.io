@@ -1,0 +1,44 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <style>
+    html {
+        padding: 0;
+        margin: 0;
+    }
+    body {
+        padding: 0;
+        margin: 2em;
+        background-color: #F8F8F8;
+        overflow: hidden;
+        font-family: -apple-system;
+        font-size: 1em;
+    }
+
+    #bottom, #top {
+        padding: 2em;
+        width: 80%;
+        min-width: 320px;
+        height: calc(50% - 2em);
+        margin: 2em auto;
+        box-sizing: border-box;
+        background-color: white;
+        border-right: 1px solid #DFDFDF;
+        border-bottom: 1px solid #DFDFDF;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #bottom:focus, #top:focus {
+        outline: none;
+    }
+    </style>
+</head>
+
+<body>
+<div id="top" contenteditable>
+    <p>Here's to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They're not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can't do is ignore them. Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+</div>
+<div id="bottom" contenteditable></div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+    <meta name="viewport" content="width=device-width">
+        <head>
+            <style>
+                html {
+                    width: 100%;
+                    height: 100%;
+                    font-family: -apple-system;
+                    font-size: 20px;
+                }
+            
+            body {
+                display: flex;
+                margin: 0;
+            }
+            
+            #output {
+                width: 125px;
+                min-width: 125px;
+                padding: 10px;
+                border-left: 1px solid black;
+                background-color: #EFEFEF;
+                overflow: scroll;
+                font-size: 12px;
+                pointer-events: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            #editor {
+                flex-grow: 1;
+                background-color: white;
+                pointer-events: auto;
+                padding: 10px;
+                overflow: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            </style>
+            <script>
+            let lastTextNode = null;
+            let lastDragEvent = null;
+            let lastEventCount = 0;
+            
+            function appendText(text) {
+                lastTextNode = document.createTextNode(text);
+                let code = document.createElement("code");
+                let container = document.createElement("div");
+                code.appendChild(lastTextNode);
+                container.appendChild(code);
+                output.appendChild(container);
+            }
+        
+            function setText(text) {
+                if (lastTextNode)
+                    lastTextNode.data = text;
+                else
+                    appendText(text);
+            }
+            
+            function handleDragEvent(event) {
+                if (event.target !== editor)
+                    return;
+                
+                updateOutputForDragEvent(event);
+            }
+            
+            function updateOutputForDragEvent(event) {
+                if (lastDragEvent && lastDragEvent.type === event.type) {
+                    lastEventCount++;
+                    setText(`${lastDragEvent.type} (${lastEventCount})`);
+                    lastDragEvent = event;
+                    output.scrollTop = output.clientHeight;
+                    return;
+                }
+                
+                lastDragEvent = event;
+                lastEventCount = 1;
+                appendText(event.type);
+                output.scrollTop = output.scrollHeight;
+            }
+            
+            function setup() {
+                editor.addEventListener("dragenter", handleDragEvent);
+                editor.addEventListener("dragover", handleDragEvent);
+                editor.addEventListener("dragleave", handleDragEvent);
+                editor.addEventListener("drop", handleDragEvent);
+            }
+            </script>
+        </head>
+        <body onload=setup()>
+            <div contenteditable id="editor"></div>
+            <div id="output"></div>
+        </body>
+</html>
