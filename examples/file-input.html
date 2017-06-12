@@ -70,10 +70,12 @@ h3 {
 <script>
     droparea.addEventListener("dragenter", event => {
         droparea.style.borderColor = "#8E8";
+        event.dataTransfer.dropEffect = "copy";
         event.preventDefault();
     });
 
     droparea.addEventListener("dragover", event => {
+        event.dataTransfer.dropEffect = "copy";
         event.preventDefault();
     });
 
