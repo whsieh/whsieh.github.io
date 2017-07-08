@@ -24,8 +24,9 @@
 </body>
 <script>
 window.touchstartEventCount = 0;
+document.body.scrollTop = 0;
 document.body.addEventListener("touchstart", () => {
-    document.body.style.backgroundColor = (++touchstartEventCount == 1) ? "green" : "red";
+    document.body.style.backgroundColor = (++touchstartEventCount % 2) ? "green" : "red";
     touches.textContent = `${touchstartEventCount}`;
 });
 </script>

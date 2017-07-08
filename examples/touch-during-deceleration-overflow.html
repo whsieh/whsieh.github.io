@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        width: 100%;
+        height: 100%;
+        font-family: -apple-system;
+        margin: 0;
+        padding: 1em;
+        box-sizing: border-box;
+    }
+
+    #port {
+        width: 500px;
+        height: 500px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        border: 10px solid black;
+        box-sizing: border-box;
+        margin: 0 auto;
+        background-color: red;
+    }
+
+    .area {
+        height: 480px;
+        width: 480px;
+        float: left;
+    }
+</style>
+<body>
+    <div class="description">
+        <p>To manually test, swipe down to scroll and, while decelerating, tap anywhere in the document. The background should turn green after the initial swipe, and <strong>not</strong> turn back to red after the tap.</p>
+        <p>The touch count is: <span id="touches">0</span></p>
+    </div>
+    <div id="port">
+        <div class="area" id="area1"></div>
+        <div class="area" id="area2"></div>
+        <div class="area" id="area3"></div>
+        <div class="area" id="area4"></div>
+        <div class="area" id="area5"></div>
+        <div class="area" id="area6"></div>
+    </div>
+</body>
+<script>
+window.touchstartEventCount = 0;
+port.scrollTop = 0;
+port.addEventListener("touchstart", () => {
+    port.style.backgroundColor = (++touchstartEventCount % 2) ? "green" : "red";
+    touches.textContent = `${touchstartEventCount}`;
+});
+</script>
