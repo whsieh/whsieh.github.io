@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<html>
+<style>
+input {
+    width: 50%;
+    height: 2em;
+    margin: 321px auto 0 auto;
+    display: block;
+    border: 4px black solid;
+    border-radius: 0;
+}
+
+body {
+    height: 200vh;
+}
+</style>
+<input id="search"></input>
+<script>
+$(search).on("click", (event) => {
+    event.stopPropagation();
+    scheduleScrollToSearchField();
+});
+
+$(search).on("touchend", (event) => {
+    event.stopPropagation();
+    $(search).focus();
+    scheduleScrollToSearchField();
+});
+
+function scheduleScrollToSearchField() {
+    setTimeout(function() {
+        var offset = $(search).offset().top;
+        if (offset > 10)
+            window.scrollTo(0, offset - 10);
+    }, 200);
+};
+</script>
+</html>
