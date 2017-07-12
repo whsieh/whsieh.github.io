@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <html>
 <style>
 input {
     width: 50%;
     height: 2em;
-    margin: 321px auto 0 auto;
+    margin: 321px auto 1em auto;
     display: block;
-    border: 4px black solid;
+    border: 3px black solid;
     border-radius: 0;
+}
+
+p {
+    display: block;
+    font-family: -apple-system;
+    margin: 1em auto;
+    text-align: center;
+}
+
+div {
+    width: 50%;
+    height: 2em;
+    margin: 5em auto 0 auto;
+    background-color: black;
 }
 
 body {
@@ -17,24 +30,38 @@ body {
 }
 </style>
 <input id="search"></input>
+<p>This search field scrolls 200ms after <code>touchend</code> and 800ms after <code>click</code>.</p>
+<div id="div"></div>
+<p>This div scrolls 200ms after both <code>touchend</code> and <code>click</code>.</p>
 <script>
-$(search).on("click", (event) => {
+search.addEventListener("click", (event) => {
     event.stopPropagation();
-    scheduleScrollToSearchField();
+    scheduleScrollToElement(800, search);
 });
 
-$(search).on("touchend", (event) => {
+search.addEventListener("touchend", (event) => {
     event.stopPropagation();
-    $(search).focus();
-    scheduleScrollToSearchField();
+    search.focus();
+    scheduleScrollToElement(200, search);
 });
 
-function scheduleScrollToSearchField() {
-    setTimeout(function() {
-        var offset = $(search).offset().top;
+div.addEventListener("click", (event) => {
+    event.stopPropagation();
+    scheduleScrollToElement(200, div);
+});
+
+div.addEventListener("touchend", (event) => {
+    event.stopPropagation();
+    scheduleScrollToElement(200, div);
+});
+
+function scheduleScrollToElement(time, element) {
+    setTimeout(() => {
+        var offset = element.getBoundingClientRect().top + pageYOffset;
+        console.log(`The offset is: ${offset}`);
         if (offset > 10)
             window.scrollTo(0, offset - 10);
-    }, 200);
+    }, time);
 };
 </script>
 </html>
