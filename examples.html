@@ -1,0 +1,70 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: -apple-system;
+    font-size: 1em;
+    margin: 1em;
+}
+a, h1 {
+    margin-top: 1em;
+    display: block;
+}
+</style>
+<h1>Recent examples</h1>
+<script>
+
+let apiRoot = "https://api.github.com";
+let username = "whsieh";
+let repository = "whsieh.github.io";
+let urlRoot = "https://whsieh.github.io";
+let fetchedExamplePages = new Set();
+
+function fetchJSONFromURL(url, completion) {
+    fetch(url)
+        .then(data => data.text())
+        .then(text => completion(JSON.parse(text)));
+}
+
+function getLatestCommit(commitInfos)
+{
+    let latestCommitInfo = null;
+    let timestampOfLatestCommit = 0;
+    for (let commitInfo of commitInfos) {
+        let timestamp = new Date(commitInfo.commit.author.date).getTime();
+        if (timestamp <= timestampOfLatestCommit)
+            continue;
+
+        timestampOfLatestCommit = timestamp;
+        latestCommitInfo = commitInfo;
+    }
+    return latestCommitInfo;
+}
+
+function recursivelyUpdateRecentPagesForCommits(commitInfos, limit, delay)
+{
+    if (!limit)
+        return;
+
+    let latestCommitInfo = getLatestCommit(commitInfos);
+    commitInfos.splice(commitInfos.indexOf(latestCommitInfo), 1);
+    fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/commits/${latestCommitInfo.sha}`, (commitDetail) => {
+        for (let changedFile of commitDetail.files.map(fileInfo => fileInfo.filename)) {
+            if (fetchedExamplePages.has(changedFile) || !changedFile.match(/^examples\/.*.html$/))
+                continue;
+
+            fetchedExamplePages.add(changedFile);
+            let link = document.createElement("a");
+            link.href = `${urlRoot}/${changedFile}`;
+            link.textContent = link.href;
+            document.body.appendChild(link);
+        }
+
+        setTimeout(() => {
+            recursivelyUpdateRecentPagesForCommits(commitInfos, limit - 1);
+        }, delay);
+    })
+}
+
+fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/commits`, commitInfos => recursivelyUpdateRecentPagesForCommits(commitInfos, 10, 500));
+</script>
