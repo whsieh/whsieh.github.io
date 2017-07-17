@@ -11,6 +11,9 @@ body {
 }
 </style>
 <h1>Recent examples</h1>
+<div id="recent"></div>
+<h1>All examples</h1>
+<div id="all"></div>
 <script>
 
 let apiRoot = "https://api.github.com";
@@ -22,9 +25,7 @@ let fetchedExamplePages = new Set();
 let validExamplePageNames = new Set();
 
 function fetchJSONFromURL(url, completion) {
-    fetch(url)
-        .then(data => data.text())
-        .then(text => completion(JSON.parse(text)));
+    fetch(url).then(data => data.text()).then(text => completion(JSON.parse(text)));
 }
 
 function getLatestCommit(commitInfos)
@@ -42,6 +43,21 @@ function getLatestCommit(commitInfos)
     return latestCommitInfo;
 }
 
+function makeLinkContainer(href, text = undefined)
+{
+    if (!text)
+        text = href;
+
+    let link = document.createElement("a");
+    link.href = href;
+    link.textContent = text || href;
+    let container = document.createElement("div");
+    container.appendChild(link);
+    container.className = "container";
+
+    return container;
+}
+
 function recursivelyUpdateRecentPagesForCommits(commitInfos, limit, delay)
 {
     if (!limit)
@@ -55,24 +71,22 @@ function recursivelyUpdateRecentPagesForCommits(commitInfos, limit, delay)
                 continue;
 
             fetchedExamplePages.add(changedFile);
-            let link = document.createElement("a");
-            link.href = `${urlRoot}/${changedFile}`;
-            link.textContent = link.href;
-            let container = document.createElement("div");
-            container.appendChild(link);
-            container.className = "container";
-            document.body.appendChild(container);
+            recent.appendChild(makeLinkContainer(`${urlRoot}/${changedFile}`, changedFile));
         }
 
         setTimeout(() => {
             recursivelyUpdateRecentPagesForCommits(commitInfos, limit - 1);
         }, delay);
-    })
+    });
 }
 
 (() => {
     fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/contents/${examplesDirectoryName}?ref=master`, examples => {
-        validExamplePageNames = new Set(examples.map(exampleInfo => exampleInfo.path));
+        let allExamplePages = examples.map(exampleInfo => exampleInfo.path);
+        for (let examplePage of allExamplePages)
+            all.appendChild(makeLinkContainer(`${urlRoot}/${examplePage}`, examplePage));
+
+        validExamplePageNames = new Set(allExamplePages);
         fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/commits`, commitInfos => recursivelyUpdateRecentPagesForCommits(commitInfos, 10, 500));
     });
 })();
