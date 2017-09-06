@@ -1,6 +1,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-* {
+body, html {
     font-family: -apple-system;
 }
 
@@ -64,10 +64,33 @@ h3 {
         <div id="text"></div>
     </div>
 </div>
-<div><h3>Uploaded file info</h3></div>
-<div id="output"></div>
+<div><h3>Uploaded files</h3></div>
+<div id="filesOutput"></div>
+<div><h3>Uploaded items</h3></div>
+<div id="itemsOutput"></div>
 
 <script>
+
+    function getEntriesAsPromise(entry) {
+        if (!entry.isDirectory)
+            return Promise.resolve([]);
+
+        return new Promise((resolve, reject) => {
+            let result = [];
+            let reader = entry.createReader();
+            let doBatch = () => {
+                reader.readEntries(entries => {
+                    if (entries.length > 0) {
+                        entries.forEach(e => result.push(e));
+                        doBatch();
+                    } else
+                        resolve(result);
+                }, reject);
+            };
+            doBatch();
+        });
+    }
+
     droparea.addEventListener("dragenter", event => {
         droparea.style.borderColor = "#8E8";
         event.dataTransfer.dropEffect = "copy";
@@ -85,20 +108,46 @@ h3 {
 
     droparea.addEventListener("drop", event => {
         droparea.style.borderColor = "#EFEFEF";
-        updateOutputForFiles(event.dataTransfer.files);
+        updateOutputForFiles(event.dataTransfer.files, event.dataTransfer.items);
         event.preventDefault();
     });
 
-    function updateOutputForFiles(files)
+    async function stringFromDataTransferItem(item)
+    {
+        return new Promise(resolve => item.getAsString(string => resolve(string)));
+    }
+
+    async function fileFromFileSystemFileEntry(fileEntry)
+    {
+        return new Promise(resolve => fileEntry.file(file => resolve(file)));
+    }
+
+    async function htmlRepresentationForFileSystemEntry(entry)
+    {
+        let type = entry.isDirectory ? "DIR" : (entry.isFile ? "FILE" : "UNKNOWN");
+        let representation = "";
+        if (entry.isDirectory) {
+            representation += `<div>DIR: ${entry.fullPath}</div>\n`;
+            for (let child of await getEntriesAsPromise(entry))
+                representation += await htmlRepresentationForFileSystemEntry(child);
+        } else if (entry.isFile) {
+            let file = await fileFromFileSystemFileEntry(entry);
+            representation += `<div>FILE: ${entry.fullPath} ('${file.type}', ${file.size} bytes)</div>\n`;
+        }
+        return representation;
+    }
+
+    async function updateOutputForFiles(files, items)
     {
         files = Array.from(files);
 
-        output.innerHTML = "";
+        filesOutput.innerHTML = "";
+        itemsOutput.innerHTML = "";
         media.innerHTML = "";
         text.innerHTML = "";
 
         if (!files)
-            return true;
+            return;
 
         let outputHTML = "";
         for (let file of files) {
@@ -107,7 +156,7 @@ h3 {
                 <code><div id="typeDisplay">The content type is: ${file.type}</div></code>
                 <br>`;
         }
-        output.innerHTML = outputHTML;
+        filesOutput.innerHTML = outputHTML;
 
         files.map(file => {
             let mimeType = file.type;
@@ -123,12 +172,22 @@ h3 {
                 reader.readAsText(file);
             }
         });
-        return true;
+
+        if (items) {
+            for (let index = 0; index < items.length; index++) {
+                let item = items.item(index);
+                itemsOutput.innerHTML += `<strong><div><code>Found data transfer item (kind: ${item.kind}, type: ${item.type})</code></div></strong>\n`;
+                let entry = item.webkitGetAsEntry();
+                if (entry)
+                    itemsOutput.innerHTML += await htmlRepresentationForFileSystemEntry(entry);
+            }
+        }
     }
 
     [single, multiple].forEach((input) => {
         input.addEventListener("change", () => {
-            return updateOutputForFiles(input.files);
+            updateOutputForFiles(input.files);
+            return true;
         });
     });
 </script>
