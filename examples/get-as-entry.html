@@ -16,22 +16,167 @@ html, body {
     height: 200px;
     top: 0;
     left: 0;
+    border: 10px #DDD dashed;
+    box-sizing: border-box;
+    line-height: calc(200px - 1em);
+    color: #DDD;
+    font-size: 2em;
 }
 
-textarea {
+#description {
+    text-align: center;
+    pointer-events: none;
+}
+
+.item > .media {
+    width: 66%;
+    height: 66%;
+    border: 2px black solid;
+    margin: 1em auto 4px auto;
+    box-sizing: border-box;
+    overflow: scroll;
+    text-align: justify;
+}
+
+.media > img, .media > embed, .media > video {
     width: 100%;
-    height: calc(100% - 200px);
-    font-family: monospace;
+    height: 100%;
+}
+
+.item {
+    width: 40vw;
+    height: 40vw;
+    max-width: 200px;
+    max-height: 200px;
+    display: inline-block;
+    text-align: center;
+}
+
+#browser {
+    padding: 1em;
+    margin: 0 auto;
 }
 </style>
 
 <div id="droparea">
-    <div>To manually test, drop something into this area and observe the output below.</div>
+    <div id="description">Drop a folder here</div>
 </div>
-<textarea id="textarea"></textarea>
+<div id="browser">
+<div>Showing: <strong id="path"></strong></div>
+<div id="files"></div>
+</div>
 
 <script>
-    function getEntriesAsPromise(entry) {
+    class FileNode {
+        constructor(name, fullpath, parent, children, file) {
+            console.assert(name);
+            console.assert(fullpath)
+            console.assert((!file && children) || (!children && file));
+            this.name = name;
+            this.fullpath = fullpath;
+            this.parent = parent;
+            this.children = children;
+            this.file = file;
+        }
+
+        *[Symbol.iterator]() {
+            if (!this.children)
+                return;
+
+            for (let child of this.children)
+                yield child;
+        }
+
+        get isFile() { return !this.children && this.file; }
+        get isDirectory() { return this.children && !this.file; }
+        get isRoot() { return !this.parent; }
+
+        toDOMNode() {
+            let media = document.createElement("div");
+            media.classList.add("media");
+            let name = document.createElement("div");
+            name.textContent = this.name;
+            let item = document.createElement("div");
+            item.classList.add("item");
+            item.appendChild(media);
+            item.appendChild(name);
+
+            if (this.isDirectory) {
+                media.insertAdjacentHTML("beforeend", `<img src="images/folder.png"></img>`);
+                media.addEventListener("click", () => {
+                    showFileNodeInBrowser(this);
+                });
+            } else if (this.isFile) {
+                let file = this.file;
+                let mimeType = file.type;
+                if (mimeType.indexOf("image") !== -1)
+                    media.insertAdjacentHTML("beforeend", `<img src="${URL.createObjectURL(file)}"></img>`);
+                else if (mimeType.indexOf("video") !== -1)
+                    media.insertAdjacentHTML("beforeend", `<video controls src="${URL.createObjectURL(file)}"></video>`);
+                else if (mimeType.indexOf("pdf") !== -1)
+                    media.insertAdjacentHTML("beforeend", `<embed src="${URL.createObjectURL(file)}" ></embed>`);
+                else if (mimeType.indexOf("text") !== -1) {
+                    let text = document.createElement("span");
+                    let reader = new FileReader();
+                    reader.addEventListener("load", event => text.insertAdjacentText("beforeend", event.target.result));
+                    reader.readAsText(file);
+                    media.appendChild(text);
+                }
+            }
+
+            return item;
+        }
+    }
+
+    function parentFolderDOMNode(file) {
+        if (!file.parent)
+            return null;
+
+        let media = document.createElement("div");
+        media.classList.add("media");
+        let name = document.createElement("div");
+        name.textContent = "../";
+        let item = document.createElement("div");
+        item.classList.add("item");
+        item.appendChild(media);
+        item.appendChild(name);
+        media.insertAdjacentHTML("beforeend", `<img src="images/up-arrow.png"></img>`);
+        media.addEventListener("click", () => {
+            showFileNodeInBrowser(file.parent);
+        });
+
+        return item;
+    }
+
+    function showFileNodeInBrowser(file) {
+        files.innerHTML = "";
+        path.textContent = file.fullpath;
+        let parentNode = parentFolderDOMNode(file);
+        if (parentNode)
+            files.appendChild(parentNode);
+        for (let child of file)
+            files.appendChild(child.toDOMNode());
+    }
+
+    async function fileNodeFromEntry(entry, parent) {
+        if (parent === undefined)
+            parent = null;
+
+        if (entry.isDirectory) {
+            let directoryNode = new FileNode(entry.name, entry.fullPath, parent, [], null)
+            for (let child of await getChildEntries(entry))
+                 directoryNode.children.push(await fileNodeFromEntry(child, directoryNode));
+            return directoryNode;
+        }
+
+        if (entry.isFile)
+            return new FileNode(entry.name, entry.fullPath, parent, null, await fileFromFileSystemFileEntry(entry));
+
+        console.assert(false);
+        return null;
+    }
+
+    function getChildEntries(entry) {
         if (!entry.isDirectory)
             return Promise.resolve([]);
 
@@ -51,43 +196,36 @@ textarea {
         });
     }
 
-    droparea.addEventListener("dragenter", event => event.preventDefault());
-    droparea.addEventListener("dragover", event => event.preventDefault());
-    droparea.addEventListener("drop", event => {
-        logItemAndFileEntryInformation(event.dataTransfer.items);
-        event.preventDefault();
-    });
-
-    async function fileFromFileSystemFileEntry(fileEntry)
-    {
+    function fileFromFileSystemFileEntry(fileEntry) {
         return new Promise(resolve => fileEntry.file(file => resolve(file)));
     }
 
-    async function representationForFileSystemEntry(entry)
-    {
-        let type = entry.isDirectory ? "DIR" : (entry.isFile ? "FILE" : "UNKNOWN");
-        let representation = "";
-        if (entry.isDirectory) {
-            representation += `DIR: ${entry.fullPath}\n`;
-            for (let child of await getEntriesAsPromise(entry))
-                representation += await representationForFileSystemEntry(child);
-        } else if (entry.isFile) {
-            let file = await fileFromFileSystemFileEntry(entry);
-            representation += `FILE: ${entry.fullPath} ('${file.type}', ${file.size} bytes)\n`;
+    droparea.addEventListener("dragenter", event => {
+        droparea.style.borderColor = "#8E8";
+        droparea.style.color = "#8E8";
+        event.preventDefault();
+    });
+    droparea.addEventListener("dragover", event => {
+        droparea.style.borderColor = "#8E8";
+        droparea.style.color = "#8E8";
+        event.preventDefault();
+    });
+    droparea.addEventListener("dragleave", event => {
+        droparea.style.borderColor = "#DDD";
+        droparea.style.color = "#DDD";
+    });
+    droparea.addEventListener("drop", async function(event) {
+        for (let item of event.dataTransfer.items) {
+            if (item.kind === "file") {
+                window.rootFileNode = await fileNodeFromEntry(item.webkitGetAsEntry());
+                showFileNodeInBrowser(rootFileNode);
+                break;
+            }
         }
-        return representation;
-    }
 
-    async function logItemAndFileEntryInformation(items)
-    {
-        textarea.value = "";
-        for (let index = 0; index < items.length; index++) {
-            let item = items.item(index);
-            textarea.value += `Found data transfer item (kind: '${item.kind}', type: '${item.type}')\n`;
-            let entry = item.webkitGetAsEntry();
-            if (entry)
-                textarea.value += await representationForFileSystemEntry(entry);
-        }
-    }
+        droparea.style.borderColor = "#DDD";
+        droparea.style.color = "#DDD";
+        event.preventDefault();
+    });
 </script>
 </html>
