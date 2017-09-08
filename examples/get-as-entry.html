@@ -11,7 +11,6 @@ html, body {
 }
 
 #droparea {
-    margin-top: 1em;
     width: 100%;
     height: 200px;
     top: 0;
@@ -34,8 +33,14 @@ html, body {
     border: 2px black solid;
     margin: 1em auto 4px auto;
     box-sizing: border-box;
-    overflow: scroll;
+    overflow: hidden;
     text-align: justify;
+}
+
+.item > .name {
+    white-space: nowrap;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 .media > img, .media > embed, .media > video {
@@ -96,6 +101,7 @@ html, body {
             media.classList.add("media");
             let name = document.createElement("div");
             name.textContent = this.name;
+            name.classList.add("name");
             let item = document.createElement("div");
             item.classList.add("item");
             item.appendChild(media);
@@ -121,7 +127,8 @@ html, body {
                     reader.addEventListener("load", event => text.insertAdjacentText("beforeend", event.target.result));
                     reader.readAsText(file);
                     media.appendChild(text);
-                }
+                } else
+                    media.insertAdjacentHTML("beforeend", `<img src="images/question.png"></img>`);
             }
 
             return item;
@@ -154,8 +161,11 @@ html, body {
         let parentNode = parentFolderDOMNode(file);
         if (parentNode)
             files.appendChild(parentNode);
-        for (let child of file)
-            files.appendChild(child.toDOMNode());
+        if (file.isDirectory) {
+            for (let child of file)
+                files.appendChild(child.toDOMNode());
+        } else
+            files.appendChild(file.toDOMNode());
     }
 
     async function fileNodeFromEntry(entry, parent) {
@@ -164,8 +174,12 @@ html, body {
 
         if (entry.isDirectory) {
             let directoryNode = new FileNode(entry.name, entry.fullPath, parent, [], null)
-            for (let child of await getChildEntries(entry))
-                 directoryNode.children.push(await fileNodeFromEntry(child, directoryNode));
+            for (let child of await getChildEntries(entry)) {
+                if (child.isDirectory)
+                    directoryNode.children.unshift(await fileNodeFromEntry(child, directoryNode));
+                else
+                    directoryNode.children.push(await fileNodeFromEntry(child, directoryNode));
+            }
             return directoryNode;
         }
 
@@ -215,6 +229,10 @@ html, body {
         droparea.style.color = "#DDD";
     });
     droparea.addEventListener("drop", async function(event) {
+        event.preventDefault();
+        droparea.style.borderColor = "#DDD";
+        droparea.style.color = "#DDD";
+
         for (let item of event.dataTransfer.items) {
             if (item.kind === "file") {
                 window.rootFileNode = await fileNodeFromEntry(item.webkitGetAsEntry());
@@ -222,10 +240,6 @@ html, body {
                 break;
             }
         }
-
-        droparea.style.borderColor = "#DDD";
-        droparea.style.color = "#DDD";
-        event.preventDefault();
     });
 </script>
 </html>
