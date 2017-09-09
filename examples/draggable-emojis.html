@@ -23,19 +23,13 @@
         align-content:flex-start;
         overflow-y: scroll;
         -webkit-overflow-scrolling: touch;
+        border: 8px rgba(0, 0, 0, 0) dashed;
+        box-sizing: border-box;
     }
 
     .container + .container {
         margin-left: 2em;
         flex-direction: row;
-    }
-
-    #left {
-        border-right: 1px #DDD solid;
-    }
-
-    #right {
-        border-left: 1px #DDD solid;
     }
 
     .item {
@@ -79,20 +73,46 @@
 </body>
 
 <script>
+window.dragSource = null;
+
 document.querySelectorAll(".item").forEach((item, index) => {
     item.id = `item-${index}`;
     item.addEventListener("dragstart", event => event.dataTransfer.setData("text/plain", item.id));
 });
 
 [right, left].forEach(container => {
-    container.addEventListener("dragenter", event => event.preventDefault());
-    container.addEventListener("dragover", event => event.preventDefault());
+    container.addEventListener("dragstart", event => {
+        window.dragSource = container;
+    });
+    container.addEventListener("dragenter", event => {
+        if (container === dragSource)
+            return;
+
+        container.style.borderColor = "rgb(100, 255, 100)";
+        event.preventDefault();
+    });
+
+    container.addEventListener("dragover", event => {
+        if (container === dragSource)
+            return;
+
+        container.style.borderColor = "rgb(100, 255, 100)";
+        event.preventDefault();
+    });
+
+    container.addEventListener("dragleave", event => {
+        container.style.borderColor = "rgba(0, 0, 0, 0)";
+        event.preventDefault();
+    });
+
     container.addEventListener("drop", event => {
+        container.style.borderColor = "rgba(0, 0, 0, 0)";
         let identifier = event.dataTransfer.getData("text/plain");
         let sourceItem = document.getElementById(identifier);
-        if (sourceItem)
+        if (sourceItem && sourceItem.parentElement != container) {
             container.appendChild(sourceItem);
-        console.log(`The identifier is: "${identifier}"`);
+            event.preventDefault();
+        }
     });
 });
 </script>
