@@ -1,0 +1,98 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<style>
+    body, html {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #F8F8F8;
+    }
+
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .container {
+        background-color: white;
+        width: calc(50% - 1em);
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items:flex-start;
+        align-content:flex-start;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .container + .container {
+        margin-left: 2em;
+        flex-direction: row;
+    }
+
+    #left {
+        border-right: 1px #DDD solid;
+    }
+
+    #right {
+        border-left: 1px #DDD solid;
+    }
+
+    .item {
+        background-color: #F8F8F8;
+        border-radius: 4em;
+        width: 4em;
+        height: 4em;
+        margin: 1em;
+        line-height: 4em;
+        text-align: center;
+    }
+</style>
+<body>
+<div class="container" id="left">
+    <div draggable="true" class="item">😀</div>
+    <div draggable="true" class="item">🙃</div>
+    <div draggable="true" class="item">😅</div>
+    <div draggable="true" class="item">😬</div>
+    <div draggable="true" class="item">🤔</div>
+    <div draggable="true" class="item">😐</div>
+    <div draggable="true" class="item">🌎</div>
+    <div draggable="true" class="item">🎋</div>
+    <div draggable="true" class="item">🌩</div>
+    <div draggable="true" class="item">🌝</div>
+    <div draggable="true" class="item">🔥</div>
+    <div draggable="true" class="item">🌊</div>
+</div>
+<div class="container" id="right">
+    <div draggable="true" class="item">🍏</div>
+    <div draggable="true" class="item">🥓</div>
+    <div draggable="true" class="item">🍕</div>
+    <div draggable="true" class="item">🍔</div>
+    <div draggable="true" class="item">🍙</div>
+    <div draggable="true" class="item">🍣</div>
+    <div draggable="true" class="item">🏠</div>
+    <div draggable="true" class="item">🏫</div>
+    <div draggable="true" class="item">🕌</div>
+    <div draggable="true" class="item">🏦</div>
+    <div draggable="true" class="item">🏭</div>
+    <div draggable="true" class="item">🏢</div>
+</body>
+
+<script>
+document.querySelectorAll(".item").forEach((item, index) => {
+    item.id = `item-${index}`;
+    item.addEventListener("dragstart", event => event.dataTransfer.setData("text/plain", item.id));
+});
+
+[right, left].forEach(container => {
+    container.addEventListener("dragenter", event => event.preventDefault());
+    container.addEventListener("dragover", event => event.preventDefault());
+    container.addEventListener("drop", event => {
+        let identifier = event.dataTransfer.getData("text/plain");
+        let sourceItem = document.getElementById(identifier);
+        if (sourceItem)
+            container.appendChild(sourceItem);
+        console.log(`The identifier is: "${identifier}"`);
+    });
+});
+</script>
