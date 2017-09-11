@@ -80,13 +80,15 @@ document.querySelectorAll(".item").forEach((item, index) => {
 });
 
 [right, left].forEach(container => {
+    container.dragEnterCount = 0;
     container.addEventListener("dragstart", event => {
+        container.dragEnterCount = 0;
         window.dragSource = container;
     });
     container.addEventListener("dragenter", event => {
+        container.dragEnterCount++;
         if (container === dragSource)
             return;
-
         container.style.borderColor = "rgb(100, 255, 100)";
         event.preventDefault();
     });
@@ -94,14 +96,13 @@ document.querySelectorAll(".item").forEach((item, index) => {
     container.addEventListener("dragover", event => {
         if (container === dragSource)
             return;
-
-        container.style.borderColor = "rgb(100, 255, 100)";
         event.preventDefault();
     });
 
     container.addEventListener("dragleave", event => {
-        container.style.borderColor = "rgba(0, 0, 0, 0)";
-        event.preventDefault();
+        container.dragEnterCount--;
+        if (container.dragEnterCount <= 0)
+            container.style.borderColor = "rgba(0, 0, 0, 0)";
     });
 
     container.addEventListener("drop", event => {
@@ -112,6 +113,7 @@ document.querySelectorAll(".item").forEach((item, index) => {
             container.appendChild(sourceItem);
             event.preventDefault();
         }
+        container.dragEnterCount = 0;
     });
 });
 </script>

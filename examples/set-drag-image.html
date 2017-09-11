@@ -1,0 +1,63 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    background-color: black;
+    color: white;
+}
+
+#container {
+    margin: 0 auto;
+}
+
+#draggable {
+    text-align: center;
+    font-size: 50px;
+    font-family: monospace;
+}
+
+#sword-container {
+    margin: 50px auto 0 auto;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+}
+
+#sword {
+    width: 100%;
+    height: 100%;
+}
+</style>
+<div id="container">
+    <div id="draggable" draggable="true">It's dangerous to go alone! Take this.</div>
+    <div id="sword-container"><img src="https://whsieh.github.io/examples/images/sword.png" id="sword"></img></div>
+</div>
+<script>
+draggable.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("text/plain", sword.src);
+    let bounds = sword.getBoundingClientRect();
+    event.dataTransfer.setDragImage(sword, bounds.width / 2, bounds.height);
+});
+
+sword.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("text/plain", sword.src);
+});
+
+sword.addEventListener("click", event => {
+    if (getComputedStyle(document.body).backgroundColor === "rgb(0, 0, 0)") {
+        document.body.style.backgroundColor = "white";
+        document.body.style.color = "black";
+    } else {
+        document.body.style.backgroundColor = "black";
+        document.body.style.color = "white";
+    }
+});
+</script>
