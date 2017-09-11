@@ -12,6 +12,7 @@ body {
     align-items: center;
     background-color: black;
     color: white;
+    font-family: monospace;
 }
 
 #container {
@@ -21,7 +22,6 @@ body {
 #draggable {
     text-align: center;
     font-size: 50px;
-    font-family: monospace;
 }
 
 #sword-container {
@@ -31,20 +31,43 @@ body {
     height: 100px;
 }
 
+#slider-container {
+    text-align: left;
+    display: none;
+    margin: 1em;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.slider {
+    margin: 1em auto;
+}
+
+input[type=range] {
+    width: 200px;
+    height: 1em;
+}
+
 #sword {
     width: 100%;
     height: 100%;
 }
 </style>
+<div id="slider-container">
+    <div class="slider"><code>drag offset x </code><input id="offsetX" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelX"></code></div>
+    <div class="slider"><code>drag offset y </code><input id="offsetY" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelY"></code></div>
+</div>
 <div id="container">
     <div id="draggable" draggable="true">It's dangerous to go alone! Take this.</div>
     <div id="sword-container"><img src="https://whsieh.github.io/examples/images/sword.png" id="sword"></img></div>
 </div>
 <script>
+window.dragOffsetX = 0;
+window.dragOffsetY = 0;
 draggable.addEventListener("dragstart", event => {
     event.dataTransfer.setData("text/plain", sword.src);
-    let bounds = sword.getBoundingClientRect();
-    event.dataTransfer.setDragImage(sword, bounds.width / 2, bounds.height);
+    event.dataTransfer.setDragImage(sword, window.dragOffsetX, window.dragOffsetY);
 });
 
 sword.addEventListener("dragstart", event => {
@@ -55,9 +78,21 @@ sword.addEventListener("click", event => {
     if (getComputedStyle(document.body).backgroundColor === "rgb(0, 0, 0)") {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
+        document.querySelector("#slider-container").style.display = "block";
     } else {
         document.body.style.backgroundColor = "black";
         document.body.style.color = "white";
+        document.querySelector("#slider-container").style.display = "none";
     }
+    updateOffsets();
 });
+
+[offsetX, offsetY].forEach(slider => slider.addEventListener("change", updateOffsets));
+
+function updateOffsets() {
+    offsetLabelX.textContent = offsetX.value;
+    offsetLabelY.textContent = offsetY.value;
+    dragOffsetX = parseInt(offsetX.value);
+    dragOffsetY = parseInt(offsetY.value);
+}
 </script>
