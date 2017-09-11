@@ -57,6 +57,7 @@ input[type=range] {
 <div id="slider-container">
     <div class="slider"><code>drag offset x </code><input id="offsetX" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelX"></code></div>
     <div class="slider"><code>drag offset y </code><input id="offsetY" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelY"></code></div>
+    <div class="slider"><code>use detached image </code><input id="detached" type="checkbox"></input></div>
 </div>
 <div id="container">
     <div id="draggable" draggable="true">It's dangerous to go alone! Take this.</div>
@@ -67,7 +68,12 @@ window.dragOffsetX = 0;
 window.dragOffsetY = 0;
 draggable.addEventListener("dragstart", event => {
     event.dataTransfer.setData("text/plain", sword.src);
-    event.dataTransfer.setDragImage(sword, window.dragOffsetX, window.dragOffsetY);
+    let image = sword;
+    if (detached.checked) {
+        image = new Image();
+        image.src = "https://whsieh.github.io/examples/images/webkit.png";
+    }
+    event.dataTransfer.setDragImage(image, window.dragOffsetX, window.dragOffsetY);
 });
 
 sword.addEventListener("dragstart", event => {
