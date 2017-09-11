@@ -64,16 +64,23 @@ input[type=range] {
     <div id="sword-container"><img src="https://whsieh.github.io/examples/images/sword.png" id="sword"></img></div>
 </div>
 <script>
+function detachedDragImage() {
+    if (window._detachedDragImage)
+        return window._detachedDragImage;
+
+    _detachedDragImage = new Image();
+    _detachedDragImage.src = "https://whsieh.github.io/examples/images/webkit.png";
+    console.log(`Decoding custom drag image (${_detachedDragImage.src})`);
+    if (_detachedDragImage.decode)
+        _detachedDragImage.decode().then(() => console.log("...done decoding custom drag image."));
+}
+
 window.dragOffsetX = 0;
 window.dragOffsetY = 0;
+
 draggable.addEventListener("dragstart", event => {
     event.dataTransfer.setData("text/plain", sword.src);
-    let image = sword;
-    if (detached.checked) {
-        image = new Image();
-        image.src = "https://whsieh.github.io/examples/images/webkit.png";
-    }
-    event.dataTransfer.setDragImage(image, window.dragOffsetX, window.dragOffsetY);
+    event.dataTransfer.setDragImage(detached.checked ? detachedDragImage() : sword, dragOffsetX, dragOffsetY);
 });
 
 sword.addEventListener("dragstart", event => {
@@ -101,4 +108,6 @@ function updateOffsets() {
     dragOffsetX = parseInt(offsetX.value);
     dragOffsetY = parseInt(offsetY.value);
 }
+
+detachedDragImage(); // Preemptively load and decode the custom detached drag image.
 </script>
