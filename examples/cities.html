@@ -1,0 +1,82 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: -apple-system;
+    font-size: 1em;
+}
+
+#map > img {
+    display: block;
+}
+
+#map {
+    position: relative;
+    width: 100%;
+}
+
+::-webkit-scrollbar  {
+    display: none;
+    height: 0;
+    width: 0;
+}
+
+.pin {
+    width: 60px;
+    height: 60px;
+    border: 0.5em white solid;
+    box-sizing: border-box;
+    border-radius: 30px;
+    transform: rotateZ(45deg);
+    background-color: rgba(14, 122, 254, 0.75);
+    position: absolute;
+}
+</style>
+
+<body>
+<div id="map">
+    <img draggable="false" src="images/usa.png"></img>
+</div>
+</body>
+
+<script>
+function dropPinAt(x, y, description, image) {
+    let pin = document.createElement("div");
+    pin.classList.add("pin");
+    pin.style.left = `${x - 30}px`;
+    pin.style.top = `${y - 30}px`;
+    pin.draggable = "true";
+    pin.addEventListener("dragstart", event => {
+        event.dataTransfer.setDragImage(image, 50, 50);
+        event.dataTransfer.setData("text/plain", description);
+    });
+    map.appendChild(pin);
+    return pin;
+}
+
+function loadIcon(name, completion) {
+    let icon = new Image();
+    icon.src = `images/${name}.png`;
+    if (icon.decode)
+        icon.decode().then(() => completion(icon));
+    else
+        completion(icon);
+}
+
+loadIcon("san-francisco", icon => dropPinAt(92, 527, "San Francisco, CA", icon));
+loadIcon("miami", icon => dropPinAt(1432, 979, "Miami, FL", icon));
+loadIcon("new-york-city", icon => dropPinAt(1632, 413, "New York City, NY", icon));
+loadIcon("portland", icon => dropPinAt(86, 203, "Portland, OR", icon));
+loadIcon("seattle", icon => dropPinAt(95, 113, "Seattle, WA", icon));
+loadIcon("salt-lake-city", icon => dropPinAt(427, 410, "Salt Lake City, UT", icon));
+loadIcon("chicago", icon => dropPinAt(1197, 372, "Chicago, IL", icon));
+loadIcon("atlanta", icon => dropPinAt(1300, 688, "Atlanta, GA", icon));
+loadIcon("saint-louis", icon => dropPinAt(1116, 497, "St. Louis, MO", icon));
+loadIcon("austin", icon => dropPinAt(875, 815, "Austin, TX", icon));
+loadIcon("los-angeles", icon => dropPinAt(228, 678, "Los Angeles, CA", icon));
+</script>
