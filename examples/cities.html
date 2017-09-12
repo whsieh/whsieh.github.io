@@ -1,4 +1,4 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <style>
 body, html {
     width: 100%;
@@ -35,14 +35,14 @@ body {
 }
 
 .pin {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border: 0.5em white solid;
     box-sizing: border-box;
-    border-radius: 30px;
-    transform: rotateZ(45deg);
+    border-radius: 40px;
     background-color: rgba(14, 122, 254, 0.75);
     position: absolute;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 </style>
 
@@ -58,13 +58,15 @@ body {
 function dropPinAt(x, y, description, image) {
     let pin = document.createElement("div");
     pin.classList.add("pin");
-    console.log([x / inner.clientWidth, y / inner.clientHeight]);
-    pin.style.left = `calc(${100 * x}% - 30px)`;
-    pin.style.top = `calc(${100 * y}% - 30px)`;
+    pin.style.left = `calc(${100 * x}% - 40px)`;
+    pin.style.top = `calc(${100 * y}% - 40px)`;
     pin.draggable = "true";
     pin.addEventListener("dragstart", event => {
         event.dataTransfer.setDragImage(image, 50, 50);
         event.dataTransfer.setData("text/plain", description);
+    });
+    pin.addEventListener("click", event => {
+        console.log(`Clicked on: "${description}"`);
     });
     inner.appendChild(pin);
     return pin;
@@ -80,7 +82,7 @@ function loadIcon(name, completion) {
 }
 
 loadIcon("san-francisco", icon => dropPinAt(0.050281, 0.529411, "San Francisco, CA", icon));
-loadIcon("miami", icon => dropPinAt(0.767497, 0.971323, "Miami, FL", icon));
+loadIcon("miami", icon => dropPinAt(0.767497, 0.949323, "Miami, FL", icon));
 loadIcon("new-york-city", icon => dropPinAt(0.873290, 0.411029, "New York City, NY", icon));
 loadIcon("portland", icon => dropPinAt(0.045856, 0.207352, "Portland, OR", icon));
 loadIcon("seattle", icon => dropPinAt(0.051890, 0.112500, "Seattle, WA", icon));
