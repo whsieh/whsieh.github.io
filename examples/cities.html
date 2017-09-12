@@ -11,13 +11,21 @@ body {
     font-size: 1em;
 }
 
-#map > img {
-    display: block;
+#inner > img {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+#inner {
+    display: table;
+    clear: both;
+    position: relative;
 }
 
 #map {
+    min-width: 100vw;
+    min-height: 100vh;
     position: relative;
-    width: 100%;
 }
 
 ::-webkit-scrollbar  {
@@ -40,7 +48,9 @@ body {
 
 <body>
 <div id="map">
-    <img draggable="false" src="images/usa.png"></img>
+    <div id="inner">
+        <img draggable="false" src="images/usa.png"></img>
+    </div>
 </div>
 </body>
 
@@ -48,14 +58,15 @@ body {
 function dropPinAt(x, y, description, image) {
     let pin = document.createElement("div");
     pin.classList.add("pin");
-    pin.style.left = `${x - 30}px`;
-    pin.style.top = `${y - 30}px`;
+    console.log([x / inner.clientWidth, y / inner.clientHeight]);
+    pin.style.left = `calc(${100 * x}% - 30px)`;
+    pin.style.top = `calc(${100 * y}% - 30px)`;
     pin.draggable = "true";
     pin.addEventListener("dragstart", event => {
         event.dataTransfer.setDragImage(image, 50, 50);
         event.dataTransfer.setData("text/plain", description);
     });
-    map.appendChild(pin);
+    inner.appendChild(pin);
     return pin;
 }
 
@@ -68,15 +79,15 @@ function loadIcon(name, completion) {
         completion(icon);
 }
 
-loadIcon("san-francisco", icon => dropPinAt(92, 527, "San Francisco, CA", icon));
-loadIcon("miami", icon => dropPinAt(1432, 979, "Miami, FL", icon));
-loadIcon("new-york-city", icon => dropPinAt(1632, 413, "New York City, NY", icon));
-loadIcon("portland", icon => dropPinAt(86, 203, "Portland, OR", icon));
-loadIcon("seattle", icon => dropPinAt(95, 113, "Seattle, WA", icon));
-loadIcon("salt-lake-city", icon => dropPinAt(427, 410, "Salt Lake City, UT", icon));
-loadIcon("chicago", icon => dropPinAt(1197, 372, "Chicago, IL", icon));
-loadIcon("atlanta", icon => dropPinAt(1300, 688, "Atlanta, GA", icon));
-loadIcon("saint-louis", icon => dropPinAt(1116, 497, "St. Louis, MO", icon));
-loadIcon("austin", icon => dropPinAt(875, 815, "Austin, TX", icon));
-loadIcon("los-angeles", icon => dropPinAt(228, 678, "Los Angeles, CA", icon));
+loadIcon("san-francisco", icon => dropPinAt(0.050281, 0.529411, "San Francisco, CA", icon));
+loadIcon("miami", icon => dropPinAt(0.767497, 0.971323, "Miami, FL", icon));
+loadIcon("new-york-city", icon => dropPinAt(0.873290, 0.411029, "New York City, NY", icon));
+loadIcon("portland", icon => dropPinAt(0.045856, 0.207352, "Portland, OR", icon));
+loadIcon("seattle", icon => dropPinAt(0.051890, 0.112500, "Seattle, WA", icon));
+loadIcon("salt-lake-city", icon => dropPinAt(0.229283, 0.409558, "Salt Lake City, UT", icon));
+loadIcon("chicago", icon => dropPinAt(0.640386, 0.362500, "Chicago, IL", icon));
+loadIcon("atlanta", icon => dropPinAt(0.698310, 0.684558, "Atlanta, GA", icon));
+loadIcon("saint-louis", icon => dropPinAt(0.598149, 0.496323, "St. Louis, MO", icon));
+loadIcon("austin", icon => dropPinAt(0.471037, 0.813235, "Austin, TX", icon));
+loadIcon("los-angeles", icon => dropPinAt(0.121078, 0.671323, "Los Angeles, CA", icon));
 </script>
