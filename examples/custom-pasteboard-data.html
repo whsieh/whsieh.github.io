@@ -4,13 +4,15 @@
 <meta charset="utf-8">
 <style>
 html, body {
-    margin: 0;
+    margin: 1em;
+    font-family: -apple-system;
+    font-size: 1em;
 }
 
 #destination {
     border: 4px dashed lightgray;
     height: 150px;
-    width: 150px;
+    width: 300px;
     caret-color: transparent;
 }
 
@@ -19,16 +21,20 @@ html, body {
     border: 4px dashed lightgreen;
 }
 
-.margins {
-    margin: 1em;
+#drag, #copy, #default {
+    font-size: 2em;
 }
 </style>
 <body>
-    <div class="margins" id="drag" draggable="true"><strong><span style="color: red">Custom</span> <i style="opacity: 0.5">Drag</i></strong></div>
-    <div class="margins" id="copy"><strong><span style="color: blue">Custom</span> <i style="opacity: 0.5">Copy</i></strong></div>
-    <div class="margins"><strong><span style="color: gray">Default</span> <i style="opacity: 0.5">Behavior</i></strong></div>
-    <div class="margins" id="destination" contenteditable></div>
-    <div class="margins"><pre id="output"></pre></div>
+    <div><span id="drag" draggable="true"><strong><span style="color: red">Custom</span> <i style="opacity: 0.5">Drag</i></strong></span></div>
+    <br>
+    <div><span id="copy"><strong><span style="color: blue">Custom</span> <i style="opacity: 0.5">Copy</i></strong></span></div>
+    <br>
+    <div><span id="default"><strong><span style="color: gray">No</span> <i style="opacity: 0.5">Customization</i></strong></span></div>
+    <br>
+    <div id="destination" contenteditable></div>
+    <br>
+    <div><pre id="output"></pre></div>
 </body>
 <script>
 function updateOutputText(event) {
