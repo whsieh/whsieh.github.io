@@ -47,12 +47,13 @@ function updateOutputText(event) {
 function setCustomData(event, source) {
     let text = source.textContent;
     let pasteboard = event.dataTransfer || event.clipboardData;
+    let html = source.innerHTML;
     pasteboard.setData("text/plain", text);
-    pasteboard.setData("text/custom-1", text.toLowerCase());
-    pasteboard.setData("text/custom-2", text.toUpperCase());
-    pasteboard.setData("text/html", source.innerHTML);
-    pasteboard.setData("text/custom-3", `<i>${text}</i>`);
-    pasteboard.setData("text/custom-4", `<strong>${text}</strong>`);
+    pasteboard.setData("custom/lower", text.toLowerCase());
+    pasteboard.setData("text/html", html);
+    pasteboard.setData("custom/italic", `<i>${html}</i>`);
+    pasteboard.setData("text/uri-list", "https://www.apple.com");
+    pasteboard.setData("custom/url", "https://www.webkit.org");
 }
 
 destination.addEventListener("dragover", updateOutputText);
