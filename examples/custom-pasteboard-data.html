@@ -24,6 +24,15 @@ html, body {
 #drag, #copy, #default {
     font-size: 2em;
 }
+
+#output {
+    font-family: monospace;
+    width: 100%;
+    height: 200px;
+    border: 1px black solid;
+    opacity: 1;
+    -webkit-text-fill-color: black;
+}
 </style>
 <body>
     <div><span id="drag" draggable="true"><strong><span style="color: red">Custom</span> <i style="opacity: 0.5">Drag</i></strong></span></div>
@@ -34,13 +43,16 @@ html, body {
     <br>
     <div id="destination" contenteditable></div>
     <br>
-    <div><pre id="output"></pre></div>
+    <textarea disabled id="output"></textarea>
 </body>
 <script>
 function updateOutputText(event) {
     let pasteboard = event.dataTransfer || event.clipboardData;
-    let text = pasteboard.types.map(type => `${type}\t“${pasteboard.getData(type)}”`).join("\n");
-    output.textContent = `Handled “${event.type}”:\n${text}`;
+    let serializedData = {};
+    for (let type of pasteboard.types) {
+        serializedData[type] = pasteboard.getData(type);
+    }
+    output.textContent = JSON.stringify(serializedData, null, "    ");
     event.preventDefault();
 }
 
@@ -49,11 +61,11 @@ function setCustomData(event, source) {
     let pasteboard = event.dataTransfer || event.clipboardData;
     let html = source.innerHTML;
     pasteboard.setData("text/plain", text);
-    pasteboard.setData("custom/lower", text.toLowerCase());
+    pasteboard.setData("foo/lower", text.toLowerCase());
     pasteboard.setData("text/html", html);
-    pasteboard.setData("custom/italic", `<i>${html}</i>`);
+    pasteboard.setData("foo/italic", `<i>${html}</i>`);
     pasteboard.setData("text/uri-list", "https://www.apple.com");
-    pasteboard.setData("custom/url", "https://www.webkit.org");
+    pasteboard.setData("foo/alt-url", "https://www.webkit.org");
 }
 
 destination.addEventListener("dragover", updateOutputText);
@@ -61,11 +73,13 @@ destination.addEventListener("drop", event => {
     updateOutputText(event);
     destination.focus();
 });
+
 destination.addEventListener("paste", updateOutputText);
 destination.addEventListener("beforeinput", event => event.preventDefault());
 drag.addEventListener("dragstart", event => {
     setCustomData(event, drag);
 });
+
 copy.addEventListener("copy", event => {
     setCustomData(event, copy);
     event.preventDefault();
