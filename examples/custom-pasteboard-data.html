@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<style>
+html, body {
+    margin: 0;
+}
+
+#destination {
+    border: 4px dashed lightgray;
+    height: 150px;
+    width: 150px;
+    caret-color: transparent;
+}
+
+#destination:focus {
+    outline: none;
+    border: 4px dashed lightgreen;
+}
+
+.margins {
+    margin: 1em;
+}
+</style>
+<body>
+    <div class="margins" id="drag" draggable="true"><strong><span style="color: red">Custom</span> <i style="opacity: 0.5">Drag</i></strong></div>
+    <div class="margins" id="copy"><strong><span style="color: blue">Custom</span> <i style="opacity: 0.5">Copy</i></strong></div>
+    <div class="margins"><strong><span style="color: gray">Default</span> <i style="opacity: 0.5">Behavior</i></strong></div>
+    <div class="margins" id="destination" contenteditable></div>
+    <div class="margins"><pre id="output"></pre></div>
+</body>
+<script>
+function updateOutputText(event) {
+    let pasteboard = event.dataTransfer || event.clipboardData;
+    let text = pasteboard.types.map(type => `${type}\t“${pasteboard.getData(type)}”`).join("\n");
+    output.textContent = `Handled “${event.type}”:\n${text}`;
+    event.preventDefault();
+}
+
+function setCustomData(event, source) {
+    let text = source.textContent;
+    let pasteboard = event.dataTransfer || event.clipboardData;
+    pasteboard.setData("text/plain", text);
+    pasteboard.setData("text/custom-1", text.toLowerCase());
+    pasteboard.setData("text/custom-2", text.toUpperCase());
+    pasteboard.setData("text/html", source.innerHTML);
+    pasteboard.setData("text/custom-3", `<i>${text}</i>`);
+    pasteboard.setData("text/custom-4", `<strong>${text}</strong>`);
+}
+
+destination.addEventListener("dragover", updateOutputText);
+destination.addEventListener("drop", event => {
+    updateOutputText(event);
+    destination.focus();
+});
+destination.addEventListener("paste", updateOutputText);
+destination.addEventListener("beforeinput", event => event.preventDefault());
+drag.addEventListener("dragstart", event => {
+    setCustomData(event, drag);
+});
+copy.addEventListener("copy", event => {
+    setCustomData(event, copy);
+    event.preventDefault();
+});
+</script>
+</html>
