@@ -46,13 +46,19 @@ html, body {
     <textarea disabled id="output"></textarea>
 </body>
 <script>
+window.result = {};
+
 function updateOutputText(event) {
     let pasteboard = event.dataTransfer || event.clipboardData;
-    let serializedData = {};
-    for (let type of pasteboard.types) {
-        serializedData[type] = pasteboard.getData(type);
+    let eventData = {};
+    for (let type of pasteboard.types)
+        eventData[type] = pasteboard.getData(type);
+    result[event.type] = eventData;
+
+    if (event.type === "drop" || event.type === "paste") {
+        output.textContent = JSON.stringify(result, null, "    ");
+        result = {};
     }
-    output.textContent = JSON.stringify(serializedData, null, "    ");
     event.preventDefault();
 }
 
