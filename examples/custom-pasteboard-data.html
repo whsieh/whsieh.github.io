@@ -66,12 +66,13 @@ function setCustomData(event, source) {
     let text = source.textContent;
     let pasteboard = event.dataTransfer || event.clipboardData;
     let html = source.innerHTML;
+    let typePrefix = event.type === "dragstart" ? "drag" : "copy";
     pasteboard.setData("text/plain", text);
-    pasteboard.setData("foo/lower", text.toLowerCase());
+    pasteboard.setData(`${typePrefix}/plain`, text.toLowerCase());
     pasteboard.setData("text/html", html);
-    pasteboard.setData("foo/italic", `<i>${html}</i>`);
+    pasteboard.setData(`${typePrefix}/html`, `<i>${html}</i>`);
     pasteboard.setData("text/uri-list", "https://www.apple.com");
-    pasteboard.setData("foo/alt-url", "https://www.webkit.org");
+    pasteboard.setData(`${typePrefix}/url`, "https://www.webkit.org");
 }
 
 destination.addEventListener("dragover", updateOutputText);
