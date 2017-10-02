@@ -94,17 +94,10 @@ function setCustomData(event) {
     }));
 }
 
-destination.addEventListener("drop", event => {
-    updateOutputText(event);
-    destination.focus();
-});
-
+destination.addEventListener("drop", updateOutputText);
 destination.addEventListener("paste", updateOutputText);
 destination.addEventListener("beforeinput", event => event.preventDefault());
-drag.addEventListener("dragstart", event => {
-    setCustomData(event);
-});
-
+drag.addEventListener("dragstart", setCustomData);
 copy.addEventListener("copy", event => {
     setCustomData(event);
     event.preventDefault();
