@@ -28,7 +28,7 @@ html, body {
 #output {
     font-family: monospace;
     width: 100%;
-    height: 200px;
+    height: 100vh;
     border: 1px black solid;
     opacity: 1;
     -webkit-text-fill-color: black;
@@ -54,8 +54,13 @@ function representationForFile(file) {
     };
 }
 
-async function updateOutputText(event) {
-    event.preventDefault();
+let result = {};
+
+function updateOutputText(event) {
+    if (event.type === "drop" || event.type === "paste")
+        event.preventDefault();
+    else if (event.type == "dragstart" || event.type === "copy")
+        result = {};
 
     let pasteboard = event.dataTransfer || event.clipboardData;
     let dataInfo = {};
@@ -71,8 +76,7 @@ async function updateOutputText(event) {
             });
         }
     }
-    let result = {
-        event: event.type,
+    result[event.type] = {
         data: dataInfo,
         items: itemsInfo
     };
@@ -92,6 +96,7 @@ function setCustomData(event) {
         lastModified: new Date(),
         type: "text/plain"
     }));
+    updateOutputText(event);
 }
 
 destination.addEventListener("drop", updateOutputText);
