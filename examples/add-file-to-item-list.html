@@ -47,10 +47,16 @@ html, body {
 function representationForFile(file) {
     if (!file)
         return null;
-    return `File(${file.name}, ${file.size} bytes, '${file.type}')`;
+    return {
+        name: file.name,
+        bytes: file.size,
+        type: file.type
+    };
 }
 
-function updateOutputText(event) {
+async function updateOutputText(event) {
+    event.preventDefault();
+
     let pasteboard = event.dataTransfer || event.clipboardData;
     let dataInfo = {};
     for (let type of pasteboard.types)
@@ -71,13 +77,13 @@ function updateOutputText(event) {
         items: itemsInfo
     };
     output.textContent = JSON.stringify(result, null, "    ");
-    event.preventDefault();
 }
 
 function setCustomData(event) {
     let pasteboard = event.dataTransfer || event.clipboardData;
     pasteboard.setData("text/html", "<i>This is some HTML data.</i>");
     pasteboard.setData("text/custom", "This is some custom data");
+    pasteboard.setData("text/plain", "This is some plain text");
     let parts = [
         new Blob(["This part is from a JavaScript Blob"], { type : "text/plain" }),
         "This part is just from a plain string"
