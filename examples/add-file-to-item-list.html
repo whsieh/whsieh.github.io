@@ -92,7 +92,7 @@ function setCustomData(event) {
     let pasteboard = event.dataTransfer || event.clipboardData;
 
     pasteboard.setData("text/html", "<i>HTML data written using setData</i>");
-    pasteboard.items.add("text/plain", "plain text data written using items.add");
+    pasteboard.items.add("plain text data written using items.add", "text/plain");
 
     if (includeCustomData.checked)
         pasteboard.setData("custom data type", "data written using setData");
