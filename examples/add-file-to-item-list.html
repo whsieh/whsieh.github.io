@@ -29,21 +29,32 @@ html, body {
     font-family: monospace;
     width: 100%;
     height: 100vh;
-    border: 1px black solid;
     opacity: 1;
     -webkit-text-fill-color: black;
 }
 </style>
+
 <body>
     <div><span id="drag" draggable="true"><strong>Drag a file</strong></span></div>
     <br>
     <div><span id="copy"><strong>Copy a file</strong></span></div>
     <br>
+    <div><input id="reset" type="button" value="Reset"></input><input id="input" type="file" multiple></input></div>
+    <br>
+    <div><input id="includeBlobFiles" type="checkbox" checked="true"></input> Include additional files</div>
+    <div><input id="includeCustomData" type="checkbox" checked="true"></input> Include custom data</div>
+    <br>
     <div id="destination" contenteditable></div>
     <br>
-    <textarea disabled id="output"></textarea>
+    <pre disabled id="output"></pre>
 </body>
 <script>
+reset.addEventListener("click", () => input.value = "");
+
+function write(message) {
+    output.textContent += `${message}\n`;
+}
+
 function representationForFile(file) {
     if (!file)
         return null;
@@ -57,50 +68,67 @@ function representationForFile(file) {
 let result = {};
 
 function updateOutputText(event) {
-    if (event.type === "drop" || event.type === "paste")
-        event.preventDefault();
-    else if (event.type == "dragstart" || event.type === "copy")
-        result = {};
-
-    let pasteboard = event.dataTransfer || event.clipboardData;
-    let dataInfo = {};
-    for (let type of pasteboard.types)
+    const dataInfo = {};
+    const pasteboard = event.dataTransfer || event.clipboardData;
+    for (const type of pasteboard.types)
         dataInfo[type] = pasteboard.getData(type);
-    let itemsInfo = []
-    if (pasteboard.items) {
-        for (let item of pasteboard.items) {
-            itemsInfo.push({
-                type: item.type,
-                kind: item.kind,
-                file: representationForFile(item.getAsFile())
-            });
-        }
+    const itemsInfo = []
+    for (const item of pasteboard.items) {
+        itemsInfo.push({
+            type: item.type,
+            kind: item.kind,
+            file: representationForFile(item.getAsFile())
+        });
     }
-    result[event.type] = {
+    write(`\n*** On ${event.type} ***\n\n${JSON.stringify({
         data: dataInfo,
-        items: itemsInfo
-    };
-    output.textContent = JSON.stringify(result, null, "    ");
+        items: itemsInfo,
+        files: Array.from(pasteboard.files).map(representationForFile)
+    }, null, "    ")}`);
 }
 
 function setCustomData(event) {
+    output.textContent = "";
     let pasteboard = event.dataTransfer || event.clipboardData;
-    pasteboard.setData("text/html", "<i>This is some HTML data.</i>");
-    pasteboard.setData("text/custom", "This is some custom data");
-    pasteboard.setData("text/plain", "This is some plain text");
-    let parts = [
-        new Blob(["This part is from a JavaScript Blob"], { type : "text/plain" }),
-        "This part is just from a plain string"
-    ];
-    pasteboard.items.add(new File(parts, "example.txt", {
-        lastModified: new Date(),
-        type: "text/plain"
-    }));
+
+    pasteboard.setData("text/html", "<i>HTML data written using setData</i>");
+    pasteboard.items.add("text/plain", "plain text data written using items.add");
+
+    if (includeCustomData.checked)
+        pasteboard.setData("custom data type", "data written using setData");
+
+    for (const file of input.files)
+        pasteboard.items.add(file);
+
+    if (includeBlobFiles.checked) {
+        let parts = [
+            new Blob(["This part is from a JavaScript Blob"], { type : "text/plain" }),
+            "This part is just from a plain string"
+        ];
+        pasteboard.items.add(new File(parts, "example.txt", {
+            lastModified: new Date(),
+            type: "text/plain"
+        }));
+        const buffer = new ArrayBuffer(64);
+        const array = new Int8Array(buffer);
+        array.fill(15);
+        pasteboard.items.add(new File([ buffer ], "custom.bin", {
+            lastModified: new Date(),
+            type: "custom/binary"
+        }));
+    }
+
     updateOutputText(event);
 }
 
-destination.addEventListener("drop", updateOutputText);
-destination.addEventListener("paste", updateOutputText);
+destination.addEventListener("drop", event => {
+    updateOutputText(event);
+    event.preventDefault();
+});
+destination.addEventListener("paste", event => {
+    updateOutputText(event);
+    event.preventDefault();
+});
 destination.addEventListener("beforeinput", event => event.preventDefault());
 drag.addEventListener("dragstart", setCustomData);
 copy.addEventListener("copy", event => {
