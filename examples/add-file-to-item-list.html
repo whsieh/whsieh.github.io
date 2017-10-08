@@ -51,40 +51,52 @@ html, body {
 <script>
 reset.addEventListener("click", () => input.value = "");
 
-function write(message) {
-    output.textContent += `${message}\n`;
+function write(markup) {
+    output.insertAdjacentHTML("beforeend", markup);
 }
 
-function representationForFile(file) {
-    if (!file)
-        return null;
-    return {
-        name: file.name,
-        bytes: file.size,
-        type: file.type
-    };
+function outputForFile(file) {
+    return file ? `(name = '${file.name}', size = ${file.size} bytes, type = '${file.type}')` : "(null)";
 }
 
-let result = {};
+globalStringLoadCount = 0;
+currentStringLoadCount = 0;
 
-function updateOutputText(event) {
-    const dataInfo = {};
+function didFinishLoadingAllStrings() {
+    write("<strong>Done loading string data</strong>");
+    // Implement me.
+}
+
+function loadString(item) {
+    currentStringLoadCount++;
+    let outputElementId = `string-${++globalStringLoadCount}`;
+    item.getAsString(string => {
+        document.getElementById(outputElementId).textContent = string;
+        currentStringLoadCount--;
+        if (!currentStringLoadCount)
+            didFinishLoadingAllStrings();
+    });
+    return `<span id=${outputElementId}></span>`;
+}
+
+function writeOutputForEvent(event) {
+    write(`<br><h3>*** Handling ${event.type} ***</h3>`);
     const pasteboard = event.dataTransfer || event.clipboardData;
+    write(`<div><strong>Types => data</strong></div>`);
     for (const type of pasteboard.types)
-        dataInfo[type] = pasteboard.getData(type);
-    const itemsInfo = []
+        write(`<div>${type} => "${pasteboard.getData(type)}"</div>`);
+    let index = 0;
+    write(`<div><strong>Item list</strong></div>`);
     for (const item of pasteboard.items) {
-        itemsInfo.push({
-            type: item.type,
-            kind: item.kind,
-            file: representationForFile(item.getAsFile())
-        });
+        if (item.kind === "file")
+            write(`<div>[${index++}] => ${outputForFile(item.getAsFile())}</div>`);
+        else
+            write(`<div>[${index++}] => (type = "${item.type}", string = "${loadString(item)}")</div>`);
     }
-    write(`\n*** On ${event.type} ***\n\n${JSON.stringify({
-        data: dataInfo,
-        items: itemsInfo,
-        files: Array.from(pasteboard.files).map(representationForFile)
-    }, null, "    ")}`);
+    write(`<div><strong>File list</strong></div>`);
+    index = 0;
+    for (let file of pasteboard.files)
+        write(`<div>[${index++}] => ${outputForFile(file)}</div>`);
 }
 
 function setCustomData(event) {
@@ -93,19 +105,23 @@ function setCustomData(event) {
 
     pasteboard.setData("text/html", "<i>HTML data written using setData</i>");
     pasteboard.items.add("plain text data written using items.add", "text/plain");
+    pasteboard.items.add("https://www.webkit.org/", "text/uri-list");
 
-    if (includeCustomData.checked)
-        pasteboard.setData("custom data type", "data written using setData");
+    if (includeCustomData.checked) {
+        pasteboard.setData("using setData", "data written using DataTransfer.setData");
+        pasteboard.items.add("data written using DataTransferItemList.add", "using add");
+        pasteboard.items.add("this should be custom data", "text");
+        pasteboard.items.add("this should also be custom data", "url");
+    }
 
     for (const file of input.files)
         pasteboard.items.add(file);
 
     if (includeBlobFiles.checked) {
-        let parts = [
+        pasteboard.items.add(new File([
             new Blob(["This part is from a JavaScript Blob"], { type : "text/plain" }),
             "This part is just from a plain string"
-        ];
-        pasteboard.items.add(new File(parts, "example.txt", {
+        ], "example.txt", {
             lastModified: new Date(),
             type: "text/plain"
         }));
@@ -118,22 +134,22 @@ function setCustomData(event) {
         }));
     }
 
-    updateOutputText(event);
+    writeOutputForEvent(event);
 }
 
 destination.addEventListener("drop", event => {
-    updateOutputText(event);
+    writeOutputForEvent(event);
     event.preventDefault();
 });
 destination.addEventListener("paste", event => {
-    updateOutputText(event);
+    writeOutputForEvent(event);
     event.preventDefault();
 });
 destination.addEventListener("beforeinput", event => event.preventDefault());
 drag.addEventListener("dragstart", setCustomData);
 copy.addEventListener("copy", event => {
-    setCustomData(event);
     event.preventDefault();
+    setCustomData(event);
 });
 </script>
 </html>
