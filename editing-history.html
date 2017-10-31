@@ -387,9 +387,6 @@ window.onload = () => {
                 <a id="toggleExpand">Expand all</a>
             </div>
             <div class="control-wrapper">
-                <a id="toggleOverlay">Expand overlay</a>
-            </div>
-            <div class="control-wrapper">
                 <a download="test-template.html" href="" id="newLayoutTest">Convert to layout test</a>
             </div>
         </div>`;
@@ -444,18 +441,6 @@ window.onload = () => {
         newLayoutTest.addEventListener("click", () => {
             EditingHistory.context.applyCurrentSelectionState(getSelection());
             newLayoutTest.href = `data:text/html,${encodeURI(createLayoutTestTemplateHTMLFromCurrentDOMState())}`;
-        });
-
-        let isOverlayExpanded = false;
-        toggleOverlay.addEventListener("click", () => {
-            if (isOverlayExpanded) {
-                overlay.style.width = "300px";
-                toggleOverlay.textContent = "Expand overlay";
-            } else {
-                overlay.style.width = "50%";
-                toggleOverlay.textContent = "Collapse overlay";
-            }
-            isOverlayExpanded = !isOverlayExpanded;
         });
 
         document.addEventListener("keydown", event => {
