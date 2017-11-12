@@ -1,0 +1,71 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system;
+            text-align: center;
+        }
+
+        .flash {
+            position: absolute;
+            font-size: 18px;
+            transition: 3s cubic-bezier(0.5, 0, 0, 0);
+        }
+
+        .fadeout {
+            transform: scale(1.5, 1.5);
+            opacity: 0;
+        }
+
+        #search {
+            width: calc(min(50%, 200px));
+            height: 40px;
+            -webkit-appearance: none;
+            border: none;
+            border-bottom: 1px black dashed;
+            padding: 1em;
+            font-size: 1em;
+        }
+
+        #search:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Search</h1>
+    <div>
+    <form id="form">
+        <input type="search" id="search" placeholder="keyword" results="5"></input>
+    </form>
+    </div>
+</body>
+
+<script>
+    function flashMessage(message, color) {
+        let div = document.createElement("div");
+        let code = document.createElement("code");
+        code.textContent = message;
+        div.appendChild(code);
+        div.style.color = color;
+        div.classList.add("flash");
+        div.addEventListener("transitionend", function() {
+            div.remove();
+        });
+        setTimeout(function() {
+            div.classList.add("fadeout");
+        }, 500);
+        div.style.left = `${search.getBoundingClientRect().left + 50}px`;
+        div.style.top = `${search.getBoundingClientRect().top + 10}px`;
+        document.body.appendChild(div);
+    }
+
+    form.addEventListener("submit", event => {
+        flashMessage("Submitted", "green");
+        search.value = "";
+        event.preventDefault();
+    });
+</script>
+</html>
