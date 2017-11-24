@@ -42,15 +42,17 @@ body {
 </style>
 <body contenteditable>
     <div id="before-div">Before</div>
-    <object id="object" data="example.swf" width="150" height="100" type="application/x-shockwave-flash">
+    <object id="object" data="example.swf" width="150" height="100" type="application/x-shockwave-flash" style="-webkit-user-select: all;">
         <img src="images/stp.png"></img>
     </object>
     <div id="after-div">After</div>
     <div id="checkbox-container">
-        use fallback content? <input id="fallback" type="checkbox"></input>
+        <div><input id="fallback" type="checkbox"></input><code> fallback content</code></div>
+        <div><input id="userSelect" type="checkbox"></input><code> user-select: all</code></div>
     </div>
 </body>
 <script>
     fallback.addEventListener("change", () => object.setAttribute("type", fallback.checked ? "unknown" : "application/x-shockwave-flash"));
+    userSelect.addEventListener("change", () => object.style.webkitUserSelect = userSelect.checked ? "all" : "");
 </script>
 </html>
