@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<style>
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    font-size: 16px;
+    font-family: -apple-system;
+    background-color: #EFEFEF;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    width: calc(100% - 4em);
+    height: calc(100% - 3em);
+    padding: 2em;
+    padding-top: 1em;
+}
+
+body {
+    padding: 1em;
+    background-color: white;
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    -webkit-tap-highlight-color: transparent;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    border-right: 1px solid #DFDFDF;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+#checkbox-container {
+    position: fixed;
+    top: 2em;
+    right: 2em;
+    -webkit-user-modify: read-only;
+}
+</style>
+<body contenteditable>
+    <div id="before-div">Before</div>
+    <object id="object" data="example.swf" width="150" height="100" type="application/x-shockwave-flash">
+        <img src="images/stp.png"></img>
+    </object>
+    <div id="after-div">After</div>
+    <div id="checkbox-container">
+        use fallback content? <input id="fallback" type="checkbox"></input>
+    </div>
+</body>
+<script>
+    fallback.addEventListener("change", () => object.setAttribute("type", fallback.checked ? "unknown" : "application/x-shockwave-flash"));
+</script>
+</html>
