@@ -10,7 +10,31 @@ body, html {
     background-color: black;
     color: white;
 }
-input[type=tel], input[type=text] {
+
+input[type=search] {
+    margin: 0 auto;
+    width: 125px;
+    font-size: 1em;
+    -webkit-appearance: none;
+    border-radius: 6px;
+    border: none;
+    background-color: #333;
+    color: white;
+    padding: 0.5em 4px;
+    text-align: center;
+}
+
+input[type=search]:focus {
+    outline: none;
+}
+
+#searchterm {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 4px;
+}
+
+input[type=tel], input[type=text], input[type=email] {
     margin: 0 auto;
     font-size: 16px;
     width: 100px;
@@ -21,6 +45,17 @@ input[type=button] {
     border-radius: 6px;
     -webkit-appearance: none;
     font-size: 14px;
+}
+
+.flash {
+    position: absolute;
+    font-size: 18px;
+    transition: 1.5s cubic-bezier(0.5, 0, 0, 0);
+}
+
+.fadeout {
+    transform: scale(1.1, 1.1) translate(0, -1em);
+    opacity: 0;
 }
 
 #die {
@@ -53,7 +88,7 @@ input[type=button] {
     color: #fff;
     font-size: inherit;
     padding: .5em;
-    padding-right: 2.5em; 
+    padding-right: 2.5em;
     border: 0;
     margin: 0;
     border-radius: 3px;
@@ -89,9 +124,16 @@ input[type=button] {
 </style>
 <div>Time to non-empty layout: <span id="timeToPaint">-</span></div>
 <br>
-<div><input placeholder="Name" id="name" type="text"></input></div>
+<div><form id="nameform"><input placeholder="Name" id="name" type="text"></input></form></div>
 <br>
-<div><input placeholder="Phone No." id="telephone" type="tel"></input></div>
+<div><form id="emailform"><input placeholder="Email" id="email" type="email"></input></form></div>
+<br>
+<div><form id="telform"><input placeholder="Phone No." id="telephone" type="tel"></input></form></div>
+<br>
+<div>
+    <form id="searchform"><input type="search" id="search" placeholder="Search"></input></form>
+    <div id="searchterm">No results.</div>
+</div>
 <br>
 <span class="dropdown">
 <select>
@@ -196,5 +238,36 @@ reloadview.addEventListener("click", () => {
 reloadpage.addEventListener("click", () => {
     if (window.webkit)
         webkit.messageHandlers.app.postMessage("reloadpage");
+});
+
+function flashMessage(message, color, form) {
+    let div = document.createElement("div");
+    let code = document.createElement("code");
+    code.textContent = message;
+    div.appendChild(code);
+    div.style.color = color;
+    div.classList.add("flash");
+    div.addEventListener("transitionend", function() {
+        div.remove();
+    });
+    setTimeout(function() {
+        div.classList.add("fadeout");
+    }, 100);
+    div.style.left = "0px";
+    div.style.top = `${form.querySelector("input").getBoundingClientRect().top + pageYOffset}px`;
+    div.style.width = `${innerWidth}px`;
+    div.style.textAlign = "center";
+    document.body.appendChild(div);
+}
+
+[emailform, searchform, telform, nameform].forEach(form => {
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        if (form == searchform)
+            searchterm.textContent = `You searched for '${search.value}'`;
+
+        flashMessage("Submitted", "green", form);
+        form.querySelector("input").value = "";
+    });
 });
 </script>
