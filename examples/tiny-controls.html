@@ -224,7 +224,7 @@ input[type=button] {
 <br>
 <div><input type="button" value="Kill app" id="die"></input></div>
 <br>
-<script>
+<script id="setup-script">
 die.addEventListener("click", () => {
     if (window.webkit)
         webkit.messageHandlers.app.postMessage("die");
