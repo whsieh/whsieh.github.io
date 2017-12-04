@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
         function onload() {
             var inputs = document.getElementsByTagName("input");
@@ -77,6 +77,10 @@
 
     <p>Text area</p>
     <textarea></textarea>
+
+    <p>Text inputs</p>
+    <div><input type="text" placeholder="Text"></input><input type="password" placeholder="Password"></input></div>
+    <div><input type="email" placeholder="Email"></input><input type="tel" placeholder="Telephone"></input></div>
 
     <p>Search fields</p>
     <input onfocus="foo()" type="search" results="5"></input>
