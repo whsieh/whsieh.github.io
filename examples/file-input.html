@@ -127,12 +127,12 @@ h3 {
         let type = entry.isDirectory ? "DIR" : (entry.isFile ? "FILE" : "UNKNOWN");
         let representation = "";
         if (entry.isDirectory) {
-            representation += `<div>DIR: ${entry.fullPath}</div>\n`;
+            representation += `<code><div>DIR: ${entry.fullPath}</div></code>\n`;
             for (let child of await getEntriesAsPromise(entry))
                 representation += await htmlRepresentationForFileSystemEntry(child);
         } else if (entry.isFile) {
             let file = await fileFromFileSystemFileEntry(entry);
-            representation += `<div>FILE: ${entry.fullPath} ('${file.type}', ${file.size} bytes)</div>\n`;
+            representation += `<code><div>FILE: ${entry.fullPath} ('${file.type}', ${file.size} bytes)</div></code>\n`;
         }
         return representation;
     }
