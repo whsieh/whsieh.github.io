@@ -1,0 +1,609 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Starbucks Wi-Fi from Google</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        b,
+        u,
+        i,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: 100%;
+        }
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+        body {
+            line-height: 1;
+        }
+        ol,
+        ul {
+            list-style: none;
+        }
+        blockquote,
+        q {
+            quotes: none;
+        }
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        body {
+            background: #fff;
+            font: 12px/18px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #757575;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: 100%;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #007042;
+            font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: normal;
+        }
+        h1 a,
+        h2 a,
+        h3 a,
+        h4 a,
+        h5 a,
+        h6 a {
+            font-weight: inherit;
+        }
+        h1 {
+            font-size: 54px;
+            line-height: 60px;
+            margin-bottom: 14px;
+        }
+        h2 {
+            font-size: 48px;
+            line-height: 55px;
+            margin-bottom: 6px;
+        }
+        h3 {
+            font-size: 26px;
+            line-height: 34px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        h4 {
+            font-size: 21px;
+            line-height: 30px;
+            margin-bottom: 4px;
+        }
+        h5 {
+            font-size: 17px;
+            line-height: 24px;
+        }
+        h6 {
+            font-size: 14px;
+            line-height: 21px;
+            font-weight: bold;
+        }
+        .subheader {
+            color: #777;
+        }
+        p {
+            margin: 0 0 20px 0;
+        }
+        p img {
+            margin: 0;
+        }
+        p.lead {
+            font-size: 21px;
+            line-height: 27px;
+            color: #777;
+        }
+        em {
+            font-style: italic;
+        }
+        strong {
+            font-weight: bold;
+            color: #333;
+        }
+        small {
+            font-size: 80%;
+        }
+        blockquote,
+        blockquote p {
+            font-size: 17px;
+            line-height: 24px;
+            color: #777;
+            font-style: italic;
+        }
+        blockquote {
+            margin: 0 0 20px;
+            padding: 9px 20px 0 19px;
+            border-left: 1px solid #ddd;
+        }
+        blockquote cite {
+            display: block;
+            font-size: 12px;
+            color: #555;
+        }
+        blockquote cite:before {
+            content: "\2014 \0020";
+        }
+        blockquote cite a,
+        blockquote cite a:visited,
+        blockquote cite a:visited {
+            color: #555;
+        }
+        a,
+        a:visited {
+            color: #71b43a;
+            text-decoration: none;
+            outline: 0;
+        }
+        a:hover,
+        a:focus {
+            color: #000;
+        }
+        p a,
+        p a:visited {
+            line-height: inherit;
+        }
+        ul,
+        ol {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none outside;
+        }
+        ol {
+            list-style: decimal;
+        }
+        ol,
+        ul.square,
+        ul.circle,
+        ul.disc {
+            margin-left: 30px;
+        }
+        ul.square {
+            list-style: square outside;
+        }
+        ul.circle {
+            list-style: circle outside;
+        }
+        ul.disc {
+            list-style: disc outside;
+        }
+        ul ul,
+        ul ol,
+        ol ol,
+        ol ul {
+            margin: 4px 0 5px 30px;
+            font-size: 90%;
+        }
+        ul ul li,
+        ul ol li,
+        ol ol li,
+        ol ul li {
+            margin-bottom: 6px;
+        }
+        li {
+            line-height: 18px;
+            margin-bottom: 12px;
+        }
+        ul.large li {
+            line-height: 21px;
+        }
+        li p {
+            line-height: 21px;
+        }
+        img.scale-with-grid {
+            max-width: 100%;
+            height: auto;
+        }
+        .button,
+        button,
+        input[type="submit"],
+        input[type="reset"],
+        input[type="button"] {
+            background: #007042;
+            background-image: linear-gradient(bottom, #338812 0%, #6fae38 100%);
+            background-image: -o-linear-gradient(bottom, #338812 0%, #6fae38 100%);
+            background-image: -moz-linear-gradient(bottom, #338812 0%, #6fae38 100%);
+            background-image: -webkit-linear-gradient(bottom, #338812 0%, #6fae38 100%);
+            background-image: -ms-linear-gradient(bottom, #338812 0%, #6fae38 100%);
+            background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #338812), color-stop(1, #6fae38));
+            border: none;
+            -moz-border-radius: 3px;
+            -webkit-border-radius: 3px;
+            border-radius: 3px;
+            color: #fff;
+            display: inline-block;
+            font-size: 18px;
+            font-weight: normal;
+            text-decoration: none;
+            text-shadow: 0 1px 0px #41871c;
+            cursor: pointer;
+            margin-bottom: 15px;
+            line-height: normal;
+            padding: 8px 10px;
+            font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-size-adjust: 100%;
+        }
+        .button:hover,
+        button:hover,
+        input[type="submit"]:hover,
+        input[type="reset"]:hover,
+        input[type="button"]:hover {
+            background: #007042;
+            background-image: linear-gradient(bottom, #429422 0%, #81ba4e 100%);
+            background-image: -o-linear-gradient(bottom, #429422 0%, #81ba4e 100%);
+            background-image: -moz-linear-gradient(bottom, #429422 0%, #81ba4e 100%);
+            background-image: -webkit-linear-gradient(bottom, #429422 0%, #81ba4e 100%);
+            background-image: -ms-linear-gradient(bottom, #429422 0%, #81ba4e 100%);
+            background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #429422), color-stop(1, #81ba4e));
+            border: none;
+            box-shadow: 0 1px 2px 0 #ccc;
+            -mox-box-shadow: 0 1px 2px 0 #ccc;
+            -webkit-box-shadow: 0 1px 2px 0 #ccc;
+            color: #fff;
+        }
+        .button:active,
+        button:active,
+        input[type="submit"]:active,
+        input[type="reset"]:active,
+        input[type="button"]:active {
+            background: #007042;
+            background-image: linear-gradient(bottom, #338812 0%, #66a133 100%);
+            background-image: -o-linear-gradient(bottom, #338812 0%, #66a133 100%);
+            background-image: -moz-linear-gradient(bottom, #338812 0%, #66a133 100%);
+            background-image: -webkit-linear-gradient(bottom, #338812 0%, #66a133 100%);
+            background-image: -ms-linear-gradient(bottom, #338812 0%, #66a133 100%);
+            background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #338812), color-stop(1, #66a133));
+            border: none;
+            box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            -mox-box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            -webkit-box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+        .button.full-width,
+        button.full-width,
+        input[type="submit"].full-width,
+        input[type="reset"].full-width,
+        input[type="button"].full-width {
+            width: 100%;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            text-align: center;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        textarea,
+        select {
+            border: 1px solid #ccc;
+            padding: 6px 4px;
+            outline: none;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px;
+            font: 13px "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: #777;
+            margin: 0;
+            width: 210px;
+            max-width: 100%;
+            display: block;
+            margin-bottom: 20px;
+            background: #fff;
+        }
+        select {
+            padding: 0;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        textarea:focus {
+            border: 1px solid #aaa;
+            color: #444;
+            -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+            -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+            box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+        }
+        textarea {
+            min-height: 60px;
+        }
+        label,
+        legend {
+            display: block;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        select {
+            width: 220px;
+        }
+        input[type="checkbox"] {
+            display: inline;
+        }
+        label span,
+        legend span {
+            font-weight: normal;
+            font-size: 12px;
+            color: #999;
+        }
+        .container:after {
+            content: "\0020";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .clearfix:before,
+        .clearfix:after,
+        .row:before,
+        .row:after {
+            content: '\0020';
+            display: block;
+            overflow: hidden;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+        .row:after,
+        .clearfix:after {
+            clear: both;
+        }
+        .row,
+        .clearfix {
+            zoom: 1;
+        }
+        .clear {
+            clear: both;
+            display: block;
+            overflow: hidden;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+        body.page1 {
+            background-size: cover;
+        }
+        .page1-main-block {
+            background-color: #fff;
+            box-shadow: 0 1px 1px 0 #999;
+            padding: 10px 0 10px 0;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .page1-logo {
+            position: relative;
+            top: 28px;
+            width: 140px;
+            height: 140px;
+        }
+        .page1-headline {
+            position: relative;
+            top: 40px;
+            font-size: 14px;
+        }
+        .page1-terms {
+            position: relative;
+            top: 66px;
+        }
+        .page1-terms a {
+            color: #71b43a;
+            text-decoration: none;
+        }
+        .page1-terms a:hover {
+            text-decoration: underline;
+        }
+        .page1-button {
+            width: 100px;
+        }
+        .page1-powered {
+            position: relative;
+            top: 30px;
+            width: 150px;
+            height: auto;
+        }
+        .page1-help {
+            position: relative;
+            top: 12px;
+            font-weight: normal;
+            font-size: 12px;
+            color: #999;
+        }
+        .page1-footer {
+            position: absolute;
+            left: 0;
+            bottom: 75px;
+            z-index: -1;
+        }
+        .page1-colombia {
+            position: absolute;
+            left: 20px;
+            top: -10px;
+        }
+        .page1-footer-copy {
+            position: absolute;
+            left: 150px;
+            top: 12px;
+        }
+        .page1-footer-copy a,
+        a:hover {
+            text-decoration: none;
+        }
+        .page1-footer-copy h5,
+        .page1-footer-copy h6 {
+            color: #fff;
+        }
+        .page1-footer-copy h5 {
+            font-weight: bold;
+        }
+        .page1-footer-copy h6 {
+            font-weight: normal;
+        }
+        .page1-closed {
+            position: relative;
+            top: 60px;
+            color: #007042;
+            font-family: "Calibri", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: normal;
+            font-size: 28px;
+            line-height: 34px;
+            padding: 0 40px;
+        }
+        body.page1 {
+            background: #fff !important;
+        }
+        .page1-main-block {
+            background-color: #fff;
+            box-shadow: none !important;
+            padding: 10px 0 10px 0;
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="page1">
+    <div class="wrap">
+        <div class="page1-container">
+            <div class="page1-main-block">
+                <img src="images/siren.png" alt="" class="page1-logo">
+
+                <div class="page1-headline">
+                    <h2>Free Wi-Fi</h2> From our friends at Google
+                </div>
+                <div class="page1-terms">
+                    <form>
+                        <input type="hidden" name="apname" value="34:fc:b9:c1:82:36">
+                        <input type="hidden" name="clmac" value="f4:5c:89:a0:bf:e3">
+                        <button id="accept" class="page1-button">Accept &amp; Connect</button>
+                        <fieldset>
+                            <label for="acceptTermsConditions">
+                                <span>I agree to the <a target="_blank">Terms of Service</a> and have<br>
+                                        reviewed the <a target="_blank">Google Privacy Policy</a></span>
+                            </label>
+                        </fieldset>
+                        <div class="page1-help">
+                            Need help? <a>855-446-2374</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

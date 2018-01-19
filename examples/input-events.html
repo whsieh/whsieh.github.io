@@ -109,9 +109,6 @@
         if (!event.dataTransfer)
             return "(null)";
 
-        if (event.dataTransfer.items)
-            return `(${event.dataTransfer.items.length} items)`
-
         return `plain="${htmlEscapedString(event.dataTransfer.getData('text/plain'))}", HTML=${htmlEscapedString(event.dataTransfer.getData('text/html'))}`;
     }
 
