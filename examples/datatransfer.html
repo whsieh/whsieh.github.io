@@ -27,11 +27,13 @@
         function setup()
         {
             document.body.addEventListener("paste", event => {
-                dumpAsOutput(event.clipboardData);
+                if (document.body.contentEditable === "true")
+                    dumpAsOutput(event.clipboardData);
                 event.preventDefault();
             });
             document.body.addEventListener("drop", event => {
-                dumpAsOutput(event.dataTransfer);
+                if (document.body.contentEditable === "true")
+                    dumpAsOutput(event.dataTransfer);
                 event.preventDefault();
             });
             document.body.addEventListener("beforeinput", event => event.preventDefault());
@@ -41,7 +43,8 @@
         {
             document.body.contentEditable = false;
             types.textContent = dataTransfer.types.join(", ");
-            items.textContent = Array.from(dataTransfer.items).map(item => `(${item.kind.toUpperCase()}, ${item.type})`).join(", ");
+            if (dataTransfer.items)
+                items.textContent = Array.from(dataTransfer.items).map(item => `(${item.kind.toUpperCase()}, ${item.type})`).join(", ");
             files.textContent = Array.from(dataTransfer.files).map(file => `('${file.name}', ${file.type})`).join(", ");
             urlData.textContent = dataTransfer.getData("text/uri-list");
             textData.textContent = dataTransfer.getData("text/plain");
