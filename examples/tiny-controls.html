@@ -34,7 +34,7 @@ input[type=search]:focus {
     margin-top: 4px;
 }
 
-input[type=tel], input[type=text], input[type=email] {
+input {
     margin: 0 auto;
     font-size: 16px;
     width: 100px;
@@ -45,6 +45,8 @@ input[type=button] {
     border-radius: 6px;
     -webkit-appearance: none;
     font-size: 14px;
+    width: auto;
+    margin: auto;
 }
 
 .flash {
@@ -124,14 +126,20 @@ input[type=button] {
 </style>
 <div>Time to non-empty layout: <span id="timeToPaint">-</span></div>
 <br>
-<div><form id="nameform"><input placeholder="Name" id="name" type="text"></input></form></div>
+<div><form action="#" id="nameform"><input placeholder="Name" id="name" type="text"></input></form></div>
 <br>
-<div><form id="emailform"><input placeholder="Email" id="email" type="email"></input></form></div>
+<div><form action="#" id="emailform"><input placeholder="Email" id="email" type="email"></input></form></div>
 <br>
-<div><form id="telform"><input placeholder="Phone No." id="telephone" type="tel"></input></form></div>
+<div><form action="#" id="passwordform"><input placeholder="Password" id="password" type="password"></input></form></div>
+<br>
+<div><form action="#" id="telform"><input placeholder="Phone No." id="telephone" type="tel"></input></form></div>
+<br>
+<div><form action="#" id="timeform"><input id="time" type="time" value="09:41"></input></form></div>
+<br>
+<div><form action="#" id="dateform"><input id="Date" type="date" value="1976-04-01"></input></form></div>
 <br>
 <div>
-    <form id="searchform"><input type="search" id="search" placeholder="Search"></input></form>
+    <form action="#" id="searchform"><input type="search" id="search" placeholder="Search"></input></form>
     <div id="searchterm">No results.</div>
 </div>
 <br>
@@ -224,7 +232,7 @@ input[type=button] {
 <br>
 <div><input type="button" value="Kill app" id="die"></input></div>
 <br>
-<script id="setup-script">
+<script>
 die.addEventListener("click", () => {
     if (window.webkit)
         webkit.messageHandlers.app.postMessage("die");
@@ -260,7 +268,7 @@ function flashMessage(message, color, form) {
     document.body.appendChild(div);
 }
 
-[emailform, searchform, telform, nameform].forEach(form => {
+[emailform, searchform, passwordform, telform, nameform, timeform, dateform].forEach(form => {
     form.addEventListener("submit", event => {
         event.preventDefault();
         if (form == searchform)
