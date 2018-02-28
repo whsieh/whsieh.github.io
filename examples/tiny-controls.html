@@ -5,7 +5,7 @@
 body, html {
     margin: 0;
     font-family: -apple-system;
-    font-size: 1em;
+    font-size: 1.25em;
     text-align: center;
     background-color: black;
     color: white;
@@ -13,8 +13,7 @@ body, html {
 
 input[type=search] {
     margin: 0 auto;
-    width: calc(max(125px, 60%));
-    font-size: 1em;
+    width: calc(min(500px, max(100px, 80%)));
     -webkit-appearance: none;
     border-radius: 6px;
     border: none;
@@ -35,8 +34,8 @@ input[type=search]:focus {
 
 input {
     margin: 0 auto;
-    font-size: 1em;
-    width: calc(max(100px, 50%));
+    font-size: 1.25em;
+    width: calc(min(500px, max(100px, 80%)));
     padding: 0.5em;
     box-sizing: border-box;
     text-align: center;
@@ -46,7 +45,8 @@ input[type=button] {
     padding: 1em;
     border-radius: 6px;
     -webkit-appearance: none;
-    font-size: 1em;
+    font-size: 1.2em;
+    white-space: normal;
     width: auto;
     margin: auto;
 }
@@ -62,10 +62,16 @@ input[type=button] {
     opacity: 0;
 }
 
-#die {
+#killapp {
     border: none;
     color: rgb(255, 59, 48);
     background-color: rgba(255, 59, 48, 0.25);
+}
+
+#killpage {
+    border: none;
+    color: rgb(88, 86, 214);
+    background-color: rgba(88, 86, 214, 0.25);
 }
 
 #reloadpage {
@@ -84,7 +90,8 @@ input[type=button] {
     position: relative;
     display: inline-block;
     vertical-align: middle;
-    width: 125px;
+    width: calc(min(500px, max(100px, 80%)));
+    font-size: 1.2em;
 }
 
 .dropdown select {
@@ -232,12 +239,19 @@ input[type=button] {
 <br>
 <div><input type="button" value="Reload view" id="reloadview"></input></div>
 <br>
-<div><input type="button" value="Kill app" id="die"></input></div>
+<div><input type="button" value="Kill web process" id="killpage"></input></div>
+<br>
+<div><input type="button" value="Kill UI process" id="killapp"></input></div>
 <br>
 <script>
-die.addEventListener("click", () => {
+killapp.addEventListener("click", () => {
     if (window.webkit)
-        webkit.messageHandlers.app.postMessage("die");
+        webkit.messageHandlers.app.postMessage("killapp");
+});
+
+killpage.addEventListener("click", () => {
+    if (window.webkit)
+        webkit.messageHandlers.app.postMessage("killpage");
 });
 
 reloadview.addEventListener("click", () => {
