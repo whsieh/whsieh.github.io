@@ -26,6 +26,7 @@
     <script>
         function setup()
         {
+            document.body.addEventListener("dragover", event => event.preventDefault());
             document.body.addEventListener("paste", event => {
                 if (document.body.contentEditable === "true")
                     dumpAsOutput(event.clipboardData);
