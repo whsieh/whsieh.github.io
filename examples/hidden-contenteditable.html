@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head>
+<style>
+    iframe {
+        opacity: 0;
+    }
+
+    iframe {
+        width: calc(100vw - 16px);
+        height: 100px;
+    }
+
+    #container {
+        border: 1px tomato dashed;
+    }
+
+    pre {
+        border: 1px lightgreen dashed;
+        min-height: 200px;
+        display: block;
+    }
+
+    code {
+        pointer-events: none;
+    }
+</style>
+<script>
+    function updateText(text) {
+        output.innerText = text;
+    }
+</script>
+</head>
+<div id="container">
+    <iframe srcdoc="
+        <script>function setup() { document.body.addEventListener('input', () => parent.updateText(document.body.innerText)); }</script>
+        <body onload=setup() contenteditable spellcheck=false></body>">
+    </iframe>
+    <code>Click above and start typing.</code>
+</div>
+<pre id="output"></pre>
+</html>
