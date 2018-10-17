@@ -2,15 +2,6 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-        function onload() {
-            var inputs = document.getElementsByTagName("input");
-            for (var i = 0; i < inputs.length; i++)
-                inputs[i].onclick = inputs[i].focus;
-
-            inputs[0].focus();
-        }
-    </script>
     <style>
         body {
             font-family: system-ui;
@@ -83,14 +74,16 @@
     <p>Color</p>
     <input type="color" value="#FF3B30" list="hi-colors"></input>
     <datalist id="hi-colors">
-        <option>#FF3B30</option>
-        <option>#FF9500</option>
-        <option>#FFCC00</option>
-        <option>#4CD964</option>
-        <option>#5AC8FA</option>
-        <option>#007AFF</option>
-        <option>#5856d6</option>
-        <option>#FF2D55</option>
+        <select>
+            <option>#FF3B30</option>
+            <option>#FF9500</option>
+            <option>#FFCC00</option>
+            <option>#4CD964</option>
+            <option>#5AC8FA</option>
+            <option>#007AFF</option>
+            <option>#5856d6</option>
+            <option>#FF2D55</option>
+        </select>
     </datalist>
 
     <p>Text area</p>
@@ -106,17 +99,21 @@
     <div>
         <input type="search" placeholder="Fruits" list="fruits">
         <datalist id="fruits">
-            <option>Apple</option>
-            <option>Apricot</option>
-            <option>Banana</option>
-            <option>Cantelope</option>
-            <option>Durian</option>
-            <option>Grape</option>
-            <option>Guava</option>
-            <option>Orange</option>
-            <option>Mango</option>
-            <option>Pear</option>
-            <option>Watermelon</option>
+            <select>
+                <option>Apple</option>
+                <option>Apricot</option>
+                <option>Banana</option>
+                <option>Cantelope</option>
+                <option>Durian</option>
+                <option>Grape</option>
+                <option>Guava</option>
+                <option>Orange</option>
+                <option>Mango</option>
+                <option>Pear</option>
+                <option>Watermelon</option>
+                <option></option>
+                <option disabled>Foo</option>
+            </select>
         </datalist>
     </div>
 
