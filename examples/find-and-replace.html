@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    textarea, input {
+        width: 300px;
+        height: 44px;
+    }
+
+    body {
+        font-family: system-ui;
+        font-size: 16px;
+    }
+
+    span[contenteditable] {
+        border: solid 1px rgba(200, 0, 0, 0.3);
+    }
+
+    iframe {
+        width: 350px;
+        height: 250px;
+    }
+</style>
+</head>
+<body>
+    <h2>Find and replace test cases</h2>
+
+    <h3>Non-editable text</h3>
+    <div>The quick brown fox jumped over the lazy dogdog.</div>
+
+    <h3>Editable text</h3>
+    <div><span contenteditable>The quick brown fox jumped over the lazy dogdog.</span></div>
+
+    <h3>Text fields</h3>
+    <div><textarea>The quick brown fox jumped over the lazy dogdog.</textarea></div>
+    <div><input value="The quick brown fox jumped over the lazy dogdog."></input></div>
+
+    <h3>Subframe</h3>
+    <iframe srcdoc="<body>
+        <div contenteditable style='border: solid 1px rgba(200, 0, 0, 0.3);'>
+            <p>The quick brown fox jumped over the lazy dogdog.</p>
+            <input style='width: 280px; height: 44px;' value='The quick brown fox jumped over the lazy dogdog.''></input>
+        </div>
+        <p>The quick brown fox jumped over the lazy dogdog.</p>
+    </body>">
+    </iframe>
+
+    <h3>Editing boundaries</h3>
+    <div><span contenteditable>The quick brown</span> fox jumped over <span contenteditable>the lazy dog</span>dog.</div>
+</body>
+</html>
