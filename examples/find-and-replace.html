@@ -2,13 +2,13 @@
 <html>
 <head>
 <style>
-    textarea, input {
+    textarea, input[type=text] {
         width: 300px;
         height: 44px;
     }
 
     body {
-        font-family: system-ui;
+        font-family: Helvetica Neue;
         font-size: 16px;
     }
 
@@ -24,16 +24,17 @@
 </head>
 <body>
     <h2>Find and replace test cases</h2>
+    <div contenteditable="false"><input type="checkbox" id="editable-toggle"></input> <label for="editable-toggle">Body contenteditable?</label></div>
 
     <h3>Non-editable text</h3>
     <div>1. The quick brown fox jumped over the lazy dogdog.</div>
 
     <h3>Editable text</h3>
-    <div><span contenteditable>2. The quick brown fox jumped over the lazy dogdog.</span></div>
+    <div><span id="span-0" contenteditable>2. The quick brown fox jumped over the lazy dogdog.</span></div>
 
     <h3>Text fields</h3>
     <div><textarea>3. The quick brown fox jumped over the lazy dogdog.</textarea></div>
-    <div><input value="4. The quick brown fox jumped over the lazy dogdog."></input></div>
+    <div><input type="text" value="4. The quick brown fox jumped over the lazy dogdog."></input></div>
 
     <h3>Subframe</h3>
     <iframe srcdoc="<body>
@@ -46,6 +47,17 @@
     </iframe>
 
     <h3>Editing boundaries</h3>
-    <div><span contenteditable>8. The quick brown</span> fox jumped over <span contenteditable>the lazy dog</span>dog.</div>
+    <div><span id="span-1" contenteditable>8. The quick brown</span> fox jumped over <span id="span-2" contenteditable>the lazy dog</span>dog.</div>
+
+    <h3>Nested editable containers</h3>
+    <div contenteditable id="div-0"><span id="span-3" contenteditable>9. The quick brown</span> fox jumped over <span id="span-4" contenteditable>the lazy dog</span>dog.</div>
+    <div id="div-1" contenteditable="false">
+        <p>10. The quick brown fox jumped over the lazy dogdog.</p>
+        <p><span id="span-5" contenteditable>11. The quick brown fox jumped over the lazy dogdog.</span></p>
+    </div>
 </body>
+<script>
+    const editableToggle = document.querySelector("#editable-toggle");
+    editableToggle.addEventListener("change", event => document.body.setAttribute("contenteditable", editableToggle.checked));
+</script>
 </html>
