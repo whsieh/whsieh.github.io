@@ -46,4 +46,11 @@
         <button>Check Out</button>
     </form>
 </body>
+<script>
+    number.addEventListener("keypress", event => {
+        if (/[0-9]/.test(event.key))
+            number.value += event.key;
+        event.preventDefault();
+    });
+</script>
 </html>
