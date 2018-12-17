@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <form>
+        <div>
+            <label for="frmNameCC">Name on card</label>
+            <input name="ccname" id="frmNameCC" required placeholder="Full Name" autocomplete="cc-name">
+        </div>
+        <div>
+            <label for="frmCCNum">Card Number</label>
+            <input name="cardnumber" id="frmCCNum" required autocomplete="cc-number">
+        </div>
+        <div>
+            <label for="frmCCCVC">CVC</label>
+            <input name="cvc" id="frmCCCVC" required autocomplete="cc-csc">
+        </div>
+        <div>
+            <label for="frmCCExp">Expiry</label>
+            <input name="cc-exp" id="frmCCExp" required placeholder="MM-YYYY" autocomplete="cc-exp">
+        </div>
+        <button>Check Out</button>
+    </form>
+</body>
+</html>
