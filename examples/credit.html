@@ -52,5 +52,12 @@
             number.value += event.key;
         event.preventDefault();
     });
+
+    const nameField = document.querySelector("#name");
+    nameField.addEventListener("keypress", event => {
+        if (/[a-zA-Z\s]/.test(event.key))
+            nameField.value += event.key;
+        event.preventDefault();
+    });
 </script>
 </html>
