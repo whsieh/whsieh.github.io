@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf8">
 <style>
     textarea, input[type=text] {
         width: 300px;
         height: 44px;
+        outline: none;
     }
 
     body {
@@ -14,6 +16,7 @@
 
     span[contenteditable] {
         border: solid 1px rgba(200, 0, 0, 0.3);
+        outline: none;
     }
 
     iframe {
@@ -37,7 +40,7 @@
     <div><input type="text" value="4. The quick brown fox jumped over the lazy dogdog."></input></div>
 
     <h3>Subframe</h3>
-    <iframe srcdoc="<body>
+    <iframe id="subframe" srcdoc="<body style='font-family: system-ui'>
         <div contenteditable style='border: solid 1px rgba(200, 0, 0, 0.3);'>
             <p>5. The quick brown fox jumped over the lazy dogdog.</p>
             <input style='width: 280px; height: 44px;' value='6. The quick brown fox jumped over the lazy dogdog.''></input>
@@ -45,6 +48,10 @@
         <p>7. The quick brown fox jumped over the lazy dogdog.</p>
     </body>">
     </iframe>
+    <div>
+        <input type="button" onclick="subframe.remove(); this.remove();" value="Remove the subframe">
+        <input type="button" onclick="subframe.contentWindow.location.reload();" value="Reload the subframe">
+    </div>
 
     <h3>Editing boundaries</h3>
     <div><span id="span-1" contenteditable>8. The quick brown</span> fox jumped over <span id="span-2" contenteditable>the lazy dog</span>dog.</div>
