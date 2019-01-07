@@ -24,14 +24,21 @@ body {
     font-size: 50px;
 }
 
-#sword-container {
+#sword-outer-container {
     margin: 50px auto 0 auto;
     text-align: center;
     width: 100px;
     height: 100px;
 }
 
-#slider-container {
+#inner-container, #detached-container {
+    border: 4px rgb(76, 217, 100) solid;
+    box-sizing: border-box;
+    width: 100px;
+    height: 100px;
+}
+
+#control-container {
     text-align: left;
     display: none;
     margin: 1em;
@@ -40,7 +47,7 @@ body {
     left: 0;
 }
 
-.slider {
+.control {
     margin: 1em auto;
 }
 
@@ -53,17 +60,37 @@ input[type=range] {
     width: 100%;
     height: 100%;
 }
+
+#output {
+    position: fixed;
+    bottom: 1em;
+}
 </style>
-<div id="slider-container">
-    <div class="slider"><code>drag offset x </code><input id="offsetX" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelX"></code></div>
-    <div class="slider"><code>drag offset y </code><input id="offsetY" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelY"></code></div>
-    <div class="slider"><code>use detached image </code><input id="detached" type="checkbox"></input></div>
+<div id="control-container">
+    <div class="control"><label for="offsetX">drag offset x </label><input id="offsetX" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelX"></code></div>
+    <div class="control"><label for="offsetY">drag offset y </label><input id="offsetY" type="range" min="-200" max="200" step="10"></input><code id="offsetLabelY"></code></div>
+    <div class="control"><label for="detached">use detached element </label><input id="detached" type="checkbox"></input></div>
+    <div class="control"><label for="element">use non-image element </label><input id="element" type="checkbox"></input></div>
+    <div class="control"><input onclick="resetControls()" type="button" value="Reset"></input></div>
 </div>
 <div id="container">
     <div id="draggable" draggable="true">It's dangerous to go alone! Take this.</div>
-    <div id="sword-container"><img src="https://whsieh.github.io/examples/images/sword.png" id="sword"></img></div>
+    <div id="sword-outer-container">
+        <div id="inner-container">
+            <img src="https://whsieh.github.io/examples/images/sword.png" id="sword"></img>
+        </div>
+    </div>
+    <p id="output">What did I just drag? <span></span></p>
 </div>
 <script>
+function resetControls() {
+    detached.checked = false;
+    element.checked = false;
+    offsetX.value = 0;
+    offsetY.value = 0;
+    updateOffsets();
+}
+
 function detachedDragImage() {
     if (window._detachedDragImage)
         return window._detachedDragImage;
@@ -80,7 +107,18 @@ window.dragOffsetY = 0;
 
 draggable.addEventListener("dragstart", event => {
     event.dataTransfer.setData("text/plain", sword.src);
-    event.dataTransfer.setDragImage(detached.checked ? detachedDragImage() : sword, dragOffsetX, dragOffsetY);
+    let dragImageElement = null;
+    if (detached.checked)
+        dragImageElement = detachedDragImage();
+    else if (element.checked)
+        dragImageElement = document.getElementById("inner-container");
+    else
+        dragImageElement = document.getElementById("sword");
+    event.dataTransfer.setDragImage(dragImageElement, dragOffsetX, dragOffsetY);
+    document.querySelector("#output > span").textContent = `<${dragImageElement.tagName}
+        id="${dragImageElement.id}"
+        class="${dragImageElement.className}"
+        src="${dragImageElement.src ? dragImageElement.src : ""}">`;
 });
 
 sword.addEventListener("dragstart", event => {
@@ -91,16 +129,26 @@ sword.addEventListener("click", event => {
     if (getComputedStyle(document.body).backgroundColor === "rgb(0, 0, 0)") {
         document.body.style.backgroundColor = "white";
         document.body.style.color = "black";
-        document.querySelector("#slider-container").style.display = "block";
+        document.querySelector("#control-container").style.display = "block";
     } else {
         document.body.style.backgroundColor = "black";
         document.body.style.color = "white";
-        document.querySelector("#slider-container").style.display = "none";
+        document.querySelector("#control-container").style.display = "none";
     }
     updateOffsets();
 });
 
-[offsetX, offsetY].forEach(slider => slider.addEventListener("change", updateOffsets));
+element.addEventListener("change", () => {
+    if (element.checked)
+        detached.checked = false;
+});
+
+detached.addEventListener("change", () => {
+    if (detached.checked)
+        element.checked = false;
+});
+
+[offsetX, offsetY].forEach(control => control.addEventListener("input", updateOffsets));
 
 function updateOffsets() {
     offsetLabelX.textContent = offsetX.value;
