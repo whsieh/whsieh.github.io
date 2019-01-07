@@ -63,7 +63,8 @@ input[type=range] {
 
 #output {
     position: fixed;
-    bottom: 1em;
+    bottom: 2em;
+    left: 1em;
 }
 </style>
 <div id="control-container">
@@ -80,7 +81,7 @@ input[type=range] {
             <img src="https://whsieh.github.io/examples/images/sword.png" id="sword"></img>
         </div>
     </div>
-    <p id="output">What did I just drag? <span></span></p>
+    <p id="output">What did I just drag? <strong></strong></p>
 </div>
 <script>
 function resetControls() {
@@ -115,10 +116,7 @@ draggable.addEventListener("dragstart", event => {
     else
         dragImageElement = document.getElementById("sword");
     event.dataTransfer.setDragImage(dragImageElement, dragOffsetX, dragOffsetY);
-    document.querySelector("#output > span").textContent = `<${dragImageElement.tagName}
-        id="${dragImageElement.id}"
-        class="${dragImageElement.className}"
-        src="${dragImageElement.src ? dragImageElement.src : ""}">`;
+    document.querySelector("#output > strong").textContent = dragImageElement.outerHTML;
 });
 
 sword.addEventListener("dragstart", event => {
