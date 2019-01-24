@@ -10,7 +10,8 @@
         </style>
     </head>
     <body>
-        <p id="select">Click here to select the input.</p>
+        <p id="select">Click here to select() the input.</p>
+        <p id="focus">Click here to focus() the input.</p>
         <input value="Hello world"></input>
         <input type="submit" value="Blur"></input>
         <script>
@@ -18,6 +19,11 @@
             select.addEventListener("click", () => {
                 document.querySelector("input").select();
             });
+
+            const focus = document.getElementById("focus");
+            focus.addEventListener("click", () => {
+                document.querySelector("input").focus();
+            })
         </script>
     </body>
 </html>
