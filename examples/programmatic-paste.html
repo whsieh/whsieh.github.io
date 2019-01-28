@@ -55,8 +55,15 @@
         text-align: center;
     }
 
-    #controls > p {
-        margin-top: 1em;
+    .flash-begin {
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+
+    .flash {
+        position: absolute;
+        font-size: 20px;
+        transition: 2s cubic-bezier(0.5, 0, 0, 0);
     }
     </style>
 </head>
@@ -66,7 +73,6 @@
 <div id="controls">
     <button id="paste">Click here to paste</button>
     <button id="copy">Click here to copy</button>
-    <p><span id="output"></span></p>
 </div>
 </body>
 <script>
@@ -76,20 +82,33 @@
     const output = document.getElementById("output");
 
     paste.addEventListener("click", event => {
-        const result = document.execCommand("Paste", true);
-        output.textContent = result ? "Successfully pasted." : "Did not paste.";
-        output.style.color = result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)";
         event.preventDefault();
         editor.focus();
+        const result = document.execCommand("Paste", true);
+        flashMessage(result ? "Successfully pasted." : "Did not paste.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
     });
 
     copy.addEventListener("click", event => {
-        const result = document.execCommand("copy", true);
-        output.textContent = result ? "Successfully copied." : "Did not copy.";
-        output.style.color = result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)";
         event.preventDefault();
         editor.focus();
+        const result = document.execCommand("Copy", true);
+        flashMessage(result ? "Successfully copied." : "Did not copy.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
     });
+
+    function flashMessage(message, color) {
+        const div = document.createElement("div");
+        const code = document.createElement("code");
+        code.textContent = message;
+        div.appendChild(code);
+        div.style.color = color;
+        const editorBounds = editor.getBoundingClientRect();
+        div.style.top = `${(editorBounds.bottom - editorBounds.top) / 2}px`;
+        div.style.left = `${(editorBounds.right - editorBounds.left) / 2}px`;
+        div.classList.add("flash");
+        div.addEventListener("transitionend", () => div.remove());
+        setTimeout(() => div.classList.add("flash-begin"), 100);
+        document.body.appendChild(div);
+    }
 
     editor.focus();
 </script>
