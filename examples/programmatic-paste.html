@@ -82,17 +82,17 @@
     const output = document.getElementById("output");
 
     paste.addEventListener("click", event => {
-        event.preventDefault();
-        editor.focus();
         const result = document.execCommand("Paste", true);
         flashMessage(result ? "Successfully pasted." : "Did not paste.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
+        event.preventDefault();
+        editor.focus();
     });
 
     copy.addEventListener("click", event => {
-        event.preventDefault();
-        editor.focus();
         const result = document.execCommand("Copy", true);
         flashMessage(result ? "Successfully copied." : "Did not copy.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
+        event.preventDefault();
+        editor.focus();
     });
 
     function flashMessage(message, color) {
