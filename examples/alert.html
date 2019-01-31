@@ -1,0 +1,59 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<head>
+    <style>
+    html {
+        padding: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+    button {
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        padding: 0.5em;
+        margin-top: 1em;
+    }
+
+    button#alert {
+        border: 2px rgb(0, 122, 255) solid;
+        background-color: rgb(0, 122, 255);
+    }
+
+    button#confirm {
+        border: 2px rgb(90, 200, 250) solid;
+        background-color: rgb(90, 200, 250);
+    }
+    </style>
+</head>
+
+<body>
+<div>
+    <button id="alert">Click here to alert</button>
+    <button id="confirm">Click here to confirm</button>
+</div>
+</body>
+<script>
+    function runConfirm(event) {
+        window.confirm("Confirm?");
+        event.preventDefault();
+        return true;
+    }
+
+    function runAlert(event) {
+        window.alert("Alert!");
+        event.preventDefault();
+        return true;
+    }
+
+    const confirmButton = document.getElementById("confirm");
+    confirmButton.addEventListener("touchstart", runConfirm);
+    confirmButton.addEventListener("click", runConfirm);
+
+    const alertButton = document.getElementById("alert");
+    alertButton.addEventListener("touchstart", runAlert);
+    alertButton.addEventListener("click", runAlert);
+</script>
+</html>
