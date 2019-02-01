@@ -81,7 +81,25 @@
     const editor = document.getElementById("editor");
     const output = document.getElementById("output");
 
+    function isSelectionInsideEditor() {
+        if (getSelection().type === "None")
+            return false;
+        const commonAncestor = getSelection().getRangeAt(0).commonAncestorContainer;
+        for (let ancestor = commonAncestor; ancestor; ancestor = ancestor.parentElement) {
+            if (ancestor == editor)
+                return true;
+        }
+        return false;
+    }
+
+    function moveSelectionIntoEditorIfNecessary() {
+        if (!isSelectionInsideEditor())
+            getSelection().setPosition(editor, 1);
+    }
+
     paste.addEventListener("click", event => {
+        moveSelectionIntoEditorIfNecessary();
+
         const result = document.execCommand("Paste", true);
         flashMessage(result ? "Successfully pasted." : "Did not paste.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
         if (result) {
@@ -91,6 +109,8 @@
     });
 
     copy.addEventListener("click", event => {
+        moveSelectionIntoEditorIfNecessary();
+
         const result = document.execCommand("Copy", true);
         flashMessage(result ? "Successfully copied." : "Did not copy.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
         if (result) {
