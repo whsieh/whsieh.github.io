@@ -43,7 +43,7 @@
         const result = document.execCommand("Paste");
         textarea.blur();
         if (result)
-            output.textContent = "Stole your passwords!";
+            output.textContent = `I found: ${textarea.textContent}`;
         else
             output.textContent = "Failed to steal your passwords.";
     });
