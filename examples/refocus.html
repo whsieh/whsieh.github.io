@@ -1,9 +1,34 @@
 <html>
-<title>Evil focus thing</title>
-<meta name="viewport" content="width=device-width; initial-scale=1">
+<head>
+    <title>Evil focus thing</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1">
+    <style>
+    input {
+        font-size: 18px;
+        border: black 2px solid;
+        border-radius: 4px;
+        padding: 0.5em;
+        margin-top: 1em;
+    }
+
+    button {
+        font-size: 18px;
+        border: none;
+        border-radius: 1em;
+        padding: 0.5em 1em;
+        background-color: rgb(255, 59, 48);
+        color: white;
+        margin-top: 1em;
+    }
+
+    body {
+        text-align: center;
+    }
+    </style>
+</head>
 <body>
-<input type="text">
-<input type="button" value="Sigh."></input>
+<div><input type="text"></div>
+<div><button>Sigh</button></div>
 </body>
 <script>
 const field = document.querySelector("input");
