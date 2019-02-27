@@ -1,0 +1,13 @@
+<html>
+<title>Evil focus thing</title>
+<meta name="viewport" content="width=device-width; initial-scale=1">
+<body>
+<input type="text">
+<input type="button" value="Sigh."></input>
+</body>
+<script>
+const field = document.querySelector("input");
+field.addEventListener("blur", () => field.focus());
+</script>
+</html>
+

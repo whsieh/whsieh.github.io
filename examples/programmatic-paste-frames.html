@@ -1,0 +1,86 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<head>
+    <style>
+    html {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+        margin: 2em;
+        background-color: #F8F8F8;
+        overflow: hidden;
+        font-family: -apple-system;
+        font-size: 1em;
+    }
+
+    #outer {
+        border: 2px rgb(76, 217, 100) solid;
+        width: 320px;
+        height: 320px;
+        box-sizing: border-box;
+    }
+
+    #inner {
+        border: 2px rgb(255, 59, 48) solid;
+        width: 160px;
+        height: 160px;
+        top: 80px;
+        left: 80px;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    #copy {
+        border: 2px rgb(90, 200, 250) dashed;
+        border-radius: 1em;
+        margin-bottom: 1em;
+        padding: 1em;
+        box-sizing: border-box;
+        display: inline-block;
+    }
+    </style>
+</head>
+
+<body>
+<code id="copy">Click here to copy</code>
+<div id="outer">
+    <iframe id="inner" src="data:text/html,
+        <body style='max-width: 160px;'><pre id='output' style='overflow-wrap: break-word;'></pre></body>
+        <script>
+            document.body.addEventListener('click', () => {
+                const textarea = document.createElement('textarea');
+                textarea.style.opacity = 0;
+                document.body.appendChild(textarea);
+                textarea.focus();
+                const result = document.execCommand('Paste');
+                const pastedText = textarea.value;
+                textarea.remove();
+                output.textContent = `(${document.origin}) pasted with result: ${result} and text: '${pastedText}'`;
+            });
+        </script>"></iframe>
+</div>
+<pre id='output'></pre>
+</body>
+<script>
+    copy.addEventListener("click", () => {
+        getSelection().selectAllChildren(copy);
+        document.execCommand("Copy");
+        getSelection().removeAllRanges();
+    });
+
+    outer.addEventListener("click", () => {
+        const textarea = document.createElement("textarea");
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.style.opacity = 0;
+        const result = document.execCommand("Paste");
+        const pastedText = textarea.value;
+        textarea.remove();
+        output.textContent = `(${document.origin}) pasted with result: ${result} and text: "${pastedText}"`;
+    });
+</script>
+</html>
