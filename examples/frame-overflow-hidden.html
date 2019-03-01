@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    html {
+        font-family: -apple-system;
+    }
+
+    p {
+        font-size: 20px;
+        line-height: 150%;
+        text-align: justify;
+    }
+
+    .hidden {
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+    }
+
+    p, iframe {
+        position: absolute;
+        height: 100px;
+    }
+
+    iframe {
+        background-color: white;
+        overflow: scroll;
+        top: 100px;
+        width: calc(100% - 16px);
+    }
+
+    .bar {
+        width: 100%;
+        height: 100px;
+        opacity: 0.1;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .blue {
+        background-color: blue;
+    }
+</style>
+</head>
+<body>
+    <div class="hidden">
+        <p id='one' contenteditable>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="hidden">
+        <iframe srcdoc="<p id='two' contenteditable style='font-size: 20px; line-height: 150%;'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <script>
+            function focus() {
+                two.focus();
+                getSelection().setPosition(two);
+            }
+            </script>"></iframe>
+    </div>
+    <div class="blue bar"></div>
+    <div class="red bar"></div>
+    <div class="blue bar"></div>
+    <div class="red bar"></div>
+    <div class="blue bar"></div>
+    <div class="red bar"></div>
+    <div class="blue bar"></div>
+    <div class="red bar"></div>
+    <div class="blue bar"></div>
+    <div class="red bar"></div>
+    <div class="blue bar"></div>
+    <div class="red bar"></div>
+    <div style="position: absolute; top: 250px;">
+        <button id="main">Focus top-level frame</button>
+        <button id="sub">Focus subframe</button>
+    </div>
+</body>
+<script>
+    main.addEventListener("click", () => one.focus());
+    sub.addEventListener("click", () => {
+        getSelection().removeAllRanges();
+        document.querySelector("iframe").contentWindow.focus();
+    });
+</script>
+</html>

@@ -32,7 +32,9 @@
 </body>
 <script>
 const field = document.querySelector("input");
-field.addEventListener("blur", () => field.focus());
+field.addEventListener("blur", () => {
+    field.focus();
+    setTimeout(() => field.focus(), 0);
+});
 </script>
 </html>
-
