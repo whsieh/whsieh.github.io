@@ -79,7 +79,9 @@
     main.addEventListener("click", () => one.focus());
     sub.addEventListener("click", () => {
         getSelection().removeAllRanges();
-        document.querySelector("iframe").contentWindow.focus();
+        const frame = document.querySelector("iframe");
+        frame.focus();
+        frame.contentWindow.focus();
     });
 </script>
 </html>
