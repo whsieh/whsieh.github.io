@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            .error {
+                color: red;
+            }
+
+            .success {
+                color: green;
+            }
+        </style>
+    </head>
+    <body>
+        <video controls></video>
+        <p id="result"></p>
+        <script>
+            const video = document.querySelector("video");
+            const result = document.getElementById("result");
+            const codecs = 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"';
+
+            function logResult(text, type) {
+                result.innerHTML += `<br><code class='${type}'>${text}</code>`;
+            }
+
+            function requestDataFromURL(url, completionHandler) {
+                var request = new XMLHttpRequest;
+                request.open("get", url);
+                request.responseType = "arraybuffer";
+                request.onload = () => completionHandler(request.response);
+                request.send();
+            }
+
+            (function () {
+                if (!window.MediaSource) {
+                    logResult("Your browser does not support the MediaSource API.", "error");
+                    return;
+                }
+
+                if (!MediaSource.isTypeSupported(codecs)) {
+                    logResult(`Your browser does not support ${codecs}.`, "error");
+                    return;
+                }
+
+                logResult("Supported media source detected.", "success");
+
+                const mediaSource = new MediaSource;
+                video.src = URL.createObjectURL(mediaSource);
+                mediaSource.addEventListener("sourceopen", () => {
+                    const sourceBuffer = mediaSource.addSourceBuffer(codecs);
+                    requestDataFromURL("bipbop.mp4", buffer => {
+                        sourceBuffer.addEventListener("updateend", () => {
+                            logResult("Playing video!", "success");
+                            mediaSource.endOfStream();
+                            video.play();
+                        });
+                        sourceBuffer.appendBuffer(buffer);
+                    });
+                });
+            })();
+        </script>
+    </body>
+</html>
