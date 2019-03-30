@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             .error {
                 color: red;
@@ -10,10 +11,23 @@
             .success {
                 color: green;
             }
+
+            video {
+                border: tomato 1px solid;
+                width: 320px;
+                height: 240px;
+            }
+
+            body, html {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
         </style>
     </head>
     <body>
         <video controls></video>
+        <div><input type="button" id="play-button" value="Start the video"></div>
         <p id="result"></p>
         <script>
             const video = document.querySelector("video");
@@ -32,7 +46,7 @@
                 request.send();
             }
 
-            (function () {
+            document.getElementById("play-button").addEventListener("click", () => {
                 if (!window.MediaSource) {
                     logResult("Your browser does not support the MediaSource API.", "error");
                     return;
@@ -58,7 +72,7 @@
                         sourceBuffer.appendBuffer(buffer);
                     });
                 });
-            })();
+            });
         </script>
     </body>
 </html>
