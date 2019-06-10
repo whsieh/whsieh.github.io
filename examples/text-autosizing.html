@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, html {
+            font-family: monospace;
+            margin: 0;
+        }
+
+        pre, code {
+            color: white;
+            background-color: black;
+            padding: 4px;
+        }
+
+        .text {
+            margin-top: 12px;
+            margin-left: 12px;
+        }
+
+        .container {
+            border: 1px solid black;
+            display: inline-block;
+            padding: 8px 12px 12px 12px;
+            margin-left: 8px;
+            max-width: 320px;
+        }
+
+        .bar {
+            width: 1180px;
+            height: 100px;
+            background: linear-gradient(to right, red 0%, green 50%, blue 100%);
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="bar"></div>
+    <div class="container">
+        <pre>-webkit-text-size-adjust: auto;</pre>
+        <div class="text" style="font-size: 8px;">1. 8px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 12px;">1. 12px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 14px;">1. 14px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 16px;">1. 16px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 20px;">1. 20px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+    </div>
+    <div class="container" style="-webkit-text-size-adjust: none;">
+        <pre>-webkit-text-size-adjust: none;</pre>
+        <div class="text" style="font-size: 8px;">2. 8px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 12px;">2. 12px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 14px;">2. 14px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 16px;">2. 16px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+        <div class="text" style="font-size: 20px;">2. 20px: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet nisi felis, eu scelerisque dolor imperdiet in.</div>
+    </div>
+    <div style="margin-top: 1em; margin-left: 8px"><pre style="display: inline-block;">The current scale is: <span id="scale">--</span></pre></div>
+    <script>
+        addEventListener("resize", updateScaleSoon);
+
+        if (window.visualViewport)
+            visualViewport.addEventListener("resize", updateScaleSoon);
+
+        function updateScaleSoon() {
+            if (window._scheduledScaleUpdateID)
+                clearTimeout(_scheduledScaleUpdateID);
+
+            _scheduledScaleUpdateID = setTimeout(() => {
+                document.getElementById("scale").textContent = visualViewport.scale.toFixed(3);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
