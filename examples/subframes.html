@@ -4,10 +4,11 @@ body {
     text-align: center;
     font-family: -apple-system;
     overflow: scroll;
+    margin: 40px;
 }
 
 iframe {
-    width: 100vw;
+    width: calc(100vw - 80px);
     height: 100vh;
     border: 4px red solid;
     box-sizing: border-box;
@@ -20,6 +21,9 @@ iframe {
 }
 
 </style>
+
+<iframe src="lorem.html"></iframe>
+<span class="label">lorem.html</span>
 
 <iframe src="file-input.html"></iframe>
 <span class="label">file-input.html</span>
