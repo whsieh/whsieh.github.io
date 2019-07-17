@@ -4,12 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<input placeholder="Tap me, I dare you"></input>
+<input placeholder="Tap me"></input>
 </body>
 <script>
-document.querySelector("input").addEventListener("focus", () => {
-    window.open("focus-navigate.html");
-    while (true);
-});
+document.querySelector("input").addEventListener("focus", () => window.open("focus-navigate.html"));
 </script>
 </html>
