@@ -1,12 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: system-ui;
+    }
+
+    input {
+        font-size: 16px;
+    }
+</style>
 </head>
 <body>
-<input placeholder="Tap me"></input>
+<p>Top input — presents a modal alert.</p>
+<input id="top-input" placeholder="Top"></input>
+<p>Bottom input — opens a new window.</p>
+<input id="bottom-input" placeholder="Bottom"></input>
 </body>
 <script>
-document.querySelector("input").addEventListener("focus", () => window.open("focus-navigate.html"));
+const topInput = document.querySelector("#top-input");
+const bottomInput = document.querySelector("#bottom-input");
+
+topInput.addEventListener("focus", () => {
+    alert("oof");
+}, { "once" : true });
+
+bottomInput.addEventListener("focus", () => {
+    open("focus-navigate.html");
+}, { "once" : true });
 </script>
 </html>
