@@ -16,11 +16,14 @@
 <body>
 <p>Top input — presents a modal alert.</p>
 <input id="top-input" placeholder="Top"></input>
+<p>Middle input — normal input.</p>
+<input id="middle-input" placeholder="Middle"></input>
 <p>Bottom input — opens a new window.</p>
 <input id="bottom-input" placeholder="Bottom"></input>
 </body>
 <script>
 const topInput = document.querySelector("#top-input");
+const middleInput = document.querySelector("#middle-input");
 const bottomInput = document.querySelector("#bottom-input");
 
 topInput.addEventListener("focus", () => {
@@ -29,6 +32,6 @@ topInput.addEventListener("focus", () => {
 
 bottomInput.addEventListener("focus", () => {
     open("focus-navigate.html");
-}, { "once" : true });
+});
 </script>
 </html>
