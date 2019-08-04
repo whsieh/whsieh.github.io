@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-size: 18px;
+            font-family: system-ui;
+            margin: 0;
+            padding: 0;
+            background-color: #E8E8E8;
+        }
+
+        #main {
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            border: 10px solid tomato;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #centered {
+            background-color: white;
+            width: 640px;
+            height: 480px;
+            position: relative;
+            border-bottom: 1px solid #CCC;
+            border-right: 1px solid #CCC;
+        }
+
+        #centered > header {
+            text-align: center;
+            margin: 1em auto;
+        }
+
+        #centered > #output {
+            width: calc(50% - 2em);
+            height: calc(100% - 5em);
+            float: left;
+            margin: 1em 1em;
+        }
+
+        #centered > .controls {
+            width: calc(50% - 2em);
+            height: calc(100% - 6em);
+            margin: 2em 0 1em calc(50% + 2em);
+        }
+
+        a {
+            outline: none;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: blue;
+        }
+
+        #output {
+            overflow: scroll;
+        }
+    </style>
+</head>
+<body>
+<div id="main">
+    <div id="centered">
+        <header><strong>Basic Fullscreen API Test</strong></header>
+        <div id="output"></div>
+        <div class="controls">
+            <div><a href="javascript:toggleFullscreen()">Toggle fullscreen</a></div>
+            <div><br></div>
+            <div><a href="javascript:clearOutput()">Clear output</a></div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+output = document.getElementById("output");
+
+function toggleFullscreen(event) {
+    if (document.webkitIsFullScreen) {
+        appendOutput("Exiting fullscreen", "gray");
+        document.webkitExitFullscreen();
+    } else {
+        appendOutput("Requesting fullscreen", "gray");
+        document.body.webkitRequestFullscreen({ navigationUI: "hide" });
+    }
+    event.preventDefault();
+}
+
+function clearOutput(event) {
+    output.innerHTML = "";
+    event.preventDefault();
+}
+
+addEventListener("resize", () => {
+    appendOutput(`resize: (${innerWidth}, ${innerHeight})`, "green");
+});
+
+addEventListener("webkitfullscreenchange", () => {
+    appendOutput(`fullscreenchange: (${innerWidth}, ${innerHeight})`, "red");
+});
+
+function appendOutput(string, color) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = string;
+    paragraph.style.color = color;
+    output.appendChild(paragraph);
+}
+</script>
+</html>
