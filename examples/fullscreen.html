@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<meta charset="utf8">
 <head>
     <style>
         body, html {
@@ -7,7 +8,7 @@
             height: 100%;
             overflow: hidden;
             font-size: 18px;
-            font-family: system-ui;
+            font-family: system-ui, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #E8E8E8;
@@ -42,6 +43,8 @@
             height: calc(100% - 5em);
             float: left;
             margin: 1em 1em;
+            overflow: scroll;
+            font-size: 16px;
         }
 
         #centered > .controls {
@@ -58,10 +61,6 @@
         a:visited {
             color: blue;
         }
-
-        #output {
-            overflow: scroll;
-        }
     </style>
 </head>
 <body>
@@ -70,9 +69,9 @@
         <header><strong>Basic Fullscreen API Test</strong></header>
         <div id="output"></div>
         <div class="controls">
-            <div><a href="javascript:toggleFullscreen()">Toggle fullscreen</a></div>
+            <div><a href="javascript:void(0)" id="toggle-fullscreen">Toggle fullscreen</a></div>
             <div><br></div>
-            <div><a href="javascript:clearOutput()">Clear output</a></div>
+            <div><a href="javascript:void(0)" id="clear-output">Clear output</a></div>
         </div>
     </div>
 </div>
@@ -80,13 +79,28 @@
 <script>
 output = document.getElementById("output");
 
-function toggleFullscreen(event) {
-    if (document.webkitIsFullScreen) {
-        appendOutput("Exiting fullscreen", "gray");
+function exitFullscreen() {
+    if (document.exitFullscreen)
+        document.exitFullscreen();
+    else if (document.webkitExitFullscreen)
         document.webkitExitFullscreen();
+}
+
+function enterFullscreen() {
+    const options = { navigationUI: "hide" };
+    if (document.body.requestFullscreen)
+        document.body.requestFullscreen(options)
+    else if (document.body.webkitRequestFullscreen)
+        document.body.webkitRequestFullscreen(options)
+}
+
+function toggleFullscreen(event) {
+    if (document.webkitIsFullScreen || document.fullscreen) {
+        appendOutput("Exiting fullscreen", "gray");
+        exitFullscreen();
     } else {
         appendOutput("Requesting fullscreen", "gray");
-        document.body.webkitRequestFullscreen({ navigationUI: "hide" });
+        enterFullscreen();
     }
     event.preventDefault();
 }
@@ -100,9 +114,17 @@ addEventListener("resize", () => {
     appendOutput(`resize: (${innerWidth}, ${innerHeight})`, "green");
 });
 
-addEventListener("webkitfullscreenchange", () => {
+function noteFullscreenChange() {
     appendOutput(`fullscreenchange: (${innerWidth}, ${innerHeight})`, "red");
-});
+}
+
+addEventListener("webkitfullscreenchange", noteFullscreenChange);
+addEventListener("fullscreenchange", noteFullscreenChange);
+
+const toggleFullscreenLink = document.getElementById("toggle-fullscreen");
+const clearOutputLink = document.getElementById("clear-output");
+toggleFullscreenLink.addEventListener("click", toggleFullscreen);
+clearOutputLink.addEventListener("click", clearOutput);
 
 function appendOutput(string, color) {
     const paragraph = document.createElement("p");
