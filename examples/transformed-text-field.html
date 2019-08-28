@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <script>
+        function applyTransform() {
+            document.body.style.transform = "translate3d(-100vw, 0px, 0px)";
+        }
+    </script>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            display: -webkit-box;
+        }
+
+        .hidden {
+            overflow: hidden;
+            width: 100vw;
+        }
+
+        input {
+            border-color: rgb(25, 25, 25);
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hidden">
+            <input></input>
+        </div>
+        <div class="hidden">
+            <input></input>
+        </div>
+    </div>
+    <div onclick="applyTransform()">Apply the transform</div>
+</body>
+</html>
