@@ -113,7 +113,7 @@
     }
 
     function inputTypeToStringForEvent(event) {
-        if (!event.inputType)
+        if (event.inputType == null)
             return "(null)";
 
         return `"${event.inputType}"`;
