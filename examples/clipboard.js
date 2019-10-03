@@ -50,8 +50,17 @@ async function revealItem(identifier, x, y) {
             tr.remove();
     });
     item.types.forEach(async type => {
-        const blob = await item.getType(type);
+        let blob = null;
+        try {
+            blob = await item.getType(type);
+        } catch (error) { }
+
         const promise = new Promise(resolve => {
+            if (!blob) {
+                resolve("<span style='color: red;'>No Data</span>");
+                return;
+            }
+
             if (type === "text/plain" || type === "text/uri-list" || type === "text/html") {
                 const reader = new FileReader;
                 reader.onload = () => {
@@ -73,6 +82,9 @@ async function revealItem(identifier, x, y) {
         });
         tableBody.appendChild(makeTableRow(["", type, blob.size, promise]));
     });
+
+    if (!item.types.length)
+        tableBody.appendChild(makeTableRow(["", "No data", "-", "-"]));
 
     tableContainer.style.visibility = "hidden";
     tableContainer.style.display = "block";
