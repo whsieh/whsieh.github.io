@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<link rel="stylesheet" type="text/css" href="clipboard.css">
+<script src="clipboard-util.js"></script>
+<body>
+    <h1>📋 Clipboard API 📋</h1>
+    <div class="horizontal-divider"></div>
+    <main>
+        <div id="left-column">
+            <section id="clipboardReadText">
+                <h2>Clipboard.readText</h2>
+                <button class="action">Paste text</button>
+                <button class="clear">Reset</button>
+                <input readonly placeholder="Result"></input>
+                <textarea readonly class="console"></textarea>
+            </section>
+            <section id="clipboardRead">
+                <h2>Clipboard.read</h2>
+                <button class="action">Read items</button>
+                <button class="clear">Reset</button>
+                <div class="item-shelf"></div>
+                <textarea readonly class="console"></textarea>
+            </section>
+            <section id="clipboardItemFactory">
+                <h2>ClipboardItem</h2>
+                <button class="action">Add item</button>
+                <button class="clear">Reset</button>
+                <div><input type="checkbox" id="blobImageCheck"></input><label for="blobImageCheck">Blob-encoded image</label></div>
+                <div><input type="checkbox" id="blobHTMLCheck"></input><label for="blobHTMLCheck">Blob-encoded HTML</label></div>
+                <div><input type="checkbox" id="blobTextCheck"></input><label for="blobTextCheck">Blob-encoded text</label></div>
+                <div><input type="checkbox" id="urlCheck"></input><label for="urlCheck">URL (plain text)</label></div>
+                <div class="item-shelf"></div>
+            </section>
+        </div>
+        <div id="right-column">
+            <section id="clipboardWriteText">
+                <h2>Clipboard.writeText</h2>
+                <button class="action">Copy text</button>
+                <button class="clear">Reset</button>
+                <input placeholder="Text to copy" value="Hello world"></input>
+                <textarea readonly class="console"></textarea>
+            </section>
+            
+            <section id="clipboardWrite">
+                <h2>Clipboard.write</h2>
+                <button class="action">Write items</button>
+                <button class="clear">Reset</button>
+                <div class="dropzone item-shelf"></div>
+                <textarea readonly class="console"></textarea>
+            </section>
+        </div>
+    </main>
+    <div class="table-container">
+        <h3>ID: <span class="item-identifier">-</span></h3>
+        <table>
+            <tbody>
+                <th id="output-header">
+                    <td class="table-header"><strong>MIME</strong></td>
+                    <td class="table-header"><strong>Size (bytes)</strong></td>
+                    <td class="table-header"><strong>Data</strong></td>
+                </th>
+            </tbody>
+        </table>
+        <a href="javascript:void(0)" class="close-button">Close</a>
+    </div>
+    <script src="clipboard.js"></script>
+</body>
+</html>
