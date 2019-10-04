@@ -147,6 +147,7 @@ async function revealItem(identifier, x, y) {
     const button = section.querySelector("button.action");
     const clear = section.querySelector("button.clear");
     const shelf = section.querySelector("div.item-shelf");
+    const noBlobImage = section.querySelector("#blobImageCheck0");
     const blobImage1 = section.querySelector("#blobImageCheck1");
     const blobImage2 = section.querySelector("#blobImageCheck2");
     const blobImage3 = section.querySelector("#blobImageCheck3");
@@ -180,6 +181,7 @@ async function revealItem(identifier, x, y) {
     clear.addEventListener("click", () => {
         Array.from(shelf.childNodes).forEach(node => node.remove());
         [blobImage1, blobImage2, blobImage3, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
+        noBlobImage.checked = true;
     });
 })();
 
