@@ -21,6 +21,9 @@ function createItemPill(identifier) {
     span.classList.add("item");
     span.addEventListener("dragstart", event => event.dataTransfer.setData(IDENTIFIER_TYPE_PREFIX + identifier, "true"));
     span.addEventListener("click", event => revealItem(identifier, event.pageX, event.pageY));
+    const item = getItem(identifier);
+    if (item)
+        span.setAttribute("title", `${item.types.length} type(s)`);
     return span;
 }
 
@@ -144,16 +147,26 @@ async function revealItem(identifier, x, y) {
     const button = section.querySelector("button.action");
     const clear = section.querySelector("button.clear");
     const shelf = section.querySelector("div.item-shelf");
-    const blobImage = section.querySelector("#blobImageCheck");
+    const blobImage1 = section.querySelector("#blobImageCheck1");
+    const blobImage2 = section.querySelector("#blobImageCheck2");
+    const blobImage3 = section.querySelector("#blobImageCheck3");
     const blobHTML = section.querySelector("#blobHTMLCheck");
     const blobText = section.querySelector("#blobTextCheck");
     const url = section.querySelector("#urlCheck");
 
+    section.querySelector("label[for='blobImageCheck1'] > span > img").src = `data:image/png;base64, ${base64ImageData1()}==`;
+    section.querySelector("label[for='blobImageCheck2'] > span > img").src = `data:image/png;base64, ${base64ImageData2()}==`;
+    section.querySelector("label[for='blobImageCheck3'] > span > img").src = `data:image/png;base64, ${base64ImageData3()}==`;
+
     button.addEventListener("click", () => {
         const identifier = nextIdentifier();
         const data = {};
-        if (blobImage.checked)
-            data["image/png"] = wrapInPromise(createImageBlob());
+        if (blobImage1.checked)
+            data["image/png"] = wrapInPromise(createImageBlob1());
+        if (blobImage2.checked)
+            data["image/png"] = wrapInPromise(createImageBlob2());
+        if (blobImage3.checked)
+            data["image/png"] = wrapInPromise(createImageBlob3());
         if (blobHTML.checked)
             data["text/html"] = wrapInPromise(createHTMLBlob());
         if (blobText.checked)
@@ -166,7 +179,7 @@ async function revealItem(identifier, x, y) {
 
     clear.addEventListener("click", () => {
         Array.from(shelf.childNodes).forEach(node => node.remove());
-        [blobImage, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
+        [blobImage1, blobImage2, blobImage3, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
     });
 })();
 
@@ -292,4 +305,13 @@ async function revealItem(identifier, x, y) {
     const tableContainer = document.querySelector(".table-container");
     const closeButton = tableContainer.querySelector(".close-button");
     closeButton.addEventListener("click", () => tableContainer.style.display = "none");
+})();
+
+(function() {
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            document.querySelector(".table-container").style.display = "none";
+            event.preventDefault();
+        }
+    });
 })();

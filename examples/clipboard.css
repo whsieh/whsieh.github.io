@@ -80,8 +80,19 @@ input {
     margin-top: 1em;
 }
 
+fieldset {
+    margin-top: 0.5em;
+}
+
 label {
     -webkit-user-select: none;
+    margin-right: 0.5em;
+    display: inline-block;
+}
+
+.radio-row > span:first-child {
+    display: inline-block;
+    width: 40%;
 }
 
 button {
@@ -104,9 +115,18 @@ button.clear {
     margin-left: 4px;
 }
 
-input[type=checkbox] {
+input[type=checkbox], input[type=radio] {
     width: auto;
     margin: 0.8em 6px 6px 6px;
+}
+
+img.icon {
+    width: 20px;
+    object-fit: fill;
+    vertical-align: text-bottom;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+    border-radius: 4px;
 }
 
 div.item-shelf {
