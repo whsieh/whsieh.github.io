@@ -1,6 +1,6 @@
 body, html {
     margin: 0;
-    font-family: system-ui;
+    font-family: system-ui, sans-serif;
     background-color: #EFEFEF;
     margin-bottom: 1em;
 }
@@ -81,7 +81,7 @@ input {
 }
 
 input.custom-data {
-    width: calc(50% - 1.5em - 40px);
+    width: calc(50% - 1.5em);
     margin-top: 0;
 }
 
