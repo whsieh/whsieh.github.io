@@ -64,24 +64,19 @@ async function revealItem(identifier, x, y) {
                 return;
             }
 
-            if (type === "text/plain" || type === "text/uri-list" || type === "text/html") {
-                const reader = new FileReader;
-                reader.onload = () => {
-                    if (type === "text/uri-list")
-                        resolve(`<a href="${reader.result}">${reader.result}</a>`);
-                    else
-                        resolve(reader.result);
-                };
-                reader.readAsText(blob);
-                return;
-            }
-
             if (type.startsWith("image")) {
                 resolve(`<img style="max-height: 100px;" src="${URL.createObjectURL(blob)}"></img>`);
                 return;
             }
 
-            resolve("…");
+            const reader = new FileReader;
+            reader.onload = () => {
+                if (type === "text/uri-list")
+                    resolve(`<a href="${reader.result}">${reader.result}</a>`);
+                else
+                    resolve(reader.result);
+            };
+            reader.readAsText(blob);
         });
         tableBody.appendChild(makeTableRow(["", type, blob.size, promise]));
     });
@@ -153,6 +148,8 @@ async function revealItem(identifier, x, y) {
     const blobImage3 = section.querySelector("#blobImageCheck3");
     const blobHTML = section.querySelector("#blobHTMLCheck");
     const blobText = section.querySelector("#blobTextCheck");
+    const customType = section.querySelector("#customType");
+    const customData = section.querySelector("#customData");
     const url = section.querySelector("#urlCheck");
 
     section.querySelector("label[for='blobImageCheck1'] > span > img").src = `data:image/png;base64,${base64ImageData1()}==`;
@@ -174,6 +171,8 @@ async function revealItem(identifier, x, y) {
             data["text/plain"] = createTextBlob();
         if (url.checked)
             data["text/uri-list"] = "https://webkit.org/";
+        if (customType.value.length && customData.value.length)
+            data[customType.value] = customData.value;
 
         const promiseWrappedData = {};
         for (const [type, blobOrString] of Object.entries(data))
@@ -197,6 +196,7 @@ async function revealItem(identifier, x, y) {
 
     clear.addEventListener("click", () => {
         Array.from(shelf.childNodes).forEach(node => node.remove());
+        [customType, customData].forEach(field => field.value = "");
         [blobImage1, blobImage2, blobImage3, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
         noBlobImage.checked = true;
     });
