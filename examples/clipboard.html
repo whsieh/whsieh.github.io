@@ -59,8 +59,10 @@
                 <div><input type="checkbox" id="urlCheck"></input><label for="urlCheck">URL (text)</label></div>
                 <fieldset>
                     <legend>Custom</legend>
-                    <input placeholder="Type" class="custom-data" id="customType"></input>
-                    <input placeholder="Data" class="custom-data" id="customData"></input>
+                    <div><input type="checkbox" id="customCheck"></input><label for="customCheck">Write custom data</label></div>
+                    <br>
+                    <input placeholder="Type" disabled value="text/custom" class="custom-data" id="customType"></input>
+                    <input placeholder="Data" disabled value="hello world" class="custom-data" id="customData"></input>
                 </fieldset>
                 <div class="item-shelf"></div>
             </section>

@@ -81,7 +81,7 @@ input {
 }
 
 input.custom-data {
-    width: calc(50% - 1.5em);
+    width: calc(50% - 1.5em - 40px);
     margin-top: 0;
 }
 

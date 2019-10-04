@@ -150,6 +150,7 @@ async function revealItem(identifier, x, y) {
     const blobText = section.querySelector("#blobTextCheck");
     const customType = section.querySelector("#customType");
     const customData = section.querySelector("#customData");
+    const customCheck = section.querySelector("#customCheck");
     const url = section.querySelector("#urlCheck");
 
     section.querySelector("label[for='blobImageCheck1'] > span > img").src = `data:image/png;base64,${base64ImageData1()}==`;
@@ -171,7 +172,7 @@ async function revealItem(identifier, x, y) {
             data["text/plain"] = createTextBlob();
         if (url.checked)
             data["text/uri-list"] = "https://webkit.org/";
-        if (customType.value.length && customData.value.length)
+        if (customCheck.checked && customType.value.length && customData.value.length)
             data[customType.value] = customData.value;
 
         const promiseWrappedData = {};
@@ -194,11 +195,18 @@ async function revealItem(identifier, x, y) {
         shelf.appendChild(createItemPill(identifier));
     });
 
+    customCheck.addEventListener("change", () => {
+        customType.disabled = !customCheck.checked;
+        customData.disabled = !customCheck.checked;
+    });
+
     clear.addEventListener("click", () => {
         Array.from(shelf.childNodes).forEach(node => node.remove());
-        [customType, customData].forEach(field => field.value = "");
-        [blobImage1, blobImage2, blobImage3, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
+        [customType, customData].forEach(field => field.disabled = true);
+        [customCheck, blobImage1, blobImage2, blobImage3, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
         noBlobImage.checked = true;
+        customType.value = "text/custom";
+        customData.value = "hello world";
     });
 })();
 
