@@ -32,19 +32,19 @@ function createImageBlob3() {
     return createImageBlob(base64ImageData3());
 }
 
-function createHTMLBlob() {
-    const markup = "<strong style='color: red;'>Hello</strong>&nbsp;<em><u style='font-size: 24px;'>world</u></em>";
+function createHTMLBlob(markup) {
+    markup = markup ? markup : "<strong style='color: red;'>Hello</strong>&nbsp;<em><u style='font-size: 24px;'>world</u></em>";
     const bytesAsArray = new Array(markup.length);
     for (let i = 0; i < markup.length; i++)
         bytesAsArray[i] = markup.charCodeAt(i);
     return new Blob([new Uint8Array(bytesAsArray)], { type : "text/html" });
 }
 
-function createTextBlob() {
-    const plainText = "The quick brown fox jumped over the lazy dog.";
-    const bytesAsArray = new Array(plainText.length);
-    for (let i = 0; i < plainText.length; i++)
-        bytesAsArray[i] = plainText.charCodeAt(i);
+function createTextBlob(text) {
+    text = text ? text : "The quick brown fox jumped over the lazy dog.";
+    const bytesAsArray = new Array(text.length);
+    for (let i = 0; i < text.length; i++)
+        bytesAsArray[i] = text.charCodeAt(i);
     return new Blob([new Uint8Array(bytesAsArray)], { type : "text/plain" });
 }
 

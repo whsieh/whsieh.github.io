@@ -155,26 +155,43 @@ async function revealItem(identifier, x, y) {
     const blobText = section.querySelector("#blobTextCheck");
     const url = section.querySelector("#urlCheck");
 
-    section.querySelector("label[for='blobImageCheck1'] > span > img").src = `data:image/png;base64, ${base64ImageData1()}==`;
-    section.querySelector("label[for='blobImageCheck2'] > span > img").src = `data:image/png;base64, ${base64ImageData2()}==`;
-    section.querySelector("label[for='blobImageCheck3'] > span > img").src = `data:image/png;base64, ${base64ImageData3()}==`;
+    section.querySelector("label[for='blobImageCheck1'] > span > img").src = `data:image/png;base64,${base64ImageData1()}==`;
+    section.querySelector("label[for='blobImageCheck2'] > span > img").src = `data:image/png;base64,${base64ImageData2()}==`;
+    section.querySelector("label[for='blobImageCheck3'] > span > img").src = `data:image/png;base64,${base64ImageData3()}==`;
 
     button.addEventListener("click", () => {
         const identifier = nextIdentifier();
         const data = {};
         if (blobImage1.checked)
-            data["image/png"] = wrapInPromise(createImageBlob1());
+            data["image/png"] = createImageBlob1();
         if (blobImage2.checked)
-            data["image/png"] = wrapInPromise(createImageBlob2());
+            data["image/png"] = createImageBlob2();
         if (blobImage3.checked)
-            data["image/png"] = wrapInPromise(createImageBlob3());
+            data["image/png"] = createImageBlob3();
         if (blobHTML.checked)
-            data["text/html"] = wrapInPromise(createHTMLBlob());
+            data["text/html"] = createHTMLBlob();
         if (blobText.checked)
-            data["text/plain"] = wrapInPromise(createTextBlob());
+            data["text/plain"] = createTextBlob();
         if (url.checked)
-            data["text/uri-list"] = wrapInPromise("https://webkit.org/");
-        setItem(identifier, new ClipboardItem(data));
+            data["text/uri-list"] = "https://webkit.org/";
+
+        const promiseWrappedData = {};
+        for (const [type, blobOrString] of Object.entries(data))
+            promiseWrappedData[type] = wrapInPromise(blobOrString);
+
+        let item;
+        try {
+            item = new ClipboardItem(promiseWrappedData);
+        } catch (exception) {
+            // Try creating the item by just passing in the data. This was the previous incarnation of the async
+            // clipboard API.
+            for (const key of Object.keys(data)) {
+                if (typeof data[key] === "string")
+                    data[key] = createTextBlob(data[key]);
+            }
+            item = new ClipboardItem(data);
+        }
+        setItem(identifier, item);
         shelf.appendChild(createItemPill(identifier));
     });
 
@@ -265,8 +282,9 @@ async function revealItem(identifier, x, y) {
         appendConsole("clipboardWrite", `Writing ${items.length} item(s) to the clipboard.`);
         navigator.clipboard.write(Array.from(items)).then(() => {
             appendConsole("clipboardWrite", `✅ Done writing ${items.length} item(s) (${Date.now() - startTime} ms).`);
-        }, () => {
+        }, error => {
             appendConsole("clipboardWrite", `❌ Failed to write ${items.length} item(s) (${Date.now() - startTime} ms).`);
+            appendConsole("clipboardWrite", `(${error.code}) ${error.message}`);
         });
     });
 
@@ -292,8 +310,9 @@ async function revealItem(identifier, x, y) {
                 setItem(identifier, item);
                 shelf.appendChild(createItemPill(identifier));
             }
-        }, () => {
+        }, error => {
             appendConsole("clipboardRead", `❌ Failed to read items (${Date.now() - startTime} ms).`);
+            appendConsole("clipboardRead", `(${error.code}) ${error.message}`);
         });
     });
 
