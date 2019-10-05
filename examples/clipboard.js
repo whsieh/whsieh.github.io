@@ -146,6 +146,7 @@ async function revealItem(identifier, x, y) {
     const blobImage1 = section.querySelector("#blobImageCheck1");
     const blobImage2 = section.querySelector("#blobImageCheck2");
     const blobImage3 = section.querySelector("#blobImageCheck3");
+    const brokenBlobImage = section.querySelector("#brokenBlobImageCheck");
     const blobHTML = section.querySelector("#blobHTMLCheck");
     const blobText = section.querySelector("#blobTextCheck");
     const customType = section.querySelector("#customType");
@@ -166,6 +167,8 @@ async function revealItem(identifier, x, y) {
             data["image/png"] = createImageBlob2();
         if (blobImage3.checked)
             data["image/png"] = createImageBlob3();
+        if (brokenBlobImage.checked)
+            data["image/png"] = createTextBlob("ThisIsNotGoingToDecodeAsAValidPNG¯\\_(ツ)_/¯");
         if (blobHTML.checked)
             data["text/html"] = createHTMLBlob();
         if (blobText.checked)
@@ -203,7 +206,7 @@ async function revealItem(identifier, x, y) {
     clear.addEventListener("click", () => {
         Array.from(shelf.childNodes).forEach(node => node.remove());
         [customType, customData].forEach(field => field.disabled = true);
-        [customCheck, blobImage1, blobImage2, blobImage3, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
+        [customCheck, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
         noBlobImage.checked = true;
         customType.value = "text/custom";
         customData.value = "hello world";
