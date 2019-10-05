@@ -168,7 +168,7 @@ async function revealItem(identifier, x, y) {
         if (blobImage3.checked)
             data["image/png"] = createImageBlob3();
         if (brokenBlobImage.checked)
-            data["image/png"] = createTextBlob("ThisIsNotGoingToDecodeAsAValidPNG¯\\_(ツ)_/¯");
+            data["image/png"] = createImageBlob("VGhpc0lzTm90R29pbmdUb0RlY29kZUFzQVZhbGlkUE5Hwq9cXyjjg4QpXy/Crw");
         if (blobHTML.checked)
             data["text/html"] = createHTMLBlob();
         if (blobText.checked)
