@@ -83,6 +83,7 @@ input {
 input.custom-data {
     width: calc(50% - 1.5em);
     margin-top: 0;
+    min-width: 0;
 }
 
 fieldset {
