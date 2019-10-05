@@ -78,7 +78,7 @@ async function revealItem(identifier, x, y) {
             };
             reader.readAsText(blob);
         });
-        tableBody.appendChild(makeTableRow(["", type, blob.size, promise]));
+        tableBody.appendChild(makeTableRow(["", type, blob ? humanReadableFileSize(blob.size) : 0, promise]));
     });
 
     if (!item.types.length)

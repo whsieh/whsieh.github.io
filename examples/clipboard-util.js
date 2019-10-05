@@ -79,3 +79,16 @@ function setItem(identifier, item) {
 function getItem(identifier) {
     return itemMap().get(identifier);
 }
+
+function humanReadableFileSize(bytes) {
+    if (Math.abs(bytes) < 1024)
+        return bytes + " B";
+
+    var units = ["KB", "MB", "GB", "TB"];
+    var unitIndex = -1;
+    do {
+        bytes /= 1024;
+        ++unitIndex;
+    } while(Math.abs(bytes) >= 1024 && unitIndex < units.length - 1);
+    return `${Math.round(bytes)} ${units[unitIndex]}`;
+}
