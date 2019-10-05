@@ -76,14 +76,12 @@ textarea, input, button {
 input {
     padding: 0.5em;
     width: calc(100% - 1.5em);
-    min-width: 120px;
     margin-top: 1em;
 }
 
 input.custom-data {
     width: calc(50% - 1.5em);
     margin-top: 0;
-    min-width: 0;
 }
 
 fieldset {
