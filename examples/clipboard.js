@@ -169,8 +169,10 @@ async function revealItem(identifier, x, y) {
             data["image/png"] = createImageBlob3();
         if (brokenBlobImage.checked)
             data["image/png"] = createImageBlob("VGhpc0lzTm90R29pbmdUb0RlY29kZUFzQVZhbGlkUE5Hwq9cXyjjg4QpXy/Crw");
-        if (blobHTML.checked)
+        if (blobHTMLCheck1.checked)
             data["text/html"] = createHTMLBlob();
+        if (blobHTMLCheck2.checked)
+            data["text/html"] = createHTMLBlob(`<span onclick='doThing()'>Nothing else to see here.</span><div style='display: none;'>Especially not this: ${base64ImageData1()}</div><!-- Or this: ${base64ImageData2()} --><script>console.log('Or this: ${base64ImageData3()}')</script>`);
         if (blobText.checked)
             data["text/plain"] = createTextBlob();
         if (url.checked)
@@ -206,8 +208,8 @@ async function revealItem(identifier, x, y) {
     clear.addEventListener("click", () => {
         Array.from(shelf.childNodes).forEach(node => node.remove());
         [customType, customData].forEach(field => field.disabled = true);
-        [customCheck, blobHTML, blobText, url].forEach(checkbox => checkbox.checked = false);
-        noBlobImage.checked = true;
+        [customCheck, blobText, url].forEach(checkbox => checkbox.checked = false);
+        [blobHTMLCheck0, noBlobImage].forEach(radio => radio.checked = true);
         customType.value = "text/custom";
         customData.value = "hello world";
     });

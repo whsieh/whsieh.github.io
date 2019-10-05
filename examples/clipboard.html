@@ -57,7 +57,16 @@
                         <span><input type="radio" name="blobImage" id="brokenBlobImageCheck"></input><label for="brokenBlobImageCheck"><span>Broken .png</span></label></span>
                     </div>
                 </fieldset>
-                <div><input type="checkbox" id="blobHTMLCheck"></input><label for="blobHTMLCheck">HTML (blob)</label></div>
+                <fieldset>
+                    <legend>text/html</legend>
+                    <div class="radio-row">
+                        <span><input type="radio" name="blobHTML" id="blobHTMLCheck0" checked></input><label for="blobHTMLCheck0">None</label></span>
+                        <span><input type="radio" name="blobHTML" id="blobHTMLCheck1"></input><label for="blobHTMLCheck1">HTML (no hidden content)</label></span>
+                    </div>
+                    <div class="radio-row">
+                        <span><input type="radio" name="blobHTML" id="blobHTMLCheck2"></input><label for="blobHTMLCheck2">HTML (hidden content)</label></span>
+                    </div>
+                </fieldset>
                 <div><input type="checkbox" id="blobTextCheck"></input><label for="blobTextCheck">Plain text (blob)</label></div>
                 <div><input type="checkbox" id="urlCheck"></input><label for="urlCheck">URL (text)</label></div>
                 <fieldset>

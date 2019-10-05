@@ -99,6 +99,11 @@ label {
     width: 40%;
 }
 
+.radio-row > span {
+    display: inline-block;
+    white-space: nowrap;
+}
+
 button {
     border-radius: 4px;
     color: white;
