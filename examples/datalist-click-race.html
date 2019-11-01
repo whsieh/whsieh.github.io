@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+<input list="foobar" />
+<datalist id="foobar">
+    <select>
+        <option>Foo</option>
+    </select>
+</datalist>
+<br>
+<p style="margin-top: 2em">Click "Foo" above.</p>
+</body>
+<script>
+const input = document.querySelector("input");
+setInterval(() => {
+    input.focus();
+    document.execCommand("InsertText", true, "");
+}, 16);
+</script>
+</html>
