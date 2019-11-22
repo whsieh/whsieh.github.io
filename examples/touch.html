@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <style>
+            body {
+                font-family: system-ui;
+                font-size: 16px;
+            }
+
+            .toucharea {
+                margin: 1em auto;
+                border: 0.5em solid black;
+                width: 200px;
+                height: 200px;
+                box-sizing: border-box;
+                border-radius: 0.5em;
+                padding: 1em;
+                -webkit-text-size-adjust: none;
+                outline: none;
+                line-height: 1.25;
+            }
+
+            p, h1 {
+                text-align: center;
+                max-width: 320px;
+                margin: 1em auto;
+            }
+
+            .scrolls {
+                overflow: scroll;
+            }
+
+            .blue-transparent { background-color: rgba(0, 122, 255, 0.25); }
+            .blue { background-color: rgb(0, 122, 255); }
+            .green-transparent { background-color: rgba(52, 199, 89, 0.25); }
+            .green { background-color: rgb(52, 199, 89); }
+            .indigo-transparent { background-color: rgba(88, 86, 214, 0.25); }
+            .indigo { background-color: rgb(88, 86, 214); }
+            .orange-transparent { background-color: rgba(255, 149, 0, 0.25); }
+            .orange { background-color: rgb(255, 149, 0); }
+            .pink-transparent { background-color: rgba(255, 45, 85, 0.25); }
+            .pink { background-color: rgb(255, 45, 85); }
+            .purple-transparent { background-color: rgba(175, 82, 222, 0.25); }
+            .purple { background-color: rgb(175, 82, 222); }
+            .red-transparent { background-color: rgba(255, 59, 48, 0.25); }
+            .red { background-color: rgb(255, 59, 48); }
+            .teal-transparent { background-color: rgba(90, 200, 250, 0.25); }
+            .teal { background-color: rgb(90, 200, 250); }
+            .yellow-transparent { background-color: rgba(255, 204, 0, 0.25); }
+            .yellow { background-color: rgb(255, 204, 0); }
+        </style>
+    </head>
+    <body>
+        <h1>Passive</h1>
+        <div class="teal-transparent toucharea passive"></div>
+        <p>Passive touchstart listener</p>
+        <div class="teal-transparent toucharea passive" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Passive touchstart listener; Editable text</p>
+        <div class="teal-transparent toucharea scrolls passive">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Passive touchstart listener; Scrollable</p>
+
+        <h1>no preventDefault (immediate)</h1>
+        <div class="blue-transparent toucharea no-prevent-default-fast"></div>
+        <p>Not passive; no preventDefault() on touchstart</p>
+        <div class="blue-transparent toucharea no-prevent-default-fast" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; no preventDefault() on touchstart; editable text</p>
+        <div class="blue-transparent toucharea scrolls no-prevent-default-fast">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; no preventDefault() on touchstart; scrollable</p>
+
+        <h1>no preventDefault (400 ms)</h1>
+        <div class="green-transparent toucharea no-no-prevent-default-medium"></div>
+        <p>Not passive; no preventDefault() on touchstart; 400ms delay</p>
+        <div class="green-transparent toucharea no-prevent-default-medium" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; no preventDefault() on touchstart; 400ms delay; editable text</p>
+        <div class="green-transparent toucharea scrolls no-prevent-default-medium">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; no preventDefault() on touchstart; 400ms delay; scrollable</p>
+
+        <h1>no preventDefault (1200 ms)</h1>
+        <div class="red-transparent toucharea no-no-prevent-default-slow"></div>
+        <p>Not passive; no preventDefault() on touchstart; 1200ms delay</p>
+        <div class="red-transparent toucharea no-prevent-default-slow" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; no preventDefault() on touchstart; 1200ms delay; editable text</p>
+        <div class="red-transparent toucharea scrolls no-prevent-default-slow">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; no preventDefault() on touchstart; 1200ms delay; scrollable</p>
+
+        <h1>preventDefault (immediate)</h1>
+        <div class="indigo-transparent toucharea prevent-default-fast"></div>
+        <p>Not passive; preventDefault() on touchstart</p>
+        <div class="indigo-transparent toucharea prevent-default-fast" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; preventDefault() on touchstart; editable text</p>
+        <div class="indigo-transparent toucharea scrolls prevent-default-fast">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; preventDefault() on touchstart; scrollable</p>
+
+        <h1>preventDefault (400 ms)</h1>
+        <div class="purple-transparent toucharea prevent-default-medium"></div>
+        <p>Not passive; preventDefault() on touchstart; 400ms delay</p>
+        <div class="purple-transparent toucharea prevent-default-medium" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; preventDefault() on touchstart; 400ms delay; editable text</p>
+        <div class="purple-transparent toucharea scrolls prevent-default-medium">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; preventDefault() on touchstart; 400ms delay; scrollable</p>
+
+        <h1>preventDefault (1200 ms)</h1>
+        <div class="orange-transparent toucharea prevent-default-slow"></div>
+        <p>Not passive; preventDefault() on touchstart; 1200ms delay</p>
+        <div class="orange-transparent toucharea prevent-default-slow" contenteditable>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; preventDefault() on touchstart; 1200ms delay; editable text</p>
+        <div class="orange-transparent toucharea scrolls prevent-default-slow">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+        <p>Not passive; preventDefault() on touchstart; 1200ms delay; scrollable</p>
+
+        <script>
+            document.querySelectorAll(".passive").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event)
+                }, { passive : true });
+            });
+
+            document.querySelectorAll(".prevent-default-fast").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event);
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".prevent-default-medium").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 400)
+                            break;
+                    }
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".prevent-default-slow").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 1200)
+                            break;
+                    }
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".no-prevent-default-fast").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event);
+                });
+            });
+
+            document.querySelectorAll(".no-prevent-default-medium").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 400)
+                            break;
+                    }
+                });
+            });
+
+            document.querySelectorAll(".no-prevent-default-slow").forEach(element => {
+                element.addEventListener("touchstart", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 1200)
+                            break;
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
