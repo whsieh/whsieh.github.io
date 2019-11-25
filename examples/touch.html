@@ -70,6 +70,19 @@
             .teal { background-color: rgb(90, 200, 250); }
             .yellow-transparent { background-color: rgba(255, 204, 0, 0.25); }
             .yellow { background-color: rgb(255, 204, 0); }
+
+            .flash {
+                position: fixed;
+                bottom: 10px;
+                left: 10px;
+                font-size: 20px;
+                transition: 1.5s cubic-bezier(0.5, 0, 0, 0);
+            }
+
+            .flash-begin {
+                transform: translateY(-200px);
+                opacity: 0;
+            }
         </style>
     </head>
     <body>
@@ -159,6 +172,13 @@
         </section>
 
         <script>
+            document.querySelectorAll(".toucharea").forEach(element => {
+                element.addEventListener("touchstart", event => flash("start", "green", "bold"), { passive : true });
+                element.addEventListener("touchmove", event => flash("move", "rgb(255, 204, 0)", "100"), { passive : true });
+                element.addEventListener("touchend", event => flash("end", "red", "bold"), { passive : true });
+                element.addEventListener("touchcancel", event => flash("cancel", "purple", "bold"), { passive : true });
+            });
+
             document.querySelectorAll(".passive").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event)
@@ -256,6 +276,21 @@
                 const section = document.getElementById(id);
                 if (section)
                     toggleSectionVisibility(section);
+            }
+
+            function flash(message, color, fontWeight) {
+                let div = document.createElement("div");
+                let code = document.createElement("code");
+                code.textContent = message;
+                div.appendChild(code);
+                if (color)
+                    div.style.color = color;
+                if (fontWeight)
+                    div.style.fontWeight = fontWeight;
+                div.classList.add("flash");
+                div.addEventListener("transitionend", () => div.remove());
+                setTimeout(() => div.classList.add("flash-begin"), 50);
+                document.body.appendChild(div);
             }
         </script>
     </body>
