@@ -96,6 +96,8 @@
                 <p>Passive touchstart listener; Editable text</p>
                 <div class="teal-transparent toucharea scrolls passive"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Passive touchstart listener; Scrollable</p>
+                <div class="teal-transparent toucharea scrolls passive prevents-touchmove">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Passive touchstart listener; preventDefault() on touchmove; scrollable</p>
             </div>
         </section>
         <section id="no-prevent-default-fast-section">
@@ -181,8 +183,15 @@
 
             document.querySelectorAll(".passive").forEach(element => {
                 element.addEventListener("touchstart", event => {
-                    console.log(event)
+                    console.log(event);
                 }, { passive : true });
+            });
+
+            document.querySelectorAll(".prevents-touchmove").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                    event.preventDefault();
+                }, { passive: false });
             });
 
             document.querySelectorAll(".prevent-default-fast").forEach(element => {
