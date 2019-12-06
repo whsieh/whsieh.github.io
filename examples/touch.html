@@ -96,8 +96,28 @@
                 <p>Passive touchstart listener; Editable text</p>
                 <div class="teal-transparent toucharea scrolls passive"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Passive touchstart listener; Scrollable</p>
-                <div class="teal-transparent toucharea scrolls passive prevents-touchmove">The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+            </div>
+        </section>
+        <section id="passive-with-active-touchmove-section">
+            <h1>Passive touchstart, active touchmove</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="pink-transparent toucharea scrolls passive no-prevent-touchmove"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Passive touchstart listener; no preventDefault() on touchmove; scrollable</p>
+                <div class="pink-transparent toucharea scrolls passive no-prevent-touchmove-medium"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Passive touchstart listener; no preventDefault() on touchmove; 30ms delay; scrollable</p>
+                <div class="pink-transparent toucharea scrolls passive prevent-touchmove"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Passive touchstart listener; preventDefault() on touchmove; scrollable</p>
+                <div class="pink-transparent toucharea scrolls passive prevent-touchmove-medium"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Passive touchstart listener; preventDefault() on touchmove; 30ms delay; scrollable</p>
+            </div>
+        </section>
+        <section id="dynamic-handlers">
+            <h1>Dynamically added listeners</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="yellow-transparent toucharea scrolls add-prevent-touch-move"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>On touchstart, add touchmove listener that prevents default</p>
             </div>
         </section>
         <section id="no-prevent-default-fast-section">
@@ -187,11 +207,57 @@
                 }, { passive : true });
             });
 
-            document.querySelectorAll(".prevents-touchmove").forEach(element => {
+            document.querySelectorAll(".prevent-touchmove").forEach(element => {
                 element.addEventListener("touchmove", event => {
                     console.log(event);
                     event.preventDefault();
                 }, { passive: false });
+            });
+
+            document.querySelectorAll(".no-prevent-touchmove").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                }, { passive: false });
+            });
+
+            document.querySelectorAll(".prevent-touchmove-medium").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 30)
+                            break;
+                    }
+                    event.preventDefault();
+                }, { passive: false });
+            });
+
+            document.querySelectorAll(".no-prevent-touchmove-medium").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 30)
+                            break;
+                    }
+                }, { passive: false });
+            });
+
+            document.querySelectorAll(".add-prevent-touch-move").forEach(element => {
+                const handleMove = function(event) {
+                    console.log(event);
+                    event.preventDefault();
+                };
+
+                element.addEventListener("touchstart", () => {
+                    console.log(event);
+                    element.addEventListener("touchmove", handleMove, { passive: false });
+                }, { passive: false });
+
+                element.addEventListener("touchend", () => {
+                    console.log(event);
+                    element.removeEventListener("touchmove", handleMove);
+                });
             });
 
             document.querySelectorAll(".prevent-default-fast").forEach(element => {

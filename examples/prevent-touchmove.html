@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+    #bar {
+        width: 200px;
+        height: 2000px;
+        background: linear-gradient(to bottom, red 0%, green 50%, blue 100%);
+    }
+    </style>
+</head>
+<body>
+<div id="bar"></div>
+<script>
+addEventListener("load", () => {
+    function touchmoveEventHandler(event)
+    {
+        event.preventDefault();
+    }
+
+    const bar = document.querySelector("#bar");
+    document.addEventListener("touchstart", event => {
+        document.body.appendChild(document.createElement("p"));
+        if (event.target === bar)
+            window.addEventListener("touchmove", touchmoveEventHandler, { passive: false, once: true });
+    }, { passive: false });
+}, false);
+</script>
+</body>
+</html>
