@@ -74,50 +74,63 @@
             <canvas id="canvas1" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Rectangles</h1>
+            <h1>Text</h1>
             <canvas id="canvas2" width="400" height="400"></canvas>
-        </div>
-        <div id="example">
-            <h1>Rectangles</h1>
-            <canvas id="canvas3" width="400" height="400"></canvas>
-        </div>
-        <div id="example">
-            <h1>Rectangles</h1>
-            <canvas id="canvas4" width="400" height="400"></canvas>
-        </div>
-        <div id="example">
-            <h1>Rectangles</h1>
-            <canvas id="canvas5" width="400" height="400"></canvas>
         </div>
     </div>
     <script>
         addEventListener("load", () => {
-            const canvas1 = document.getElementById("canvas1");
-            const context1 = canvas1.getContext("2d");
-            context1.beginPath();
-            context1.strokeStyle = "black";
-            context1.rect(20, 20, 160, 160);
-            context1.stroke();
+            (function () {
+                const context = document.getElementById("canvas1").getContext("2d");
+                context.beginPath();
+                context.strokeStyle = "black";
+                context.rect(20, 20, 160, 160);
+                context.stroke();
 
-            context1.beginPath();
-            context1.strokeStyle = "red";
-            context1.rect(220, 20, 160, 160);
-            context1.stroke();
-            context1.fillStyle = "red";
-            context1.fill();
+                context.beginPath();
+                context.strokeStyle = "red";
+                context.rect(220, 20, 160, 160);
+                context.stroke();
+                context.fillStyle = "red";
+                context.fill();
 
-            context1.beginPath();
-            context1.rect(20, 220, 160, 160);
-            context1.fillStyle = "green";
-            context1.fill();
+                context.beginPath();
+                context.rect(20, 220, 160, 160);
+                context.fillStyle = "green";
+                context.fill();
 
-            context1.beginPath();
-            context1.strokeStyle = "black";
-            context1.lineWidth = 20;
-            context1.rect(230, 230, 140, 140);
-            context1.stroke();
-            context1.fillStyle = "gray";
-            context1.fill();
+                context.beginPath();
+                context.strokeStyle = "black";
+                context.lineWidth = 20;
+                context.rect(230, 230, 140, 140);
+                context.stroke();
+                context.fillStyle = "gray";
+                context.fill();
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas2").getContext("2d");
+                context.font = "40px serif";
+                context.fillText("40px serif", 40, 40);
+
+                context.font = "Bold 28px sans-serif";
+                context.direction = "rtl";
+                context.fillStyle = "blue";
+                context.fillText("Bold 28px sans-serif", 340, 140);
+
+                context.font = "Bold Italic 30px Helvetica";
+                context.direction = "ltr";
+                context.fillStyle = "black";
+                context.fillText("30px Helvetica", 40, 240);
+
+                context.font = "Italic 16px Times New Roman";
+                context.strokeStyle = "red";
+                context.strokeText("Italic 16px Times New Roman", 180, 300);
+
+                context.font = "54px Arial";
+                context.fillStyle = "green";
+                context.fillText("54px Arial", 100, 370, [200]);
+            })();
         });
     </script>
 </body>
