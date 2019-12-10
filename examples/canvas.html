@@ -85,7 +85,7 @@
 <body>
     <div id="example-container">
         <div id="example">
-            <h1>Rectangles</h1>
+            <h1>Rects</h1>
             <canvas id="canvas1" width="400" height="400"></canvas>
         </div>
         <div id="example">
@@ -93,7 +93,7 @@
             <canvas id="canvas2" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>🤷🏻‍♂️</h1>
+            <h1>Arcs</h1>
             <canvas id="canvas3" width="400" height="400"></canvas>
         </div>
         <div id="example">
@@ -173,6 +173,36 @@
                 context.font = "54px Arial";
                 context.fillStyle = "green";
                 context.fillText("54px Arial", 100, 370, [200]);
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas3").getContext("2d");
+                context.beginPath();
+                context.arc(90, 90, 80, 0, 2 * Math.PI, false);
+                context.strokeStyle = "black";
+                context.stroke();
+
+                context.beginPath();
+                context.arc(290, 90, 80, Math.PI, 2 * Math.PI, false);
+                context.fillStyle = "pink";
+                context.fill();
+                context.lineWidth = 5;
+                context.strokeStyle = "red";
+                context.stroke();
+
+                context.beginPath();
+                context.lineWidth = 10;
+                context.arc(90, 290, 80, Math.PI / 2, Math.PI, true);
+                context.strokeStyle = "green";
+                context.stroke();
+
+                context.beginPath();
+                context.strokeStyle = "black";
+                context.lineWidth = 20;
+                context.arc(290, 290, 80, 0, 2 * Math.PI, false);
+                context.stroke();
+                context.fillStyle = "gray";
+                context.fill();
             })();
         });
     </script>
