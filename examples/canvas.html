@@ -34,22 +34,27 @@
         body {
             font-family: system-ui;
             margin: 0;
+            background-color: #EFEFEF;
         }
 
         h1 {
-            margin: 0 auto;
+            margin: 0.5em auto;
             text-align: center;
-            margin-bottom: 0.5em;
             font-size: 20px;
         }
 
         canvas {
             display: block;
-            width: 200px;
-            height: 200px;
+            width: 202px;
+            height: 202px;
             margin: 0 auto;
-            border: 1px solid lightgray;
             margin-bottom: 0.5em;
+            box-sizing: border-box;
+            border: 1px solid transparent;
+        }
+
+        canvas:hover {
+            border: 1px solid #EFEFEF;
         }
 
         #example-container {
@@ -62,8 +67,13 @@
         }
 
         #example {
-            width: 250px;
-            height: 250px;
+            width: calc(250px - 1em);
+            height: 260px;
+            background-color: white;
+            margin: 0.5em;
+            box-sizing: border-box;
+            border-right: 1px solid #AAA;
+            border-bottom: 1px solid #AAA;
         }
     </style>
 </head>
@@ -76,6 +86,30 @@
         <div id="example">
             <h1>Text</h1>
             <canvas id="canvas2" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1></h1>
+            <canvas id="canvas3" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1></h1>
+            <canvas id="canvas4" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1></h1>
+            <canvas id="canvas5" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1></h1>
+            <canvas id="canvas6" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1></h1>
+            <canvas id="canvas7" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1></h1>
+            <canvas id="canvas8" width="400" height="400"></canvas>
         </div>
     </div>
     <script>
@@ -115,17 +149,18 @@
 
                 context.font = "Bold 28px sans-serif";
                 context.direction = "rtl";
-                context.fillStyle = "blue";
-                context.fillText("Bold 28px sans-serif", 340, 140);
+                context.strokeStyle = "blue";
+                context.lineWidth = 2;
+                context.strokeText("Bold 28px sans-serif", 340, 140);
 
                 context.font = "Bold Italic 30px Helvetica";
                 context.direction = "ltr";
                 context.fillStyle = "black";
                 context.fillText("30px Helvetica", 40, 240);
 
-                context.font = "Italic 16px Times New Roman";
-                context.strokeStyle = "red";
-                context.strokeText("Italic 16px Times New Roman", 180, 300);
+                context.font = "Italic 16px monospace";
+                context.fillStyle = "red";
+                context.fillText("Italic 16px monospace", 180, 300);
 
                 context.font = "54px Arial";
                 context.fillStyle = "green";
