@@ -97,26 +97,27 @@
             <canvas id="canvas3" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>🤷🏻‍♂️</h1>
+            <h1>Translate</h1>
             <canvas id="canvas4" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>🤷🏻‍♂️</h1>
+            <h1>Lines</h1>
             <canvas id="canvas5" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>🤷🏻‍♂️</h1>
+            <h1>Gradients</h1>
             <canvas id="canvas6" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>🤷🏻‍♂️</h1>
+            <h1>Pattern</h1>
             <canvas id="canvas7" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>🤷🏻‍♂️</h1>
+            <h1>Shadows</h1>
             <canvas id="canvas8" width="400" height="400"></canvas>
         </div>
     </div>
+    <img id="icon" src="./images/stp-tiny.png" style="visibility: hidden;">
     <script>
         function refreshCanvases() {
             (function () {
@@ -212,6 +213,92 @@
                 context.fillStyle = "gray";
                 context.fill();
                 context.restore();
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas4").getContext("2d");
+                for (var i = 0; i < 10; i++) {
+                    for (var j = 0; j < 10; j++) {
+                        context.save();
+                        context.fillStyle = `rgb(${i * 25.5}, ${j * 25.5}, ${(i + j) * 12.75})`;
+                        context.translate(10 + j * 50, 10 + i * 50);
+                        context.fillRect(0, 0, 25, 25);
+                        context.restore();
+                    }
+                }
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas5").getContext("2d");
+                context.save();
+                context.lineWidth = 10;
+                context.lineJoin = "round";
+                context.strokeRect(75, 140, 150, 110);
+                context.fillRect(130, 190, 40, 60);
+                context.moveTo(50, 140);
+                context.lineTo(150, 60);
+                context.lineTo(250, 140);
+                context.closePath();
+                context.stroke();
+
+                context.moveTo(50, 300);
+                context.lineTo(350, 300);
+                context.closePath();
+                context.stroke();
+
+                context.moveTo(50, 380);
+                context.lineTo(350, 380);
+                context.closePath();
+                context.stroke();
+
+                context.setLineDash([25, 25]);
+                context.lineDashOffset = 10;
+                context.moveTo(60, 340);
+                context.lineTo(340, 340);
+                context.closePath();
+                context.stroke();
+
+                context.restore();
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas6").getContext("2d");
+
+                const gradient1 = context.createLinearGradient(0, 0, 400, 200);
+                gradient1.addColorStop(0, "red");
+                gradient1.addColorStop(0.5, "green");
+                gradient1.addColorStop(1, "blue");
+                context.fillStyle = gradient1;
+                context.fillRect(20, 20, 360, 200);
+
+                const gradient2 = context.createRadialGradient(200, 280, 5, 200, 280, 140);
+                gradient2.addColorStop(0, "white");
+                gradient2.addColorStop(1, "black");
+                context.arc(200, 280, 120, 0, 2 * Math.PI);
+                context.fillStyle = gradient2;
+                context.fill();
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas7").getContext("2d");
+                const pattern = context.createPattern(document.getElementById("icon"), "repeat");
+                context.fillStyle = pattern;
+                context.fillRect(0, 0, 400, 400);
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas8").getContext("2d");
+
+                context.shadowColor = "black";
+                context.shadowBlur = 20;
+                context.fillStyle = "pink";
+                context.fillRect(40, 40, 200, 200);
+
+                context.fillStyle = "tomato";
+                context.fillRect(100, 100, 200, 200);
+
+                context.fillStyle = "red";
+                context.fillRect(160, 160, 200, 200);
             })();
         }
 
