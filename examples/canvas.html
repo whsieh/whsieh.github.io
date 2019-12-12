@@ -231,26 +231,31 @@
             (function() {
                 const context = document.getElementById("canvas5").getContext("2d");
                 context.save();
+                context.clearRect(0, 0, 400, 400);
                 context.lineWidth = 10;
                 context.lineJoin = "round";
                 context.strokeRect(75, 140, 150, 110);
                 context.fillRect(130, 190, 40, 60);
+                context.beginPath();
                 context.moveTo(50, 140);
                 context.lineTo(150, 60);
                 context.lineTo(250, 140);
                 context.closePath();
                 context.stroke();
 
+                context.beginPath();
                 context.moveTo(50, 300);
                 context.lineTo(350, 300);
                 context.closePath();
                 context.stroke();
 
+                context.beginPath();
                 context.moveTo(50, 380);
                 context.lineTo(350, 380);
                 context.closePath();
                 context.stroke();
 
+                context.beginPath();
                 context.setLineDash([25, 25]);
                 context.lineDashOffset = 10;
                 context.moveTo(60, 340);
@@ -263,6 +268,8 @@
 
             (function() {
                 const context = document.getElementById("canvas6").getContext("2d");
+                context.save();
+                context.clearRect(0, 0, 400, 400);
 
                 const gradient1 = context.createLinearGradient(0, 0, 400, 200);
                 gradient1.addColorStop(0, "red");
@@ -277,17 +284,23 @@
                 context.arc(200, 280, 120, 0, 2 * Math.PI);
                 context.fillStyle = gradient2;
                 context.fill();
+                context.restore();
             })();
 
             (function() {
                 const context = document.getElementById("canvas7").getContext("2d");
+                context.save();
+                context.clearRect(0, 0, 400, 400);
                 const pattern = context.createPattern(document.getElementById("icon"), "repeat");
                 context.fillStyle = pattern;
                 context.fillRect(0, 0, 400, 400);
+                context.restore();
             })();
 
             (function() {
                 const context = document.getElementById("canvas8").getContext("2d");
+                context.save();
+                context.clearRect(0, 0, 400, 400);
 
                 context.shadowColor = "black";
                 context.shadowBlur = 20;
@@ -299,6 +312,7 @@
 
                 context.fillStyle = "red";
                 context.fillRect(160, 160, 200, 200);
+                context.restore();
             })();
         }
 
