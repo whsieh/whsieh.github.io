@@ -80,6 +80,12 @@
             border-right: 1px solid #AAA;
             border-bottom: 1px solid #AAA;
         }
+
+        .hidden-image {
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
     </style>
 </head>
 <body>
@@ -141,8 +147,8 @@
             <canvas id="canvas14" width="400" height="400"></canvas>
         </div>
     </div>
-    <img id="icon" src="./images/stp-tiny.png" style="visibility: hidden;">
-    <img id="image" src="./images/webkit.png" style="visibility: hidden;">
+    <img id="icon" src="./images/stp-tiny.png" class="hidden-image">
+    <img id="image" src="./images/webkit.png" class="hidden-image">
     <script>
         function refreshCanvases() {
             (function () {
