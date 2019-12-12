@@ -97,40 +97,48 @@
             <canvas id="canvas3" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Translate</h1>
+            <h1>Ellipse</h1>
             <canvas id="canvas4" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Rotate</h1>
+            <h1>Bezier</h1>
             <canvas id="canvas5" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Scale</h1>
+            <h1>Translate</h1>
             <canvas id="canvas6" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Shear</h1>
+            <h1>Rotate</h1>
             <canvas id="canvas7" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Lines</h1>
+            <h1>Scale</h1>
             <canvas id="canvas8" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Gradients</h1>
+            <h1>Shear</h1>
             <canvas id="canvas9" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Pattern</h1>
+            <h1>Lines</h1>
             <canvas id="canvas10" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Shadows</h1>
+            <h1>Gradients</h1>
             <canvas id="canvas11" width="400" height="400"></canvas>
         </div>
         <div id="example">
-            <h1>Image</h1>
+            <h1>Pattern</h1>
             <canvas id="canvas12" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1>Shadows</h1>
+            <canvas id="canvas13" width="400" height="400"></canvas>
+        </div>
+        <div id="example">
+            <h1>Image</h1>
+            <canvas id="canvas14" width="400" height="400"></canvas>
         </div>
     </div>
     <img id="icon" src="./images/stp-tiny.png" style="visibility: hidden;">
@@ -236,9 +244,78 @@
                 const context = document.getElementById("canvas4").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
+                context.lineWidth = 10;
+                context.strokeStyle = "black";
+                context.fillStyle = "rgba(100, 100, 100, 0.5)";
+                for (let i = 1; i <= 12; ++i) {
+                    context.beginPath();
+                    context.ellipse(20 * i, 20 * i, 10 * i, 15 * i, Math.PI / 4, 0, 2 * Math.PI);
+                    context.stroke();
+                    context.fill();
+                }
+                context.restore();
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas5").getContext("2d");
+                context.save();
+                context.clearRect(0, 0, 400, 400);
+
+                function drawBezierPath(start, control1, control2, end) {
+                    context.save();
+
+                    context.lineWidth = 2;
+                    context.strokeStyle = "rgba(255, 0, 0, 0.6)";
+                    context.beginPath();
+                    context.setLineDash([4]);
+                    context.moveTo(start.x, start.y);
+                    context.lineTo(control1.x, control1.y);
+                    context.stroke();
+
+                    context.beginPath();
+                    context.setLineDash([4]);
+                    context.moveTo(end.x, end.y);
+                    context.lineTo(control2.x, control2.y);
+                    context.stroke();
+
+                    context.beginPath();
+                    context.lineWidth = 4;
+                    context.setLineDash([]);
+                    context.strokeStyle = "black";
+                    context.moveTo(start.x, start.y);
+                    context.bezierCurveTo(control1.x, control1.y, control2.x, control2.y, end.x, end.y);
+                    context.stroke();
+
+                    context.fillStyle = "blue";
+                    context.beginPath();
+                    context.arc(start.x, start.y, 8, 0, 2 * Math.PI);
+                    context.arc(end.x, end.y, 8, 0, 2 * Math.PI);
+                    context.fill();
+
+                    context.fillStyle = "red";
+                    context.beginPath();
+                    context.arc(control1.x, control1.y, 5, 0, 2 * Math.PI);
+                    context.arc(control2.x, control2.y, 5, 0, 2 * Math.PI);
+                    context.fill();
+
+                    context.restore();
+                }
+
+                drawBezierPath({ x: 50, y: 20 }, { x: 230, y: 30 }, { x: 150, y: 80 }, { x: 350, y: 100 });
+                drawBezierPath({ x: 350, y: 100 }, { x: 340, y: 130 }, { x: 50, y: 130 }, { x: 50, y: 180 });
+                drawBezierPath({ x: 50, y: 180 }, { x: 40, y: 260 }, { x: 100, y: 280 }, { x: 350, y: 280 });
+                drawBezierPath({ x: 350, y: 280 }, { x: 300, y: 360 }, { x: 100, y: 300 }, { x: 50, y: 360 });
+
+                context.restore();
+            })();
+
+            (function() {
+                const context = document.getElementById("canvas6").getContext("2d");
+                context.save();
+                context.clearRect(0, 0, 400, 400);
                 context.translate(10, 10);
-                for (var i = 0; i < 10; i++) {
-                    for (var j = 0; j < 10; j++) {
+                for (let i = 0; i < 10; i++) {
+                    for (let j = 0; j < 10; j++) {
                         context.fillStyle = `rgb(${i * 25.5}, ${j * 25.5}, ${(i + j) * 12.75})`;
                         context.fillRect(0, 0, 25, 25);
                         context.translate(40, 0);
@@ -249,11 +326,11 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas5").getContext("2d");
+                const context = document.getElementById("canvas7").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
                 context.translate(200, 200);
-                for (var i = 0; i < 10; i++) {
+                for (let i = 0; i < 10; i++) {
                     context.fillStyle = `rgb(${255 - i * 25.5}, 0, 0)`;
                     context.fillRect(0, 0, 100, 100);
                     context.fillStyle = `rgb(0, 0, ${255 - i * 25.5})`;
@@ -264,11 +341,11 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas6").getContext("2d");
+                const context = document.getElementById("canvas8").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
                 context.translate(200, 200);
-                for (var i = 0; i < 15; i++) {
+                for (let i = 0; i < 15; i++) {
                     context.fillStyle = `rgba(${i * 25.5}, ${i * 25.5}, ${255 - i * 25.5}, 0.2)`;
                     context.fillRect(-200, -200, 400, 400);
                     context.scale(0.9, 0.9);
@@ -277,10 +354,10 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas7").getContext("2d");
+                const context = document.getElementById("canvas9").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
-                for (var i = 0; i <= 40; i++) {
+                for (let i = 0; i <= 40; i++) {
                     context.fillStyle = `rgb(${255 - i * 6}, ${i * 6}, ${i * 6})`;
                     context.setTransform(1, 1 - 0.05 * i, 0, 1, -200, 0);
                     context.fillRect(0, 200, 600, 20);
@@ -289,7 +366,7 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas8").getContext("2d");
+                const context = document.getElementById("canvas10").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
                 context.lineWidth = 10;
@@ -327,7 +404,7 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas9").getContext("2d");
+                const context = document.getElementById("canvas11").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
 
@@ -348,7 +425,7 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas10").getContext("2d");
+                const context = document.getElementById("canvas12").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
                 const pattern = context.createPattern(document.getElementById("icon"), "repeat");
@@ -358,7 +435,7 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas11").getContext("2d");
+                const context = document.getElementById("canvas13").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
 
@@ -376,7 +453,7 @@
             })();
 
             (function() {
-                const context = document.getElementById("canvas12").getContext("2d");
+                const context = document.getElementById("canvas14").getContext("2d");
                 context.save();
                 context.clearRect(0, 0, 400, 400);
                 context.drawImage(document.getElementById("image"), 0, 0);
