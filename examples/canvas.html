@@ -71,6 +71,7 @@
             flex-wrap: wrap;
             margin: 0 auto;
             padding-top: 1em;
+            margin-bottom: 100px;
         }
 
         #example {
@@ -100,16 +101,49 @@
             display: none;
         }
 
-        #modal-image {
-            width: calc(min(80%, 400px));
+        #modal-container > img, #modal-container > canvas {
             border: 1px solid gray;
             background-color: white;
+        }
+
+        #modal-container > img {
+            width: calc(min(80%, 400px));
+        }
+
+        #modal-container > canvas {
+            width: 320px;
+            height: 320px;
+        }
+
+        #readback-options {
+            position: fixed;
+            right: 1em;
+            bottom: 1em;
+            border-radius: 1em;
+            padding: 10px;
+            box-sizing: border-box;
+            -webkit-backdrop-filter: blur(10px) contrast(75%);
         }
     </style>
 </head>
 <body>
+    <div id="readback-options">
+        <fieldset>
+            <legend>Readback method</legend>
+            <div>
+                <input type="radio" id="toBlob" name="read-method" value="toBlob" checked>
+                <label for="toBlob"><code>toBlob()</code> and <code>&lt;img&gt;</code></label>
+            </div>
+            <div>
+                <input type="radio" id="getImageData" name="read-method" value="getImageData">
+                <label for="getImageData"><code>getImageData()</code> and <code>&lt;canvas&gt;</code></label>
+            </div>
+            <div class="blur"></div>
+        </fieldset>
+    </div>
     <div id="modal-container">
-        <img id="modal-image">
+        <img></img>
+        <canvas width="400" height="400"></canvas>
     </div>
     <div id="example-container">
         <div id="example">
@@ -495,16 +529,35 @@
                 refreshCanvases();
                 event.preventDefault();
             }
+
+            if (event.key === "Escape") {
+                modalImage.src = "";
+                modalContainer.style.display = "none";
+                event.preventDefault();
+            }
         });
 
-        const modalImage = document.getElementById("modal-image");
+        const modalImage = document.querySelector("#modal-container > img");
+        const modalCanvas = document.querySelector("#modal-container > canvas");
         const modalContainer = document.getElementById("modal-container");
+        const useToBlobInput = document.querySelector("input#toBlob");
+        const useGetImageDataInput = document.querySelector("input#getImageData");
 
         document.querySelectorAll("canvas").forEach(canvas => {
             canvas.addEventListener("click", event => {
                 modalContainer.style.display = "flex";
-                canvas.toBlob(blob => modalImage.src = URL.createObjectURL(blob));
                 event.preventDefault();
+                if (useToBlobInput.checked) {
+                    modalCanvas.style.display = "none";
+                    modalImage.style.display = "block";
+                    canvas.toBlob(blob => modalImage.src = URL.createObjectURL(blob));
+                } else if (useGetImageDataInput.checked) {
+                    modalCanvas.style.display = "block";
+                    modalImage.style.display = "none";
+                    const imageData = canvas.getContext("2d").getImageData(0, 0, 400, 400);
+                    modalCanvas.getContext("2d").clearRect(0, 0, 400, 400);
+                    modalCanvas.getContext("2d").putImageData(imageData, 0, 0);
+                }
             });
         });
 
