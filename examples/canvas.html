@@ -562,13 +562,27 @@
         });
 
         modalContainer.addEventListener("click", event => {
-            if (event.target === modalImage)
+            if (event.target === modalImage || event.target === modalCanvas)
                 return;
 
             modalImage.src = "";
             modalContainer.style.display = "none";
             event.preventDefault();
         });
+
+        [useToBlobInput, useGetImageDataInput].map(input => {
+            input.addEventListener("change", () => {
+                localStorage.setItem("useGetImageDataInput", useGetImageDataInput.checked);
+            });
+        });
+
+        (function () {
+            const useGetImageDataInputValue = localStorage.getItem("useGetImageDataInput");
+            if (useGetImageDataInputValue === "true")
+                useGetImageDataInput.checked = true;
+            else
+                useToBlobInput.checked = true;
+        })();
     </script>
 </body>
 </html>
