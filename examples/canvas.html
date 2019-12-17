@@ -36,6 +36,7 @@
             font-family: system-ui;
             margin: 0;
             background-color: #EFEFEF;
+            position: relative;
         }
 
         h1 {
@@ -56,6 +57,7 @@
             margin-bottom: 0.5em;
             box-sizing: border-box;
             border: 1px solid transparent;
+            cursor: pointer;
         }
 
         canvas:hover {
@@ -86,9 +88,29 @@
             width: 0;
             height: 0;
         }
+
+        #modal-container {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.67);
+            display: none;
+        }
+
+        #modal-image {
+            width: calc(min(80%, 400px));
+            border: 1px solid gray;
+            background-color: white;
+        }
     </style>
 </head>
 <body>
+    <div id="modal-container">
+        <img id="modal-image">
+    </div>
     <div id="example-container">
         <div id="example">
             <h1>Rects</h1>
@@ -473,6 +495,26 @@
                 refreshCanvases();
                 event.preventDefault();
             }
+        });
+
+        const modalImage = document.getElementById("modal-image");
+        const modalContainer = document.getElementById("modal-container");
+
+        document.querySelectorAll("canvas").forEach(canvas => {
+            canvas.addEventListener("click", event => {
+                modalContainer.style.display = "flex";
+                canvas.toBlob(blob => modalImage.src = URL.createObjectURL(blob));
+                event.preventDefault();
+            });
+        });
+
+        modalContainer.addEventListener("click", event => {
+            if (event.target === modalImage)
+                return;
+
+            modalImage.src = "";
+            modalContainer.style.display = "none";
+            event.preventDefault();
         });
     </script>
 </body>
