@@ -285,8 +285,8 @@
             context.save();
             context.clearRect(0, 0, 400, 400);
             for (let index = 1; index <= 6; ++index) {
-                context.font = `${11 * index}px Roboto`;
-                context.fillText(`${11 * index}px Roboto`, 20, 20 + 6 * (index + 1) * (index + 2));
+                context.font = `Bold Italic ${11 * index}px Roboto`;
+                context.fillText(`${11 * index}px Roboto`, 10, 20 + 6 * (index + 1) * (index + 2));
             }
             context.restore();
         });
