@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf8">
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <style>
         @font-face {
             font-family: "Ahem";
@@ -279,13 +280,13 @@
         });
 
         canvasRenderers.push(async function() {
-            await document.fonts.load("12px Ahem");
+            await document.fonts.load("12px Roboto");
             const context = document.getElementById("canvas3").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             for (let index = 1; index <= 6; ++index) {
-                context.font = `${12 * index}px Ahem`;
-                context.fillText(`${12 * index}px`, 60, 20 + 6 * (index + 1) * (index + 2));
+                context.font = `${11 * index}px Roboto`;
+                context.fillText(`${11 * index}px Roboto`, 20, 20 + 6 * (index + 1) * (index + 2));
             }
             context.restore();
         });
