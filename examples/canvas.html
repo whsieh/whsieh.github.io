@@ -220,6 +220,12 @@
             <h1>Clipping</h1>
             <canvas id="canvas17" width="400" height="400"></canvas>
         </div>
+        <div class="example">
+            <h1>Focus Ring</h1>
+            <canvas id="canvas18" width="400" height="400">
+                <button></button>
+            </canvas>
+        </div>
     </div>
     <img id="icon" src="./images/stp-tiny.png" class="hidden">
     <img id="image" src="./images/webkit.png" class="hidden">
@@ -591,6 +597,44 @@
             context.clip(region, "evenodd");
             context.fillStyle = "green";
             context.fillRect(0, 0, 400, 400);
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            const canvas = document.getElementById("canvas18");
+            const context = canvas.getContext("2d");
+            context.save();
+            context.clearRect(0, 0, 400, 400);
+
+            const gradient = context.createLinearGradient(200, 100, 200, 300);
+            gradient.addColorStop(0, "#AAA");
+            gradient.addColorStop(1, "#EEE");
+
+            context.fillStyle = gradient;
+            context.strokeStyle = "#444";
+            context.lineWidth = 4;
+            context.beginPath();
+            context.moveTo(110, 110);
+            context.quadraticCurveTo(200, 65, 290, 110);
+            context.quadraticCurveTo(335, 200, 290, 290);
+            context.quadraticCurveTo(200, 335, 110, 290);
+            context.quadraticCurveTo(65, 200, 110, 110);
+            context.stroke();
+            context.fill();
+
+            const focusOutline = new Path2D;
+            focusOutline.moveTo(100, 100);
+            focusOutline.quadraticCurveTo(200, 50, 300, 100);
+            focusOutline.quadraticCurveTo(350, 200, 300, 300);
+            focusOutline.quadraticCurveTo(200, 350, 100, 300);
+            focusOutline.quadraticCurveTo(50, 200, 100, 100);
+
+            const button = canvas.querySelector("button");
+            button.focus();
+
+            context.drawFocusIfNeeded(focusOutline, button);
+
+            button.blur();
             context.restore();
         });
 
