@@ -216,6 +216,10 @@
             <h1>Blending</h1>
             <canvas id="canvas16" width="400" height="400"></canvas>
         </div>
+        <div class="example">
+            <h1>Clipping</h1>
+            <canvas id="canvas17" width="400" height="400"></canvas>
+        </div>
     </div>
     <img id="icon" src="./images/stp-tiny.png" class="hidden">
     <img id="image" src="./images/webkit.png" class="hidden">
@@ -571,6 +575,22 @@
             context.arc(200, 250, 100, 0, Math.PI*2, true);
             context.closePath();
             context.fill();
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            const context = document.getElementById("canvas17").getContext("2d");
+            context.save();
+            context.clearRect(0, 0, 400, 400);
+
+            const region = new Path2D;
+            for (let i = 0; i < 4; ++i) {
+                region.rect(0, 50 + 100 * i, 400, 50);
+                region.rect(50 + 100 * i, 0, 50, 400);
+            }
+            context.clip(region, "evenodd");
+            context.fillStyle = "green";
+            context.fillRect(0, 0, 400, 400);
             context.restore();
         });
 
