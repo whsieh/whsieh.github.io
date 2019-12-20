@@ -80,7 +80,7 @@
             margin-bottom: 100px;
         }
 
-        #example {
+        .example {
             width: calc(250px - 1em);
             height: 260px;
             background-color: white;
@@ -152,65 +152,69 @@
         <canvas width="400" height="400"></canvas>
     </div>
     <div id="example-container">
-        <div id="example">
+        <div class="example">
             <h1>Rects</h1>
             <canvas id="canvas1" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Fonts</h1>
             <canvas id="canvas2" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Web fonts</h1>
             <canvas id="canvas3" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Arcs</h1>
             <canvas id="canvas4" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Ellipse</h1>
             <canvas id="canvas5" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Bezier</h1>
             <canvas id="canvas6" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Translate</h1>
             <canvas id="canvas7" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Rotate</h1>
             <canvas id="canvas8" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Scale</h1>
             <canvas id="canvas9" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Shear</h1>
             <canvas id="canvas10" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Lines</h1>
             <canvas id="canvas11" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Gradients</h1>
             <canvas id="canvas12" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Pattern</h1>
             <canvas id="canvas13" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Shadows</h1>
             <canvas id="canvas14" width="400" height="400"></canvas>
         </div>
-        <div id="example">
+        <div class="example">
             <h1>Image</h1>
             <canvas id="canvas15" width="400" height="400"></canvas>
+        </div>
+        <div class="example">
+            <h1>Blending</h1>
+            <canvas id="canvas16" width="400" height="400"></canvas>
         </div>
     </div>
     <img id="icon" src="./images/stp-tiny.png" class="hidden">
@@ -541,6 +545,32 @@
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.drawImage(document.getElementById("image"), 0, 0);
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            const context = document.getElementById("canvas16").getContext("2d");
+            context.save();
+            context.clearRect(0, 0, 400, 400);
+            context.globalCompositeOperation = "multiply";
+
+            context.fillStyle = "magenta";
+            context.beginPath();
+            context.arc(150, 150, 100, 0, Math.PI*2, true);
+            context.closePath();
+            context.fill();
+
+            context.fillStyle = "cyan";
+            context.beginPath();
+            context.arc(250, 150, 100, 0, Math.PI*2, true);
+            context.closePath();
+            context.fill();
+
+            context.fillStyle = "yellow";
+            context.beginPath();
+            context.arc(200, 250, 100, 0, Math.PI*2, true);
+            context.closePath();
+            context.fill();
             context.restore();
         });
 
