@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #target {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        }
+
+        html, body {
+            font-family: system-ui;
+        }
+    </style>
+</head>
+<body>
+    <div id="target"></div>
+    <div id="log"></div>
+    <script>
+        const target = document.getElementById("target");
+        const log = document.getElementById("log");
+
+        function eventLogger(color) {
+            return event => {
+                const paragraph = document.createElement("p");
+                paragraph.textContent = `${event.type} on <${event.target.tagName} id="${event.target.id}">`;
+                paragraph.style.color = color;
+                log.appendChild(paragraph);
+            };
+        }
+
+        target.addEventListener("pointerdown", eventLogger("green"));
+        target.addEventListener("pointerup", eventLogger("red"));
+        target.addEventListener("click", eventLogger("cyan"));
+    </script>
+</body>
+</html>
