@@ -10,6 +10,28 @@
             src: url("./fonts/Ahem.ttf");
         }
 
+        @font-face {
+            font-family: "FontWithFeaturesOTF-titl";
+            src: url("fonts/FontWithFeatures.otf") format("opentype");
+            font-feature-settings: "titl" 1;
+        }
+
+        @font-face {
+            font-family: "FontWithFeaturesOTF-no-titl";
+            src: url("fonts/FontWithFeatures.otf") format("opentype");
+        }
+
+        @font-face {
+            font-family: "FontWithFeaturesTTF-titl";
+            src: url("fonts/FontWithFeatures.ttf") format("truetype");
+            font-feature-settings: "titl" 1;
+        }
+
+        @font-face {
+            font-family: "FontWithFeaturesTTF-no-titl";
+            src: url("fonts/FontWithFeatures.ttf") format("truetype");
+        }
+
         @media screen and (max-width: 500px) {
             #example-container {
                 justify-content: center;
@@ -165,64 +187,68 @@
             <canvas id="canvas3" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Arcs</h1>
+            <h1>Variable fonts</h1>
             <canvas id="canvas4" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Ellipse</h1>
+            <h1>Arcs</h1>
             <canvas id="canvas5" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Bezier</h1>
+            <h1>Ellipse</h1>
             <canvas id="canvas6" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Translate</h1>
+            <h1>Bezier</h1>
             <canvas id="canvas7" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Rotate</h1>
+            <h1>Translate</h1>
             <canvas id="canvas8" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Scale</h1>
+            <h1>Rotate</h1>
             <canvas id="canvas9" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Shear</h1>
+            <h1>Scale</h1>
             <canvas id="canvas10" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Lines</h1>
+            <h1>Shear</h1>
             <canvas id="canvas11" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Gradients</h1>
+            <h1>Lines</h1>
             <canvas id="canvas12" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Pattern</h1>
+            <h1>Gradients</h1>
             <canvas id="canvas13" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Shadows</h1>
+            <h1>Pattern</h1>
             <canvas id="canvas14" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Image</h1>
+            <h1>Shadows</h1>
             <canvas id="canvas15" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Blending</h1>
+            <h1>Image</h1>
             <canvas id="canvas16" width="400" height="400"></canvas>
         </div>
         <div class="example">
-            <h1>Clipping</h1>
+            <h1>Blending</h1>
             <canvas id="canvas17" width="400" height="400"></canvas>
         </div>
         <div class="example">
+            <h1>Clipping</h1>
+            <canvas id="canvas18" width="400" height="400"></canvas>
+        </div>
+        <div class="example">
             <h1>Focus Ring</h1>
-            <canvas id="canvas18" width="400" height="400">
+            <canvas id="canvas19" width="400" height="400">
                 <button></button>
             </canvas>
         </div>
@@ -306,7 +332,30 @@
         });
 
         canvasRenderers.push(async function() {
+            await document.fonts.load("80px FontWithFeaturesTTF-titl");
+            await document.fonts.load("80px FontWithFeaturesTTF-no-titl");
+            await document.fonts.load("80px FontWithFeaturesOTF-titl");
+            await document.fonts.load("80px FontWithFeaturesOTF-no-titl");
             const context = document.getElementById("canvas4").getContext("2d");
+            context.save();
+
+            context.font = "80px FontWithFeaturesOTF-titl";
+            context.fillText("OOOO", 40, 100);
+
+            context.font = "80px FontWithFeaturesOTF-no-titl";
+            context.fillText("OOOO", 40, 180);
+
+            context.font = "80px FontWithFeaturesTTF-titl";
+            context.fillText("aaaa", 40, 260);
+
+            context.font = "80px FontWithFeaturesTTF-no-titl";
+            context.fillText("aaaa", 40, 340);
+
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            const context = document.getElementById("canvas5").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.beginPath();
@@ -339,7 +388,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas5").getContext("2d");
+            const context = document.getElementById("canvas6").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.lineWidth = 10;
@@ -355,7 +404,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas6").getContext("2d");
+            const context = document.getElementById("canvas7").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
 
@@ -408,7 +457,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas7").getContext("2d");
+            const context = document.getElementById("canvas8").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.translate(10, 10);
@@ -424,7 +473,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas8").getContext("2d");
+            const context = document.getElementById("canvas9").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.translate(200, 200);
@@ -439,7 +488,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas9").getContext("2d");
+            const context = document.getElementById("canvas10").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.translate(200, 200);
@@ -452,7 +501,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas10").getContext("2d");
+            const context = document.getElementById("canvas11").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             for (let i = 0; i <= 40; i++) {
@@ -464,7 +513,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas11").getContext("2d");
+            const context = document.getElementById("canvas12").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.lineWidth = 10;
@@ -502,7 +551,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas12").getContext("2d");
+            const context = document.getElementById("canvas13").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
 
@@ -523,7 +572,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas13").getContext("2d");
+            const context = document.getElementById("canvas14").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             const pattern = context.createPattern(document.getElementById("icon"), "repeat");
@@ -533,7 +582,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas14").getContext("2d");
+            const context = document.getElementById("canvas15").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
 
@@ -551,7 +600,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas15").getContext("2d");
+            const context = document.getElementById("canvas16").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.drawImage(document.getElementById("image"), 0, 0);
@@ -559,7 +608,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas16").getContext("2d");
+            const context = document.getElementById("canvas17").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
             context.globalCompositeOperation = "multiply";
@@ -585,7 +634,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const context = document.getElementById("canvas17").getContext("2d");
+            const context = document.getElementById("canvas18").getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
 
@@ -601,7 +650,7 @@
         });
 
         canvasRenderers.push(async function() {
-            const canvas = document.getElementById("canvas18");
+            const canvas = document.getElementById("canvas19");
             const context = canvas.getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
