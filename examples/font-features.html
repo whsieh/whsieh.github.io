@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="utf8">
+    <head>
+        <style>
+            @font-face {
+                font-family: "FontWithFeaturesTTF";
+                src: url("fonts/FontWithFeatures.ttf") format("truetype");
+                font-feature-settings: "titl" 1;
+            }
+
+            @font-face {
+                font-family: "FontWithFeaturesOTF";
+                src: url("fonts/FontWithFeatures.otf") format("opentype");
+                font-feature-settings: "titl" 1;
+            }
+
+            .ttf {
+                font-family: "FontWithFeaturesTTF";
+            }
+
+            .otf {
+                font-family: "FontWithFeaturesOTF";
+            }
+
+            .no-titl {
+                font-feature-settings: "titl" 0;
+            }
+
+            body {
+                font-size: 40px;
+                font-family: system-ui;
+            }
+        </style>
+    </head>
+    <body>
+        <p><strong>Crosses</strong>: <span class="ttf no-titl">aaa</span></p>
+        <p><strong>Checks</strong>: <span class="ttf">aaa</span></p>
+        <p><strong>Crosses</strong>: <span class="otf no-titl">OOO</span></p>
+        <p><strong>Checks</strong>: <span class="otf">OOO</span></p>
+    </body>
+</html>
