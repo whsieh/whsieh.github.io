@@ -9,27 +9,63 @@
         text-align: center;
     }
 
-    button#hang {
+    button {
         border-radius: 4px;
         color: white;
         font-size: 16px;
         padding: 0.5em;
         margin-top: 1em;
-        border: 2px rgb(0, 122, 255) solid;
-        background-color: rgb(0, 122, 255);
+        width: 300px;
+    }
+
+    button#hang5 {
+        border: 2px rgb(255, 204, 0) solid;
+        background-color: rgb(255, 204, 0);
+    }
+
+    button#hang10 {
+        border: 2px rgb(255, 149, 0) solid;
+        background-color: rgb(255, 149, 0);
+    }
+
+    button#hang {
+        border: 2px rgb(255, 59, 48) solid;
+        background-color: rgb(255, 59, 48);
     }
     </style>
 </head>
 <body>
 <div>
+    <button id="hang5">Click here to hang for 5 seconds</button>
+</div>
+<div>
+    <button id="hang10">Click here to hang for 10 seconds</button>
+</div>
+<div>
     <button id="hang">Click here to hang forever</button>
 </div>
 </body>
 <script>
-    const button = document.getElementById("hang");
-    button.addEventListener("click", () => {
+    document.getElementById("hang").addEventListener("click", () => {
+        console.log("Hanging for eternity...");
         while(1)
             continue;
+    });
+
+    document.getElementById("hang5").addEventListener("click", () => {
+        console.log("Hanging for 5 seconds...");
+        const startTime = Date.now();
+        while(Date.now() - startTime < 5000)
+            continue;
+        console.log("...done!");
+    });
+
+    document.getElementById("hang10").addEventListener("click", () => {
+        console.log("Hanging for 10 seconds...");
+        const startTime = Date.now();
+        while(Date.now() - startTime < 10000)
+            continue;
+        console.log("...done!");
     });
 </script>
 </html>
