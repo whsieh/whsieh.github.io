@@ -70,6 +70,8 @@
             .teal { background-color: rgb(90, 200, 250); }
             .yellow-transparent { background-color: rgba(255, 204, 0, 0.25); }
             .yellow { background-color: rgb(255, 204, 0); }
+            .gray-transparent { background-color: rgba(200, 200, 200, 0.25); }
+            .gray { background-color: rgb(200, 200, 200); }
 
             .flash {
                 position: fixed;
@@ -110,6 +112,18 @@
                 <p>Passive touchstart listener; preventDefault() on touchmove; scrollable</p>
                 <div class="pink-transparent toucharea scrolls passive prevent-touchmove-medium"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Passive touchstart listener; preventDefault() on touchmove; 30ms delay; scrollable</p>
+            </div>
+        </section>
+        <section id="active-event-listeners-section">
+            <h1>Active touchstart, touchmove, touchend</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="gray-transparent toucharea all-active prevent-default-fast"></div>
+                <p>Active touch event listeners; no delay</p>
+                <div class="gray-transparent toucharea all-active prevent-default-medium"></div>
+                <p>Active touch event listeners; 400 ms delay</p>
+                <div class="gray-transparent toucharea all-active prevent-default-slow"></div>
+                <p>Active touch event listeners; 1200 ms delay</p>
             </div>
         </section>
         <section id="dynamic-handlers">
@@ -199,6 +213,14 @@
                 element.addEventListener("touchmove", event => flash("move", "rgb(255, 204, 0)", "100"), { passive : true });
                 element.addEventListener("touchend", event => flash("end", "red", "bold"), { passive : true });
                 element.addEventListener("touchcancel", event => flash("cancel", "purple", "bold"), { passive : true });
+            });
+
+            document.querySelectorAll(".all-active").forEach(element => {
+                for (const eventName of ["touchstart", "touchmove", "touchend"]) {
+                    element.addEventListener(eventName, event => {
+                        // Nothing.
+                    }, { passive : false });
+                }
             });
 
             document.querySelectorAll(".passive").forEach(element => {
