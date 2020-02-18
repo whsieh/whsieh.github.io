@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+<iframe srcdoc="<body style='margin-top: 900px;'>Hello</body>"></iframe>
+<script>
+if (window.testRunner) {
+    testRunner.dumpAsText();
+    testRunner.waitUntilDone();
+}
+
+const frame = document.querySelector("iframe");
+const frameSet = document.createElement("frameset");
+
+function handleBlur() {
+    document.body.appendChild(frame);
+
+    if (window.testRunner)
+        testRunner.notifyDone();
+}
+
+addEventListener("load", () => {
+    const frameDocument = frame.contentDocument;
+    frameDocument.getSelection().selectAllChildren(frameDocument.body);
+    frameSet.onblur = handleBlur;
+    frame.focus();
+});
+</script>
+</body>
+</html>
