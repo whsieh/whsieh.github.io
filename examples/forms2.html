@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <style>
+            body {
+                font-family: system-ui;
+                text-align: center;
+            }
+
+            .container {
+                margin: 15px;
+                padding: 15px;
+                border: 1px solid gray;
+            }
+
+            input {
+                font-size: inherit;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>font-size: <label for="font-size-slider">12px</label></h1>
+        <input id="font-size-slider" type="range" min="4" max="24" value="12">
+        <div id="controls-container" style="font-size: 12px;">
+            <div class="container">
+                <input type="checkbox">
+                <input type="radio">
+                <input checked="true" type="checkbox">
+                <input checked="true" type="radio">
+                <input type="button" value="Button">
+            </div>
+            <div class="container">
+                <input type="text" placeholder="Text">
+                <input type="search" placeholder="Search">
+            </div>
+            <div class="container">
+                <input type="number" placeholder="Number">
+                <input type="range">
+            </div>
+        </div>
+        <script>
+            const controlsContainer = document.getElementById("controls-container");
+            const fontSizeSlider = document.getElementById("font-size-slider");
+            fontSizeSlider.addEventListener("input", updateFontSizes);
+            let rememberLastFontSizeTimerID;
+            const lastKnownFontSize = localStorage.getItem("font-size");
+
+            if (lastKnownFontSize && !isNaN(parseInt(lastKnownFontSize))) {
+                console.log(`[!] Restoring font size: ${lastKnownFontSize}px`);
+                fontSizeSlider.value = lastKnownFontSize;
+                updateFontSizes();
+            }
+
+            function updateFontSizes() {
+                const fontSizeValue = `${fontSizeSlider.value}px`;
+                controlsContainer.style.fontSize = fontSizeValue;
+                fontSizeSlider.labels[0].textContent = fontSizeValue;
+
+                if (rememberLastFontSizeTimerID)
+                    clearTimeout(rememberLastFontSizeTimerID);
+                rememberLastFontSizeTimerID = setTimeout(() => {
+                    console.log(`[!] Writing font size: ${fontSizeValue}`);
+                    localStorage.setItem("font-size", fontSizeSlider.value);
+                }, 500);
+            }
+
+            addEventListener("keydown", event => {
+                if (event.key === "ArrowLeft") {
+                    if (event.metaKey)
+                        fontSizeSlider.value = fontSizeSlider.min;
+                    else
+                        fontSizeSlider.value = parseInt(fontSizeSlider.value) - (event.altKey ? 5 : 1);
+                    updateFontSizes();
+                    return event.preventDefault();
+                }
+
+                if (event.key === "ArrowRight") {
+                    if (event.metaKey)
+                        fontSizeSlider.value = fontSizeSlider.max;
+                    else
+                        fontSizeSlider.value = parseInt(fontSizeSlider.value) + (event.altKey ? 5 : 1);
+                    updateFontSizes();
+                    return event.preventDefault();
+                }
+            });
+        </script>
+    </body>
+</html>
