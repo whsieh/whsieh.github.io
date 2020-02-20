@@ -14,7 +14,7 @@
                 border: 1px solid gray;
             }
 
-            input {
+            input, select {
                 font-size: inherit;
             }
         </style>
@@ -37,6 +37,16 @@
             <div class="container">
                 <input type="number" placeholder="Number">
                 <input type="range">
+            </div>
+            <div class="container">
+                <select>
+                    <option selected>Foo</option>
+                    <option>Bar</option>
+                </select>
+                <select multiple>
+                    <option selected>Foo</option>
+                    <option>Bar</option>
+                </select>
             </div>
         </div>
         <script>
