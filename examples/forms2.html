@@ -10,8 +10,6 @@
 
             .container {
                 margin: 15px;
-                padding: 15px;
-                border: 1px solid gray;
             }
 
             input, select {
@@ -21,6 +19,10 @@
             select {
                 min-width: 80px;
             }
+
+            .heading {
+                font-size: 16px;
+            }
         </style>
     </head>
     <body>
@@ -28,29 +30,29 @@
         <input id="font-size-slider" type="range" min="1" max="30" value="12">
         <div id="controls-container" style="font-size: 12px;">
             <div class="container">
-                <input type="checkbox">
+                <p class="heading">Checkbox & radio (unchecked)</p>
                 <input type="radio">
-                <input checked="true" type="checkbox">
+                <input type="checkbox">
+            </div>
+            <div class="container">
+                <p class="heading">Checkbox & radio (checked)</p>
                 <input checked="true" type="radio">
+                <input checked="true" type="checkbox">
+            </div>
+            <div class="container">
+                <p class="heading">Push button</p>
                 <input type="button" value="Button">
             </div>
             <div class="container">
-                <input type="text" placeholder="Text">
-                <input type="search" placeholder="Search" results="5">
-            </div>
-            <div class="container">
-                <input type="number" placeholder="Number">
-                <input type="range">
-            </div>
-            <div class="container">
+                <p class="heading">Select</p>
                 <select>
-                    <option selected>Foo</option>
-                    <option>Bar</option>
+                    <option selected>Hello</option>
+                    <option>Foo bar baz</option>
                 </select>
-                <select multiple>
-                    <option selected>Foo</option>
-                    <option>Bar</option>
-                </select>
+            </div>
+            <div class="container">
+                <p class="heading">Search</p>
+                <input type="search" results="5" placeholder="Search">
             </div>
         </div>
         <script>
