@@ -10,10 +10,15 @@
 
             .container {
                 margin: 15px;
+                text-align: center;
             }
 
             input, select {
                 font-size: inherit;
+            }
+
+            input + label {
+                margin-left: 4px;
             }
 
             select {
@@ -31,13 +36,13 @@
         <div id="controls-container" style="font-size: 12px;">
             <div class="container">
                 <p class="heading">Checkbox & radio (unchecked)</p>
-                <input type="radio">
-                <input type="checkbox">
+                <div><input id="radio1" type="radio"><label for="radio1">Foo</label></div>
+                <div><input id="check1" type="checkbox"><label for="check1">Bar</label></div>
             </div>
             <div class="container">
                 <p class="heading">Checkbox & radio (checked)</p>
-                <input checked="true" type="radio">
-                <input checked="true" type="checkbox">
+                <div><input id="radio2" checked="true" type="radio"><label for="radio2">Foo</label></div>
+                <div><input id="check2" checked="true" type="checkbox"><label for="check2">Bar</label></div>
             </div>
             <div class="container">
                 <p class="heading">Push button</p>
