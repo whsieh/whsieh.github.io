@@ -172,6 +172,8 @@ async function revealItem(identifier, x, y) {
         if (blobHTMLCheck1.checked)
             data["text/html"] = createHTMLBlob();
         if (blobHTMLCheck2.checked)
+            data["text/html"] = createHTMLBlob("<span style='color: orange;'>今日は晴れています</span>");
+        if (blobHTMLCheck3.checked)
             data["text/html"] = createHTMLBlob(`<span onclick='doThing()'>Nothing else to see here.</span><div style='display: none;'>Especially not this: ${base64ImageData1()}</div><!-- Or this: ${base64ImageData2()} --><script>console.log('Or this: ${base64ImageData3()}')</script>`);
         if (blobText.checked)
             data["text/plain"] = createTextBlob();
