@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #input-container {
+            position: fixed;
+            left: 0; top: 0;
+            width: 200px; height: 200px;
+            transform: translate3d(-400px, 1em, 0);
+            transition: all 1s ease-out;
+        }
+
+        input {
+            font-size: 20px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <button>Tap to focus</button>
+    <div id="input-container"><input></div>
+    <script>
+        const container = document.getElementById("input-container");
+        const input = document.querySelector("input");
+        const button = document.querySelector("button");
+        button.addEventListener("click", () => {
+            container.style.transform = "translate3d(1em, 1em, 0)";
+            button.remove();
+            input.focus();
+        });
+    </script>
+</body>
+</html>
