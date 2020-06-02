@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1, a {
+    font-size: 20px;
+    font-family: system-ui;
+}
+
+h1 {
+    user-select: all;
+    -webkit-user-select: all;
+}
+
+a {
+    display: inline-block;
+    text-decoration: none;
+}
+
+a:active {
+    color: blue;
+}
+
+textarea {
+    margin: 1em;
+    width: calc(100% - 2em);
+    font-size: 16px;
+    font-family: monospace;
+}
+</style>
+</head>
+<body>
+    <h1 id="regular">Regular text</h1>
+    <h1 id="regular-normal">Regular text + normal data</h1>
+    <h1 id="regular-custom">Regular text + custom data</h1>
+    <h1 id="normal">Normal data only</h1>
+    <h1 id="custom">Custom data only</h1>
+    <img id="image" src="images/los-angeles.png"></img>
+    <div><a id="link" href="https://www.apple.com">Apple Homepage</a></div>
+    <textarea rows="20" readonly id="text-output"></textarea>
+</body>
+<script>
+const textOutput = document.getElementById("text-output");
+
+function clearOutput() {
+    textOutput.value = "";
+}
+
+function appendOutput(s) {
+    if (textOutput.value.length)
+        textOutput.value += `\n\n${s}`;
+    else
+        textOutput.value += s;
+}
+
+function appendOutputForEvent(event, element)
+{
+    clearOutput();
+    appendOutput(`Target: #${element.id}`);
+    const allData = {};
+    for (let type of event.dataTransfer.types)
+        allData[type] = event.dataTransfer.getData(type);
+    appendOutput(`Data: ${JSON.stringify(allData, null, 4)}`);
+    const fileData = [];
+    console.log(event.dataTransfer.files);
+    for (let file of event.dataTransfer.files)
+         fileData.push([file.type, `${file.size} bytes`]);
+    appendOutput(`Files: ${JSON.stringify(fileData, null, 4)}`);
+}
+
+const regular = document.getElementById("regular");
+regular.addEventListener("dragstart", event => {
+    appendOutputForEvent(event, regular);
+});
+
+const regularNormal = document.getElementById("regular-normal");
+regularNormal.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("text/uri-list", "https://www.google.com");
+    appendOutputForEvent(event, regularNormal);
+});
+
+const regularCustom = document.getElementById("regular-custom");
+regularCustom.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("text/foo", "Hello world");
+    appendOutputForEvent(event, regularCustom);
+});
+
+const normal = document.getElementById("normal");
+normal.addEventListener("dragstart", event => {
+    event.dataTransfer.clearData();
+    event.dataTransfer.setData("text/uri-list", "https://www.google.com");
+    appendOutputForEvent(event, normal);
+});
+
+const custom = document.getElementById("custom");
+custom.addEventListener("dragstart", event => {
+    event.dataTransfer.clearData();
+    event.dataTransfer.setData("text/foo", "Hello world");
+    appendOutputForEvent(event, custom);
+});
+
+const image = document.getElementById("image");
+image.addEventListener("dragstart", event => {
+    appendOutputForEvent(event, image);
+});
+
+const link = document.getElementById("link");
+link.addEventListener("dragstart", event => {
+    appendOutputForEvent(event, link);
+});
+</script>
+</html>
