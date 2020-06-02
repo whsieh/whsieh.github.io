@@ -19,7 +19,6 @@ h1 {
 }
 
 a {
-    display: inline-block;
     text-decoration: none;
 }
 
@@ -37,15 +36,16 @@ textarea {
 </head>
 <body>
     <h1 id="regular">Regular text</h1>
-    <h1 id="regular-normal">Regular text + normal data</h1>
+    <h1 id="regular-url">Regular text + URL data</h1>
     <h1 id="regular-custom">Regular text + custom data</h1>
-    <h1 id="normal">Normal data only</h1>
+    <h1 id="url">URL data only</h1>
     <h1 id="custom">Custom data only</h1>
     <p>Image only</p>
     <img id="image" src="images/los-angeles.png"></img>
-    <p>Image with added data</p>
-    <img id="image-normal" src="images/los-angeles.png"></img>
-    <div><a id="link" href="https://www.apple.com">Apple Homepage</a></div>
+    <p>Image with added text</p>
+    <img id="image-text" src="images/los-angeles.png"></img>
+    <p>Link only: <a id="link" href="https://www.apple.com">Apple Homepage</a></p>
+    <p>Link with custom data: <a id="link-custom" href="https://www.apple.com">Apple Homepage</a></p>
     <textarea rows="20" readonly id="text-output"></textarea>
 </body>
 <script>
@@ -82,10 +82,10 @@ regular.addEventListener("dragstart", event => {
     appendOutputForEvent(event, regular);
 });
 
-const regularNormal = document.getElementById("regular-normal");
-regularNormal.addEventListener("dragstart", event => {
+const regularURL = document.getElementById("regular-url");
+regularURL.addEventListener("dragstart", event => {
     event.dataTransfer.setData("text/uri-list", "https://www.google.com");
-    appendOutputForEvent(event, regularNormal);
+    appendOutputForEvent(event, regularURL);
 });
 
 const regularCustom = document.getElementById("regular-custom");
@@ -94,11 +94,11 @@ regularCustom.addEventListener("dragstart", event => {
     appendOutputForEvent(event, regularCustom);
 });
 
-const normal = document.getElementById("normal");
-normal.addEventListener("dragstart", event => {
+const url = document.getElementById("url");
+url.addEventListener("dragstart", event => {
     event.dataTransfer.clearData();
     event.dataTransfer.setData("text/uri-list", "https://www.google.com");
-    appendOutputForEvent(event, normal);
+    appendOutputForEvent(event, url);
 });
 
 const custom = document.getElementById("custom");
@@ -113,15 +113,21 @@ image.addEventListener("dragstart", event => {
     appendOutputForEvent(event, image);
 });
 
-const imageNormal = document.getElementById("image-normal");
-imageNormal.addEventListener("dragstart", event => {
+const imageText = document.getElementById("image-text");
+imageText.addEventListener("dragstart", event => {
     event.dataTransfer.setData("text/plain", "This is an image of Los Angeles.");
-    appendOutputForEvent(event, imageNormal);
+    appendOutputForEvent(event, imageText);
 });
 
 const link = document.getElementById("link");
 link.addEventListener("dragstart", event => {
     appendOutputForEvent(event, link);
+});
+
+const linkCustom = document.getElementById("link-custom");
+linkCustom.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("text/foo", "bar");
+    appendOutputForEvent(event, linkCustom);
 });
 </script>
 </html>
