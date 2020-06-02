@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width">
 <html>
 <head>
 <style>
@@ -7,7 +8,7 @@ body {
     padding: 0;
 }
 
-h1, a {
+h1, a, p {
     font-size: 20px;
     font-family: system-ui;
 }
@@ -40,7 +41,10 @@ textarea {
     <h1 id="regular-custom">Regular text + custom data</h1>
     <h1 id="normal">Normal data only</h1>
     <h1 id="custom">Custom data only</h1>
+    <p>Image only</p>
     <img id="image" src="images/los-angeles.png"></img>
+    <p>Image with added data</p>
+    <img id="image-normal" src="images/los-angeles.png"></img>
     <div><a id="link" href="https://www.apple.com">Apple Homepage</a></div>
     <textarea rows="20" readonly id="text-output"></textarea>
 </body>
@@ -107,6 +111,12 @@ custom.addEventListener("dragstart", event => {
 const image = document.getElementById("image");
 image.addEventListener("dragstart", event => {
     appendOutputForEvent(event, image);
+});
+
+const imageNormal = document.getElementById("image-normal");
+imageNormal.addEventListener("dragstart", event => {
+    event.dataTransfer.setData("text/plain", "This is an image of Los Angeles.");
+    appendOutputForEvent(event, imageNormal);
 });
 
 const link = document.getElementById("link");
