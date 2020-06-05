@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui;
+        }
+
+        .bar {
+            width: 100px;
+            background: linear-gradient(to bottom, red 0%, green 50%, blue 100%);
+            margin-bottom: 1em;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        #bar-height-container {
+            position: fixed;
+            right: 1em;
+            text-align: right;
+        }
+
+        input {
+            width: 100px;
+            font-size: 16px;
+        }
+
+        label {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bar"></div>
+    <div id="bar-height-container">
+        <label for="barheight">Max height: </label><input type="number" value="2000" step="100" id="bar-height">
+    </div>
+    <script>
+        let timestep = 0;
+        const bar = document.querySelector(".bar");
+        const barHeightInput = document.querySelector("input#bar-height");
+        const nextProgressTick = () => 0.5 + 0.5 * Math.sin(2 * Math.PI * (++timestep / 100.));
+        const maxHeight = () => parseInt(barHeightInput.value);
+
+        setInterval(() => {
+            const height = Math.round(maxHeight() * nextProgressTick());
+            bar.style.height = `${height}px`;
+        }, 1000. / 60);
+    </script>
+</body>
+</html>
