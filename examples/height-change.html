@@ -5,19 +5,18 @@
     <style>
         body {
             font-family: system-ui;
+            margin: 0;
         }
 
         .bar {
             width: 100px;
             background: linear-gradient(to bottom, red 0%, green 50%, blue 100%);
             margin-bottom: 1em;
-            position: fixed;
-            top: 0;
-            left: 0;
         }
 
         #bar-height-container {
             position: fixed;
+            top: 1em;
             right: 1em;
             text-align: right;
         }
@@ -33,10 +32,10 @@
     </style>
 </head>
 <body>
-    <div class="bar"></div>
     <div id="bar-height-container">
         <label for="barheight">Max height: </label><input type="number" value="2000" step="100" id="bar-height">
     </div>
+    <div class="bar"></div>
     <script>
         let timestep = 0;
         const bar = document.querySelector(".bar");
