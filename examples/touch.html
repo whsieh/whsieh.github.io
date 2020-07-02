@@ -32,8 +32,13 @@
                 margin: 1em auto;
             }
 
+            p {
+                font-size: 14px;
+            }
+
             h1 {
                 margin: 0.5em auto;
+                font-size: 18px;
             }
 
             .scrolls {
@@ -72,6 +77,10 @@
             .yellow { background-color: rgb(255, 204, 0); }
             .gray-transparent { background-color: rgba(200, 200, 200, 0.25); }
             .gray { background-color: rgb(200, 200, 200); }
+            .brown-transparent { background-color: rgba(160, 82, 45, 0.25); }
+            .brown { background-color: rgb(160, 82, 45); }
+            .turqoise-transparent { background-color: rgba(64, 224, 208, 0.25); }
+            .turqoise { background-color: rgb(64, 224, 208); }
 
             .flash {
                 position: fixed;
@@ -118,7 +127,7 @@
             <h1>Active touchstart, touchmove, touchend</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
-                <div class="gray-transparent toucharea all-active prevent-default-fast"></div>
+                <div class="gray-transparent toucharea all-active touchstart-prevent-default-fast"></div>
                 <p>Active touch event listeners; no delay</p>
                 <div class="gray-transparent toucharea all-active prevent-default-medium"></div>
                 <p>Active touch event listeners; 400 ms delay</p>
@@ -130,11 +139,11 @@
             <h1>Dynamically added listeners</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
-                <div class="yellow-transparent toucharea scrolls add-prevent-touch-move"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="yellow-transparent toucharea scrolls touchstart-add-prevent-touch-move"><button style="display: block;">Try clicking me?</button> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>On touchstart, add touchmove listener that prevents default</p>
             </div>
         </section>
-        <section id="no-prevent-default-fast-section">
+        <section id="no-touchstart-prevent-default-fast-section">
             <h1>no preventDefault (immediate)</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
@@ -142,11 +151,11 @@
                 <p>Not passive; no preventDefault() on touchstart</p>
                 <div class="blue-transparent toucharea no-prevent-default-fast" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; no preventDefault() on touchstart; editable text</p>
-                <div class="blue-transparent toucharea scrolls no-prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="blue-transparent toucharea scrolls no-touchstart-prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; no preventDefault() on touchstart; scrollable</p>
             </div>
         </section>
-        <section id="no-prevent-default-medium-section">
+        <section id="no-touchstart-prevent-default-medium-section">
             <h1>no preventDefault (400 ms)</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
@@ -158,7 +167,7 @@
                 <p>Not passive; no preventDefault() on touchstart; 400ms delay; scrollable</p>
             </div>
         </section>
-        <section id="no-prevent-default-slow-section">
+        <section id="no-touchstart-prevent-default-slow-section">
             <h1>no preventDefault (1200 ms)</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
@@ -170,40 +179,64 @@
                 <p>Not passive; no preventDefault() on touchstart; 1200ms delay; scrollable</p>
             </div>
         </section>
-        <section id="prevent-default-fast-section">
-            <h1>preventDefault (immediate)</h1>
+        <section id="touchstart-prevent-default-fast-section">
+            <h1>touchstart preventDefault (immediate)</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
-                <div class="indigo-transparent toucharea prevent-default-fast"></div>
+                <div class="indigo-transparent toucharea touchstart-prevent-default-fast"></div>
                 <p>Not passive; preventDefault() on touchstart</p>
-                <div class="indigo-transparent toucharea prevent-default-fast" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="indigo-transparent toucharea touchstart-prevent-default-fast" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; preventDefault() on touchstart; editable text</p>
-                <div class="indigo-transparent toucharea scrolls prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="indigo-transparent toucharea scrolls touchstart-prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; preventDefault() on touchstart; scrollable</p>
             </div>
         </section>
-        <section id="prevent-default-medium-section">
-            <h1>preventDefault (400 ms)</h1>
+        <section id="touchstart-prevent-default-medium-section">
+            <h1>touchstart preventDefault (400 ms)</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
-                <div class="purple-transparent toucharea prevent-default-medium"></div>
+                <div class="purple-transparent toucharea touchstart-prevent-default-medium"></div>
                 <p>Not passive; preventDefault() on touchstart; 400ms delay</p>
-                <div class="purple-transparent toucharea prevent-default-medium" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="purple-transparent toucharea touchstart-prevent-default-medium" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; preventDefault() on touchstart; 400ms delay; editable text</p>
-                <div class="purple-transparent toucharea scrolls prevent-default-medium"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="purple-transparent toucharea scrolls touchstart-prevent-default-medium"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; preventDefault() on touchstart; 400ms delay; scrollable</p>
             </div>
         </section>
-        <section id="prevent-default-slow-section">
-            <h1>preventDefault (1200 ms)</h1>
+        <section id="touchstart-prevent-default-slow-section">
+            <h1>touchstart preventDefault (1200 ms)</h1>
             <a class="toggle" href="#">[-] Collapse</a>
             <div class="touchareas">
-                <div class="orange-transparent toucharea prevent-default-slow"></div>
+                <div class="orange-transparent toucharea touchstart-prevent-default-slow"></div>
                 <p>Not passive; preventDefault() on touchstart; 1200ms delay</p>
-                <div class="orange-transparent toucharea prevent-default-slow" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="orange-transparent toucharea touchstart-prevent-default-slow" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; preventDefault() on touchstart; 1200ms delay; editable text</p>
-                <div class="orange-transparent toucharea scrolls prevent-default-slow"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <div class="orange-transparent toucharea scrolls touchstart-prevent-default-slow"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
                 <p>Not passive; preventDefault() on touchstart; 1200ms delay; scrollable</p>
+            </div>
+        </section>
+        <section id="touchend-prevent-default-fast-section">
+            <h1>touchend preventDefault (immediate)</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="brown-transparent toucharea touchend-prevent-default-fast"></div>
+                <p>Not passive; preventDefault() on touchend</p>
+                <div class="brown-transparent toucharea touchend-prevent-default-fast" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchend; editable text</p>
+                <div class="brown-transparent toucharea scrolls touchend-prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchend; scrollable</p>
+            </div>
+        </section>
+        <section id="touchend-prevent-default-medium-section">
+            <h1>touchend preventDefault (400 ms)</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="turqoise-transparent toucharea touchend-prevent-default-medium"></div>
+                <p>Not passive; preventDefault() on touchend; 400ms delay</p>
+                <div class="turqoise-transparent toucharea touchend-prevent-default-medium" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick turqoise fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchend; 400ms delay; editable text</p>
+                <div class="turqoise-transparent toucharea scrolls touchend-prevent-default-medium"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchend; 400ms delay; scrollable</p>
             </div>
         </section>
 
@@ -282,14 +315,14 @@
                 });
             });
 
-            document.querySelectorAll(".prevent-default-fast").forEach(element => {
+            document.querySelectorAll(".touchstart-prevent-default-fast").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
                     event.preventDefault();
                 });
             });
 
-            document.querySelectorAll(".prevent-default-medium").forEach(element => {
+            document.querySelectorAll(".touchstart-prevent-default-medium").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
                     const startTime = Date.now();
@@ -301,12 +334,31 @@
                 });
             });
 
-            document.querySelectorAll(".prevent-default-slow").forEach(element => {
+            document.querySelectorAll(".touchstart-prevent-default-slow").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
                     const startTime = Date.now();
                     while (1) {
                         if (Date.now() - startTime > 1200)
+                            break;
+                    }
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".touchend-prevent-default-fast").forEach(element => {
+                element.addEventListener("touchend", event => {
+                    console.log(event);
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".touchend-prevent-default-medium").forEach(element => {
+                element.addEventListener("touchend", event => {
+                    console.log(event);
+                    const startTime = Date.now();
+                    while (1) {
+                        if (Date.now() - startTime > 400)
                             break;
                     }
                     event.preventDefault();
