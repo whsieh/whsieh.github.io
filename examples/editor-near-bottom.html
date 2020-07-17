@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+div[contenteditable] {
+    margin-top: 2000px;
+    font-size: 20px;
+    border: solid black 1px;
+    outline: none;
+}
+</style>
+</head>
+<body>
+<div contenteditable>
+    <div>Try to delete the letters below.</div>
+    <div>A</div>
+    <div>B</div>
+    <div id="target">C</div>
+</div>
+<script>
+addEventListener("load", () => {
+    setTimeout(() => document.getElementById("target").scrollIntoView(), 200);
+});
+</script>
