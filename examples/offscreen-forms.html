@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <style>
+        select {
+            position: absolute;
+            top: 0;
+            left: -10000px;
+        }
+    </style>
+</head>
+<body>
+    <button>Focus the offscreen select</button>
+    <select>
+        <option id="one">One</option>
+        <option id="two">Two</option>
+        <option id="three">Three</option>
+    </select>
+</body>
+<script>
+document.querySelector("button").addEventListener("click", (event) => {
+    document.querySelector("select").focus();
+});
+</script>
+</html>
