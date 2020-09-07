@@ -23,6 +23,9 @@
         const passwordInput = document.querySelector("input[type='password']");
 
         textInput.addEventListener("focus", () => {
+            // This is just here to ensure that ElementRareData::setComputedStyle is called with a non-null RenderStyle.
+            console.log(getComputedStyle(passwordInput).display);
+
             passwordInput.style.display = "block";
             passwordInput.focus();
             textInput.style.display = "none";
