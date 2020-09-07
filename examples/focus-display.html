@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head>
+    <style>
+        input {
+            font-size: 32px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        input[type="password"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" value="Click me">
+    <input type="password" value="Click me">
+    <script>
+        const textInput = document.querySelector("input[type='text']");
+        const passwordInput = document.querySelector("input[type='password']");
+
+        textInput.addEventListener("focus", () => {
+            passwordInput.style.display = "block";
+            passwordInput.focus();
+            textInput.style.display = "none";
+
+            requestAnimationFrame(finishTest);
+        });
+
+        function finishTest() {
+            const succeeded = document.activeElement === passwordInput;
+            if (succeeded)
+                message = "PASS: Password field was focused";
+            else
+                message = "FAIL: Password field was not focused";
+            const textNode = document.createTextNode(message);
+            const container = document.createElement("pre");
+            container.style.color = succeeded ? "green" : "red";
+            container.appendChild(textNode);
+            document.body.appendChild(container);
+
+            passwordInput.remove();
+            textInput.remove();
+        }
+    </script>
+</body>
+</html>
