@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        function createAndLoadVideo() {
+            return new Promise((resolve, reject) => {
+                const video = document.createElement("video");
+                video.oncanplaythrough = () => resolve(video);
+                video.onerror = reject;
+                video.preload = "auto";
+                video.src = "bipbop.mp4";
+                window._video = video;
+            });
+        }
+
+        addEventListener("load", async () => {
+            canvas = document.querySelector("canvas");
+            context = canvas.getContext("2d");
+            context.drawImage(await createAndLoadVideo(), 0, 0);
+        });
+    </script>
+</head>
+<body>
+    <p>You should see the first frame of <code>bipbop.mp4</code> below:</p>
+    <canvas width="300" height="200"></canvas>
+</body>
+</html>
