@@ -15,11 +15,11 @@
 
         addEventListener("load", async () => {
             video = await createAndLoadVideo();
-            bitmap = await createImageBitmap(video, { imageOrientation: "none" });
 
             canvas = document.querySelector("canvas");
             context = canvas.getContext("2d");
-            context.drawImage(bitmap, 0, 0);
+            context.fillStyle = context.createPattern(video, "repeat");
+            context.fillRect(0, 0, canvas.width, canvas.height);
         });
     </script>
 </head>
