@@ -9,6 +9,7 @@
                 video.onerror = reject;
                 video.preload = "auto";
                 video.src = "bipbop.mp4";
+                video.load();
                 window._video = video;
             });
         }
