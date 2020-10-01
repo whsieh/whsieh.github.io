@@ -252,10 +252,34 @@
                 <button></button>
             </canvas>
         </div>
+        <div class="example">
+            <h1>Video</h1>
+            <canvas id="canvas20" width="400" height="400">
+                <button></button>
+            </canvas>
+        </div>
+        <div class="example">
+            <h1>Video (pattern)</h1>
+            <canvas id="canvas21" width="400" height="400">
+                <button></button>
+            </canvas>
+        </div>
     </div>
     <img id="icon" src="./images/stp-tiny.png" class="hidden">
     <img id="image" src="./images/webkit.png" class="hidden">
     <script>
+        function createAndLoadVideo() {
+            return new Promise((resolve, reject) => {
+                const video = document.createElement("video");
+                video.oncanplaythrough = () => resolve(video);
+                video.onerror = reject;
+                video.preload = "auto";
+                video.src = "bipbop.mp4";
+                video.load();
+                window._video = video;
+            });
+        }
+
         const canvasRenderers = [];
         canvasRenderers.push(async function() {
             if (!document.getElementById("canvas1"))
@@ -741,6 +765,31 @@
             context.drawFocusIfNeeded(focusOutline, button);
 
             button.blur();
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            if (!document.getElementById("canvas20"))
+                return;
+
+            const canvas = document.getElementById("canvas20");
+            const context = canvas.getContext("2d");
+            context.save();
+            context.clearRect(0, 0, 400, 400);
+            context.drawImage(await createAndLoadVideo(), 40, 80);
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            if (!document.getElementById("canvas21"))
+                return;
+
+            const canvas = document.getElementById("canvas21");
+            const context = canvas.getContext("2d");
+            context.save();
+            context.clearRect(0, 0, 400, 400);
+            context.fillStyle = context.createPattern(await createAndLoadVideo(), "repeat");
+            context.fillRect(0, 0, canvas.width, canvas.height);
             context.restore();
         });
 
