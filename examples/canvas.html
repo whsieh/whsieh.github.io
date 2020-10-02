@@ -202,13 +202,21 @@
     <script>
         function createAndLoadVideo() {
             return new Promise((resolve, reject) => {
+                if (window._cachedVideo) {
+                    resolve(window._cachedVideo);
+                    return;
+                }
+
                 const video = document.createElement("video");
-                video.oncanplaythrough = () => resolve(video);
+                video.oncanplaythrough = () => {
+                    window._cachedVideo = video;
+                    resolve(video);
+                };
+
                 video.onerror = reject;
                 video.preload = "auto";
                 video.src = "bipbop.mp4";
                 video.load();
-                window._video = video;
             });
         }
 
