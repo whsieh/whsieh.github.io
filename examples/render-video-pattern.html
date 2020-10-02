@@ -15,9 +15,12 @@
         }
 
         addEventListener("load", async () => {
+            video = await createAndLoadVideo();
+
             canvas = document.querySelector("canvas");
             context = canvas.getContext("2d");
-            context.drawImage(await createAndLoadVideo(), 0, 0);
+            context.fillStyle = context.createPattern(video, "repeat");
+            context.fillRect(0, 0, canvas.width, canvas.height);
         });
     </script>
 </head>

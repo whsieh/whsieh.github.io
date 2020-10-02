@@ -15,17 +15,14 @@
         }
 
         addEventListener("load", async () => {
-            video = await createAndLoadVideo();
-
             canvas = document.querySelector("canvas");
             context = canvas.getContext("2d");
-            context.fillStyle = context.createPattern(video, "repeat");
-            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(await createImageBitmap(await createAndLoadVideo(), 0, 0, 400, 300), 0, 0);
         });
     </script>
 </head>
 <body>
     <p>You should see the first frame of <code>bipbop.mp4</code> below:</p>
-    <canvas width="300" height="200"></canvas>
+    <canvas width="400" height="300"></canvas>
 </body>
 </html>
