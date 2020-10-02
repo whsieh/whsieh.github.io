@@ -174,96 +174,28 @@
         <canvas width="400" height="400"></canvas>
     </div>
     <div id="example-container">
-        <div class="example">
-            <h1>Rects</h1>
-            <canvas id="canvas1" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Fonts</h1>
-            <canvas id="canvas2" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Web fonts</h1>
-            <canvas id="canvas3" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Variable fonts</h1>
-            <canvas id="canvas4" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Arcs</h1>
-            <canvas id="canvas5" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Ellipse</h1>
-            <canvas id="canvas6" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Bezier</h1>
-            <canvas id="canvas7" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Translate</h1>
-            <canvas id="canvas8" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Rotate</h1>
-            <canvas id="canvas9" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Scale</h1>
-            <canvas id="canvas10" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Shear</h1>
-            <canvas id="canvas11" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Lines</h1>
-            <canvas id="canvas12" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Gradients</h1>
-            <canvas id="canvas13" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Pattern</h1>
-            <canvas id="canvas14" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Shadows</h1>
-            <canvas id="canvas15" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Image</h1>
-            <canvas id="canvas16" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Blending</h1>
-            <canvas id="canvas17" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Clipping</h1>
-            <canvas id="canvas18" width="400" height="400"></canvas>
-        </div>
-        <div class="example">
-            <h1>Focus Ring</h1>
-            <canvas id="canvas19" width="400" height="400">
-                <button></button>
-            </canvas>
-        </div>
-        <div class="example">
-            <h1>Video</h1>
-            <canvas id="canvas20" width="400" height="400">
-                <button></button>
-            </canvas>
-        </div>
-        <div class="example">
-            <h1>Video (pattern)</h1>
-            <canvas id="canvas21" width="400" height="400">
-                <button></button>
-            </canvas>
-        </div>
+        <div class="example"><h1>Rects</h1><canvas id="canvas1" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Fonts</h1><canvas id="canvas2" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Web fonts</h1><canvas id="canvas3" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Variable fonts</h1><canvas id="canvas4" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Arcs</h1><canvas id="canvas5" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Ellipse</h1><canvas id="canvas6" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Bezier</h1><canvas id="canvas7" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Translate</h1><canvas id="canvas8" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Rotate</h1><canvas id="canvas9" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Scale</h1><canvas id="canvas10" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Shear</h1><canvas id="canvas11" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Lines</h1><canvas id="canvas12" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Gradients</h1><canvas id="canvas13" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Pattern</h1><canvas id="canvas14" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Shadows</h1><canvas id="canvas15" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Image</h1><canvas id="canvas16" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Blending</h1><canvas id="canvas17" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Clipping</h1><canvas id="canvas18" width="400" height="400"></canvas></div>
+        <div class="example"><h1>Focus Ring</h1><canvas id="canvas19" width="400" height="400"><button></button></canvas></div>
+        <div class="example"><h1>Video</h1><canvas id="canvas20" width="400" height="400"><button></button></canvas></div>
+        <div class="example"><h1>Video (pattern)</h1><canvas id="canvas21" width="400" height="400"><button></button></canvas></div>
+        <div class="example"><h1>Video (ImageBitmap)</h1><canvas id="canvas22" width="400" height="400"><button></button></canvas></div>
     </div>
     <img id="icon" src="./images/stp-tiny.png" class="hidden">
     <img id="image" src="./images/webkit.png" class="hidden">
@@ -790,6 +722,21 @@
             context.clearRect(0, 0, 400, 400);
             context.fillStyle = context.createPattern(await createAndLoadVideo(), "repeat");
             context.fillRect(0, 0, canvas.width, canvas.height);
+            context.restore();
+        });
+
+        canvasRenderers.push(async function() {
+            if (!document.getElementById("canvas22"))
+                return;
+
+            if (!window.createImageBitmap)
+                return;
+
+            const canvas = document.getElementById("canvas22");
+            const context = canvas.getContext("2d");
+            context.save();
+            context.clearRect(0, 0, 400, 400);
+            context.drawImage(await createImageBitmap(await createAndLoadVideo(), 0, 0, 400, 300), 40, 80);
             context.restore();
         });
 
