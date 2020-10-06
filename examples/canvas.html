@@ -754,6 +754,7 @@
         });
 
         async function refreshCanvases() {
+            await createAndLoadVideo(); // Prewarm video.
             for (const renderer of canvasRenderers)
                 await renderer();
         }
