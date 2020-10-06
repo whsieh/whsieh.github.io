@@ -716,6 +716,8 @@
             const context = canvas.getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
+            context.fillStyle = "black";
+            context.fillRect(0, 0, canvas.width, canvas.height);
             context.drawImage(await createAndLoadVideo(), 40, 80);
             context.restore();
         });
@@ -744,7 +746,10 @@
             const context = canvas.getContext("2d");
             context.save();
             context.clearRect(0, 0, 400, 400);
-            context.drawImage(await createImageBitmap(await createAndLoadVideo(), 0, 0, 400, 300), 40, 80);
+            const bitmap = await createImageBitmap(await createAndLoadVideo(), 0, 0, 400, 300);
+            const delta = 10;
+            for (let i = 0; i < 5; ++i)
+                context.drawImage(bitmap, 20 + 10 * i, 60 + 10 * i);
             context.restore();
         });
 
