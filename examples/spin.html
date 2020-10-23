@@ -28,8 +28,9 @@
                 context.moveTo(200, 200);
                 context.lineTo(200 + 180 * Math.cos(radians), 200 + 180 * Math.sin(radians));
                 context.stroke();
+                if (radians >= 2 * Math.PI)
+                    break;
             }
-
         });
     </script>
 </head>
