@@ -11,30 +11,50 @@
         }
     </style>
     <script>
-        addEventListener("load", async () => {
-            let canvas = document.querySelector("canvas");
-            let context = canvas.getContext("2d");
+        addEventListener("load", () => {
+            let button = document.querySelector("button");
+            button.addEventListener("click", async () => {
+                button.disabled = true;
+                await runAnimation();
+                button.disabled = false;
+            });
+        });
 
+        async function runAnimation() {
             let startTime = Date.now();
+            let contextsAndColorFunctions = [
+                [document.getElementById("red").getContext("2d"), radians => `rgb(${200 + Math.floor(50 * Math.sin(radians))}, 0, 0)`],
+                [document.getElementById("green").getContext("2d"), radians => `rgb(0, ${200 + Math.floor(50 * Math.cos(radians))}, 0)`],
+                [document.getElementById("blue").getContext("2d"), radians => `rgb(0, 0, ${200 + Math.floor(50 * Math.sin(radians))})`]
+            ];
 
             while (true) {
-                await new Promise(requestAnimationFrame);
                 let radians = (Date.now() - startTime) / 1000;
-                let color = 50 + Math.floor(100 * Math.sin(radians));
-                context.clearRect(0, 0, 400, 400);
-                context.lineWidth = 2 + 4 * Math.cos(radians);
-                context.strokeStyle = `rgb(${color}, ${color}, ${color})`;
-                context.beginPath();
-                context.moveTo(200, 200);
-                context.lineTo(200 + 180 * Math.cos(radians), 200 + 180 * Math.sin(radians));
-                context.stroke();
+
+                for (let [context, colorFunction] of contextsAndColorFunctions)
+                    paintFrame(radians, context, colorFunction(radians));
+
+                await new Promise(requestAnimationFrame);
                 if (radians >= 2 * Math.PI)
                     break;
             }
-        });
+        }
+
+        function paintFrame(radians, context, color) {
+            context.clearRect(0, 0, 400, 400);
+            context.lineWidth = 4 + 2 * Math.cos(radians);
+            context.strokeStyle = color;
+            context.beginPath();
+            context.moveTo(200, 200);
+            context.lineTo(200 + 180 * Math.cos(radians), 200 + 180 * Math.sin(radians));
+            context.stroke();
+        }
     </script>
 </head>
 <body>
-    <canvas width="400" height="400"></canvas>
+    <canvas id="red" width="400" height="400"></canvas>
+    <canvas id="green" width="400" height="400"></canvas>
+    <canvas id="blue" width="400" height="400"></canvas>
+    <div><button>Start animation</button></div>
 </body>
 </html>
