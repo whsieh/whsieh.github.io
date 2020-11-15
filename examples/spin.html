@@ -8,32 +8,66 @@
             width: 200px;
             height: 200px;
             border: 1px solid black;
+            display: inline-block;
+            margin: 1em;
+        }
+
+        body {
+            font-family: system-ui;
+            font-size: 16px;
+        }
+
+        input[type="number"] {
+            width: 2em;
+            border: none;
+            font-size: 16px;
+            outline: none;
         }
     </style>
     <script>
         addEventListener("load", () => {
             let button = document.querySelector("button");
+            let canvasContainer = document.getElementById("canvases");
+            let canvasCount = document.getElementById("canvas-count");
+
             button.addEventListener("click", async () => {
                 button.disabled = true;
+                canvasCount.disabled = true;
                 await runAnimation();
                 button.disabled = false;
+                canvasCount.disabled = false;
             });
+
+            function updateCanvases() {
+                document.querySelectorAll("canvas").forEach(canvas => canvas.remove());
+                for (let i = 0; i < parseInt(canvasCount.value); ++i) {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = 400;
+                    canvas.height = 400;
+                    canvasContainer.appendChild(canvas);
+                }
+            }
+
+            canvasCount.addEventListener("change", updateCanvases);
+            updateCanvases();
         });
 
         async function runAnimation() {
             let startTime = Date.now();
-            let contextsAndColorFunctions = [
-                [document.getElementById("red").getContext("2d"), radians => `rgb(${200 + Math.floor(50 * Math.sin(radians))}, 0, 0)`],
-                [document.getElementById("green").getContext("2d"), radians => `rgb(0, ${200 + Math.floor(50 * Math.cos(radians))}, 0)`],
-                [document.getElementById("blue").getContext("2d"), radians => `rgb(0, 0, ${200 + Math.floor(50 * Math.sin(radians))})`]
+            let colorConverterFunctions = [
+                radians => `rgb(${200 + Math.floor(50 * Math.sin(radians))}, 0, 0)`,
+                radians => `rgb(0, ${200 + Math.floor(50 * Math.cos(radians))}, 0)`,
+                radians => `rgb(0, 0, ${200 + Math.floor(50 * Math.sin(radians))})`
             ];
 
+            const canvases = Array.from(document.querySelectorAll("canvas"));
             while (true) {
                 let radians = (Date.now() - startTime) / 1000;
-
-                for (let [context, colorFunction] of contextsAndColorFunctions)
+                for (let i = 0; i < canvases.length; ++i) {
+                    const context = canvases[i].getContext("2d");
+                    const colorFunction = colorConverterFunctions[i % 3];
                     paintFrame(radians, context, colorFunction(radians));
-
+                }
                 await new Promise(requestAnimationFrame);
                 if (radians >= 2 * Math.PI)
                     break;
@@ -52,9 +86,8 @@
     </script>
 </head>
 <body>
-    <canvas id="red" width="400" height="400"></canvas>
-    <canvas id="green" width="400" height="400"></canvas>
-    <canvas id="blue" width="400" height="400"></canvas>
+    <div id="canvases"></div>
     <div><button>Start animation</button></div>
+    <div><label for="canvas-count">Number of canvases: </label><input min="1" max="9" id="canvas-count" value="1" type="number"></input></div>
 </body>
 </html>
