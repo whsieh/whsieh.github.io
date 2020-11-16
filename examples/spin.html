@@ -39,8 +39,12 @@
             });
 
             function updateCanvases() {
+                let newCanvasCount = parseInt(canvasCount.value);
+                if (isNaN(newCanvasCount))
+                    return;
+
                 document.querySelectorAll("canvas").forEach(canvas => canvas.remove());
-                for (let i = 0; i < parseInt(canvasCount.value); ++i) {
+                for (let i = 0; i < newCanvasCount; ++i) {
                     const canvas = document.createElement("canvas");
                     canvas.width = 400;
                     canvas.height = 400;
@@ -48,7 +52,7 @@
                 }
             }
 
-            canvasCount.addEventListener("change", updateCanvases);
+            canvasCount.addEventListener("input", updateCanvases);
             updateCanvases();
         });
 
