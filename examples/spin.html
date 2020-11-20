@@ -18,10 +18,17 @@
         }
 
         input[type="number"] {
-            width: 2em;
             border: none;
             font-size: 16px;
             outline: none;
+        }
+
+        #canvas-count {
+            width: 2em;
+        }
+
+        #frames-per-second {
+            width: 2.5em;
         }
     </style>
     <script>
@@ -29,13 +36,16 @@
             let button = document.querySelector("button");
             let canvasContainer = document.getElementById("canvases");
             let canvasCount = document.getElementById("canvas-count");
+            let framesPerSecond = document.getElementById("frames-per-second");
 
             button.addEventListener("click", async () => {
                 button.disabled = true;
                 canvasCount.disabled = true;
+                framesPerSecond.disabled = true;
                 await runAnimation();
                 button.disabled = false;
                 canvasCount.disabled = false;
+                framesPerSecond.disabled = false;
             });
 
             function updateCanvases() {
@@ -64,16 +74,19 @@
                 radians => `rgb(0, 0, ${200 + Math.floor(50 * Math.sin(radians))})`
             ];
 
+            const targetFramesPerSecond = parseInt(document.getElementById("frames-per-second").value);
+            let delayPerFrame = 1000.0 / targetFramesPerSecond
+
             const canvases = Array.from(document.querySelectorAll("canvas"));
             while (true) {
-                let radians = (Date.now() - startTime) / 1000;
+                let radians = Math.min(2 * Math.PI, (Date.now() - startTime) / 1000);
                 for (let i = 0; i < canvases.length; ++i) {
                     const context = canvases[i].getContext("2d");
                     const colorFunction = colorConverterFunctions[i % 3];
                     paintFrame(radians, context, colorFunction(radians));
                 }
-                await new Promise(requestAnimationFrame);
-                if (radians >= 2 * Math.PI)
+                await new Promise(resolve => setTimeout(resolve, delayPerFrame));
+                if (radians == 2 * Math.PI)
                     break;
             }
         }
@@ -93,5 +106,6 @@
     <div id="canvases"></div>
     <div><button>Start animation</button></div>
     <div><label for="canvas-count">Number of canvases: </label><input min="1" max="9" id="canvas-count" value="1" type="number"></input></div>
+    <div><label for="canvas-count">FPS: </label><input min="10" max="60" step="10" id="frames-per-second" value="10" type="number"></input></div>
 </body>
 </html>
