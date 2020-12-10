@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <style>
+        canvas {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+    <script>
+        addEventListener("load", () => {
+            const source = document.getElementById("source");
+            const sourceContext = source.getContext("2d");
+            sourceContext.fillStyle = "green";
+            sourceContext.fillRect(0, 0, 200, 200);
+
+            const destination = document.getElementById("destination");
+            destination.getContext("2d").drawImage(source, 0, 0, 200, 200);
+        });
+    </script>
+</head>
+<body>
+    <canvas id="source" width="200" height="200"></canvas>
+    <canvas id="destination" width="200" height="200"></canvas>
+</body>
+</html>
