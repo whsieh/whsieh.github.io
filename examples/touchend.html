@@ -12,7 +12,8 @@
         }
 
         addEventListener("load", () => {
-            const checkbox = document.getElementById("prevent-touchend");
+            const preventTouchend = document.getElementById("prevent-touchend");
+            const delayTouchend = document.getElementById("delay-touchend");
             const target = document.getElementById("target");
             target.addEventListener("touchstart", event => {
                 flash("TOUCHSTART", "lightblue");
@@ -23,8 +24,10 @@
             });
 
             target.addEventListener("touchend", event => {
-                spin(500);
-                if (checkbox.checked)
+                if (delayTouchend.checked)
+                    spin(500);
+
+                if (preventTouchend.checked)
                     event.preventDefault();
                 flash("TOUCHEND", "darkblue");
             });
@@ -95,8 +98,7 @@
     <div id="target">
         <p>Phasellus nec mattis ipsum, eget pellentesque est. Sed lacinia nisi quis velit aliquam, et placerat augue posuere. Nullam sed fermentum leo, a cursus tellus. Ut sed mattis erat, quis volutpat leo. Duis ac cursus metus. Nullam eu libero eget quam scelerisque dictum. Nullam condimentum magna in sapien porta congue. Aliquam felis mauris, mattis vel quam ac, dictum commodo lorem. Curabitur felis dui, suscipit nec dictum ac, rhoncus nec elit. In convallis dui vel placerat pellentesque.</p>
     </div>
-    <div>
-        <label for="prevent-touchend">Prevent touchend? </label><input type="checkbox" checked id="prevent-touchend">
-    </div>
+    <p><label for="prevent-touchend">Prevent touchend? </label><input type="checkbox" checked id="prevent-touchend"></p>
+    <p><label for="delay-touchend">Delay touchend? </label><input type="checkbox" checked id="delay-touchend"></p>
 </body>
 </html>
