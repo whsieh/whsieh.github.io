@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <script>
+    jsTestIsAsync = true;
+
+    addEventListener("load", async () => {
+        const target1 = document.getElementById("target1");
+        const target2 = document.getElementById("target2");
+        const textarea = document.querySelector("textarea");
+        const button = document.querySelector("button");
+
+        function log(s) {
+            textarea.textContent += s + "\n";
+        }
+
+        button.addEventListener("click", () => {
+            textarea.textContent = "";
+        });
+
+        // target1.addEventListener("touchstart", event => {
+        //     log("touchstart on target1");
+        // });
+
+        target1.addEventListener("touchend", event => {
+            event.preventDefault();
+            log("touchend on target1");
+        });
+
+        target1.addEventListener("click", event => {
+            log("click on target1");
+        });
+
+        // target2.addEventListener("touchstart", event => {
+        //     log("touchstart on target2");
+        // });
+
+        target2.addEventListener("touchend", event => {
+            log("touchend on target2");
+        });
+
+        target2.addEventListener("click", event => {
+            log("click on target2");
+        });
+    });
+    </script>
+    <style>
+    #target1 {
+        background-color: orange;
+    }
+
+    #target2 {
+        background-color: purple;
+    }
+
+    #target1, #target2 {
+        width: 150px;
+        height: 150px;
+        margin: 1em;
+    }
+
+    textarea, button {
+        font-size: 16px;
+    }
+    </style>
+</head>
+<body>
+    <div id="target1"></div>
+    <div id="target2"></div>
+    <textarea rows="16" cols="16"></textarea>
+    <div><button>Clear Output</button></div>
+</body>
+</html>
