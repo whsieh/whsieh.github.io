@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: system-ui;
+        }
+
+        div[contenteditable] {
+            border: 1px solid tomato;
+            width: 100%;
+            min-height: 100px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<button id="copy-html">1. Get dice</button>
+<p>2. Paste into the editor below:</p>
+<div contenteditable></div>
+<script>
+document.getElementById("copy-html").addEventListener("click", event => {
+    navigator.clipboard.write([
+        new ClipboardItem({
+            "image/png": new Promise(async resolve => {
+                const response = await fetch("https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png");
+                resolve(await response.blob());
+            })
+        })
+    ]);
+});
+</script>
+</body>
+</html>
