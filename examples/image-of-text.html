@@ -16,11 +16,22 @@
 
         .fixed {
             bottom: 20px;
-            right: 50%;
+            right: calc(50% - 225px);
             position: fixed;
             border: 1px solid black;
             box-sizing: border-box;
-            zoom: 0.5;
+            background: #EEE;
+        }
+
+        .close {
+            text-align: right;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: 8px;
+        }
+
+        .close > a {
+            text-decoration: none;
         }
 
         div.scroller {
@@ -79,6 +90,15 @@
         <img src="images/dog.png"></img>
         <img class="transparent" src="images/dog.png"></img>
     </div> -->
-    <div class="fixed"><img src="images/dog.png"></img></div>
+    <div class="fixed">
+        <div class="close"><a href="#">Close</a></div>
+        <img src="images/dog.png"></img>
+    </div>
+    <script>
+        document.querySelector(".close > a").addEventListener("click", event => {
+            document.querySelector(".fixed").remove();
+            event.preventDefault();
+        });
+    </script>
 </body>
 </html>
