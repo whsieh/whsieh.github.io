@@ -5,22 +5,32 @@
         body {
             margin: 0;
             text-align: center;
+            font-family: system-ui;
+            background-color: #222;
         }
 
         .floating {
             position: fixed;
-            background-color: red;
+            background-color: tomato;
             width: 100px;
-            height: 150px;
             text-align: center;
+            border-radius: 5px;
         }
 
         .floating > input {
             width: 100%;
             height: 50px;
-            position: absolute;
             left: 0;
             bottom: 0;
+        }
+
+        input {
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 4px;
         }
 
         .absolute {
@@ -28,6 +38,7 @@
             position: absolute;
             width: 100px;
             height: 50px;
+            color: white;
         }
 
         #absolute-input-1 {
@@ -60,13 +71,6 @@
 
         #content {
             height: 500vh;
-            background-image: -webkit-gradient(
-                linear,
-                left top,
-                left bottom,
-                color-stop(0, #888888),
-                color-stop(1, #FFFFFF)
-            );
         }
 
         #top-div {
@@ -92,10 +96,10 @@
 </head>
 
 <body>
-    <div id="top-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="top-input"></input></div>
-    <div id="left-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="left-input"></input></div>
-    <div id="right-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="right-input"></input></div>
-    <div id="bottom-div" class="floating">Lorem ipsum dolor sit amet, consectetur adipiscing elit.<input id="bottom-input"></input></div>
+    <div id="top-div" class="floating">Lorem ipsum dolor sit amet.<input id="top-input"></input></div>
+    <div id="left-div" class="floating">Lorem ipsum dolor sit amet.<input id="left-input"></input></div>
+    <div id="right-div" class="floating">Lorem ipsum dolor sit amet.<input id="right-input"></input></div>
+    <div id="bottom-div" class="floating">Lorem ipsum dolor sit amet.<input id="bottom-input"></input></div>
     <div id="content">
         <input id="absolute-input-1" class="absolute"></input>
         <div id="absolute-div-1" class="absolute">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
