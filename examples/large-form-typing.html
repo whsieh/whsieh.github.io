@@ -1,0 +1,22 @@
+<html>
+<head>
+    <script>
+        function populate() {
+            var f = document.getElementById("form");
+            for (var i = 0; i < 1000; ++i) {
+                var input = document.createElement('input');
+                input.type = "text";
+                input.name = "firstname " + i;
+                f.appendChild(input);
+            }
+        }
+    </script>
+</head>
+
+<body onload="populate()">
+    <form id="form" action="/action_page.php">
+        First name:<br><input type="text" name="firstname" value="Test"><br>
+        Last name:<br><input type="text" name="lastname" value="Name"><br><br><input type="submit" value="Submit">
+    </form>
+</body>
+</html>
