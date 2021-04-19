@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        html, body {
+            font-size: 24px;
+            line-height: 1.8em;
+        }
+
+        pre {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+<pre id="output"></pre>
+<svg id="map"></svg>
+
+<script>
+function toString(domRect) {
+    return `DOMRect { (${domRect.left}, ${domRect.top}), (${domRect.width}, ${domRect.height}) }`;
+}
+
+let output = "";
+const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+path.setAttribute("d", "M 0,0");
+document.getElementById("map").appendChild(path);
+let domRect = path.getBoundingClientRect();
+output += `(0, 0): ${toString(domRect)}\n`;
+
+path.setAttribute("d", "M 100,100");
+domRect = path.getBoundingClientRect();
+output += `(100, 100): ${toString(domRect)}\n`;
+
+document.getElementById("output").innerText = output;
+</script>
+</body>
+
+</html>
