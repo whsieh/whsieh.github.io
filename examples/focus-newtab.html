@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: system-ui;
+}
+
+input {
+    font-size: 24px;
+}
+</style>
+</head>
+<body>
+<p>Focusing or clicking this text field opens a new tab after 200 ms.</p>
+<input autofocus placeholder="Tap me"></input>
+</body>
+<script>
+const input = document.querySelector("input");
+
+input.addEventListener("focus", () => {
+    setTimeout(() => {
+        open("focus-newtab.html");
+    }, 200)
+});
+
+input.addEventListener("click", () => {
+    setTimeout(() => {
+        open("focus-newtab.html");
+    }, 200)
+});
+</script>
+</html>
