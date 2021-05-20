@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    #target {
+        width: 200px;
+        height: 200px;
+        background-color: tomato;
+    }
+</style>
+</head>
+<body>
+    <div id="target"></div>
+    <textarea id="output" rows="24"></textarea>
+    <div>
+        <label for="logEvents">Log events?&nbsp;</label>
+        <input id="logEvents" checked type="checkbox"></input>
+    </div>
+    <script>
+        let target = document.getElementById("target");
+        let output = document.querySelector("textarea");
+        let logEvents = document.getElementById("logEvents");
+
+        function logEvent(event) {
+            console.log(event);
+            if (logEvents.checked)
+                output.textContent += event.type + "\n";
+        }
+
+        function preventTouchEnd(event) {
+            logEvent(event);
+            event.preventDefault();
+            target.removeEventListener("touchend", preventTouchEnd);
+        }
+
+        target.addEventListener("click", event => logEvent(event));
+
+        target.addEventListener("touchstart", event => {
+            logEvent(event);
+            target.addEventListener("touchend", preventTouchEnd);
+        });
+    </script>
+</body>
+</html>
