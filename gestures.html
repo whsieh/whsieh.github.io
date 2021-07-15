@@ -22,9 +22,49 @@ body, html {
     overflow: hidden;
     font-family: system-ui;
 }
+
+.legend {
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+    width: 150px;
+    z-index: 1000;
+}
+
+.legend > div {
+    margin: 0.5em 0;
+}
+
+.state-color {
+    width: 1em;
+    height: 1em;
+    margin-right: 4px;
+    display: inline-block;
+    border-radius: 4px;
+}
 </style>
 <body>
+<div class="legend">
+    <div><span class="state-color possible">&nbsp;</span>Possible</div>
+    <div><span class="state-color began">&nbsp;</span>Began</div>
+    <div><span class="state-color changed">&nbsp;</span>Changed</div>
+    <div><span class="state-color ended">&nbsp;</span>Ended</div>
+    <div><span class="state-color cancelled">&nbsp;</span>Cancelled</div>
+    <div><span class="state-color failed">&nbsp;</span>Failed</div>
+</div>
 <script>
+const stateColorMap = {
+    possible : "darkgreen",
+    began : "blue",
+    changed : "cyan",
+    ended : "orange",
+    cancelled : "purple",
+    failed : "red"
+};
+
+const legendContainer = document.querySelector(".legend");
+legendContainer.style.display = "none";
+
 function initializeGraph(graphData) {
     let translationOffsetX = 0;
     let translationOffsetY = 0;
@@ -60,28 +100,24 @@ function initializeGraph(graphData) {
         .call(force.drag);
 
     const getFillColor = d => {
-        if (d.name === "WKDeferringGestureRecognizer")
-            return "red";
-        if (d.name.includes("WK"))
-            return "orange";
-        return "black";
+        return stateColorMap[d.state?.toLowerCase()] || "black";
     };
 
     const getFontWeight = d => {
-        if (d.name === "WKDeferringGestureRecognizer" || d.name.includes("WK"))
+        if (d.name.includes("WKDeferringGestureRecognizer") || d.name.includes("WK"))
             return 700;
         return 400;
     };
 
     const getFontSize = d => {
-        if (d.name === "WKDeferringGestureRecognizer")
+        if (d.name.includes("WKDeferringGestureRecognizer"))
             return 18;
         return 14;
     };
 
 
     const getDotRadius = d => {
-        if (d.name === "WKDeferringGestureRecognizer")
+        if (d.name.includes("WKDeferringGestureRecognizer"))
             return 8;
         return 5;
     };
@@ -140,6 +176,10 @@ function initializeGraph(graphData) {
         isMovingBackground = false;
         updateMouseLocation(e);
     });
+
+    for (let state in stateColorMap)
+        document.querySelector(`.state-color.${state}`).style.backgroundColor = stateColorMap[state];
+    legendContainer.style.display = "";
 }
 
 function parseText(text) {
