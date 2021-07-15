@@ -62,13 +62,13 @@ function initializeGraph(graphData) {
     const getFillColor = d => {
         if (d.name === "WKDeferringGestureRecognizer")
             return "red";
-        if (d.name.includes("WKContentView"))
+        if (d.name.includes("WK"))
             return "orange";
         return "black";
     };
 
     const getFontWeight = d => {
-        if (d.name === "WKDeferringGestureRecognizer" || d.name.includes("WKContentView"))
+        if (d.name === "WKDeferringGestureRecognizer" || d.name.includes("WK"))
             return 700;
         return 400;
     };
@@ -108,9 +108,9 @@ function initializeGraph(graphData) {
 
     addEventListener("resize", () => {
         let [width, height] = [innerWidth, innerHeight];
-        svg.width = width;
-        svg.height = height;
-        force.size([width, height]);
+        svgContainer.setAttribute("width", width);
+        svgContainer.setAttribute("height", height);
+        force.size([width, height]).resume();
     });
 
     let svgContainer = document.querySelector("svg");
