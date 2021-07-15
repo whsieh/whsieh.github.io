@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v2.min.js?2.9.3"></script>
+<style>
+.link {
+    stroke: #AAA;
+}
+
+.node text {
+    cursor: pointer;
+}
+
+.node circle {
+    stroke: #FFF;
+    stroke-width: 3px;
+    fill: #555;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+</style>
+<body>
+<script>
+function initializeGraph(graphData) {
+    const width = innerWidth, height = innerHeight;
+
+    const svg = d3.select("body")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    const force = d3.layout.force()
+        .gravity(.1)
+        .distance(100)
+        .charge(-1000)
+        .size([width, height]);
+
+    force.nodes(graphData.nodes)
+        .links(graphData.links)
+        .start();
+
+    const link = svg.selectAll(".link")
+        .data(graphData.links)
+        .enter().append("line")
+        .attr("class", "link")
+        .style("stroke-width", d => Math.sqrt(d.weight));
+
+    const node = svg.selectAll(".node")
+        .data(graphData.nodes)
+        .enter().append("g")
+        .attr("class", "node")
+        .call(force.drag);
+
+    node.append("circle")
+        .attr("r","5");
+
+    node.append("text")
+        .attr("dx", 12)
+        .attr("dy", ".35em")
+        .text(function(d) { return d.name });
+
+    force.on("tick", function() {
+        link.attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+        node.attr("transform", d => "translate(" + d.x + "," + d.y + ")");
+    });
+}
+
+function parseText(text) {
+    return JSON.parse(text.split("\n").map(line => {
+        const i = line.indexOf("<WK>: ");
+        return i === -1 ? line : line.substring(i + 6);
+    }).join(""));
+}
+
+function filterGraphData(graphData) {
+    let originalNodeIDToNodeMap = {};
+    let originalNodeIDToNewNodeIDMap = {};
+    let connectedOriginalNodeIDs = new Set();
+
+    let filteredNodes = [];
+    let filteredLinks = [];
+
+    for (let index in graphData.nodes)
+        originalNodeIDToNodeMap[index] = graphData.nodes[index];
+
+    for (let link of graphData.links) {
+        connectedOriginalNodeIDs.add(link.source);
+        connectedOriginalNodeIDs.add(link.target);
+    }
+
+    for (let index in originalNodeIDToNodeMap) {
+        if (connectedOriginalNodeIDs.has(parseInt(index))) {
+            originalNodeIDToNewNodeIDMap[index] = filteredNodes.length;
+            filteredNodes.push(originalNodeIDToNodeMap[index]);
+        }
+    }
+
+    for (let link of graphData.links) {
+        filteredLinks.push({
+            source: originalNodeIDToNewNodeIDMap[link.source],
+            target: originalNodeIDToNewNodeIDMap[link.target],
+            weight: link.weight
+        });
+    }
+
+    return {
+        nodes: filteredNodes,
+        links: filteredLinks
+    };
+}
+
+function handleDropOrPaste(event) {
+    event.preventDefault();
+    const dataTransfer = event.dataTransfer ? event.dataTransfer : event.clipboardData;
+    document.designMode = "off";
+    let graphData = parseText(dataTransfer.getData("text/plain"));
+    graphData = filterGraphData(graphData);
+    initializeGraph(graphData);
+}
+
+document.body.addEventListener("drop", handleDropOrPaste);
+document.body.addEventListener("paste", handleDropOrPaste);
+document.designMode = "on";
+</script>
