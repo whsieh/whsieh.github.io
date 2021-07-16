@@ -69,6 +69,7 @@ function initializeGraph(graphData) {
     let translationOffsetX = 0;
     let translationOffsetY = 0;
     let isMovingBackground = false;
+    let gravity = 0.1;
 
     const width = innerWidth, height = innerHeight;
 
@@ -78,7 +79,7 @@ function initializeGraph(graphData) {
         .attr("height", height);
 
     const force = d3.layout.force()
-        .gravity(.1)
+        .gravity(gravity)
         .distance(100)
         .charge(-1000)
         .size([width, height]);
@@ -134,7 +135,7 @@ function initializeGraph(graphData) {
         .attr("font-size", getFontSize)
         .style("fill", getFillColor);
 
-    force.on("tick", function() {
+    force.on("tick", () => {
         link.attr("x1", d => translationOffsetX + d.source.x)
             .attr("y1", d => translationOffsetY + d.source.y)
             .attr("x2", d => translationOffsetX + d.target.x)
@@ -147,6 +148,27 @@ function initializeGraph(graphData) {
         svgContainer.setAttribute("width", width);
         svgContainer.setAttribute("height", height);
         force.size([width, height]).resume();
+    });
+
+    let lastScaleFactor = 1;
+
+    addEventListener("gesturestart", e => {
+        lastScaleFactor = e.scale;
+        e.preventDefault();
+    });
+
+    addEventListener("gesturechange", e => {
+        const scale = e.scale / lastScaleFactor;
+        lastScaleFactor = e.scale;
+        e.preventDefault();
+
+        gravity /= scale;
+        force.gravity(gravity).resume();
+    });
+
+    addEventListener("gestureend", e => {
+        lastScaleFactor = e.scale;
+        e.preventDefault();
     });
 
     let svgContainer = document.querySelector("svg");
@@ -229,10 +251,10 @@ function filterGraphData(graphData) {
 function handleDropOrPaste(event) {
     event.preventDefault();
     const dataTransfer = event.dataTransfer ? event.dataTransfer : event.clipboardData;
-    document.designMode = "off";
     let graphData = parseText(dataTransfer.getData("text/plain"));
     graphData = filterGraphData(graphData);
     initializeGraph(graphData);
+    document.designMode = "off";
 }
 
 document.body.addEventListener("drop", handleDropOrPaste);
