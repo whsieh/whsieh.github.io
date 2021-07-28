@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body, html {
+    font-size: 18px;
+    font-family: system-ui;
+}
+
+canvas, img {
+    width: 200px;
+    height: 200px;
+    border: solid 2px tomato;
+    margin: 1em;
+}
+</style>
+<script>
+async function runAnimationLoop()
+{
+    let slowFramerateCheck = document.getElementById("slow-framerate-check");
+    let image = document.querySelector("img");
+    let offsetX = 0, offsetY = 0;
+    let context = document.querySelector("canvas").getContext("2d");
+    while (true) {
+        context.save();
+        context.clearRect(0, 0, 400, 400);
+        context.drawImage(image, 0, -(offsetY % 800) + 400, 400, 400);
+        offsetY += 4;
+        context.restore();
+        if (slowFramerateCheck.checked)
+            await new Promise(resolve => setTimeout(resolve, 100));
+        else
+            await new Promise(requestAnimationFrame);
+    }
+}
+
+const filterStyle = "drop-shadow(0px 0px 4px gray) drop-shadow(0px 0px 4px gray)";
+
+addEventListener("load", () => {
+    let applyFilterCheck = document.getElementById("apply-filter-check");
+    let canvas = document.querySelector("canvas");
+    applyFilterCheck.addEventListener("change", () => {
+        if (applyFilterCheck.checked)
+            canvas.style.filter = filterStyle;
+        else
+            canvas.style.filter = "";
+    });
+
+    canvas.style.filter = filterStyle;
+    runAnimationLoop();
+});
+</script>
+</head>
+<body>
+<img src="images/up-arrow.png"></img>
+<canvas width="400" height="400" id="destination"></canvas>
+<div>
+    <input id="slow-framerate-check" type="checkbox"></input>
+    <label for="slow-framerate-check">Slow framerate</label>
+</div>
+<div>
+    <input checked id="apply-filter-check" type="checkbox"></input>
+    <label for="apply-filter-check">Apply filter</label>
+</div>
+</body>
+</html>
