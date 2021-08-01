@@ -2,6 +2,10 @@
 <html>
 <head>
 <style>
+body {
+    font-family: system-ui;
+}
+
 canvas {
     width: 200px;
     height: 200px;
@@ -18,6 +22,7 @@ addEventListener("load", async () => {
     let context = document.querySelector("canvas").getContext("2d");
 
     context.lineWidth = 5;
+    context.beginPath();
     context.moveTo(150, 150);
     context.lineTo(250, 250);
     context.moveTo(250, 150);
@@ -27,6 +32,10 @@ addEventListener("load", async () => {
 
     await renderingUpdate();
     context.clearRect(0, 0, 400, 400);
+    context.strokeStyle = "green";
+    context.beginPath();
+    context.arc(200, 200, 100, 0, 2 * Math.PI);
+    context.stroke();
 
     await renderingUpdate();
 });
@@ -34,6 +43,6 @@ addEventListener("load", async () => {
 </head>
 <body>
 <canvas width="400" height="400"></canvas>
-<p>The above canvas should be completely blank shortly after page load.</p>
+<p>The above canvas should show a green circle.</p>
 </body>
 </html>
