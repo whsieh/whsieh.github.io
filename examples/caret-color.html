@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+    font: system-ui;
+}
+
+.editable {
+    caret-color: red;
+    font-size: 18px;
+    border: 1px solid gray;
+    outline: none;
+    padding: 0.5em;
+    width: 150px;
+}
+</style>
+</head>
+<body>
+<h2><pre>input</pre></h2>
+<input class="editable" type="text"></input>
+<h2><pre>contenteditable div</pre></h2>
+<div contenteditable class="editable"></div>
+</body>
+</html>
