@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf8">
+<head>
+<style>
+p {
+    font-family: system-ui;
+}
+
+canvas {
+    width: 200px;
+    height: 200px;
+    margin-top: 0;
+}
+</style>
+</head>
+<body>
+<p>This test passes if you can see “苹果电脑” below.</p>
+<canvas width="400" height="400"></canvas>
+</body>
+<script>
+let canvas = document.querySelector("canvas");
+let context = canvas.getContext("2d");
+context.font = "bold 36px '.AppleSimplifiedChineseFont-Heavy'";
+context.strokeText("苹果电脑", 40, 40);
+</script>
+</html>
