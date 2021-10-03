@@ -7,28 +7,21 @@ body {
     font-size: 16px;
 }
 
-canvas {
+canvas, img {
     width: 160px;
     height: 160px;
     display: block;
 }
-
-img {
-    visibility: hidden;
-    width: 0;
-    height: 0;
-}
 </style>
 </head>
 <body>
-<h2>getImageData() / putImageData</h2>
-<img id="image" src="./images/webkit.png" class="hidden"></img>
+<h2>canvas.toBlob()</h2>
 <strong>Source</strong>
 <canvas id="source" width="320" height="320"></canvas>
 <strong>Destination</strong>
-<canvas id="destination" width="320" height="320"></canvas>
+<img id="destination" width="320" height="320" src=""></img>
 <script>
-addEventListener("load", () => {
+addEventListener("load", async () => {
     const sourceCanvas = document.getElementById("source");
     const sourceContext = sourceCanvas.getContext("2d");
     sourceContext.save();
@@ -40,10 +33,9 @@ addEventListener("load", () => {
     sourceContext.fill();
     sourceContext.restore();
 
-    const imageData = sourceContext.getImageData(0, 0, 320, 320);
-    const destinationCanvas = document.getElementById("destination");
-    const destinationContext = destinationCanvas.getContext("2d");
-    destinationContext.putImageData(imageData, 0, 0, 0, 0, 320, 320);
+    const blob = await new Promise(resolve => sourceCanvas.toBlob(resolve));
+    const destinationImage = document.getElementById("destination");
+    destinationImage.src = URL.createObjectURL(blob);
 });
 </script>
 </body>
