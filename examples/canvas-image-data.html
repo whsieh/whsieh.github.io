@@ -12,28 +12,26 @@ canvas {
     height: 160px;
     display: block;
 }
-
-img {
-    visibility: hidden;
-    width: 0;
-    height: 0;
-}
 </style>
 </head>
 <body>
-<h2>getImageData() / putImageData</h2>
-<img id="image" src="./images/webkit.png" class="hidden"></img>
+<h2>getImageData() / putImageData()</h2>
 <strong>Source</strong>
 <canvas id="source" width="320" height="320"></canvas>
 <strong>Destination</strong>
 <canvas id="destination" width="320" height="320"></canvas>
+<input type="button" value="Change color"></input>
 <script>
-addEventListener("load", () => {
+async function changeColor() {
+    const red = Math.round(Math.random() * 255);
+    const green = Math.round(Math.random() * 255);
+    const blue = Math.round(Math.random() * 255);
     const sourceCanvas = document.getElementById("source");
     const sourceContext = sourceCanvas.getContext("2d");
+    sourceContext.clearRect(0, 0, 320, 320);
     sourceContext.save();
-    sourceContext.strokeStyle = "red";
-    sourceContext.fillStyle = "rgba(200, 100, 100, 0.25)";
+    sourceContext.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
+    sourceContext.fillStyle = `rgba(${red}, ${green}, ${blue}, 0.25)`;
     sourceContext.lineWidth = 4;
     sourceContext.rect(40, 40, 240, 240);
     sourceContext.stroke();
@@ -44,6 +42,11 @@ addEventListener("load", () => {
     const destinationCanvas = document.getElementById("destination");
     const destinationContext = destinationCanvas.getContext("2d");
     destinationContext.putImageData(imageData, 0, 0, 0, 0, 320, 320);
+}
+
+addEventListener("load", async () => {
+    await changeColor();
+    document.querySelector("input").addEventListener("click", changeColor);
 });
 </script>
 </body>

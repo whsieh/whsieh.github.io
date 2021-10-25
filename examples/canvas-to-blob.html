@@ -20,13 +20,18 @@ canvas, img {
 <canvas id="source" width="320" height="320"></canvas>
 <strong>Destination</strong>
 <img id="destination" width="320" height="320" src=""></img>
+<input type="button" value="Change color"></input>
 <script>
-addEventListener("load", async () => {
+async function changeColor() {
+    const red = Math.round(Math.random() * 255);
+    const green = Math.round(Math.random() * 255);
+    const blue = Math.round(Math.random() * 255);
     const sourceCanvas = document.getElementById("source");
     const sourceContext = sourceCanvas.getContext("2d");
+    sourceContext.clearRect(0, 0, 320, 320);
     sourceContext.save();
-    sourceContext.strokeStyle = "red";
-    sourceContext.fillStyle = "rgba(200, 100, 100, 0.25)";
+    sourceContext.strokeStyle = `rgb(${red}, ${green}, ${blue})`;
+    sourceContext.fillStyle = `rgba(${red}, ${green}, ${blue}, 0.25)`;
     sourceContext.lineWidth = 4;
     sourceContext.rect(40, 40, 240, 240);
     sourceContext.stroke();
@@ -36,6 +41,11 @@ addEventListener("load", async () => {
     const blob = await new Promise(resolve => sourceCanvas.toBlob(resolve));
     const destinationImage = document.getElementById("destination");
     destinationImage.src = URL.createObjectURL(blob);
+}
+
+addEventListener("load", async () => {
+    await changeColor();
+    document.querySelector("input").addEventListener("click", changeColor);
 });
 </script>
 </body>
