@@ -8,6 +8,10 @@
     body, html {
         margin: 0;
     }
+
+    .container + .container {
+        margin: 1em auto;
+    }
 </style>
 <script>
     function setup() {
@@ -20,6 +24,13 @@
 </script>
 </head>
 <body onload=setup()>
-    <video autoplay controls src="bipbop.mp4"></video>
-    <p><a href="http://whsieh.github.io/examples/bipbop.html">Link to this page<a/></p>
+    <div class="container">
+        <video autoplay controls src="bipbop.mp4"></video>
+    </div>
+    <div class="container">
+        <audio controls src="bipbop.mp4"></audio>
+    </div>
+    <div class="container">
+        <a href="http://whsieh.github.io/examples/bipbop.html">Link to this page<a/>
+    </div>
 </body>
