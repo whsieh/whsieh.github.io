@@ -67,4 +67,13 @@ img {
     </details>
 </div>
 </body>
+<script>
+let details = document.querySelector("details");
+details.addEventListener("toggle", event => {
+    if (!details.open)
+        return;
+
+    details.querySelector("img").scrollIntoView();
+});
+</script>
 </html>
