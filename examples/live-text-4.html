@@ -31,5 +31,14 @@ THAT THEY ARE OFTEN
 NOT TRUE.
 -ABRAHAM LINCOLN
 </textarea>
+<script>
+document.querySelector("textarea").addEventListener("beforeinput", event => {
+    if (event.inputType !== "insertFromPaste" || !event.data.includes("TRUE,"))
+        return;
+
+    event.preventDefault();
+    document.execCommand("InsertText", true, event.data.replaceAll("TRUE,", "TRUE."));
+});
+</script>
 </body>
 </html>
