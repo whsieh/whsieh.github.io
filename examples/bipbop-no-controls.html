@@ -1,0 +1,33 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    video {
+        width: calc(min(100vw, 480px));
+    }
+
+    body, html {
+        margin: 0;
+    }
+
+    .container + .container {
+        margin: 1em auto;
+    }
+</style>
+<script>
+    function setup() {
+        var video = document.querySelector("video");
+        video.volume = 0.01;
+        setTimeout(function() {
+            video.pause();
+        }, 3000);
+    }
+</script>
+</head>
+<body onload=setup()>
+    <div class="container">
+        <video autoplay src="bipbop.mp4"></video>
+    </div>
+    <div class="container">
+        <a href="http://whsieh.github.io/examples/bipbop.html">Link to this page<a/>
+    </div>
+</body>
