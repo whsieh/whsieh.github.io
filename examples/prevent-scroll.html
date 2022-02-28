@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<style>
+body {
+    font-family: system-ui;
+}
+
+input {
+    margin-bottom: 2400px;
+}
+</style>
+</head>
+<body>
+<div><button id="focus-select">Focus <code>select</code></button></div>
+<div><button id="focus-select-prevent-scroll">Focus <code>select</code> (prevent scroll)</button></div>
+<div><input placeholder="Text field"></div>
+<div><button id="focus-input">Focus <code>input</code></button></div>
+<div><button id="focus-input-prevent-scroll">Focus <code>input</code> (prevent scroll)</button></div>
+<select name="select">
+<option value="1" selected>First</option>
+<option value="2">Second</option>
+<option value="3">Third</option>
+</select>
+</body>
+<script>
+document.getElementById("focus-select").addEventListener("click", event => {
+    event.preventDefault();
+    document.querySelector("select").focus({ preventScroll: false });
+});
+
+document.getElementById("focus-select-prevent-scroll").addEventListener("click", event => {
+    event.preventDefault();
+    document.querySelector("select").focus({ preventScroll: true });
+});
+
+document.getElementById("focus-input").addEventListener("click", event => {
+    event.preventDefault();
+    document.querySelector("input").focus({ preventScroll: false });
+});
+
+document.getElementById("focus-input-prevent-scroll").addEventListener("click", event => {
+    event.preventDefault();
+    document.querySelector("input").focus({ preventScroll: true });
+});
+</script>
+</html>
