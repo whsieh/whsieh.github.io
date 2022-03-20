@@ -1,0 +1,87 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body, html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+
+    .container {
+        width: 640px;
+        height: 480px;
+        position: relative;
+        background-color: black;
+    }
+
+    .container:-webkit-full-screen-document {
+        width: 100%;
+        height: 100%;
+    }
+
+    video, .controls {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+
+    .play {
+        width: 60px;
+        height: 60px;
+        background-color: white;
+        border-radius: 50%;
+        border: white 2px solid;
+        top: calc(50% - 30px);
+        left: calc(50% - 30px);
+        position: absolute;
+        cursor: pointer;
+    }
+
+    body, html {
+        margin: 0;
+    }
+</style>
+</head>
+<body onload=setup()>
+<div class="container">
+    <video src="bipbop.mp4"></video>
+    <div class="controls">
+        <img role="button" class="play" src="images/play.jpg">
+    </div>
+</div>
+<script>
+const video = document.querySelector("video");
+const container = document.querySelector(".container");
+const controls = document.querySelector(".controls");
+const playButton = document.querySelector("img.play");
+video.volume = 0.01;
+document.querySelector("img.play").addEventListener("click", () => {
+    if (!document.webkitIsFullScreen && container.webkitRequestFullscreen)
+        container.webkitRequestFullscreen({ navigationUI: "hide" })
+    video.play();
+});
+
+function togglePlayback(event) {
+    if (playButton.parentElement)
+        return;
+
+    if (video.paused)
+        video.play();
+    else
+        video.pause();
+
+    event.stopPropagation();
+    event.preventDefault();
+}
+
+video.addEventListener("play", () => {
+    playButton.remove();
+    controls.addEventListener("click", togglePlayback);
+});
+
+video.addEventListener("pause", () => {
+    controls.appendChild(playButton);
+    controls.removeEventListener("click", togglePlayback);
+});
+</script>
+</body>
