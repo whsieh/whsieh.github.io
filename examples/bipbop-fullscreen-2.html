@@ -7,6 +7,16 @@
         margin: 0;
     }
 
+    button {
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        margin: 4px;
+        padding: 0.5em;
+        border: 2px rgb(0, 122, 255) solid;
+        background-color: rgb(0, 122, 255);
+    }
+
     .container {
         width: 640px;
         height: 480px;
@@ -53,18 +63,33 @@
         <img role="button" class="play" src="images/play.jpg">
     </div>
 </div>
+<button class="fullscreen">Enter Fullscreen</button>
 <script>
-let video;
+const video = document.createElement("video");
+video.src = "bipbop.mp4";
+video.currentTime = 0;
+video.volume = 0.01;
+video.load();
+video.addEventListener("play", () => {
+    playButton.remove();
+    controls.addEventListener("click", togglePlayback);
+});
+video.addEventListener("pause", () => {
+    controls.appendChild(playButton);
+    controls.removeEventListener("click", togglePlayback);
+});
+
 const container = document.querySelector(".container");
 const controls = document.querySelector(".controls");
 const playButton = document.querySelector("img.play");
+const fullscreenButton = document.querySelector("button.fullscreen");
 
-document.querySelector("img.play").addEventListener("click", () => {
+fullscreenButton.addEventListener("click", () => {
     if (!document.webkitIsFullScreen && container.webkitRequestFullscreen)
-        container.webkitRequestFullscreen({ navigationUI: "hide" })
-
-    setTimeout(() => ensureVideo().play(), 600);
+        container.webkitRequestFullscreen({ navigationUI: "hide" });
 });
+
+document.querySelector("img.play").addEventListener("click", () => ensureVideo().play());
 
 function togglePlayback(event) {
     if (playButton.parentElement)
@@ -80,22 +105,10 @@ function togglePlayback(event) {
 }
 
 function ensureVideo() {
-    if (video)
+    if (video.isConnected)
         return video;
 
-    video = document.createElement("video");
-    video.src = "bipbop.mp4";
-    video.volume = 0.01;
     container.insertBefore(video, controls);
-    video.addEventListener("play", () => {
-        playButton.remove();
-        controls.addEventListener("click", togglePlayback);
-    });
-
-    video.addEventListener("pause", () => {
-        controls.appendChild(playButton);
-        controls.removeEventListener("click", togglePlayback);
-    });
     return video;
 }
 </script>
