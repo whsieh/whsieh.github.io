@@ -5,8 +5,9 @@ function updateOutputContainer() {
     if (!outputContainer)
         return;
 
-    outputContainer.textContent = `scale := ${visualViewport.scale.toFixed(3)}\n`
-        + `innerWidth := ${innerWidth}`;
+    outputContainer.textContent = `scale = ${visualViewport.scale.toFixed(3)}\n`
+        + `innerWidth = ${innerWidth}\n`
+        + `screen = (${screen.width}, ${screen.height})`;
 }
 
 addEventListener("load", () => {
