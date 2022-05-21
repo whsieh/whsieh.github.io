@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head>
+<style>
+body {
+    font-family: system-ui;
+}
+input {
+    font-size: 18px;
+}
+</style>
+</head>
+<body>
+<h2>Numeric input</h2>
+<input onkeyup="value=value.replace(/[^\d\.]/g,'')" type="number">
+</body>
+</html>
