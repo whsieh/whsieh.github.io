@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<style>
+body, html {
+    font-family: system-ui;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.5em;
+    border: 1px solid #DDD;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+td.image {
+    text-align: center;
+    width: 100px;
+}
+
+td.image > a > img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 1em 0;
+    overflow-x: scroll;
+    object-fit: contain;
+    border: 1px solid lightgray;
+}
+
+td.image > a > img:hover {
+    background-color: black;
+}
+
+td.text-recognition {
+    width: calc(48vw - 50px);
+    overflow-y: scroll;
+    white-space: pre-wrap;
+    font-family: monospace;
+    padding: 2em;
+}
+
+td.translation {
+    width: calc(48vw - 50px);
+    overflow-y: scroll;
+    white-space: pre-wrap;
+    font-family: monospace;
+    padding: 2em;
+}
+
+tr:nth-child(even) {
+    background-color: #EFEFEF;
+}
+
+input[type=button] {
+    font-size: 16px;
+}
+
+div + div {
+    margin-top: 1em;
+}
+
+.language-pair {
+    padding: 1em;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+tr.language-pair-row {
+    background-color: #555;
+    color: white;
+}
+</style>
+<script>
+function addRow(imageSource)
+{
+    let template = document.querySelector("template.image-translation");
+    let row = template.content.cloneNode(true).children[0];
+    row.querySelector("td.image > a > img").src = imageSource;
+    row.querySelector("td.image > a").href = imageSource;
+    document.querySelector("tbody").appendChild(row);
+    return row;
+}
+
+function addDivider(sourceLID, targetLID)
+{
+    let row = document.createElement("tr");
+    row.classList.add("language-pair-row");
+    let rowData = document.createElement("td");
+    rowData.colSpan = 3;
+    rowData.classList.add("language-pair");
+    let source = document.createElement("code");
+    source.textContent = sourceLID;
+    let target = document.createElement("code");
+    target.textContent = targetLID;
+    rowData.appendChild(document.createTextNode("Translating from "));
+    rowData.appendChild(source);
+    rowData.appendChild(document.createTextNode(" to "));
+    rowData.appendChild(target);
+    row.appendChild(rowData);
+    document.querySelector("tbody").appendChild(row);
+    return row;
+}
+
+let table;
+let rowsByIdentifier = {};
+
+function updateTable(line)
+{
+    let translationMatch = line.match(/Translating page from '(.*)' to '(.*)'$/);
+    if (translationMatch) {
+        console.log("Adding divider.")
+        addDivider(translationMatch[1], translationMatch[2]);
+        return;
+    }
+
+    let startedMatch = line.match(/\[#(\d+)\] Image translation started for (.*)$/);
+    if (startedMatch) {
+        // line = `[#1] Image translation started for https://okky.kr/assets/images/okjsp_logo.png`
+        let identifier = parseInt(startedMatch[1]);
+        rowsByIdentifier[identifier] = addRow(startedMatch[2]);
+        return;
+    }
+
+    let noTextMatch = line.match(/\[#(\d+)\] Image translation completed in (\d+\.\d+) sec\. \(no text\)$/);
+    if (noTextMatch) {
+        // line = `[#1] Image translation completed in 0.287 sec. (no text)`
+        let identifier = parseInt(noTextMatch[1]);
+        let row = rowsByIdentifier[identifier];
+        if (!row)
+            return;
+
+        row.querySelector("td.text-recognition").textContent = `No text\n\n(${noTextMatch[2]} sec.)`;
+        return;
+    }
+
+    let recognizedTextMatch = line.match(/\[#(\d+)\] Image translation recognized text in (\d+\.\d+) sec\. \(line count: (\d+)\): /);
+    if (recognizedTextMatch) {
+        // line = `[#2] Image translation recognized text in 0.502 sec. (line count: 2): "2022 EA Korea Summer Internship\n|지원기간 | 2022.05.02(월) - 05.22(일) 23:59까지"`
+        let identifier = parseInt(recognizedTextMatch[1]);
+        let row = rowsByIdentifier[identifier];
+        if (!row)
+            return;
+
+        let stringToShow = line.substring(line.indexOf(recognizedTextMatch[0]) + recognizedTextMatch[0].length);
+        stringToShow = stringToShow.replaceAll("\\n", "\n");
+        row.querySelector("td.text-recognition").textContent = `${stringToShow}\n\n(${recognizedTextMatch[2]} sec.)`;
+        return;
+    }
+
+    let translatedTextMatch = line.match(/\[#(\d+)\] Image translation completed in (\d+\.\d+) sec\. \(paragraph count: (\d+)\): /);
+    if (translatedTextMatch) {
+        // line = `[#2] Image translation completed in 0.991 sec. (paragraph count: 2): "2022 EA Korea Summer Internship\n|Application period | 2022.05.02 (Mon) - 05.22 (Sun) 23:59"`
+        let identifier = parseInt(translatedTextMatch[1]);
+        let row = rowsByIdentifier[identifier];
+        if (!row)
+            return;
+
+        let stringToShow = line.substring(line.indexOf(translatedTextMatch[0]) + translatedTextMatch[0].length);
+        stringToShow = stringToShow.replaceAll("\\n", "\n");
+        row.querySelector("td.translation").textContent = `${stringToShow}\n\n(${translatedTextMatch[2]} sec.)`;
+        parseFloat(translatedTextMatch[2]);
+        return;
+    }
+}
+
+function consume(logOutput)
+{
+    logOutput.split("\n").map(updateTable);
+}
+
+function handleDropOrPaste(event)
+{
+    event.preventDefault();
+    const dataTransfer = event.dataTransfer ? event.dataTransfer : event.clipboardData;
+    for (let line of dataTransfer.getData("text/plain").split("\n"))
+        consume(line);
+    document.querySelector("table").style.display = "";
+    document.designMode = "off";
+}
+
+addEventListener("load", () => {
+    document.body.addEventListener("drop", handleDropOrPaste);
+    document.body.addEventListener("paste", handleDropOrPaste);
+    document.designMode = "on";
+});
+</script>
+</head>
+<body>
+    <table style="display: none;">
+        <tbody>
+            <tr id="table-header-container">
+                <th>Image</th>
+                <th>Text Recognition</th>
+                <th>Translation</th>
+            </tr>
+        </tbody>
+    </table>
+    <template class="image-translation">
+        <tr>
+            <td class="image"><a target="_blank"><img></a></td>
+            <td class="text-recognition"></td>
+            <td class="translation"></td>
+        </tr>
+    </template>
+</body>
+</html>
