@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head>
+<style>
+input {
+    font-size: 18px;
+    margin: 0.5em;
+    border: 0.5px solid gray;
+    outline: none;
+    padding: 0.5em;
+}
+</style>
+</head>
+<body>
+<input placeholder="Tap me">
+<script>
+let input = document.querySelector("input");
+input.addEventListener("focus", () => {
+    input.select();
+    input.blur();
+    setTimeout(prompt);
+});
+</script>
+</body>
+</html>

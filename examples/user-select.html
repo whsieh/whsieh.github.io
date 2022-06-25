@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: system-ui;
+}
+
+.none {
+    user-select: none;
+}
+
+.auto {
+    user-select: auto;
+}
+
+.text {
+    user-select: text;
+}
+
+.all {
+    user-select: all;
+}
+
+.contain {
+    user-select: contain;
+}
+
+h1 {
+    text-align: center;
+}
+
+div[contenteditable] {
+    width: 200px;
+    height: 3em;
+    margin: 1em auto;
+    padding: 0.5em;
+    border: 1px solid tomato;
+    font-size: 1.5em;
+    overflow-y: hidden;
+    outline: none;
+}
+</style>
+</head>
+<body>
+<h1 class="none">user-select: none</h1>
+<div class="none" contenteditable></div>
+<h1 class="auto">user-select: auto</h1>
+<div class="auto" contenteditable></div>
+<h1 class="text">user-select: text</h1>
+<div class="text" contenteditable></div>
+<h1 class="all">user-select: all</h1>
+<div class="all" contenteditable></div>
+<h1 class="contain">user-select: contain</h1>
+<div class="contain" contenteditable></div>
+</body>
+</html>
