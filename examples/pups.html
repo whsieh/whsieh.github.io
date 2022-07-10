@@ -9,10 +9,15 @@
             font-family: system-ui;
         }
 
-        img {
+        a, img {
             width: calc(min(75%, 500px));
-            display: block;
+            display: inline-block;
             margin: 2em auto;
+        }
+
+        a > img {
+            width: 100%;
+            margin: 0;
         }
     </style>
 </head>
@@ -20,7 +25,7 @@
     <h1>Yuna</h1>
     <img src="images/yuna.jpg"></img>
     <h1>Chu</h1>
-    <img src="images/chu.jpeg"></img>
+    <a href="https://whsieh.github.io/examples"><img src="images/chu.jpeg"></img></a>
     <h1>Do</h1>
     <img src="images/do.png"></img>
 </body>
