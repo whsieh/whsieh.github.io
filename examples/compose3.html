@@ -6,13 +6,13 @@ body {
     font-family: system-ui;
 }
 
-h1 {
+h1, h3 {
     text-align: center;
 }
 
 div[contenteditable] {
     width: 100%;
-    min-height: 400px;
+    min-height: 600px;
     border: 1px solid red;
     padding: 1em;
     outline: none;
@@ -46,13 +46,14 @@ addEventListener("load", () => {
             document.body.offsetHeight;
 
             zeroWidthJoiner.remove();
-        }, 1);
+        }, 0);
     });
 });
 </script>
 </head>
 <body>
     <h1>Fake Gmail compose</h1>
-    <div contenteditable>
+    <h3>Try hitting enter a bunch of times</h3>
+    <div contenteditable autofocus>
 </body>
 </html>
