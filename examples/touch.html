@@ -239,8 +239,64 @@
                 <p>Not passive; preventDefault() on touchend; 400ms delay; scrollable</p>
             </div>
         </section>
+        <section id="touchmove-prevent-default-fast-section">
+            <h1>touchmove preventDefault (immediate)</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="pink-transparent toucharea touchmove-prevent-default-fast"></div>
+                <p>Not passive; preventDefault() on touchmove</p>
+                <div class="pink-transparent toucharea touchmove-prevent-default-fast" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchmove; editable text</p>
+                <div class="pink-transparent toucharea scrolls touchmove-prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchmove; scrollable</p>
+            </div>
+        </section>
+        <section id="touchmove-prevent-default-medium-section">
+            <h1>touchmove preventDefault (400 ms)</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="teal-transparent toucharea touchmove-prevent-default-medium"></div>
+                <p>Not passive; preventDefault() on touchmove; 400ms delay</p>
+                <div class="teal-transparent toucharea touchmove-prevent-default-medium" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick turqoise fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchmove; 400ms delay; editable text</p>
+                <div class="teal-transparent toucharea scrolls touchmove-prevent-default-medium"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; preventDefault() on touchmove; 400ms delay; scrollable</p>
+            </div>
+        </section>
+        <section id="no-touchmove-prevent-default-fast-section">
+            <h1>no touchmove preventDefault (immediate)</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="green-transparent toucharea no-touchmove-prevent-default-fast"></div>
+                <p>Not passive; no preventDefault() on touchmove</p>
+                <div class="green-transparent toucharea no-touchmove-prevent-default-fast" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; no preventDefault() on touchmove; editable text</p>
+                <div class="green-transparent toucharea scrolls no-touchmove-prevent-default-fast"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; no preventDefault() on touchmove; scrollable</p>
+            </div>
+        </section>
+        <section id="no-touchmove-prevent-default-medium-section">
+            <h1>no touchmove preventDefault (400 ms)</h1>
+            <a class="toggle" href="#">[-] Collapse</a>
+            <div class="touchareas">
+                <div class="red-transparent toucharea no-touchmove-prevent-default-medium"></div>
+                <p>Not passive; no preventDefault() on touchmove; 400ms delay</p>
+                <div class="red-transparent toucharea no-touchmove-prevent-default-medium" contenteditable><a href="https://www.webkit.org">Link to webkit.org</a> The quick turqoise fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; no preventDefault() on touchmove; 400ms delay; editable text</p>
+                <div class="red-transparent toucharea scrolls no-touchmove-prevent-default-medium"><a href="https://www.webkit.org">Link to webkit.org</a> The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the lazy dog.</div>
+                <p>Not passive; no preventDefault() on touchmove; 400ms delay; scrollable</p>
+            </div>
+        </section>
 
         <script>
+            function hang(ms) {
+                const startTime = Date.now();
+                while (1) {
+                    if (Date.now() - startTime > ms)
+                        break;
+                }
+            }
+
             document.querySelectorAll(".toucharea").forEach(element => {
                 element.addEventListener("touchstart", event => flash("start", "green", "bold"), { passive : true });
                 element.addEventListener("touchmove", event => flash("move", "rgb(255, 204, 0)", "100"), { passive : true });
@@ -278,11 +334,7 @@
             document.querySelectorAll(".prevent-touchmove-medium").forEach(element => {
                 element.addEventListener("touchmove", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 30)
-                            break;
-                    }
+                    hang(30);
                     event.preventDefault();
                 }, { passive: false });
             });
@@ -290,11 +342,7 @@
             document.querySelectorAll(".no-prevent-touchmove-medium").forEach(element => {
                 element.addEventListener("touchmove", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 30)
-                            break;
-                    }
+                    hang(30);
                 }, { passive: false });
             });
 
@@ -325,11 +373,7 @@
             document.querySelectorAll(".touchstart-prevent-default-medium").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 400)
-                            break;
-                    }
+                    hang(400);
                     event.preventDefault();
                 });
             });
@@ -337,11 +381,7 @@
             document.querySelectorAll(".touchstart-prevent-default-slow").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 1200)
-                            break;
-                    }
+                    hang(1200);
                     event.preventDefault();
                 });
             });
@@ -356,12 +396,36 @@
             document.querySelectorAll(".touchend-prevent-default-medium").forEach(element => {
                 element.addEventListener("touchend", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 400)
-                            break;
-                    }
+                    hang(400);
                     event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".touchmove-prevent-default-fast").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".touchmove-prevent-default-medium").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                    hang(400);
+                    event.preventDefault();
+                });
+            });
+
+            document.querySelectorAll(".no-touchmove-prevent-default-fast").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                });
+            });
+
+            document.querySelectorAll(".no-touchmove-prevent-default-medium").forEach(element => {
+                element.addEventListener("touchmove", event => {
+                    console.log(event);
+                    hang(400);
                 });
             });
 
@@ -374,22 +438,14 @@
             document.querySelectorAll(".no-prevent-default-medium").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 400)
-                            break;
-                    }
+                    hang(400);
                 });
             });
 
             document.querySelectorAll(".no-prevent-default-slow").forEach(element => {
                 element.addEventListener("touchstart", event => {
                     console.log(event);
-                    const startTime = Date.now();
-                    while (1) {
-                        if (Date.now() - startTime > 1200)
-                            break;
-                    }
+                    hang(1200);
                 });
             });
 
