@@ -409,10 +409,18 @@
             });
 
             document.querySelectorAll(".touchmove-prevent-default-medium").forEach(element => {
+                let isFirstTouchMove = true;
+                element.addEventListener("touchstart", event => {
+                    isFirstTouchMove = true;
+                }, { passive: true });
+
                 element.addEventListener("touchmove", event => {
                     console.log(event);
-                    hang(400);
-                    event.preventDefault();
+                    if (isFirstTouchMove) {
+                        hang(400);
+                        event.preventDefault();
+                        isFirstTouchMove = false;
+                    }
                 });
             });
 
@@ -423,9 +431,17 @@
             });
 
             document.querySelectorAll(".no-touchmove-prevent-default-medium").forEach(element => {
+                let isFirstTouchMove = true;
+                element.addEventListener("touchstart", event => {
+                    isFirstTouchMove = true;
+                }, { passive: true });
+
                 element.addEventListener("touchmove", event => {
                     console.log(event);
-                    hang(400);
+                    if (isFirstTouchMove) {
+                        hang(400);
+                        isFirstTouchMove = false;
+                    }
                 });
             });
 
