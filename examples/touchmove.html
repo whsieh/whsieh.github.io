@@ -60,18 +60,23 @@
             font-family: system-ui;
         }
 
+        body, html {
+            margin: 0;
+        }
+
         #target {
             border: solid 4px rgb(255, 59, 48);
             border-radius: 4px;
             background-color: rgba(255, 59, 48, 0.25);
             color: red;
-            width: 250px;
-            height: 250px;
+            width: 300px;
+            height: 400px;
             overflow: scroll;
             line-height: 1.5em;
             padding-right: 1em;
             text-align: justify;
             margin-bottom: 1em;
+            box-sizing: border-box;
         }
 
         .flash {
@@ -92,7 +97,7 @@
         }
 
         div {
-            margin: 1em;
+            margin: 10px;
         }
     </style>
 </head>
