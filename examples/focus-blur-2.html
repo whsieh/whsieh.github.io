@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+input {
+    font-size: 18px;
+    margin: 0.5em;
+    border: 0.5px solid gray;
+    outline: none;
+    padding: 0.5em;
+}
+</style>
+</head>
+<body>
+<input value="Tap me">
+<script>
+let input = document.querySelector("input");
+input.addEventListener("focus", () => {
+    input.select();
+    setTimeout(() => {
+        open("focus-blur-2.html");
+    }, 0);
+});
+</script>
+</body>
+</html>
