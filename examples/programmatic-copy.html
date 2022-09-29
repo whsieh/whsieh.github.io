@@ -1,0 +1,104 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<head>
+    <style>
+    html {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+        margin: 2em;
+        background-color: #F8F8F8;
+        overflow: hidden;
+        font-family: -apple-system;
+        font-size: 1em;
+    }
+
+    button#copy {
+        border: 2px rgb(90, 200, 250) solid;
+        background-color: rgb(90, 200, 250);
+        margin: 0 auto;
+        display: block;
+    }
+
+    button {
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        padding: 0.5em;
+    }
+
+    .flash-begin {
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+
+    .flash {
+        position: absolute;
+        font-size: 20px;
+        transition: 2s cubic-bezier(0.5, 0, 0, 0);
+    }
+
+    div.control {
+        margin: 1em;
+    }
+
+    .hidden {
+        opacity: 0;
+    }
+
+    #editor {
+        padding: 2em;
+        width: 80%;
+        min-width: 320px;
+        height: calc(40% - 2em);
+        margin: 2em auto;
+        box-sizing: border-box;
+        background-color: white;
+        border-right: 1px solid #DFDFDF;
+        border-bottom: 1px solid #DFDFDF;
+        overflow: scroll;
+        outline: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div contenteditable id="editor">First, click the copy button below; then focus this editable area.</div>
+    <div class="control"><button id="copy">Click here to copy</button></div>
+    <div><input class="hidden" type="text" readonly value="hidden text" /></div>
+</body>
+<script>
+    const copy = document.getElementById("copy");
+    const hiddenInput = document.querySelector(".hidden");
+
+    copy.addEventListener("click", event => {
+        hiddenInput.select();
+        document.execCommand("Copy", true);
+    });
+
+    hiddenInput.addEventListener("copy", event => {
+        event.clipboardData.setData("text/wenson", "Hello world");
+        event.preventDefault();
+        flashMessage("Wrote clipboard data", "rgb(90, 200, 250)");
+    });
+
+    function flashMessage(message, color) {
+        const div = document.createElement("div");
+        const code = document.createElement("code");
+        code.textContent = message;
+        div.appendChild(code);
+        div.style.color = color;
+        const bounds = document.body.getBoundingClientRect();
+        div.style.top = `${(bounds.bottom - bounds.top) / 2}px`;
+        div.style.left = `${(bounds.right - bounds.left) / 2}px`;
+        div.classList.add("flash");
+        div.addEventListener("transitionend", () => div.remove());
+        setTimeout(() => div.classList.add("flash-begin"), 100);
+        document.body.appendChild(div);
+    }
+</script>
+</html>
