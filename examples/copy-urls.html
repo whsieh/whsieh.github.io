@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<style>
+body, html {
+    font-family: system-ui;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+    font-size: 16px;
+}
+
+section {
+    width: 100%;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+section + section {
+    border-top: solid #EFEFEF 1px;
+}
+
+button {
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+button#clipboard-write {
+    border: 2px rgb(0, 122, 255) solid;
+    background-color: rgb(0, 122, 255);
+}
+
+button#datatransfer-setdata {
+    border: 2px rgb(52, 199, 89) solid;
+    background-color: rgb(52, 199, 89);
+}
+</style>
+<script>
+let linkURL = "https://rally.mozilla.org/?utm_medium=cpc&utm_source=twitter&utm_campaign=2022-09-28&utm_content=mozilla-affinity-any-gender-us&twclid=2-1gr7tm3kkw22yebkwobjgmpv7";
+
+addEventListener("load", () => {
+    document.getElementById("plain").href = linkURL;
+    let clipboardWriteButton = document.getElementById("clipboard-write");
+    clipboardWriteButton.addEventListener("click", () => {
+        if (!navigator.clipboard && location.href.startsWith("http://")) {
+            alert("Async clipboard API is unsupported; navigating to HTTPS…");
+            location.href = "https://whsieh.github.io/examples/copy-urls";
+            return;
+        }
+        navigator.clipboard.write([
+            new ClipboardItem({ "text/uri-list" : linkURL })
+        ]);
+    });
+
+    let datatransferSetDataButton = document.getElementById("datatransfer-setdata");
+    datatransferSetDataButton.addEventListener("click", clickEvent => {
+        clickEvent.preventDefault();
+
+        let hiddenSpan = document.createElement("span");
+        hiddenSpan.style.opacity = 0;
+        hiddenSpan.innerHTML = "&nbsp;";
+        document.body.appendChild(hiddenSpan);
+
+        hiddenSpan.addEventListener("copy", event => {
+            event.preventDefault();
+            event.clipboardData.setData("text/uri-list", linkURL);
+        }, { once: true });
+
+        getSelection().selectAllChildren(hiddenSpan);
+        document.execCommand("Copy", true);
+        hiddenSpan.remove();
+    });
+});
+
+function openURL() {
+    open(linkURL, "blank");
+}
+
+function navigateToURL() {
+    location.href = linkURL;
+}
+</script>
+</head>
+<body>
+<section>
+<h3>Plain link</h3>
+<a id="plain" target="_blank">rally.mozilla.org</a>
+</section>
+<section>
+<h3>window.open</h3>
+<a id="window-open" href="javascript:openURL()">rally.mozilla.org</a>
+</section>
+<section>
+<h3>location.href</h3>
+<a id="location-href" href="javascript:navigateToURL()">rally.mozilla.org</a>
+</section>
+<section>
+<h3>Clipboard.write</h3>
+<button id="clipboard-write">Copy rally.mozilla.org</button>
+</section>
+<section>
+<h3>DataTransfer.setData</h3>
+<button id="datatransfer-setdata">Copy rally.mozilla.org</button>
+</section>
+</body>
+</html>
