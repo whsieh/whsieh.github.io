@@ -53,9 +53,10 @@ addEventListener("load", () => {
             location.href = "https://whsieh.github.io/examples/copy-urls";
             return;
         }
-        navigator.clipboard.write([
-            new ClipboardItem({ "text/uri-list" : linkURL })
-        ]);
+        navigator.clipboard.write([new ClipboardItem({
+            "text/uri-list" : linkURL,
+            "text/plain" : linkURL
+        })]);
     });
 
     let datatransferSetDataButton = document.getElementById("datatransfer-setdata");
@@ -69,6 +70,7 @@ addEventListener("load", () => {
 
         hiddenSpan.addEventListener("copy", event => {
             event.preventDefault();
+            event.clipboardData.setData("text/plain", linkURL);
             event.clipboardData.setData("text/uri-list", linkURL);
         }, { once: true });
 
