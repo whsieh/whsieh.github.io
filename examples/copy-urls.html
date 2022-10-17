@@ -42,10 +42,13 @@ button#datatransfer-setdata {
 }
 </style>
 <script>
-let linkURL = "https://rally.mozilla.org/?utm_medium=cpc&utm_source=twitter&utm_campaign=2022-09-28&utm_content=mozilla-affinity-any-gender-us&twclid=2-1gr7tm3kkw22yebkwobjgmpv7";
+let linkURLWithoutScheme = "rally.mozilla.org/?utm_medium=cpc&utm_source=twitter&utm_campaign=2022-09-28&utm_content=mozilla-affinity-any-gender-us&twclid=2-1gr7tm3kkw22yebkwobjgmpv7";
+let linkURL = `https://${linkURLWithoutScheme}`;
 
 addEventListener("load", () => {
-    document.getElementById("plain").href = linkURL;
+    let plainLink = document.getElementById("plain");
+    plainLink.href = linkURL;
+    plainLink.title = linkURL;
     let clipboardWriteButton = document.getElementById("clipboard-write");
     clipboardWriteButton.addEventListener("click", () => {
         if (!navigator.clipboard && location.href.startsWith("http://")) {
@@ -78,6 +81,11 @@ addEventListener("load", () => {
         document.execCommand("Copy", true);
         hiddenSpan.remove();
     });
+
+    document.getElementById("window-open").title = linkURL;
+    document.getElementById("location-href").title = linkURL;
+    clipboardWriteButton.title = linkURL;
+    datatransferSetDataButton.title = linkURL;
 });
 
 function openURL() {
