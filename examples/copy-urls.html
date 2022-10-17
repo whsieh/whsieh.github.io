@@ -40,10 +40,35 @@ button#datatransfer-setdata {
     border: 2px rgb(52, 199, 89) solid;
     background-color: rgb(52, 199, 89);
 }
+
+.flash-begin {
+    transform: translateY(-25px);
+    opacity: 0;
+}
+
+.flash {
+    position: absolute;
+    font-size: 20px;
+    transition: 2s cubic-bezier(0.5, 0, 0, 0);
+}
 </style>
 <script>
 let linkURLWithoutScheme = "rally.mozilla.org/?utm_medium=cpc&utm_source=twitter&utm_campaign=2022-09-28&utm_content=mozilla-affinity-any-gender-us&twclid=2-1gr7tm3kkw22yebkwobjgmpv7";
 let linkURL = `https://${linkURLWithoutScheme}`;
+
+function flashMessage(message, color) {
+    const div = document.createElement("div");
+    const code = document.createElement("code");
+    code.textContent = message;
+    div.appendChild(code);
+    div.style.color = color;
+    div.style.bottom = "1em";
+    div.style.right = "1em";
+    div.classList.add("flash");
+    div.addEventListener("transitionend", () => div.remove());
+    setTimeout(() => div.classList.add("flash-begin"), 100);
+    document.body.appendChild(div);
+}
 
 addEventListener("load", () => {
     let plainLink = document.getElementById("plain");
@@ -60,6 +85,8 @@ addEventListener("load", () => {
             "text/uri-list" : linkURL,
             "text/plain" : linkURL
         })]);
+
+        flashMessage("Copied URL", "rgb(0, 122, 255)");
     });
 
     let datatransferSetDataButton = document.getElementById("datatransfer-setdata");
@@ -80,6 +107,8 @@ addEventListener("load", () => {
         getSelection().selectAllChildren(hiddenSpan);
         document.execCommand("Copy", true);
         hiddenSpan.remove();
+
+        flashMessage("Copied URL", "rgb(52, 199, 89)");
     });
 
     document.getElementById("window-open").title = linkURL;
