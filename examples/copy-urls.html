@@ -121,6 +121,14 @@ addEventListener("load", () => {
         flashMessage("Copied URL", "rgb(52, 199, 89)");
     });
 
+    let textarea = document.getElementById("textarea");
+    textarea.addEventListener("paste", event => {
+        if (!event.clipboardData.types.includes("text/plain"))
+            return;
+        document.execCommand("InsertText", true, event.clipboardData.getData("text/plain"));
+        event.preventDefault();
+    });
+
     document.getElementById("window-open").title = linkURL;
     document.getElementById("location-href").title = linkURL;
     clipboardWriteButton.title = linkURL;
