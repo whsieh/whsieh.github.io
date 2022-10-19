@@ -51,6 +51,16 @@ button#datatransfer-setdata {
     font-size: 20px;
     transition: 2s cubic-bezier(0.5, 0, 0, 0);
 }
+
+textarea {
+    border: 1px solid gray;
+    border-radius: 4px;
+    outline: none;
+    font-size: 16px;
+    width: 280px;
+    resize: none;
+    padding: 8px;
+}
 </style>
 <script>
 let linkURLWithoutScheme = "rally.mozilla.org/?utm_medium=cpc&utm_source=twitter&utm_campaign=2022-09-28&utm_content=mozilla-affinity-any-gender-us&twclid=2-1gr7tm3kkw22yebkwobjgmpv7";
@@ -146,6 +156,10 @@ function navigateToURL() {
 <section>
 <h3>Clipboard.write</h3>
 <button id="clipboard-write">Copy rally.mozilla.org</button>
+</section>
+<section>
+<h3>Text Area</h3>
+<textarea id="textarea" rows="12" resize="no"></textarea>
 </section>
 </body>
 </html>
