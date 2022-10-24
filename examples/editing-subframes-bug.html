@@ -1,0 +1,26 @@
+<!DOCTYPE html> <!-- webkit-test-runner [ AsyncOverflowScrollingEnabled=true AsyncFrameScrollingEnabled=true ] -->
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<style>
+body, html {
+    margin: 0;
+}
+
+iframe {
+    height: 160px;
+}
+</style>
+</head>
+<body>
+<iframe src="./editing-subframes-bug-child.html"></iframe>
+<div><button>Click me</button></div>
+<script>
+document.querySelector("button").addEventListener("click", () => {
+    document.body.style.overflowY = "hidden";
+    document.querySelector("iframe").contentWindow.handleClick();
+    document.body.offsetHeight;
+});
+</script>
+</body>
+</html>
