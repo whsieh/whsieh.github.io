@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Copy Me</h1>
+</body>
+<script>
+let heading = document.querySelector("h1");
+getSelection().selectAllChildren(heading);
+
+heading.addEventListener("copy", event => {
+    let dataTransfer = event.clipboardData;
+    dataTransfer.setData("text/html", `<p>Bug</p><br><a href="rdar://101878956">rdar://101878956</a>`);
+    dataTransfer.setData("text/plain", "Bug\nrdar://101878956");
+    event.preventDefault();
+});
+</script>
+</html>
