@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: system-ui;
+}
+img {
+    width: 200px;
+    height: 200px;
+    display: block;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Test Image</h1>
+    <img id="target" src="images/webkit.png">
+    <h2>webkit.png</h2>
+</div>
+<button id="legacy-selection-button">Set legacy selection</button>
+<button id="selection-button">Set selection</button>
+<script>
+let target = document.getElementById("target");
+
+document.getElementById("legacy-selection-button").addEventListener("click", () => {
+    getSelection().setBaseAndExtent(target, 0, target, 1);
+});
+
+document.getElementById("selection-button").addEventListener("click", () => {
+    let index = [...target.parentNode.childNodes].indexOf(target);
+    getSelection().setBaseAndExtent(target.parentNode, index, target.parentNode, index + 1);
+});
+</script>
+</body>
+</html>
