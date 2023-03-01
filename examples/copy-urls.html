@@ -85,8 +85,8 @@ addEventListener("load", () => {
     plainLink.href = linkURL;
     plainLink.title = linkURL;
     let plainLinkWithNewTab =  document.getElementById("plain-new-tab");
-    plainLink.href = linkURL;
-    plainLink.title = linkURL;
+    plainLinkWithNewTab.href = linkURL;
+    plainLinkWithNewTab.title = linkURL;
     let clipboardWriteButton = document.getElementById("clipboard-write");
     clipboardWriteButton.addEventListener("click", () => {
         if (!navigator.clipboard && location.href.startsWith("http://")) {
