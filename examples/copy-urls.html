@@ -84,6 +84,9 @@ addEventListener("load", () => {
     let plainLink = document.getElementById("plain");
     plainLink.href = linkURL;
     plainLink.title = linkURL;
+    let plainLinkWithNewTab =  document.getElementById("plain-new-tab");
+    plainLink.href = linkURL;
+    plainLink.title = linkURL;
     let clipboardWriteButton = document.getElementById("clipboard-write");
     clipboardWriteButton.addEventListener("click", () => {
         if (!navigator.clipboard && location.href.startsWith("http://")) {
@@ -147,7 +150,9 @@ function navigateToURL() {
 <body>
 <section>
 <h3>Plain link</h3>
-<a id="plain" target="_blank">rally.mozilla.org</a>
+<a id="plain">rally.mozilla.org</a>
+<h3>Plain link (new tab)</h3>
+<a id="plain-new-tab" target="_blank">rally.mozilla.org</a>
 </section>
 <section>
 <h3>window.open</h3>
