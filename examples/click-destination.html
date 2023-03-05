@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body, html {
+    font-size: 16px;
+    font-family: system-ui;
+}
+</style>
+<script>
+addEventListener("load", () => {
+    let buyButton = document.querySelector("button#buy");
+    buyButton.addEventListener("click", async () => {
+        let result = await fetch("http://localhost:8000//.well-known/private-click-measurement/trigger-attribution/12/63");
+        console.log(result);
+    });
+});
+</script>
+</head>
+<body>
+    <button id="buy">Buy it now!</button>
+</body>
+</html>
