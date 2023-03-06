@@ -11,7 +11,7 @@ body, html {
 addEventListener("load", () => {
     let buyButton = document.querySelector("button#buy");
     buyButton.addEventListener("click", async () => {
-        let result = await fetch("https://localhost:8000/pixel?trigger=12");
+        let result = await fetch(`https://localhost:8000/pixel?trigger=12&time=${(new Date).getTime()}`);
         document.body.appendChild(document.createTextNode(`Response: ${result.status}`));
     });
 });
