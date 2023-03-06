@@ -11,8 +11,8 @@ body, html {
 addEventListener("load", () => {
     let buyButton = document.querySelector("button#buy");
     buyButton.addEventListener("click", async () => {
-        let result = await fetch("http://localhost:8000//.well-known/private-click-measurement/trigger-attribution/12/63");
-        console.log(result);
+        let result = await fetch("https://localhost:8000/pixel?trigger=12");
+        document.body.appendChild(document.createTextNode(`Response: ${result.status}`));
     });
 });
 </script>
