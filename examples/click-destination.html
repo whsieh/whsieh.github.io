@@ -6,12 +6,16 @@ body, html {
     font-size: 16px;
     font-family: system-ui;
 }
+
+button {
+    font-size: 20px;
+}
 </style>
 <script>
 addEventListener("load", () => {
     let buyButton = document.querySelector("button#buy");
     buyButton.addEventListener("click", async () => {
-        let result = await fetch(`https://localhost:8000/pixel?trigger=12&time=${(new Date).getTime()}`);
+        let result = await fetch(`https://pcm-test-server.herokuapp.com/pixel?trigger=12&time=${(new Date).getTime()}`);
         document.body.appendChild(document.createTextNode(`Response: ${result.status}`));
     });
 });
