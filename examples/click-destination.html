@@ -27,10 +27,6 @@ div + div {
     <input id="trigger" type="number" value="12" max="15" min="0"></input>
 </div>
 <div>
-    <label for="priority">Priority: </label>
-    <input id="priority" type="number" value="4" max="63" min="0"></input>
-</div>
-<div>
     <button id="buy">Buy it now!</button>
 </div>
 <div>
@@ -38,14 +34,8 @@ div + div {
 </div>
 <script>
 let triggerInput = document.querySelector("#trigger");
-let priorityInput = document.querySelector("#priority");
 let buyButton = document.querySelector("#buy");
 let responseStatus = document.querySelector("#response-status");
-
-function priorityValue() {
-    let result = priorityInput.valueAsNumber;
-    return isNaN(result) ? 0 : result;
-}
 
 function triggerValue() {
     let result = triggerInput.valueAsNumber;
@@ -53,7 +43,7 @@ function triggerValue() {
 }
 
 buyButton.addEventListener("click", async () => {
-    const query = `trigger=${triggerValue()}&time=${(new Date).getTime()}&priority=${priorityValue()}`;
+    const query = `trigger=${triggerValue()}&time=${(new Date).getTime()}`;
     let result = await fetch("https://pcm-test-server.herokuapp.com/pixel?" + query);
     responseStatus.textContent = result.status;
 });
