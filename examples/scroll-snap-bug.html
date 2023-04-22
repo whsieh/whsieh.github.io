@@ -18,25 +18,43 @@
         </script>
         <style>
         body {
-            margin:0;
+            margin: 0;
+            overflow-x: hidden;
+            overflow-y: scroll;
         }
 
         :root {
             scroll-snap-type: y mandatory;
         }
 
+        body, html {
+            width: 100%;
+            height: 100%;
+        }
+
         .panel {
             height: 100vh;
-            background: purple;
             width: 50%;
             scroll-snap-align: start;
+            font-family: system-ui;
+            font-size: 50px;
+            line-height: 100vh;
+            color: white;
+            text-align: center;
         }
         </style>
     </head>
     <body onload="runTest()">
-        <div class="panel" style="background: red"></div>
-        <div class="panel" style="background: green"></div>
-        <div class="panel" style="background: blue"></div>
+        <div style="background-color: rgb(0, 122, 255);" class="panel">0</div>
+        <div style="background-color: rgb(52, 199, 89);" class="panel">1</div>
+        <div style="background-color: rgb(88, 86, 214);" class="panel">2</div>
+        <div style="background-color: rgb(255, 149, 0);" class="panel">3</div>
+        <div style="background-color: rgb(175, 82, 222);" class="panel">4</div>
+        <div style="background-color: rgb(255, 59, 48);" class="panel">5</div>
+        <div style="background-color: rgb(0, 122, 255);" class="panel">6</div>
+        <div style="background-color: rgb(52, 199, 89);" class="panel">7</div>
+        <div style="background-color: rgb(88, 86, 214);" class="panel">8</div>
+        <div style="background-color: rgb(255, 149, 0);" class="panel">9</div>
     </body>
 </html>
 
