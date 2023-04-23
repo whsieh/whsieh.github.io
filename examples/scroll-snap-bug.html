@@ -1,6 +1,9 @@
+<!DOCTYPE HTML>
 <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <head>
         <script>
+        var playing = true;
         var framecount = 0;
         function oscillateBarWidth() {
             var panels = document.getElementsByClassName("panel");
@@ -9,11 +12,22 @@
                 var framewidth = 10 * Math.sin(framecount * 2 * Math.PI / 100) + 50;
                 panels[i].style.width = framewidth + "%";
             }
-            requestAnimationFrame(oscillateBarWidth);
+            if (playing)
+                requestAnimationFrame(oscillateBarWidth);
         }
 
         function runTest() {
             oscillateBarWidth();
+
+            let toggle = document.getElementById("toggle");
+            let toggleImage = toggle.querySelector("img");
+            toggle.addEventListener("click", () => {
+                toggleImage.src = playing ? "images/play.jpg" : "images/pause.jpg";
+                playing = !playing;
+
+                if (playing)
+                    oscillateBarWidth();
+            });
         }
         </script>
         <style>
@@ -42,6 +56,19 @@
             color: white;
             text-align: center;
         }
+
+        #toggle {
+            position: fixed;
+            top: 1em;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+        }
+
+        #toggle > img {
+            width: 100%;
+            height: 100%;
+        }
         </style>
     </head>
     <body onload="runTest()">
@@ -55,6 +82,9 @@
         <div style="background-color: rgb(52, 199, 89);" class="panel">7</div>
         <div style="background-color: rgb(88, 86, 214);" class="panel">8</div>
         <div style="background-color: rgb(255, 149, 0);" class="panel">9</div>
+        <div id="toggle" class="paused">
+            <img src="images/pause.jpg">
+        </div>
     </body>
 </html>
 
