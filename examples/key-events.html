@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<style>
+body, html {
+    font-family: system-ui;
+    font-size: 16px;
+}
+
+table {
+    border-collapse: collapse;
+    min-width: 250px;
+    max-width: 400px;
+}
+
+th, td {
+    padding: 0.5em;
+    border: 1px solid #DDD;
+}
+
+tr:nth-child(even) {
+    background-color: #EFEFEF;
+}
+
+.button-container {
+    margin: 1em;
+}
+</style>
+<script>
+let startTime;
+
+function makeRow(event) {
+    const row = document.createElement("tr");
+    const timeData = document.createElement("td");
+    const typeData = document.createElement("td");
+    const keyData = document.createElement("td");
+    const currentTime = (new Date).getTime();
+    if (!startTime)
+        startTime = currentTime;
+    timeData.textContent = currentTime - startTime;
+    typeData.textContent = event.type;
+    keyData.textContent = event.key;
+    row.appendChild(timeData);
+    row.appendChild(typeData);
+    row.appendChild(keyData);
+    return row;
+}
+
+function handleKeyEventByAppendingRow(event) {
+    const tableBody = document.querySelector("tbody");
+    tableBody.appendChild(makeRow(event));
+}
+
+addEventListener("load", () => {
+    document.body.addEventListener("keydown", handleKeyEventByAppendingRow);
+    document.body.addEventListener("keypress", handleKeyEventByAppendingRow);
+    document.body.addEventListener("keyup", handleKeyEventByAppendingRow);
+
+    document.querySelector(".reset-button").addEventListener("click", () => {
+        const tableBody = document.querySelector("tbody");
+        for (let row of [...tableBody.querySelectorAll("tr")]) {
+            if (!row.classList.contains("header"))
+                row.remove();
+        }
+    });
+});
+</script>
+</head>
+<body>
+<div class="button-container">
+    <button class="reset-button">Clear Table</button>
+</div>
+<table>
+    <tbody>
+        <tr class="header">
+            <th>Time (ms)</th>
+            <th>Type</th>
+            <th>Key</th>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
