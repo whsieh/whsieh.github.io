@@ -10,6 +10,7 @@ body, html {
     font-family: system-ui;
     font-size: 16px;
     overflow: hidden;
+    color: tomato;
 }
 
 table {
@@ -35,18 +36,25 @@ div.listener {
     box-sizing: border-box;
     width: calc(100% - 300px);
     height: 100%;
-    display: inline-block;
     -webkit-user-select: none;
     user-select: none;
     cursor: crosshair;
+    line-height: 100vh;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 32px;
 }
 
 div.events {
     box-sizing: border-box;
     width: 292px;
     height: 100%;
-    display: inline-block;
     overflow-y: scroll;
+    position: absolute;
+    left: calc(100% - 300px);
+    top: 0;
 }
 </style>
 <script>
@@ -96,7 +104,7 @@ addEventListener("load", () => {
 </script>
 </head>
 <body>
-    <div class="listener"></div>
+    <div class="listener">Hover or drag over me</div>
     <div class="events">
         <table>
             <tbody></tbody>
