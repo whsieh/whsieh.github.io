@@ -28,10 +28,6 @@ th, td {
     border: 1px solid #DDD;
 }
 
-td {
-/*    width: 100px;*/
-}
-
 tr:nth-child(even) {
     background-color: #EFEFEF;
 }
@@ -110,15 +106,18 @@ addEventListener("load", () => {
         }
 
         const tableRow = document.createElement("tr");
-        addData(tableRow, event.type);
+        addData(tableRow, event.type.substr(5));
         addData(tableRow, `${event.clientX}, ${event.clientY}`);
         addData(tableRow, `${event.movementX}, ${event.movementY}`);
         addData(tableRow, event.buttons);
         addData(tableRow, modifierString(event));
         tableBody.appendChild(tableRow);
 
+        if (event.type !== "mousemove")
+            tableRow.style.fontWeight = "bold";
+
         tableRow.style.color = colorForEvent(event);
-        if (tableBody.childElementCount > 200)
+        if (tableBody.scrollHeight > 2 * innerHeight)
             tableBody.firstElementChild.nextElementSibling.remove();
 
         eventsContainer.scrollBy(0, 1000);
@@ -135,7 +134,7 @@ addEventListener("load", () => {
     <div class="listener">Hover or drag over me</div>
     <div class="events">
         <table>
-            <tbody><tr><th>Type</th><th>Position</th><th>Movement</th><th>Buttons</th><th>Modifiers</th></tr></tbody>
+            <tbody><tr><th>Type</th><th>Pos</th><th>Mvmt</th><th>Button</th><th>Mod</th></tr></tbody>
         </table>
     </div>
 </body>
