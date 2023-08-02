@@ -3,24 +3,33 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+:root {
+    --table-width: 500px;
+}
+
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: system-ui;
-    font-size: 16px;
+    font-size: 14px;
     overflow: hidden;
     color: tomato;
 }
 
 table {
     border-collapse: collapse;
-    width: 292px;
+    width: var(--table-width);
+    text-align: center;
 }
 
 th, td {
     padding: 0.5em;
     border: 1px solid #DDD;
+}
+
+td {
+/*    width: 100px;*/
 }
 
 tr:nth-child(even) {
@@ -34,7 +43,7 @@ body {
 div.listener {
     border: 4px solid tomato;
     box-sizing: border-box;
-    width: calc(100% - 300px);
+    width: calc(100% - var(--table-width));
     height: 100%;
     -webkit-user-select: none;
     user-select: none;
@@ -49,15 +58,31 @@ div.listener {
 
 div.events {
     box-sizing: border-box;
-    width: 292px;
+    width: var(--table-width);
     height: 100%;
     overflow-y: scroll;
     position: absolute;
-    left: calc(100% - 300px);
+    width: var(--table-width);
+    left: calc(100% - var(--table-width));
     top: 0;
 }
 </style>
 <script>
+function modifierString(event) {
+    let result = [];
+    if (event.ctrlKey)
+        result.push("ctrl");
+    if (event.shiftKey)
+        result.push("shift");
+    if (event.altKey)
+        result.push("alt");
+    if (event.metaKey)
+        result.push("meta");
+    if (!result.length)
+        return "-"
+    return result.join(", ");
+}
+
 addEventListener("load", () => {
     let isMouseDown = false;
     function colorForEvent(event) {
@@ -78,20 +103,23 @@ addEventListener("load", () => {
         else if (event.type === "mouseup")
             isMouseDown = false;
 
+        function addData(tableRow, textContent) {
+            const tableData = document.createElement("td");
+            tableData.textContent = textContent;
+            tableRow.appendChild(tableData);
+        }
+
         const tableRow = document.createElement("tr");
-        const typeData = document.createElement("td");
-        typeData.textContent = event.type;
-
-        const locationData = document.createElement("td");
-        locationData.textContent = `(${event.clientX}, ${event.clientY})`;
-
-        tableRow.appendChild(typeData);
-        tableRow.appendChild(locationData);
+        addData(tableRow, event.type);
+        addData(tableRow, `${event.clientX}, ${event.clientY}`);
+        addData(tableRow, `${event.movementX}, ${event.movementY}`);
+        addData(tableRow, event.buttons);
+        addData(tableRow, modifierString(event));
         tableBody.appendChild(tableRow);
 
         tableRow.style.color = colorForEvent(event);
         if (tableBody.childElementCount > 200)
-            tableBody.firstElementChild.remove();
+            tableBody.firstElementChild.nextElementSibling.remove();
 
         eventsContainer.scrollBy(0, 1000);
     };
@@ -107,7 +135,7 @@ addEventListener("load", () => {
     <div class="listener">Hover or drag over me</div>
     <div class="events">
         <table>
-            <tbody></tbody>
+            <tbody><tr><th>Type</th><th>Position</th><th>Movement</th><th>Buttons</th><th>Modifiers</th></tr></tbody>
         </table>
     </div>
 </body>
