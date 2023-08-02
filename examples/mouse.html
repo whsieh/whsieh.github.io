@@ -8,6 +8,7 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: system-ui;
+    font-size: 16px;
     overflow: hidden;
 }
 
@@ -37,6 +38,7 @@ div.listener {
     display: inline-block;
     -webkit-user-select: none;
     user-select: none;
+    cursor: crosshair;
 }
 
 div.events {
@@ -49,17 +51,25 @@ div.events {
 </style>
 <script>
 addEventListener("load", () => {
+    let isMouseDown = false;
     function colorForEvent(event) {
         if (event.type === "mousedown")
             return "red";
         if (event.type === "mouseup")
             return "green";
+        if (isMouseDown)
+            return "black";
         return "darkgray";
     }
 
     const eventsContainer = document.querySelector("div.events");
     const tableBody = document.querySelector("tbody");
-    let appendRow = event => {
+    let handleMouseEvent = event => {
+        if (event.type === "mousedown")
+            isMouseDown = true;
+        else if (event.type === "mouseup")
+            isMouseDown = false;
+
         const tableRow = document.createElement("tr");
         const typeData = document.createElement("td");
         typeData.textContent = event.type;
@@ -79,9 +89,9 @@ addEventListener("load", () => {
     };
 
     let listenerArea = document.querySelector("div.listener");
-    listenerArea.addEventListener("mousedown", appendRow);
-    listenerArea.addEventListener("mousemove", appendRow);
-    listenerArea.addEventListener("mouseup", appendRow);
+    listenerArea.addEventListener("mousedown", handleMouseEvent);
+    listenerArea.addEventListener("mousemove", handleMouseEvent);
+    listenerArea.addEventListener("mouseup", handleMouseEvent);
 });
 </script>
 </head>
