@@ -86,6 +86,8 @@ addEventListener("load", () => {
             return "red";
         if (event.type === "mouseup")
             return "green";
+        if (event.type === "click" || event.type === "dblclick")
+            return "purple";
         if (isMouseDown)
             return "black";
         return "darkgray";
@@ -93,20 +95,20 @@ addEventListener("load", () => {
 
     const eventsContainer = document.querySelector("div.events");
     const tableBody = document.querySelector("tbody");
+    function addData(tableRow, textContent) {
+        const tableData = document.createElement("td");
+        tableData.textContent = textContent;
+        tableRow.appendChild(tableData);
+    }
+
     let handleMouseEvent = event => {
         if (event.type === "mousedown")
             isMouseDown = true;
         else if (event.type === "mouseup")
             isMouseDown = false;
 
-        function addData(tableRow, textContent) {
-            const tableData = document.createElement("td");
-            tableData.textContent = textContent;
-            tableRow.appendChild(tableData);
-        }
-
         const tableRow = document.createElement("tr");
-        addData(tableRow, event.type.substr(5));
+        addData(tableRow, event.type);
         addData(tableRow, `${event.clientX}, ${event.clientY}`);
         addData(tableRow, `${event.movementX}, ${event.movementY}`);
         addData(tableRow, event.buttons);
@@ -127,6 +129,8 @@ addEventListener("load", () => {
     listenerArea.addEventListener("mousedown", handleMouseEvent);
     listenerArea.addEventListener("mousemove", handleMouseEvent);
     listenerArea.addEventListener("mouseup", handleMouseEvent);
+    listenerArea.addEventListener("click", handleMouseEvent);
+    listenerArea.addEventListener("dblclick", handleMouseEvent);
 });
 </script>
 </head>
