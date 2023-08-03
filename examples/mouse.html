@@ -131,6 +131,7 @@ addEventListener("load", () => {
     listenerArea.addEventListener("mouseup", handleMouseEvent);
     listenerArea.addEventListener("click", handleMouseEvent);
     listenerArea.addEventListener("dblclick", handleMouseEvent);
+    listenerArea.addEventListener("contextmenu", event => event.preventDefault());
 });
 </script>
 </head>
