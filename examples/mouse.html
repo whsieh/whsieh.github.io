@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root {
-    --table-width: 500px;
+    --table-width: 520px;
 }
 
 body, html {
@@ -111,6 +111,7 @@ addEventListener("load", () => {
         addData(tableRow, event.type);
         addData(tableRow, `${event.clientX}, ${event.clientY}`);
         addData(tableRow, `${event.movementX}, ${event.movementY}`);
+        addData(tableRow, event.button);
         addData(tableRow, event.buttons);
         addData(tableRow, modifierString(event));
         tableBody.appendChild(tableRow);
@@ -139,7 +140,16 @@ addEventListener("load", () => {
     <div class="listener">Hover or drag over me</div>
     <div class="events">
         <table>
-            <tbody><tr><th>Type</th><th>Pos</th><th>Mvmt</th><th>Button</th><th>Mod</th></tr></tbody>
+            <tbody>
+                <tr>
+                    <th>Type</th>
+                    <th>Pos</th>
+                    <th>Mvmt</th>
+                    <th>Btn</th>
+                    <th>Btns</th>
+                    <th>Mod</th>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
