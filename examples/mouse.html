@@ -133,6 +133,17 @@ addEventListener("load", () => {
     listenerArea.addEventListener("click", handleMouseEvent);
     listenerArea.addEventListener("dblclick", handleMouseEvent);
     listenerArea.addEventListener("contextmenu", event => event.preventDefault());
+
+    addEventListener("keydown", event => {
+        if (event.key === "k" && event.metaKey) {
+            let header = tableBody.firstElementChild;
+            for (const child of [...tableBody.children])
+                child.remove();
+            tableBody.appendChild(header);
+            event.preventDefault();
+        }
+    });
+
 });
 </script>
 </head>
