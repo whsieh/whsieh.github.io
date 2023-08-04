@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root {
@@ -81,14 +82,15 @@ function modifierString(event) {
 
 addEventListener("load", () => {
     let isMouseDown = false;
+    let isTouchDown = false;
     function colorForEvent(event) {
-        if (event.type === "mousedown")
+        if (event.type === "mousedown" || event.type === "touchstart")
             return "red";
-        if (event.type === "mouseup")
+        if (event.type === "mouseup" || event.type === "touchend")
             return "green";
         if (event.type === "click" || event.type === "dblclick")
             return "purple";
-        if (isMouseDown)
+        if (isMouseDown || isTouchDown)
             return "black";
         return "darkgray";
     }
@@ -123,7 +125,7 @@ addEventListener("load", () => {
         if (tableBody.scrollHeight > 2 * innerHeight)
             tableBody.firstElementChild.nextElementSibling.remove();
 
-        eventsContainer.scrollBy(0, 1000);
+        eventsContainer.scrollTop = eventsContainer.scrollHeight;
     };
 
     let listenerArea = document.querySelector("div.listener");
@@ -133,6 +135,36 @@ addEventListener("load", () => {
     listenerArea.addEventListener("click", handleMouseEvent);
     listenerArea.addEventListener("dblclick", handleMouseEvent);
     listenerArea.addEventListener("contextmenu", event => event.preventDefault());
+
+    let handleTouchEvent = event => {
+        if (event.type === "touchstart")
+            isTouchDown = true;
+        else if (event.type === "touchend")
+            isTouchDown = false;
+
+        const tableRow = document.createElement("tr");
+        addData(tableRow, event.type);
+        addData(tableRow, `${event.pageX}, ${event.pageY}`);
+        addData(tableRow, "—");
+        addData(tableRow, "—");
+        addData(tableRow, "—");
+        addData(tableRow, modifierString(event));
+        tableBody.appendChild(tableRow);
+
+        if (event.type !== "touchmove")
+            tableRow.style.fontWeight = "bold";
+
+        tableRow.style.color = colorForEvent(event);
+        if (tableBody.scrollHeight > 2 * innerHeight)
+            tableBody.firstElementChild.nextElementSibling.remove();
+
+        eventsContainer.scrollTop = eventsContainer.scrollHeight;
+    };
+
+    listenerArea.addEventListener("touchstart", handleTouchEvent);
+    listenerArea.addEventListener("touchmove", handleTouchEvent);
+    listenerArea.addEventListener("touchend", handleTouchEvent);
+    listenerArea.addEventListener("touchcancel", handleTouchEvent);
 
     addEventListener("keydown", event => {
         if (event.key === "k" && event.metaKey) {

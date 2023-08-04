@@ -1,0 +1,9 @@
+<meta name="viewport" content="width=device-width">
+<script>
+function logKey(event) {
+    output.textContent += `"${event.key}",`;
+}
+</script>
+<input onkeydown=logKey(event)></input>
+<div>[<code id="output"></code>]</div>
+
