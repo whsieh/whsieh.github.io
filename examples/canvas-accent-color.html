@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+canvas {
+    width: 20px;
+    height: 20px;
+    visibility: hidden;
+}
+
+div#color-swatch {
+    font-family: system-ui;
+    width: 200px;
+    height: 100px;
+    border-radius: 10px;
+    line-height: 100px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="color-swatch"></div>
+<canvas width="40" height="40" style="border: 1px solid lightgray;"><button></button></canvas>
+<script>
+const canvas = document.querySelector("canvas");
+const context = canvas.getContext("2d");
+context.save();
+context.clearRect(0, 0, 40, 40);
+
+const focusOutline = new Path2D;
+focusOutline.moveTo(10, 10);
+focusOutline.quadraticCurveTo(20, 5, 30, 10);
+focusOutline.quadraticCurveTo(35, 20, 30, 30);
+focusOutline.quadraticCurveTo(20, 35, 10, 30);
+focusOutline.quadraticCurveTo(5, 20, 10, 10);
+
+const button = canvas.querySelector("button");
+button.focus();
+
+context.drawFocusIfNeeded(focusOutline, button);
+
+button.blur();
+context.restore();
+
+let averageRed = 0;
+let averageGreen = 0;
+let averageBlue = 0;
+let pixelCount = 0;
+
+const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+for (let row = 0; row < 40; row++) {
+    for (let column = 0; column < 40; column++) {
+        const byteOffset = 4 * (row * 40 + column);
+        const alphaComponent = imageData.at(byteOffset + 3);
+        if (!alphaComponent)
+            continue;
+
+        const redComponent = imageData.at(byteOffset);
+        const greenComponent = imageData.at(byteOffset + 1);
+        const blueComponent = imageData.at(byteOffset + 2);
+
+        averageRed += redComponent;
+        averageGreen += greenComponent;
+        averageBlue += blueComponent;
+        pixelCount++;
+    }
+}
+
+averageRed /= pixelCount;
+averageGreen /= pixelCount;
+averageBlue /= pixelCount;
+
+
+const color = `rgb(${Math.round(averageRed)}, ${Math.round(averageGreen)}, ${Math.round(averageBlue)})`;
+const swatch = document.getElementById("color-swatch");
+swatch.textContent = color;
+swatch.style.backgroundColor = color;
+</script>
+</body>
+</html>
