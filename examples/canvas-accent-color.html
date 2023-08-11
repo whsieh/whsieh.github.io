@@ -3,81 +3,108 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+html {
+    font-family: system-ui;
+    font-size: 16px;
+}
+
 canvas {
-    width: 20px;
-    height: 20px;
-    visibility: hidden;
+    width: 0;
+    height: 0;
+    opacity: 0;
 }
 
 div#color-swatch {
-    font-family: system-ui;
-    width: 200px;
+    width: 160px;
     height: 100px;
     border-radius: 10px;
     line-height: 100px;
     color: white;
-    font-size: 16px;
     text-align: center;
+}
+
+input {
+    width: 16px;
+    height: 16px;
+}
+
+label {
+    user-select: none;
+    -webkit-user-select: none;
 }
 </style>
 </head>
 <body>
+<p>
+    <input id="use-fill-style-check" type="checkbox" />
+    <label for="use-fill-style-check">Use fill style</label>
+</p>
 <div id="color-swatch"></div>
 <canvas width="40" height="40" style="border: 1px solid lightgray;"><button></button></canvas>
 <script>
-const canvas = document.querySelector("canvas");
-const context = canvas.getContext("2d");
-context.save();
-context.clearRect(0, 0, 40, 40);
+const useFillColor = document.getElementById("use-fill-style-check");
 
-const focusOutline = new Path2D;
-focusOutline.moveTo(10, 10);
-focusOutline.quadraticCurveTo(20, 5, 30, 10);
-focusOutline.quadraticCurveTo(35, 20, 30, 30);
-focusOutline.quadraticCurveTo(20, 35, 10, 30);
-focusOutline.quadraticCurveTo(5, 20, 10, 10);
+function showAccentColor() {
+    const canvas = document.querySelector("canvas");
+    const context = canvas.getContext("2d");
+    context.save();
+    context.clearRect(0, 0, 40, 40);
 
-const button = canvas.querySelector("button");
-button.focus();
+    if (useFillColor.checked) {
+        context.fillStyle = "accentcolor";
+        context.fillRect(0, 0, 40, 40);
+    } else {
+        const focusOutline = new Path2D;
+        focusOutline.moveTo(10, 10);
+        focusOutline.quadraticCurveTo(20, 5, 30, 10);
+        focusOutline.quadraticCurveTo(35, 20, 30, 30);
+        focusOutline.quadraticCurveTo(20, 35, 10, 30);
+        focusOutline.quadraticCurveTo(5, 20, 10, 10);
 
-context.drawFocusIfNeeded(focusOutline, button);
-
-button.blur();
-context.restore();
-
-let averageRed = 0;
-let averageGreen = 0;
-let averageBlue = 0;
-let pixelCount = 0;
-
-const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-for (let row = 0; row < 40; row++) {
-    for (let column = 0; column < 40; column++) {
-        const byteOffset = 4 * (row * 40 + column);
-        const alphaComponent = imageData.at(byteOffset + 3);
-        if (!alphaComponent)
-            continue;
-
-        const redComponent = imageData.at(byteOffset);
-        const greenComponent = imageData.at(byteOffset + 1);
-        const blueComponent = imageData.at(byteOffset + 2);
-
-        averageRed += redComponent;
-        averageGreen += greenComponent;
-        averageBlue += blueComponent;
-        pixelCount++;
+        const button = canvas.querySelector("button");
+        button.focus();
+        context.drawFocusIfNeeded(focusOutline, button);
+        button.blur();
     }
+
+    context.restore();
+
+    let averageRed = 0;
+    let averageGreen = 0;
+    let averageBlue = 0;
+    let pixelCount = 0;
+
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    for (let row = 0; row < 40; row++) {
+        for (let column = 0; column < 40; column++) {
+            const byteOffset = 4 * (row * 40 + column);
+            const alphaComponent = imageData.at(byteOffset + 3);
+            if (!alphaComponent)
+                continue;
+
+            const redComponent = imageData.at(byteOffset);
+            const greenComponent = imageData.at(byteOffset + 1);
+            const blueComponent = imageData.at(byteOffset + 2);
+
+            averageRed += redComponent;
+            averageGreen += greenComponent;
+            averageBlue += blueComponent;
+            pixelCount++;
+        }
+    }
+
+    averageRed /= pixelCount;
+    averageGreen /= pixelCount;
+    averageBlue /= pixelCount;
+
+    const colorComponents = `${Math.round(averageRed)}, ${Math.round(averageGreen)}, ${Math.round(averageBlue)}`;
+    const swatch = document.getElementById("color-swatch");
+    swatch.textContent = colorComponents;
+    swatch.style.backgroundColor = `rgb(${colorComponents})`;
 }
 
-averageRed /= pixelCount;
-averageGreen /= pixelCount;
-averageBlue /= pixelCount;
-
-
-const color = `rgb(${Math.round(averageRed)}, ${Math.round(averageGreen)}, ${Math.round(averageBlue)})`;
-const swatch = document.getElementById("color-swatch");
-swatch.textContent = color;
-swatch.style.backgroundColor = color;
+showAccentColor();
+useFillColor.addEventListener("change", showAccentColor);
 </script>
 </body>
 </html>
