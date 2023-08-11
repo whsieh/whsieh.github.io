@@ -9,8 +9,8 @@ html {
 }
 
 canvas {
-    width: 0;
-    height: 0;
+    width: 20px;
+    height: 20px;
     opacity: 0;
 }
 
@@ -40,7 +40,7 @@ label {
     <label for="use-fill-style-check">Use fill style</label>
 </p>
 <div id="color-swatch"></div>
-<canvas width="40" height="40" style="border: 1px solid lightgray;"><button></button></canvas>
+<canvas width="40" height="40" style="border: 1px solid lightgray;"><button tabindex="0"></button></canvas>
 <script>
 const useFillColor = document.getElementById("use-fill-style-check");
 
@@ -54,16 +54,11 @@ function showAccentColor() {
         context.fillStyle = "accentcolor";
         context.fillRect(0, 0, 40, 40);
     } else {
-        const focusOutline = new Path2D;
-        focusOutline.moveTo(10, 10);
-        focusOutline.quadraticCurveTo(20, 5, 30, 10);
-        focusOutline.quadraticCurveTo(35, 20, 30, 30);
-        focusOutline.quadraticCurveTo(20, 35, 10, 30);
-        focusOutline.quadraticCurveTo(5, 20, 10, 10);
-
         const button = canvas.querySelector("button");
+        context.beginPath();
+        context.rect(10, 10, 20, 20);
         button.focus();
-        context.drawFocusIfNeeded(focusOutline, button);
+        context.drawFocusIfNeeded(button);
         button.blur();
     }
 
