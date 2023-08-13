@@ -1,0 +1,51 @@
+<html>
+<head>
+<style>
+body {
+    font-family: system-ui;
+}
+
+div#focus-ring {
+    background-color: -webkit-focus-ring-color;
+}
+
+div#activeborder {
+    background-color: activeborder;
+}
+
+div#accentcolor {
+    background-color: accentcolor;
+}
+
+div {
+    border-radius: 4px;
+    margin: 4px;
+    width: 200px;
+    height: 200px;
+    font-size: 16px;
+    text-align: center;
+    line-height: 200px;
+    color: white;
+}
+</style>
+</head>
+<body>
+<h3>-webkit-focus-ring-color</h3>
+<div id="focus-ring"></div>
+<h3>activeborder</h3>
+<div id="activeborder"></div>
+<h3>accentcolor</h3>
+<div id="accentcolor"></div>
+<script>
+function showBackgroundColor(elementID) {
+    let container = document.getElementById(elementID);
+    container.textContent = getComputedStyle(container).backgroundColor;
+}
+
+addEventListener("load", () => {
+    showBackgroundColor("focus-ring");
+    showBackgroundColor("activeborder");
+    showBackgroundColor("accentcolor");
+});
+</script>
+</html>
