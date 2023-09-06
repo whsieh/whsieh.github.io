@@ -14,40 +14,61 @@ button {
     padding: 0.5em;
     border: 2px rgb(0, 122, 255) solid;
     background-color: rgb(0, 122, 255);
-    position: absolute;
     top: 1em;
     left: 1em;
     height: 50px;
     box-sizing: border-box;
+    width: 180px;
 }
 
-input {
-    z-index: -1;
+input, select {
+    width: 1px;
+    height: 1px;
     opacity: 0;
-    position: absolute;
-    top: 50px;
-    left: calc(1em + 4px);
 }
 </style>
 </head>
 <body>
-<button>Show date picker</button>
+<div>
+    <button id="show-date-picker">Show date picker</button>
+</div>
 <input type="date" placeholder="Date" value="1976-04-01">
+<div>
+    <button id="show-select">Show select menu</button>
+</div>
+<select>
+    <option value="Apple">Apple</option>
+    <option value="Apricot">Apricot</option>
+    <option value="Banana">Banana</option>
+    <option value="Cantaloupe">Cantaloupe</option>
+    <option value="Durian">Durian</option>
+    <option value="Grape">Grape</option>
+    <option value="Guava">Guava</option>
+    <option value="Orange">Orange</option>
+    <option value="Mango">Mango</option>
+    <option value="Pear">Pear</option>
+    <option value="Watermelon">Watermelon</option>
+</select>
 <script>
-let button = document.querySelector("button");
-let input = document.querySelector("input");
-button.addEventListener("click", async () => {
-    input.click();
-    input.focus();
+let showDatePickerButton = document.getElementById("show-date-picker");
+let showSelectButton = document.getElementById("show-select");
+let datePicker = document.querySelector("input");
+let select = document.querySelector("select");
+
+showDatePickerButton.addEventListener("click", async () => {
+    datePicker.focus();
+});
+
+showSelectButton.addEventListener("click", async () => {
+    select.focus();
 });
 
 document.body.addEventListener("click", (event) => {
     if (event.target !== document.body)
         return;
 
-    input.blur();
-    input.remove();
-    document.body.appendChild(input);
+    select.blur();
+    datePicker.blur();
 });
 </script>
 </body>
