@@ -26,6 +26,10 @@ tr:nth-child(even) {
 .button-container {
     margin: 1em;
 }
+
+label {
+    margin-left: 2px;
+}
 </style>
 <script>
 let startTime;
@@ -48,6 +52,9 @@ function makeRow(event) {
 }
 
 function handleKeyEventByAppendingRow(event) {
+    let shouldPreventDefault = document.getElementById("toggle-prevent-default");
+    if (shouldPreventDefault.checked)
+        event.preventDefault();
     const tableBody = document.querySelector("tbody");
     tableBody.appendChild(makeRow(event));
 }
@@ -70,6 +77,9 @@ addEventListener("load", () => {
 <body>
 <div class="button-container">
     <button class="reset-button">Clear Table</button>
+</div>
+<div class="button-container">
+    <input type="checkbox" id="toggle-prevent-default" checked><label for="toggle-prevent-default">preventDefault()</label>
 </div>
 <table>
     <tbody>
