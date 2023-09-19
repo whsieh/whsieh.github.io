@@ -30,6 +30,15 @@ tr:nth-child(even) {
 label {
     margin-left: 2px;
 }
+
+div#hidden-editor {
+    opacity: 0;
+    position: fixed;
+    top: -1000px;
+    left: -1000px;
+    width: 0.5px;
+    height: 0.5px;
+}
 </style>
 <script>
 let startTime;
@@ -71,12 +80,20 @@ addEventListener("load", () => {
                 row.remove();
         }
     });
+
+    document.querySelector(".focus-button").addEventListener("click", event => {
+        let editor = document.getElementById("hidden-editor");
+        editor.innerHTML = "";
+        editor.focus();
+        event.preventDefault();
+    });
 });
 </script>
 </head>
 <body>
 <div class="button-container">
     <button class="reset-button">Clear Table</button>
+    <button class="focus-button">Show Keyboard</button>
 </div>
 <div class="button-container">
     <input type="checkbox" id="toggle-prevent-default" checked><label for="toggle-prevent-default">preventDefault()</label>
@@ -90,5 +107,6 @@ addEventListener("load", () => {
         </tr>
     </tbody>
 </table>
+<div id="hidden-editor" contenteditable></div>
 </body>
 </html>
