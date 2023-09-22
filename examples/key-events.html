@@ -23,7 +23,7 @@ tr:nth-child(even) {
     background-color: #EFEFEF;
 }
 
-.button-container {
+.container {
     margin: 1em;
 }
 
@@ -38,6 +38,10 @@ div#hidden-editor {
     left: -1000px;
     width: 0.5px;
     height: 0.5px;
+}
+
+button, .text-display {
+    font-size: 16px;
 }
 </style>
 <script>
@@ -69,6 +73,9 @@ function handleKeyEventByAppendingRow(event) {
 }
 
 addEventListener("load", () => {
+    let editor = document.getElementById("hidden-editor");
+    let textDisplay = document.querySelector(".text-display");
+
     document.body.addEventListener("keydown", handleKeyEventByAppendingRow);
     document.body.addEventListener("keypress", handleKeyEventByAppendingRow);
     document.body.addEventListener("keyup", handleKeyEventByAppendingRow);
@@ -80,24 +87,31 @@ addEventListener("load", () => {
                 row.remove();
         }
         event.preventDefault();
+        textDisplay.value = "";
     });
 
     document.querySelector(".focus-button").addEventListener("click", event => {
-        let editor = document.getElementById("hidden-editor");
         editor.innerHTML = "";
         editor.focus();
         event.preventDefault();
+    });
+
+    editor.addEventListener("input", () => {
+        textDisplay.value = editor.textContent;
     });
 });
 </script>
 </head>
 <body>
-<div class="button-container">
-    <button class="reset-button">Clear Table</button>
-    <button class="focus-button">Show Keyboard</button>
+<div class="container">
+    <button class="reset-button">Reset</button>
+    <button class="focus-button">Focus Editor</button>
 </div>
-<div class="button-container">
-    <input type="checkbox" id="toggle-prevent-default" checked><label for="toggle-prevent-default">preventDefault()</label>
+<div class="container">
+    <input class="text-display" readonly placeholder="No text in hidden editor">
+</div>
+<div class="container">
+    <input type="checkbox" id="toggle-prevent-default"><label for="toggle-prevent-default">preventDefault()</label>
 </div>
 <table>
     <tbody>
