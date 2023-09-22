@@ -73,12 +73,13 @@ addEventListener("load", () => {
     document.body.addEventListener("keypress", handleKeyEventByAppendingRow);
     document.body.addEventListener("keyup", handleKeyEventByAppendingRow);
 
-    document.querySelector(".reset-button").addEventListener("click", () => {
+    document.querySelector(".reset-button").addEventListener("mousedown", event => {
         const tableBody = document.querySelector("tbody");
         for (let row of [...tableBody.querySelectorAll("tr")]) {
             if (!row.classList.contains("header"))
                 row.remove();
         }
+        event.preventDefault();
     });
 
     document.querySelector(".focus-button").addEventListener("click", event => {
