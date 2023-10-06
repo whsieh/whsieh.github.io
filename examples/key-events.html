@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
 <style>
 body, html {
     font-family: system-ui;
     font-size: 16px;
+    margin: 4px;
 }
 
 table {
     border-collapse: collapse;
     min-width: 250px;
-    max-width: 400px;
+    max-width: 380px;
 }
 
 th, td {
@@ -45,22 +47,35 @@ button, .text-display {
 }
 </style>
 <script>
-let startTime;
+function modifierString(event) {
+    let result = [];
+    if (event.ctrlKey)
+        result.push("Ctrl");
+    if (event.shiftKey)
+        result.push("Shift");
+    if (event.altKey)
+        result.push("Alt");
+    if (event.metaKey)
+        result.push("Meta");
+    if (!result.length)
+        return "-"
+    return result.join(", ");
+}
 
 function makeRow(event) {
     const row = document.createElement("tr");
-    const timeData = document.createElement("td");
     const typeData = document.createElement("td");
     const keyData = document.createElement("td");
-    const currentTime = (new Date).getTime();
-    if (!startTime)
-        startTime = currentTime;
-    timeData.textContent = currentTime - startTime;
+    const keyCode = document.createElement("td");
+    const modifiers = document.createElement("td");
     typeData.textContent = event.type;
     keyData.textContent = event.key;
-    row.appendChild(timeData);
+    keyCode.textContent = event.keyCode;
+    modifiers.textContent = modifierString(event);
     row.appendChild(typeData);
     row.appendChild(keyData);
+    row.appendChild(keyCode);
+    row.appendChild(modifiers);
     return row;
 }
 
@@ -68,8 +83,7 @@ function handleKeyEventByAppendingRow(event) {
     let shouldPreventDefault = document.getElementById("toggle-prevent-default");
     if (shouldPreventDefault.checked)
         event.preventDefault();
-    const tableBody = document.querySelector("tbody");
-    tableBody.appendChild(makeRow(event));
+    document.querySelector("tr.header").insertAdjacentElement("afterend", makeRow(event));
 }
 
 addEventListener("load", () => {
@@ -114,12 +128,14 @@ addEventListener("load", () => {
 <div class="container">
     <input type="checkbox" id="toggle-prevent-default"><label for="toggle-prevent-default">preventDefault()</label>
 </div>
+<p><em>Descending order by timestamp ▼</em></p>
 <table>
     <tbody>
         <tr class="header">
-            <th>Time (ms)</th>
             <th>Type</th>
             <th>Key</th>
+            <th>Code</th>
+            <th>Mdfr.</th>
         </tr>
     </tbody>
 </table>
