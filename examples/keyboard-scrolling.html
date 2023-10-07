@@ -6,11 +6,16 @@
 <style>
 body, html {
     margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: system-ui;
+}
+
+.vertical-scroller {
     overflow-x: hidden;
     overflow-y: scroll;
     width: 100%;
     height: 100%;
-    font-family: system-ui;
 }
 
 .panel {
@@ -61,6 +66,25 @@ addEventListener("load", () => {
         flash(`Preventing ${event.key}`, "white");
         event.preventDefault();
     });
+
+    const useOverflowCheck = document.getElementById("use-overflow");
+    useOverflowCheck.addEventListener("change", () => {
+        const previousScroller = document.querySelector(".vertical-scroller");
+        previousScroller.classList.remove("vertical-scroller");
+
+        const newScroller = useOverflowCheck.checked ? document.createElement("div") : document.body;
+        console.log(previousScroller, newScroller);
+        for (const panel of [...document.querySelectorAll(".panel")])
+            newScroller.appendChild(panel);
+
+        newScroller.classList.add("vertical-scroller");
+
+        if (previousScroller !== document.body)
+            previousScroller.remove();
+
+        if (newScroller !== document.body)
+            document.body.appendChild(newScroller);
+    });
 });
 
 function flash(message, color, fontWeight) {
@@ -79,7 +103,7 @@ function flash(message, color, fontWeight) {
 }
 </script>
 </head>
-<body>
+<body class="vertical-scroller">
     <div style="background-color: rgb(0, 122, 255);" class="panel">0</div>
     <div style="background-color: rgb(52, 199, 89);" class="panel">1</div>
     <div style="background-color: rgb(88, 86, 214);" class="panel">2</div>
@@ -96,6 +120,10 @@ function flash(message, color, fontWeight) {
             <div>
                 <input type="checkbox" id="prevent-check" value="prevent">
                 <label for="prevent-check">preventDefault() ↑↓</label>
+            </div>
+            <div>
+                <input type="checkbox" id="use-overflow" value="prevent">
+                <label for="use-overflow">Use overflow scroller</label>
             </div>
         </fieldset>
     </div>
