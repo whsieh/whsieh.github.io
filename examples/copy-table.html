@@ -34,7 +34,8 @@ svg {
 <body>
 <div>
     <p>Click the button to programmatically write a basic table to the pasteboard.</p>
-    <button>Write table</button>
+    <button id="one">Write table</button>
+    <button id="two">Write fancier table</button>
     <div id="status-okay" class="status hide">
         <svg class="check" height="16" viewBox="0 0 16 16" version="1.1" width="16">
             <path fill="green" d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
@@ -43,26 +44,38 @@ svg {
     </div>
 </div>
 <script>
-let button = document.querySelector("button")
-button.addEventListener("click", clickEvent => {
-    clickEvent.preventDefault();
+let button1 = document.querySelector("button#one");
+let button2 = document.querySelector("button#two");
 
-    let hiddenSpan = document.createElement("span");
-    hiddenSpan.style.opacity = 0;
-    hiddenSpan.innerHTML = "&nbsp;";
-    document.body.appendChild(hiddenSpan);
+const table1 = `<table style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; border-collapse: collapse;"><colgroup><col style="width: 90px;"><col style="width: 90px;"></colgroup><tbody><tr><td style="border: 1px solid rgb(230, 230, 230); font-weight: bold; text-align: left;">Hello</td><td style="border: 1px solid rgb(230, 230, 230); font-weight: bold; text-align: left;">World</td></tr><tr><td style="border: 1px solid rgb(230, 230, 230); text-align: left;">Foo</td><td style="border: 1px solid rgb(230, 230, 230); text-align: left;">Bar</td></tr></tbody></table>`;
+const table2 = `<table><tbody><tr><td>Link to <a href="https://webkit.org">webkit.org</a></td><td><strong>Right</strong> <em>Cell</em></td></tr></tbody></table>`;
 
-    hiddenSpan.addEventListener("copy", event => {
-        event.clipboardData.setData("text/plain", "Hello\tWorld\nFoo\tBar\n");
-        event.clipboardData.setData("text/html", `<table style="caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0); font-style: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: auto; text-align: start; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: none; border-collapse: collapse;"><colgroup><col style="width: 90px;"><col style="width: 90px;"></colgroup><tbody><tr><td style="border: 1px solid rgb(230, 230, 230); font-weight: bold; text-align: left;">Hello</td><td style="border: 1px solid rgb(230, 230, 230); font-weight: bold; text-align: left;">World</td></tr><tr><td style="border: 1px solid rgb(230, 230, 230); text-align: left;">Foo</td><td style="border: 1px solid rgb(230, 230, 230); text-align: left;">Bar</td></tr></tbody></table>`);
-        event.preventDefault();
-    }, { once: true });
+const text1 = "Hello\tWorld\nFoo\tBar\n";
+const text2 = "Link to webkit.org\tRight Cell\n";
 
-    getSelection().selectAllChildren(hiddenSpan);
-    document.execCommand("Copy", true);
-    hiddenSpan.remove();
+[button1, button2].map(button => {
+    const markupToWrite = button == button1 ? table1 : table2;
+    const textToWrite = button == button1 ? text1 : text2;
+    button.addEventListener("click", clickEvent => {
+        clickEvent.preventDefault();
 
-    document.querySelector(".status").style.display = "block";
+        let hiddenSpan = document.createElement("span");
+        hiddenSpan.style.opacity = 0;
+        hiddenSpan.innerHTML = "&nbsp;";
+        document.body.appendChild(hiddenSpan);
+
+        hiddenSpan.addEventListener("copy", event => {
+            event.clipboardData.setData("text/plain", textToWrite);
+            event.clipboardData.setData("text/html", markupToWrite);
+            event.preventDefault();
+        }, { once: true });
+
+        getSelection().selectAllChildren(hiddenSpan);
+        document.execCommand("Copy", true);
+        hiddenSpan.remove();
+
+        document.querySelector(".status").style.display = "block";
+    });
 });
 </script>
 </body>
