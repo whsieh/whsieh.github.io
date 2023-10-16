@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body, html {
+        font-family: system-ui;
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        padding: 1.2em;
+        box-sizing: border-box;
+    }
+
+    blockquote[type="cite"] {
+        padding-left: 1em;
+        margin-left: 4px;
+    }
+
+    blockquote[type="cite"].l1 {
+        color: rgba(0, 175, 205, 255);
+        border-left: 1px solid rgba(0, 175, 205, 255);
+    }
+
+    blockquote[type="cite"].l2 {
+        color: rgba(88, 86, 214, 255);
+        border-left: 1px solid rgba(88, 86, 214, 255);
+    }
+</style>
+</head>
+<body contenteditable spellcheck="false">
+<p>The quick brown fox jumped over the lazy dog.</p>
+<blockquote type="cite" class="l1">
+    <p>This is a blockquoted paragraph with a nested blockquote:
+    <blockquote type="cite" class="l2">
+        <p>This is a nested blockquote. Here’s to the crazy ones. The misfits. The rebels. The troublemakers.</p>
+    </blockquote>
+    <div>This is the end of the outer blockquote</div>
+</blockquote>
+<p>— W</p>
+</body>
+</html>
