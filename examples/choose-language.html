@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<body>
+<h2>Your current language is: <span id="language">--</span></h2>
+<select>
+    <option value="--">--</option>
+    <option value="English">English</option>
+    <option value="Spanish">Spanish</option>
+    <option value="Mandarin">Mandarin</option>
+    <option value="German">German</option>
+    <option value="Japanese">Japanese</option>
+</select>
+<script>
+let language = document.getElementById("language");
+let select = document.querySelector("select");
+for (let keyAndValue of document.cookie.split("; ")) {
+    if (!keyAndValue.includes("="))
+        continue;
+
+    let [key, value] = keyAndValue.split("=");
+    if (key === "language") {
+        language.textContent = value;
+        for (let optionElement of [...select.querySelectorAll("option")]) {
+            if (optionElement.textContent === value)
+                optionElement.selected = true;
+        }
+        break;
+    }
+}
+
+select.addEventListener("change", () => {
+    document.cookie = `language=${select.value}`;
+    language.textContent = select.value;
+});
+</script>
+</body>
+</html>
