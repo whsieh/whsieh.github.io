@@ -38,15 +38,16 @@
 
 <body>
 <div id="editor" contenteditable>
-    <div>Press ⌘V to Paste…</div>
+    <div>Press ⌘V to paste.</div>
+    <div>Press ^V to paste as plain text.</div>
+    <div><br></div>
     <div id="target"><br></div>
 </div>
 </body>
 <script>
     const editor = document.getElementById("editor");
     editor.addEventListener("keydown", async event => {
-        if (event.key === "v" && event.metaKey && event.altKey) {
-            event.preventDefault();
+        if (event.key === "v" && event.ctrlKey) {
             try {
                 const plainText = await navigator.clipboard.readText();
                 document.execCommand("InsertText", true, plainText);
