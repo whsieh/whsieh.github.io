@@ -13,7 +13,7 @@
         margin: 2em;
         background-color: #F8F8F8;
         overflow: hidden;
-        font-family: -apple-system;
+        font-family: system-ui;
         font-size: 1em;
     }
 
@@ -28,7 +28,6 @@
         border-right: 1px solid #DFDFDF;
         border-bottom: 1px solid #DFDFDF;
         overflow: scroll;
-        -webkit-overflow-scrolling: touch;
     }
 
     #editor:focus {
@@ -45,7 +44,17 @@
 </body>
 <script>
     const editor = document.getElementById("editor");
-    editor.addEventListener("keydown", event => {
+    editor.addEventListener("keydown", async event => {
+        if (event.key === "v" && event.metaKey && event.altKey) {
+            event.preventDefault();
+            try {
+                const plainText = await navigator.clipboard.readText();
+                document.execCommand("InsertText", true, plainText);
+            } catch (e) {
+                console.log(`Paste failed: ${e}`);
+            }
+        }
+
         if (event.key === "v" && event.metaKey)
             document.execCommand("Paste");
     });
