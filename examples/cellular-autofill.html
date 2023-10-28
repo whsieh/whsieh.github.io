@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+<style>
+body {
+    width: 100%;
+    margin: 0;
+    padding-top: 1em;
+    text-align: center;
+    font-family: system-ui;
+}
+input {
+    width: calc(min(90%, 320px));
+    background-color: #EEE;
+    height: 2.4em;
+    margin: 0.5em auto;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 1.2em;
+    appearance: none;
+    box-sizing: border-box;
+    padding: 0 1em;
+    outline: none;
+    display: block;
+    text-align: center;
+}
+
+input[type="submit"] {
+    color: white;
+    background-color: rgb(90, 200, 250);
+}
+
+input + input {
+    margin-top: 1em;
+}
+</style>
+</head>
+<body>
+    <form action="index.html" method="post">
+        <input autocomplete="device-eid" name="eid" inputmode="numeric" placeholder="EID"></input>
+        <input autocomplete="device-imei" name="imei" inputmode="numeric" placeholder="IMEI"></input>
+        <input type="submit" value="Activate"></input>
+    </form>
+</body>
+</html>
