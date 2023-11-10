@@ -7,45 +7,56 @@
             margin: 0;
             font-size: 16px;
             text-align: center;
+            font-family: system-ui;
         }
 
         .editable {
-            width: 300px;
+            width: 250px;
             height: 50px;
-            border: dashed 1px;
-            margin: 25px auto;
+            border: darkgray solid 1px;
+            margin: 10px auto;
+            padding: 1em;
+            font-size: 18px;
+            text-align: initial;
+            overflow: scroll;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        h3 {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-<code>spellcheck disabled</code>
+<h3>spellcheck disabled</h3>
 <div class="editable" id="div-1" contenteditable spellcheck="false"></div>
-<div><input class="editable" id="input-1" spellcheck="false"></input></div>
+<div><input placeholder="input element" class="editable" id="input-1" spellcheck="false"></input></div>
 
-<code>autocomplete disabled</code>
+<h3>autocomplete disabled</h3>
 <div class="editable" id="div-2" contenteditable autocomplete="off"></div>
-<div><input class="editable" id="input-2" autocomplete="off"></input></div>
+<div><input placeholder="input element" class="editable" id="input-2" autocomplete="off"></input></div>
 
-<code>autocapitalize disabled</code>
+<h3>autocapitalize disabled</h3>
 <div class="editable" id="div-3a" contenteditable autocapitalize="off"></div>
-<div><input class="editable" id="input-3a" autocapitalize="off"></input></div>
+<div><input placeholder="input element" class="editable" id="input-3a" autocapitalize="off"></input></div>
 
-<code>autocapitalize words</code>
+<h3>autocapitalize words</h3>
 <div class="editable" id="div-3b" contenteditable autocapitalize="words"></div>
-<div><input class="editable" id="input-3b" autocapitalize="words"></input></div>
+<div><input placeholder="input element" class="editable" id="input-3b" autocapitalize="words"></input></div>
 
-<code>autocapitalize and autocorrect disabled</code>
+<h3>autocapitalize & autocorrect disabled</h3>
 <div class="editable" id="div-3b" contenteditable autocapitalize="none" autocorrect="off"></div>
-<div><input class="editable" id="input-3b" autocapitalize="none" autocorrect="off"></input></div>
+<div><input placeholder="input element" class="editable" id="input-3b" autocapitalize="none" autocorrect="off"></input></div>
 
-<code>autocorrect disabled</code>
+<h3>autocorrect disabled</h3>
 <div class="editable" id="div-4" contenteditable autocorrect="off"></div>
-<div><input class="editable" id="input-4" autocorrect="off"></input></div>
+<div><input placeholder="input element" class="editable" id="input-4" autocorrect="off"></input></div>
 
-<code>default contenteditable</code>
+<h3>default contenteditable</h3>
 <div class="editable" id="div-5" contenteditable></div>
-<div><input class="editable" id="input-5"></input></div>
+<div><input placeholder="input element" class="editable" id="input-5"></input></div>
 
 </body>
 </html>
