@@ -5,6 +5,7 @@
 <style>
 body, html {
     font-family: system-ui;
+    text-align: center;
 }
 
 div.scroller {
@@ -13,6 +14,7 @@ div.scroller {
     border-radius: 4px;
     overflow: scroll;
     box-sizing: border-box;
+    margin: auto;
 }
 
 div.content {
@@ -36,8 +38,7 @@ function reset() {
 
 addEventListener("load", async () => {
     await new Promise(requestAnimationFrame);
-    await new Promise(resolve => setTimeout(resolve, 0));
-    reset();
+    setTimeout(reset, 0);
 });
 </script>
 </head>
