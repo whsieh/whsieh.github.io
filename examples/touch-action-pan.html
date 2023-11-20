@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+    font-family: system-ui;
+}
+
+div.scroller {
+    width: 250px;
+    height: 250px;
+    border-radius: 4px;
+    overflow: scroll;
+    box-sizing: border-box;
+}
+
+div.content {
+    width: 750px;
+    height: 750px;
+    background: radial-gradient(#e66465, #9198e5);
+}
+
+button {
+    margin: 1em 0;
+    font-size: 16px;
+}
+</style>
+<script>
+function reset() {
+    [...document.getElementsByClassName("scroller")].map(scroller => {
+        scroller.scrollTop = scroller.clientHeight;
+        scroller.scrollLeft = scroller.clientWidth;
+    });
+}
+
+addEventListener("load", async () => {
+    await new Promise(requestAnimationFrame);
+    await new Promise(resolve => setTimeout(resolve, 0));
+    reset();
+});
+</script>
+</head>
+<body>
+<button onclick="reset()">Reset scroll positions</button>
+<h3>touch-action: pan-x;</h3>
+<div class="scroller" style="touch-action: pan-x;">
+    <div class="content"></div>
+</div>
+<h3>touch-action: pan-y;</h3>
+<div class="scroller" style="touch-action: pan-y;">
+    <div class="content"></div>
+</div>
+</body>
+</html>
