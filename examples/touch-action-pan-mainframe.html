@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+    font-family: system-ui;
+    width: 10000px;
+    height: 10000px;
+    overflow: scroll;
+    background: radial-gradient(#e66465, #9198e5);
+}
+
+#options {
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    border-radius: 1em;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 18px;
+    -webkit-backdrop-filter: blur(10px) contrast(75%);
+}
+</style>
+<script>
+addEventListener("load", async () => {
+    addEventListener("change", event => {
+        if (event.target.tagName === "INPUT")
+            document.body.style.touchAction = event.target.value;
+    });
+});
+</script>
+</head>
+<body>
+<div id="options">
+    <fieldset>
+        <legend>Touch Action</legend>
+        <div>
+            <input type="radio" id="auto" name="touch-action" value="auto" checked>
+            <label for="auto"><code>auto</code></label>
+        </div>
+        <div>
+            <input type="radio" id="pan-x" name="touch-action" value="pan-x">
+            <label for="pan-x"><code>pan-x</code></label>
+        </div>
+        <div>
+            <input type="radio" id="pan-y" name="touch-action" value="pan-y">
+            <label for="pan-y"><code>pan-y</code></label>
+        </div>
+        <div class="blur"></div>
+    </fieldset>
+    </div>
+</body>
+</html>
