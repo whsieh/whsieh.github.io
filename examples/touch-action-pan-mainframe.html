@@ -21,6 +21,16 @@ body {
     font-size: 18px;
     -webkit-backdrop-filter: blur(10px) contrast(75%);
 }
+
+#scroll-position {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    color: white;
+    line-height: 100vh;
+    text-align: center;
+    font-size: 48px;
+}
 </style>
 <script>
 addEventListener("load", async () => {
@@ -28,10 +38,16 @@ addEventListener("load", async () => {
         if (event.target.tagName === "INPUT")
             document.body.style.touchAction = event.target.value;
     });
+
+    const scrollPosition = document.getElementById("scroll-position");
+    addEventListener("scroll", () => {
+        scrollPosition.textContent = `${pageXOffset}, ${pageYOffset}`;
+    });
 });
 </script>
 </head>
 <body>
+<div id="scroll-position">0, 0</div>
 <div id="options">
     <fieldset>
         <legend>Touch Action</legend>
