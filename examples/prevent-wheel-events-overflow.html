@@ -6,6 +6,9 @@
 body, html {
     margin: 0;
     font-family: system-ui;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
 .scroller {
@@ -37,7 +40,7 @@ addEventListener("load", () => {
     let banner = document.querySelector("h3");
     let scroller = document.querySelector(".scroller");
     scroller.addEventListener("wheel", event => {
-        if (hasFadedOut && pageYOffset <= 0 && event.deltaY < 0) {
+        if (hasFadedOut && scroller.scrollTop <= 0 && event.deltaY < 0) {
             hasFadedOut = false;
             banner.style.opacity = 1;
             preventedScrollingDistance = 0;
