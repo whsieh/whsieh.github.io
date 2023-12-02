@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<style>
+body, html {
+    margin: 0;
+    font-family: system-ui;
+}
+
+.scroller {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.tall {
+    background: linear-gradient(to bottom, red 0%, green 50%, blue 100%);
+    width: 100px;
+    height: 5000px;
+}
+
+h3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 60px;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+}
+</style>
+<script>
+let preventedScrollingDistance = 0;
+let hasFadedOut = false;
+addEventListener("load", () => {
+    let banner = document.querySelector("h3");
+    let scroller = document.querySelector(".scroller");
+    scroller.addEventListener("wheel", event => {
+        if (hasFadedOut && pageYOffset <= 0 && event.deltaY < 0) {
+            hasFadedOut = false;
+            banner.style.opacity = 1;
+            preventedScrollingDistance = 0;
+            event.preventDefault();
+            return;
+        }
+
+        if (hasFadedOut)
+            return;
+
+        preventedScrollingDistance += event.deltaY;
+        if (preventedScrollingDistance < 0)
+            preventedScrollingDistance = 0;
+
+        let targetOpacity = 1 - (preventedScrollingDistance / 2000);
+        if (targetOpacity > 1)
+            targetOpacity = 1;
+        else if (targetOpacity < 0)
+            targetOpacity = 0;
+
+        banner.style.opacity = targetOpacity;
+        if (!targetOpacity)
+            hasFadedOut = true;
+        event.preventDefault();
+    }, { passive: false });
+
+    setTimeout(() => {
+        scrollTo(0, 0);
+    });
+});
+</script>
+</head>
+<body>
+<div class="scroller">
+    <div class="tall"></div>
+    <h3>This fades out as you scroll...</h3>
+</div>
+</body>
+</html>
