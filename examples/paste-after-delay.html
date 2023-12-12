@@ -1,0 +1,70 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf8">
+<head>
+    <style>
+    html {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+        margin: 2em;
+        background-color: #F8F8F8;
+        overflow: hidden;
+        font-family: system-ui;
+        font-size: 1em;
+    }
+
+    #editor {
+        padding: 2em;
+        width: 80%;
+        min-width: 320px;
+        height: calc(100% - 150px);
+        margin: 2em auto;
+        box-sizing: border-box;
+        background-color: white;
+        border-right: 1px solid #DFDFDF;
+        border-bottom: 1px solid #DFDFDF;
+        overflow: scroll;
+    }
+
+    #editor:focus {
+        outline: none;
+    }
+
+    button#paste {
+        border: 2px rgb(0, 122, 255) solid;
+        background-color: rgb(0, 122, 255);
+    }
+
+    button {
+        text-align: center;
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        padding: 0.5em;
+        margin: auto 0;
+    }
+    </style>
+</head>
+
+<body>
+<div id="editor" contenteditable>
+    <div id="target"><br></div>
+</div>
+<div style="text-align: center;"><button id="paste">Paste</button></div>
+</body>
+<script>
+    const button = document.querySelector("button");
+    button.addEventListener("mousedown", event => {
+        event.preventDefault();
+        setTimeout(async () => {
+            let text = await navigator.clipboard.readText();
+            document.execCommand("InsertText", true, text);
+        }, 750);
+    });
+    getSelection().selectAllChildren(document.getElementById("target"));
+</script>
+</html>
