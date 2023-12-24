@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
 <head>
     <style>
         body, html {
@@ -10,17 +11,31 @@
             font-family: monospace;
         }
 
+        .non-editable {
+            margin: 1em;
+            color: gray;
+            font-family: system-ui;
+        }
+
+        .non-editable > p {
+            color: black;
+        }
+
         .heading {
             display: block;
             width: 100%;
-            border-top: 2px gray dashed;
-            margin-top: 20px;
-            box-sizing: border-box;
+            border-bottom: 1px black solid;
         }
 
         #resetButton {
             margin-top: 40px;
             display: none;
+        }
+
+        div.container {
+            margin: 1em;
+            padding: 1em;
+            box-sizing: border-box;
         }
     </style>
     <script>
@@ -66,20 +81,42 @@
     </script>
 </head>
 <body contenteditable onload=setup()>
-    <h2 class="heading">Types</h2>
-    <div class="output" id="types"></div>
-    <h2 class="heading">Items</h2>
-    <div class="output" id="items"></div>
-    <h2 class="heading">Files</h2>
-    <div class="output" id="files"></div>
-    <h2 class="heading">text/plain</h2>
-    <div class="output" id="textData"></div>
-    <h2 class="heading">text/uri-list</h2>
-    <div class="output" id="urlData"></div>
-    <h2 class="heading">text/html</h2>
-    <div class="output" id="htmlData"></div>
-    <h2 class="heading">text/html (raw)</h2>
-    <div class="output" id="rawHTMLData"></div>
+    <div class="non-editable" contenteditable="false">
+        <h2 class="top-heading">Copy this and paste anywhere below</h2>
+        <p>
+            <strong>Here’s to the crazy ones.</strong> The misfits.
+            The rebels. The troublemakers. <em>The round pegs in the square holes.</em>
+            The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them. Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.
+        </p>
+    </div>
+    <div class="container">
+        <h2 class="heading">Types</h2>
+        <div class="output" id="types"></div>
+    </div>
+    <div class="container">
+        <h2 class="heading">Items</h2>
+        <div class="output" id="items"></div>
+    </div>
+    <div class="container">
+        <h2 class="heading">Files</h2>
+        <div class="output" id="files"></div>
+    </div>
+    <div class="container">
+        <h2 class="heading">text/plain</h2>
+        <div class="output" id="textData"></div>
+    </div>
+    <div class="container">
+        <h2 class="heading">text/uri-list</h2>
+        <div class="output" id="urlData"></div>
+    </div>
+    <div class="container">
+        <h2 class="heading">text/html</h2>
+        <div class="output" id="htmlData"></div>
+    </div>
+    <div class="container">
+        <h2 class="heading">text/html (raw)</h2>
+        <div class="output" id="rawHTMLData"></div>
+    </div>
     <button id="resetButton" onclick=reset()>Reset</button>
 </body>
 </html>
