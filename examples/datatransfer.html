@@ -17,7 +17,7 @@
             font-family: system-ui;
         }
 
-        .non-editable > p {
+        .non-editable > div {
             color: black;
         }
 
@@ -82,12 +82,19 @@
 </head>
 <body contenteditable onload=setup()>
     <div class="non-editable" contenteditable="false">
-        <h2 class="top-heading">Copy this and paste anywhere below</h2>
-        <p>
-            <strong>Here’s to the crazy ones.</strong> The misfits.
-            The rebels. The troublemakers. <em>The round pegs in the square holes.</em>
-            The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo. You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them. Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.
-        </p>
+        <h2 class="top-heading">Copy this and paste below</h2>
+        <div>
+            <strong>Strong text</strong>
+            <em>Emphasized text</em>
+            <span style="color: blue;">Blue text</span>
+            <a href="https://apple.com">Link to apple.com</a>
+            <ul>
+                <li>List item #1</li>
+                <li>List item #2</li>
+                <li>List item #3</li>
+            </ul>
+            </div>
+        </div>
     </div>
     <div class="container">
         <h2 class="heading">Types</h2>
