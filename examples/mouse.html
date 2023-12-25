@@ -90,6 +90,8 @@ addEventListener("load", () => {
             return "green";
         if (event.type === "click" || event.type === "dblclick")
             return "purple";
+        if (event.type === "wheel")
+            return "lightblue";
         if (isMouseDown || isTouchDown)
             return "black";
         return "darkgray";
@@ -112,13 +114,16 @@ addEventListener("load", () => {
         const tableRow = document.createElement("tr");
         addData(tableRow, event.type);
         addData(tableRow, `${event.clientX}, ${event.clientY}`);
-        addData(tableRow, `${event.movementX}, ${event.movementY}`);
+        if (event.type === "wheel")
+            addData(tableRow, `${event.deltaX}, ${event.deltaY}`);
+        else
+            addData(tableRow, `${event.movementX}, ${event.movementY}`);
         addData(tableRow, event.button);
         addData(tableRow, event.buttons);
         addData(tableRow, modifierString(event));
         tableBody.appendChild(tableRow);
 
-        if (event.type !== "mousemove")
+        if (event.type !== "mousemove" && event.type !== "wheel")
             tableRow.style.fontWeight = "bold";
 
         tableRow.style.color = colorForEvent(event);
@@ -135,6 +140,7 @@ addEventListener("load", () => {
     listenerArea.addEventListener("click", handleMouseEvent);
     listenerArea.addEventListener("dblclick", handleMouseEvent);
     listenerArea.addEventListener("contextmenu", event => event.preventDefault());
+    listenerArea.addEventListener("wheel", handleMouseEvent);
 
     let handleTouchEvent = event => {
         if (event.type === "touchstart")
