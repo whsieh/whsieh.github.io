@@ -115,7 +115,7 @@ addEventListener("load", () => {
         addData(tableRow, event.type);
         addData(tableRow, `${event.clientX}, ${event.clientY}`);
         if (event.type === "wheel")
-            addData(tableRow, `${event.deltaX}, ${event.deltaY}`);
+            addData(tableRow, `${event.deltaX.toFixed(1)}, ${event.deltaY.toFixed(1)}`);
         else
             addData(tableRow, `${event.movementX}, ${event.movementY}`);
         addData(tableRow, event.button);
