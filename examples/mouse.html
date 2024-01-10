@@ -90,6 +90,8 @@ addEventListener("load", () => {
             return "green";
         if (event.type === "click" || event.type === "dblclick")
             return "purple";
+        if (event.type === "contextmenu")
+            return "orange";
         if (event.type === "wheel")
             return "lightblue";
         if (isMouseDown || isTouchDown)
@@ -136,6 +138,7 @@ addEventListener("load", () => {
     let listenerArea = document.querySelector("div.listener");
     listenerArea.addEventListener("mousedown", handleMouseEvent);
     listenerArea.addEventListener("mousemove", handleMouseEvent);
+    listenerArea.addEventListener("contextmenu", handleMouseEvent);
     listenerArea.addEventListener("mouseup", handleMouseEvent);
     listenerArea.addEventListener("click", handleMouseEvent);
     listenerArea.addEventListener("dblclick", handleMouseEvent);
