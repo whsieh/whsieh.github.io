@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="canonical" href="https://whsieh.github.io/examples" />
 <style>
@@ -12,6 +13,8 @@ body {
     margin-top: 1em;
 }
 </style>
+</head>
+<body>
 <h1>Recent examples</h1>
 <div id="recent"></div>
 <h1>All examples</h1>
@@ -92,6 +95,6 @@ function recursivelyUpdateRecentPagesForCommits(commitInfos, limit, delay)
         fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/commits`, commitInfos => recursivelyUpdateRecentPagesForCommits(commitInfos, 10, 500));
     });
 })();
-
 </script>
+</body>
 </html>
