@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+    margin: 0;
+    background-color: #EFEFEF;
+    font-family: system-ui;
+}
+
+body {
+    height: 1500px;
+}
+
+.container {
+    margin-top: 600px;
+    position: sticky;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 1em;
+}
+
+iframe {
+    width: 100%;
+    height: 250px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-color: white;
+    z-index: 100;
+}
+</style>
+</head>
+<body>
+    <h2>↓ Scroll down ↓</h2>
+    <div class="container"></div>
+    <script>
+        const subframe = document.createElement("iframe");
+        subframe.frameBorder = 0;
+        subframe.addEventListener("load", async () => {
+            await new Promise(requestAnimationFrame);
+            subframe.style.visibility = "hidden";
+        });
+        subframe.srcdoc = `<!DOCTYPE html>
+            <html>
+            <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+            body, html {
+                background: tomato;
+            }
+
+            html {
+                overflow: scroll;
+            }
+
+            body {
+                height: 1000px;
+                font-family: system-ui;
+                color: white;
+                line-height: 2em;
+                text-align: center;
+            }
+            </style>
+            </head>
+            <body>
+            This text is inside of a <code>visibility: hidden;</code> subframe! It should not be visible at all.
+            </body>
+            </html>`;
+        document.body.appendChild(subframe);
+    </script>
+</body>
+</html>
