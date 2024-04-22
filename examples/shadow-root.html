@@ -3,8 +3,10 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body, html {
+body, html, main {
     margin: 0;
+    width: 100%;
+    height: 100%;
 }
 
 section {
@@ -13,18 +15,24 @@ section {
 </style>
 <script>
 addEventListener("load", () => {
-    const host = document.querySelector("main");
-    const shadowRoot = host.attachShadow({ mode: "open" });
-    shadowRoot.innerHTML = `
+    const outerShadowRoot = document.querySelector("main").attachShadow({ mode: "open" });
+    outerShadowRoot.innerHTML = `
         <style>
             div {
-                width: 200px;
+                width: 400px;
+                height: 600px;
+                border: 2px solid black;
+            }
+        </style>
+        <div></div>`;
+
+    const innerShadowRoot = outerShadowRoot.querySelector("div").attachShadow({ mode: "open" });
+    innerShadowRoot.innerHTML = `
+        <style>
+            div {
+                width: 400px;
                 height: 200px;
                 box-sizing: border-box;
-            }
-
-            div + div {
-                margin: 1em 0;
             }
             .red { background-color: rgb(255, 59, 48); }
             .green { background-color: rgb(52, 199, 89); }
@@ -32,8 +40,7 @@ addEventListener("load", () => {
         </style>
         <div class="red"></div>
         <div class="green"></div>
-        <div class="blue"></div>
-    `;
+        <div class="blue"></div>`;
 });
 </script>
 </head>
