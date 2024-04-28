@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body, html {
+        padding: 0;
+        margin: 0;
+        font-family: system-ui;
+    }
+
+    .fixed {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        color: white;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    #top {
+        top: 0;
+        background: #4CAF50;
+        transform: translateY(-100%);
+    }
+
+    #bottom {
+        bottom: 0;
+        background: #DF4C50;
+        transform: translateY(100%);
+    }
+
+    .content {
+        padding: 60px 10px;
+        height: 5000px;
+        background-color: #f4f4f4;
+    }
+
+    .sizing {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        z-index: -100;
+    }
+
+    .svh {
+        height: 100svh;
+    }
+
+    .dvh {
+        height: 100dvh;
+    }
+
+    .lvh {
+        height: 100lvh;
+    }
+    </style>
+    <script>
+    function setTopVisible(visible) {
+        document.getElementById("top").style.transform = visible ? "translateY(0)" : "translateY(-100%)";
+    }
+
+    function setBottomVisible(visible) {
+        document.getElementById("bottom").style.transform = visible ? "translateY(0)" : "translateY(100%)";
+    }
+
+    function updateVisibility() {
+        let svh = document.querySelector(".svh.sizing").getBoundingClientRect().height,
+            dvh = document.querySelector(".dvh.sizing").getBoundingClientRect().height,
+            lvh = document.querySelector(".lvh.sizing").getBoundingClientRect().height;
+
+        let distanceToSVH = Math.round(Math.abs(svh - dvh)),
+            distanceToLVH = Math.round(Math.abs(lvh - dvh));
+
+        setTopVisible(distanceToLVH <= 1 || distanceToLVH < distanceToSVH);
+        setBottomVisible(distanceToSVH <= 1 || distanceToSVH < distanceToLVH);
+    }
+
+    addEventListener("load", () => {
+        updateVisibility();
+        addEventListener("resize", updateVisibility);
+        addEventListener("scroll", updateVisibility);
+    });
+    </script>
+</head>
+<body>
+    <header class="fixed" id="top">Top Bar</header>
+    <footer class="fixed" id="bottom">Bottom Bar</footer>
+    <div class="content">
+        <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+        <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+        <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    </div>
+    <div class="svh sizing"></div>
+    <div class="lvh sizing"></div>
+    <div class="dvh sizing"></div>
+</body>
+</html>
