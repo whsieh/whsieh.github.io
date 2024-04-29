@@ -14,15 +14,21 @@
         left: 0;
         width: 100%;
         color: white;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        height: 60px;
+        height: 84px;
         text-align: center;
-        line-height: 60px;
+        line-height: 84px;
         font-size: 20px;
         font-weight: bold;
     }
 
     #top {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.3s ease;
+    }
+
+    #top > .text-content {
+        width: 100%;
+        height: 100%;
         background: #4CAF50;
     }
 
@@ -31,10 +37,11 @@
         background: #DF4C50;
         transform: translateY(100%);
         transition: transform 0.3s ease;
+        box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.2);
     }
 
     .content {
-        padding: 60px 10px;
+        padding: 84px 10px;
         height: 5000px;
         background-color: #f4f4f4;
     }
@@ -80,7 +87,9 @@
         let lvh = computeLVH(),
             svh = computeSVH();
         setBottomVisible(svh != computeDVH() || svh == lvh);
-        document.getElementById("top").style.bottom = `${lvh - 60}px`;
+        let header = document.getElementById("top");
+        header.style.bottom = `${lvh - 84}px`;
+        header.style.opacity = lvh == computeDVH() || svh == lvh ? 1 : 0;
     }
 
     addEventListener("load", () => {
@@ -91,7 +100,7 @@
     </script>
 </head>
 <body>
-    <header class="fixed" id="top">Top Bar</header>
+    <header class="fixed" id="top"><div class="text-content">Top Bar</div></header>
     <footer class="fixed" id="bottom">Bottom Bar</footer>
     <div class="content">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
