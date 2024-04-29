@@ -77,8 +77,9 @@
     }
 
     function updateFixedContainers() {
-        let lvh = computeLVH();
-        setBottomVisible(lvh != computeDVH() || computeSVH() == lvh);
+        let lvh = computeLVH(),
+            svh = computeSVH();
+        setBottomVisible(svh != computeDVH() || svh == lvh);
         document.getElementById("top").style.bottom = `${lvh - 60}px`;
     }
 
