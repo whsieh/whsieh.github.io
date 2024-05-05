@@ -8,6 +8,7 @@ body, html {
     width: 100%;
     height: 100%;
     margin: 0;
+    font-family: system-ui;
 }
 
 #editor, #keys {
@@ -16,7 +17,6 @@ body, html {
     outline: none;
     padding: 1em;
     box-sizing: border-box;
-    font-family: system-ui;
 }
 
 #editor {
@@ -43,11 +43,41 @@ body, html {
     opacity: 0.5;
     border: 1px white solid;
 }
+
+.options {
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #eee;
+}
 </style>
 </head>
 <body>
-    <div id="editor" contenteditable>Type here</div>
+    <div id="editor" contenteditable writingsuggestions="true" autocomplete="on" spellcheck="true">
+        Type here
+    </div>
     <pre id="keys"></pre>
+    <div class="options">
+        <fieldset>
+            <legend>Options</legend>
+            <div>
+                <input type="checkbox" id="writing-suggestions" checked>
+                <label for="writing-suggestions">writingsuggestions</label>
+            </div>
+            <div>
+                <input type="checkbox" id="spellcheck" checked>
+                <label for="spellcheck">spellcheck</label>
+            </div>
+            <div>
+                <input type="checkbox" id="autocomplete" checked>
+                <label for="autocomplete">autocomplete</label>
+            </div>
+        </fieldset>
+    </div>
     <script>
     const editor = document.getElementById("editor");
     const keys = document.getElementById("keys");
@@ -79,6 +109,21 @@ body, html {
         editor.addEventListener("input", () => {
             if (editor.textContent === "")
                 keys.innerHTML = "";
+        });
+
+        const writingSuggestions = document.getElementById("writing-suggestions");
+        writingSuggestions.addEventListener("change", () => {
+            editor.writingsuggestions = writingSuggestions.checked;
+        });
+
+        const spellcheck = document.getElementById("spellcheck");
+        spellcheck.addEventListener("change", () => {
+            editor.spellcheck = spellcheck.checked;
+        });
+
+        const autocomplete = document.getElementById("autocomplete");
+        autocomplete.addEventListener("change", () => {
+            editor.setAttribute("autocomplete", autocomplete.checked ? "on" : "off");
         });
     });
     </script>
