@@ -65,6 +65,13 @@
             max-width: 150px;
             font-size: 16px;
         }
+
+        [readonly] {
+            border: 1px dashed gray;
+            border-radius: 4px;
+            color: gray;
+            padding: 4px;
+        }
     </style>
 </head>
 
@@ -119,6 +126,10 @@
     <div><input placeholder="Enter" enterkeyhint="enter"><input placeholder="Next" enterkeyhint="next"></div>
     <div><input placeholder="Done" enterkeyhint="done"><input placeholder="Search" enterkeyhint="search"></div>
     <div><input placeholder="Go" enterkeyhint="go"><input placeholder="Send" enterkeyhint="send"></div>
+
+    <p>Readonly</p>
+    <div><input value="Non-editable text" readonly></div>
+    <textarea readonly>Non-editable text</textarea>
 
     <p>Datalist</p>
     <div>
