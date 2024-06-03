@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui;
+    font-size: 16px;
+    line-height: 2em;
+}
+
+button {
+    font-size: 20px;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100svh;
+    box-sizing: border-box;
+    border: 4px solid rgb(255, 59, 48);
+    background-color: rgba(255, 59, 48, 0.1);
+}
+
+.content {
+    padding: 1em;
+}
+
+h3 {
+    text-align: center;
+    background: darkgray;
+    color: white;
+    margin: 0;
+}
+
+.button-container {
+    margin: 4px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="content">
+    <p>Here’s to the crazy ones. The misfits. The rebels. <a href="https://webkit.org">The troublemakers</a>. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+    <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+    <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    <button id="open-button">Show Popup</button>
+</div>
+<div class="popup" style="display: none;">
+    <div class="button-container"><button id="close-button">Close Popup</button></div>
+</div>
+<script>
+addEventListener("load", () => {
+    let popup = document.querySelector(".popup");
+    document.getElementById("open-button").addEventListener("click", () => {
+        popup.style.display = "block";
+    });
+    document.getElementById("close-button").addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+});
+</script>
+</body>
+</html>
