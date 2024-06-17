@@ -15,11 +15,11 @@ a {
 </style>
 <script>
 addEventListener("load", () => {
-    document.querySelector("a").href += `?sid=${Math.random().toFixed(16).substr(2)}`;
+    const script = document.createElement("script");
+    script.src = "link-href-change.js";
+    document.body.appendChild(script);
 });
 </script>
 </head>
-<body>
-<a href="https://webkit.org">Link to webkit.org</a>
-</body>
+<body></body>
 </html>
