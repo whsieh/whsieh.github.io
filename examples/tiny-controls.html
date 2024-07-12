@@ -133,7 +133,8 @@ input[type=button] {
     color: rgba(0, 0, 0, 0.25);
 }
 </style>
-<div>First paint<br><span id="timeToPaint">-</span></div>
+<br>
+<div><form action="#" id="nameform"><input id="name" type="text"></input></form></div>
 <br>
 <div><form action="#" id="nameform"><input placeholder="Name" id="name" type="text"></input></form></div>
 <br>
@@ -234,36 +235,7 @@ input[type=button] {
 </select>
 </span>
 <br>
-<br>
-<div><input type="button" value="Reload page" id="reloadpage"></input></div>
-<br>
-<div><input type="button" value="Reload view" id="reloadview"></input></div>
-<br>
-<div><input type="button" value="Kill web process" id="killpage"></input></div>
-<br>
-<div><input type="button" value="Kill UI process" id="killapp"></input></div>
-<br>
 <script>
-killapp.addEventListener("click", () => {
-    if (window.webkit)
-        webkit.messageHandlers.app.postMessage("killapp");
-});
-
-killpage.addEventListener("click", () => {
-    if (window.webkit)
-        webkit.messageHandlers.app.postMessage("killpage");
-});
-
-reloadview.addEventListener("click", () => {
-    if (window.webkit)
-        webkit.messageHandlers.app.postMessage("reloadview");
-});
-
-reloadpage.addEventListener("click", () => {
-    if (window.webkit)
-        webkit.messageHandlers.app.postMessage("reloadpage");
-});
-
 function flashMessage(message, color, form) {
     let div = document.createElement("div");
     let code = document.createElement("code");
