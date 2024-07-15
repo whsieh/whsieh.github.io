@@ -1,0 +1,41 @@
+<!DOCTYPE>
+<html>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<head>
+<script>
+    const lastVisitKey = "lv";
+    addEventListener("load", () => {
+        let allCookies = {};
+        document.cookie.split(";").map(component => {
+            const keyAndValue = component.trim().split("=");
+            if (keyAndValue.length === 1)
+                allCookies[keyAndValue] = "";
+            else
+                allCookies[keyAndValue[0]] = keyAndValue[1];
+        });
+        if (lastVisitKey in allCookies)
+            document.querySelector("time").textContent = allCookies[lastVisitKey];
+        document.cookie = `${lastVisitKey}=${String(new Date)}`;
+    });
+</script>
+<style>
+html {
+    font-family: system-ui;
+    font-size: 16px;
+}
+
+time {
+    font-weight: bold;
+}
+
+iframe {
+    width: 300px;
+    height: 100px;
+}
+</style>
+</head>
+<body>
+    <p>Your last visit was on <time>N/A</time></p>
+    <iframe src="https://pcm-test-server.herokuapp.com/third-party-script-cookies.html"></iframe>
+</body>
+</html>
