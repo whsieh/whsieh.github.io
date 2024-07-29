@@ -12,8 +12,11 @@ addEventListener("load", () => {
         flash("touchstart", "red");
     });
     target.addEventListener("touchmove", (event) => {
-        event.preventDefault();
-        flash("touchmove prevented", "orange");
+        if (document.getElementById("prevent-touchmove").checked) {
+            event.preventDefault();
+            flash("touchmove prevented", "orange");
+        } else
+            flash("touchmove", "orange");
     });
     target.addEventListener("touchend", (event) => {
         flash("touchend", "yellow");
@@ -38,7 +41,6 @@ function flash(message, color, fontWeight) {
 <style>
 body {
     font-family: system-ui;
-    margin: 0;
 }
 
 #target {
@@ -46,11 +48,11 @@ body {
     border-radius: 4px;
     background-color: black;
     width: 320px;
-    height: 320px;
+    height: 280px;
     overflow: scroll;
-    line-height: 1.5em;
     text-align: justify;
     position: relative;
+    margin-bottom: 1em;
 }
 
 .tall {
@@ -61,22 +63,26 @@ body {
 
 .flash {
     position: absolute;
-    bottom: 10px;
+    top: 0px;
     left: 10px;
     font-size: 20px;
     transition: 2s cubic-bezier(0.5, 0, 0, 0);
 }
 
 .flash-begin {
-    transform: translateY(-300px);
+    transform: translateY(250px);
     opacity: 0;
+}
+
+input {
+    font-size: 16px;
 }
 </style>
 </head>
 <body>
-    <h3>preventDefault is called for all touchmove events below</h3>
     <div id="target">
         <div class="tall"></div>
     </div>
+    <div><input type="checkbox" checked id="prevent-touchmove"><label for="prevent-touchmove">&nbsp;Prevent touchmove</label></div>
 </body>
 </html>
