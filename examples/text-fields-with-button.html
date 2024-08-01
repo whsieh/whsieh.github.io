@@ -62,7 +62,7 @@ addEventListener("load", () => {
         event.preventDefault();
     };
 
-    for (const event of ["touchstart", "touchend", "mousedown", "click"])
+    for (const event of ["touchend", "mousedown", "click"])
         outerContainer.addEventListener(event, preventDefaultUnlessTargetIsInput);
 });
 </script>
