@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body, html {
+    font-size: 16px;
+    font-family: system-ui;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.container {
+    margin: 1em auto;
+}
+
+.outer-container {
+    width: 100%;
+}
+
+input {
+    font-size: 16px;
+    border: 1px solid lightgray;
+    border-radius: 22px;
+    width: 250px;
+    height: 24px;
+    padding: 1em;
+    outline: none;
+}
+
+button {
+    color: white;
+    background-color: rgb(90, 200, 250);
+    width: 250px;
+    height: 44px;
+    font-size: 20px;
+    border: none;
+    border-radius: 20px;
+}
+
+button:hover {
+    background-color: rgb(70, 180, 220);
+}
+
+hr {
+    width: 100%;
+    height: 0.5px;
+    margin: 2em 0;
+}
+</style>
+<script>
+addEventListener("load", () => {
+    let outerContainer = document.querySelector(".outer-container");
+    let preventDefaultUnlessTargetIsInput = event => {
+        const tag = event.target?.tagName;
+        if (["INPUT", "BUTTON"].includes(tag))
+            return;
+
+        console.log(`Preventing ${event.type}`);
+        event.preventDefault();
+    };
+
+    for (const event of ["touchstart", "touchend", "mousedown", "click"])
+        outerContainer.addEventListener(event, preventDefaultUnlessTargetIsInput);
+});
+</script>
+</head>
+<body>
+    <h2>Enter your name</h2>
+    <hr>
+    <div class="outer-container">
+        <div class="container">
+            <input type="text" autocomplete="none" spellcheck="false" placeholder="First name">
+        </div>
+        <div class="container">
+            <input type="text" autocomplete="none" spellcheck="false" placeholder="Last name">
+        </div>
+        <div class="container">
+            <button>Sign Up</button>
+        </div>
+    </div>
+</body>
+</html>
