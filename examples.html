@@ -86,7 +86,7 @@ function recursivelyUpdateRecentPagesForCommits(commitInfos, limit, delay)
 }
 
 (() => {
-    fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/contents/${examplesDirectoryName}?ref=master`, examples => {
+    fetchJSONFromURL(`${apiRoot}/repos/${username}/${repository}/contents/${examplesDirectoryName}?ref=main`, examples => {
         let allExamplePages = examples.map(exampleInfo => exampleInfo.path).filter(name => name.endsWith(".html"));
         for (let examplePage of allExamplePages)
             all.appendChild(makeLinkContainer(`${urlRoot}/${examplePage}`, examplePage));
