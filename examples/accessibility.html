@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @media (inverted-colors: none) {
+            .inverted-colors--inactive {
+                visibility: visible;
+            }
+
+            .inverted-colors--active {
+                visibility: hidden;
+            }
+        }
+
+        @media (inverted-colors: inverted) {
+            .inverted-colors--active {
+                visibility: visible;
+            }
+
+            .inverted-colors--inactive {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .motion--inactive {
+                visibility: visible;
+            }
+
+            .motion--active {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .motion--active {
+                visibility: visible;
+            }
+
+            .motion--inactive {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-contrast: no-preference) {
+            .contrast--inactive {
+                visibility: visible;
+            }
+
+            .contrast--less {
+                visibility: hidden;
+            }
+
+            .contrast--active {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-contrast: less) {
+            .contrast--less {
+                visibility: visible;
+            }
+
+            .contrast--inactive {
+                visibility: hidden;
+            }
+
+            .contrast--more {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-contrast: more) {
+            .contrast--active {
+                visibility: visible;
+            }
+
+            .contrast--inactive {
+                visibility: hidden;
+            }
+
+            .contrast--less {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-reduced-transparency: no-preference) {
+            .transparency--inactive {
+                visibility: visible;
+            }
+
+            .transparency--active {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-reduced-transparency: reduce) {
+            .transparency--active {
+                visibility: visible;
+            }
+
+            .transparency--inactive {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .color_scheme--inactive {
+                visibility: visible;
+            }
+
+            .color_scheme--active {
+                visibility: hidden;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .color_scheme--active {
+                visibility: visible;
+            }
+
+            .color_scheme--inactive {
+                visibility: hidden;
+            }
+        }
+
+        /* @media (filter: grayscale(0)) { */
+        @media (monochrome: 0) {
+
+            .grayscale--inactive {
+                visibility: visible;
+            }
+
+            .grayscale--active {
+                visibility: hidden;
+            }
+        }
+
+        /* @media (filter: grayscale(1)) { */
+        @media (monochrome) {
+
+            .grayscale--inactive {
+                visibility: hidden;
+            }
+
+            .grayscale--active {
+                visibility: visible;
+            }
+        }
+
+        .button--borderless {
+            border: 0;
+            background: none;
+        }
+
+        body {
+            padding: 10px;
+        }
+        * {
+            font-family: sans-serif;
+        }
+
+        .table {
+            display: flex;
+            flex-flow: column nowrap;
+            flex: 1 1 auto;
+        }
+
+        .tr {
+            width: 100%;
+            display: flex;
+            flex-flow: row nowrap;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .td {
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Web Accessibility Settings - Automation Testing UIs</h1>
+    <div class="table">
+        <div class="tr">
+            <div class="td">
+                <h2>Invert Colors (kAXSInvertColorsEnabledPreference)</h2>
+                <p class="status">Status: ✅ Testable with media query</p>
+                <p class="inverted-colors--active">Invert Display Color Active</p>
+                <p class="inverted-colors--inactive">Invert Display Color Inactive</p>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <h2>Reduce Motion (kAXSReduceMotionPreference)</h2>
+                <p class="status">Status: ✅ Testable with media query</p>
+                <p class="motion--active">Reduce Motion Active</p>
+                <p class="motion--inactive">Reduce Motion Inactive</p>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <h2>Color Scheme (kAXSDarkenSystemColorsEnabledPreference)</h2>
+                <p class="status">Status: ✅ Testable with media query</p>
+                <p class="color_scheme--active">Color Scheme Active</p>
+                <p class="color_scheme--inactive">Color Scheme Inactive</p>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <h2>Increase Contrast</h2>
+                <p class="status">Status: ⚠️ Testable with media query</p>
+                <p class="contrast--active">Increase Contrast Active</p>
+                <!-- <p class="contrast--less">Prefers less contrast</p> -->
+                <p class="contrast--inactive">Increase Contrast Inactive</p>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <h2>Grayscale (kAXSGrayscaleEnabledPreference)</h2>
+                <p class="status">Status: ⛔️ No media query available - `@media (monochrome)` does not reflect grayscale
+                    preference from Accessibility &gt; Display &gt; Color Filter &gt; Grayscale</p>
+                <p class="grayscale--active">Grayscale Active</p>
+                <p class="grayscale--inactive">Grayscale Inactive</p>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <h2>Reduce Transparency</h2>
+                <p class="status">
+                    Status: ⛔️ No media query available;
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-transparency">prefers-reduced-transparency</a>
+                    not yet supported in WebKit (or any other rendering engine)
+                </p>
+                <p class="transparency--active">Reduce Transparency Active</p>
+                <p class="transparency--inactive">Reduce Transparency Inactive</p>
+            </div>
+        </div>
+        <div class="tr">
+            <div class="td">
+                <h2>Differentiate Without Color</h2>
+                <p class="status">Status: ⛔️ No media query available</p>
+                <p>Differentiate Without Color Active</p>
+                <p>Differentiate Without Color Inactive</p>
+            </div>
+        </div>
+    </div>
+
+
+
+</body></html>
