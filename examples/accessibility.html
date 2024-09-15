@@ -4,47 +4,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @media (inverted-colors: none) {
-            .inverted-colors--inactive {
+            .inverted-colors-inactive {
+                color: red;
                 visibility: visible;
             }
 
-            .inverted-colors--active {
+            .inverted-colors-active {
+                color: green;
                 visibility: hidden;
             }
         }
 
         @media (inverted-colors: inverted) {
-            .inverted-colors--active {
+            .inverted-colors-active {
+                color: green;
                 visibility: visible;
             }
 
-            .inverted-colors--inactive {
+            .inverted-colors-inactive {
+                color: red;
                 visibility: hidden;
             }
         }
 
         @media (prefers-reduced-motion: no-preference) {
-            .motion--inactive {
+            .motion-inactive {
+                color: red;
                 visibility: visible;
             }
 
-            .motion--active {
+            .motion-active {
+                color: green;
                 visibility: hidden;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .motion--active {
+            .motion-active {
+                color: green;
                 visibility: visible;
             }
 
-            .motion--inactive {
+            .motion-inactive {
+                color: red;
                 visibility: hidden;
             }
         }
 
         @media (prefers-contrast: no-preference) {
-            .contrast--inactive {
+            .contrast-inactive {
+                color: red;
                 visibility: visible;
             }
 
@@ -52,7 +61,8 @@
                 visibility: hidden;
             }
 
-            .contrast--active {
+            .contrast-active {
+                color: green;
                 visibility: hidden;
             }
         }
@@ -62,7 +72,8 @@
                 visibility: visible;
             }
 
-            .contrast--inactive {
+            .contrast-inactive {
+                color: red;
                 visibility: hidden;
             }
 
@@ -72,11 +83,13 @@
         }
 
         @media (prefers-contrast: more) {
-            .contrast--active {
+            .contrast-active {
+                color: green;
                 visibility: visible;
             }
 
-            .contrast--inactive {
+            .contrast-inactive {
+                color: red;
                 visibility: hidden;
             }
 
@@ -85,42 +98,26 @@
             }
         }
 
-        @media (prefers-reduced-transparency: no-preference) {
-            .transparency--inactive {
-                visibility: visible;
-            }
-
-            .transparency--active {
-                visibility: hidden;
-            }
-        }
-
-        @media (prefers-reduced-transparency: reduce) {
-            .transparency--active {
-                visibility: visible;
-            }
-
-            .transparency--inactive {
-                visibility: hidden;
-            }
-        }
-
         @media (prefers-color-scheme: light) {
-            .color_scheme--inactive {
+            .color_scheme-inactive {
+                color: red;
                 visibility: visible;
             }
 
-            .color_scheme--active {
+            .color_scheme-active {
+                color: green;
                 visibility: hidden;
             }
         }
 
         @media (prefers-color-scheme: dark) {
-            .color_scheme--active {
+            .color_scheme-active {
+                color: green;
                 visibility: visible;
             }
 
-            .color_scheme--inactive {
+            .color_scheme-inactive {
+                color: red;
                 visibility: hidden;
             }
         }
@@ -128,11 +125,13 @@
         /* @media (filter: grayscale(0)) { */
         @media (monochrome: 0) {
 
-            .grayscale--inactive {
+            .grayscale-inactive {
+                color: red;
                 visibility: visible;
             }
 
-            .grayscale--active {
+            .grayscale-active {
+                color: green;
                 visibility: hidden;
             }
         }
@@ -140,11 +139,13 @@
         /* @media (filter: grayscale(1)) { */
         @media (monochrome) {
 
-            .grayscale--inactive {
+            .grayscale-inactive {
+                color: red;
                 visibility: hidden;
             }
 
-            .grayscale--active {
+            .grayscale-active {
+                color: green;
                 visibility: visible;
             }
         }
@@ -157,82 +158,37 @@
         body {
             padding: 10px;
         }
+
         * {
             font-family: sans-serif;
         }
 
-        .table {
-            display: flex;
-            flex-flow: column nowrap;
-            flex: 1 1 auto;
+        div.setting {
+            margin: 1em;
         }
 
-        .tr {
-            width: 100%;
-            display: flex;
-            flex-flow: row nowrap;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .td {
-            padding: 20px 0;
+        span.title {
+            font-size: 18px;
+            width: 180px;
+            display: inline-block;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <h1>Web Accessibility Settings - Automation Testing UIs</h1>
-    <div class="table">
-        <div class="tr">
-            <div class="td">
-                <h2>Invert Colors (kAXSInvertColorsEnabledPreference)</h2>
-                <p class="inverted-colors--active">Invert Display Color Active</p>
-                <p class="inverted-colors--inactive">Invert Display Color Inactive</p>
-            </div>
-        </div>
-        <div class="tr">
-            <div class="td">
-                <h2>Reduce Motion (kAXSReduceMotionPreference)</h2>
-                <p class="motion--active">Reduce Motion Active</p>
-                <p class="motion--inactive">Reduce Motion Inactive</p>
-            </div>
-        </div>
-        <div class="tr">
-            <div class="td">
-                <h2>Color Scheme (kAXSDarkenSystemColorsEnabledPreference)</h2>
-                <p class="color_scheme--active">Color Scheme Active</p>
-                <p class="color_scheme--inactive">Color Scheme Inactive</p>
-            </div>
-        </div>
-        <div class="tr">
-            <div class="td">
-                <h2>Increase Contrast</h2>
-                <p class="contrast--active">Increase Contrast Active</p>
-                <!-- <p class="contrast--less">Prefers less contrast</p> -->
-                <p class="contrast--inactive">Increase Contrast Inactive</p>
-            </div>
-        </div>
-        <div class="tr">
-            <div class="td">
-                <h2>Grayscale (kAXSGrayscaleEnabledPreference)</h2>
-                <p class="grayscale--active">Grayscale Active</p>
-                <p class="grayscale--inactive">Grayscale Inactive</p>
-            </div>
-        </div>
-        <div class="tr">
-            <div class="td">
-                <h2>Reduce Transparency</h2>
-                <p class="transparency--active">Reduce Transparency Active</p>
-                <p class="transparency--inactive">Reduce Transparency Inactive</p>
-            </div>
-        </div>
-        <div class="tr">
-            <div class="td">
-                <h2>Differentiate Without Color</h2>
-                <p>Differentiate Without Color Active</p>
-                <p>Differentiate Without Color Inactive</p>
-            </div>
-        </div>
+    <h1>Accessibility Settings</h1>
+    <div class="setting">
+        <span class="title">Increase Contrast</span><span class="contrast-active">Active</span><span class="contrast-inactive">Inactive</span></h2>
+    </div>
+    <div class="setting">
+        <span class="title">Reduce Motion</span><span class="motion-active">Active</span><span class="motion-inactive">Inactive</span></h2>
+    </div>
+    <div class="setting">
+        <span class="title">Invert Colors</span><span class="inverted-colors-active">Active</span><span class="inverted-colors-inactive">Inactive</span></h2>
+    </div>
+    <div class="setting">
+        <span class="title">Grayscale</span><span class="grayscale-active">Active</span><span class="grayscale-inactive">Inactive</span></h2>
     </div>
 
 
