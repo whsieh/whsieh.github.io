@@ -6,119 +6,119 @@
         @media (inverted-colors: none) {
             .inverted-colors-inactive {
                 color: red;
-                visibility: visible;
+                display: inline;
             }
 
             .inverted-colors-active {
                 color: green;
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (inverted-colors: inverted) {
             .inverted-colors-active {
                 color: green;
-                visibility: visible;
+                display: inline;
             }
 
             .inverted-colors-inactive {
                 color: red;
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-reduced-motion: no-preference) {
             .motion-inactive {
                 color: red;
-                visibility: visible;
+                display: inline;
             }
 
             .motion-active {
                 color: green;
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .motion-active {
                 color: green;
-                visibility: visible;
+                display: inline;
             }
 
             .motion-inactive {
                 color: red;
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-contrast: no-preference) {
             .contrast-inactive {
                 color: red;
-                visibility: visible;
+                display: inline;
             }
 
             .contrast--less {
-                visibility: hidden;
+                display: none;
             }
 
             .contrast-active {
                 color: green;
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-contrast: less) {
             .contrast--less {
-                visibility: visible;
+                display: inline;
             }
 
             .contrast-inactive {
                 color: red;
-                visibility: hidden;
+                display: none;
             }
 
             .contrast--more {
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-contrast: more) {
             .contrast-active {
                 color: green;
-                visibility: visible;
+                display: inline;
             }
 
             .contrast-inactive {
                 color: red;
-                visibility: hidden;
+                display: none;
             }
 
             .contrast--less {
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-color-scheme: light) {
             .color_scheme-inactive {
                 color: red;
-                visibility: visible;
+                display: inline;
             }
 
             .color_scheme-active {
                 color: green;
-                visibility: hidden;
+                display: none;
             }
         }
 
         @media (prefers-color-scheme: dark) {
             .color_scheme-active {
                 color: green;
-                visibility: visible;
+                display: inline;
             }
 
             .color_scheme-inactive {
                 color: red;
-                visibility: hidden;
+                display: none;
             }
         }
 
@@ -127,12 +127,12 @@
 
             .grayscale-inactive {
                 color: red;
-                visibility: visible;
+                display: inline;
             }
 
             .grayscale-active {
                 color: green;
-                visibility: hidden;
+                display: none;
             }
         }
 
@@ -141,12 +141,12 @@
 
             .grayscale-inactive {
                 color: red;
-                visibility: hidden;
+                display: none;
             }
 
             .grayscale-active {
                 color: green;
-                visibility: visible;
+                display: inline;
             }
         }
 
@@ -173,11 +173,15 @@
             display: inline-block;
             font-weight: bold;
         }
+
+        h2 {
+            margin: 0;
+        }
     </style>
 </head>
 
 <body>
-    <h1>Accessibility Settings</h1>
+    <h2>Accessibility Settings</h2>
     <div class="setting">
         <span class="title">Increase Contrast</span><span class="contrast-active">Active</span><span class="contrast-inactive">Inactive</span></h2>
     </div>
