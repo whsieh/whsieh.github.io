@@ -40,6 +40,15 @@ label, input {
     right: 1em;
     text-align: right;
 }
+
+.nested-container {
+    width: 250px;
+    height: 250px;
+    padding: 1em;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    border: 1px solid gray;
+}
 </style>
 <script>
 addEventListener("load", () => {
@@ -71,13 +80,48 @@ addEventListener("load", () => {
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+        <h2>Nested overflow</h2>
+        <div class='nested-container'>
+            <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+            <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+            <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+        </div>
     </div>
     <h2>Subframe</h2>
-    <iframe class="container" srcdoc="<head><style>body { font-family: system-ui; width: 100%; height: 100%; font-size: 16px; padding: 1em; margin: 0; box-sizing: border-box; }</style></head>
+    <iframe class="container" srcdoc="
+        <head>
+            <style>
+            body {
+                font-family: system-ui;
+                width: 100%;
+                height: 100%;
+                font-size: 16px;
+                padding: 1em;
+                margin: 0;
+                box-sizing: border-box;
+                line-height: 1.5em;
+            }
+
+            .container {
+                width: 250px;
+                height: 250px;
+                padding: 1em;
+                box-sizing: border-box;
+                overflow-y: scroll;
+                border: 1px solid gray;
+            }
+            </style>
+        </head>
         <body>
             <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
             <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
             <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+            <h2>Nested overflow</h2>
+            <div class='container'>
+                <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+                <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+                <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+            </div>
         </body>">
     </iframe>
     <div class="settings">
