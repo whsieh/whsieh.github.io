@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: system-ui;
+        }
+
+        input:not([type='submit'], [type='reset']) {
+            width: 150px;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <p><strong>The following text fields only allow AutoFill</strong></p>
+    <form class="data">
+        <label for="first">First Name:</label>
+        <input name="first" id="first"><br>
+        <label for="last">Last Name:</label>
+        <input name="last" id="last"><br>
+        <br>
+        <input type="submit">
+        <input type="reset">
+    </form>
+    <script>
+        function shouldAllowInputEvent(event) {
+            return !event.inputType?.startsWith("insert")
+                || (event.data.length > 1 && !["insertFromPaste", "insertFromDrop"].includes(event.inputType));
+        }
+
+        for (let textField of [...document.querySelectorAll("#first, #last")]) {
+            textField.addEventListener("beforeinput", (event) => {
+                if (!shouldAllowInputEvent(event))
+                    event.preventDefault();
+            });
+            textField.addEventListener("keydown", event => event.preventDefault());
+        }
+    </script>
+</body>
+
+</html>
