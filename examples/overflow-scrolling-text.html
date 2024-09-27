@@ -9,6 +9,7 @@ body, html {
     width: 100%;
     height: 3000px;
     font-size: 16px;
+    margin: 0;
 }
 
 .container {
@@ -26,6 +27,10 @@ body, html {
 
 div.container {
     padding: 1em;
+}
+
+div.container, iframe {
+    margin-left: 2em;
 }
 
 label, input {
@@ -54,6 +59,10 @@ label, input {
     -webkit-user-select: none;
     user-select: none;
 }
+
+h2 {
+    margin: 1em;
+}
 </style>
 <script>
 addEventListener("load", () => {
@@ -69,8 +78,8 @@ addEventListener("load", () => {
 
     fixedSwitch.addEventListener("change", () => {
         if (fixedSwitch.checked) {
-            overflowContainer.style = "position: fixed; top: 0; left: 0;";
-            subframe.style = "position: fixed; top: 310px; left: 0;";
+            overflowContainer.style = "position: fixed; top: 0; left: 0; margin-left: 0;";
+            subframe.style = "position: fixed; top: 310px; left: 0; margin-left: 0;";
         } else {
             overflowContainer.style = "position: static;";
             subframe.style = "position: static;";
