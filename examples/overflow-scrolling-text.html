@@ -11,10 +11,11 @@ body, html {
     font-size: 16px;
     margin: 0;
     background-color: #eee;
+    overflow-x: hidden;
 }
 
 .container {
-    width: 300px;
+    width: calc(min(80%, 450px));
     height: 400px;
     border-radius: 6px;
     box-sizing: border-box;
@@ -25,12 +26,13 @@ body, html {
     outline: none;
 }
 
-div.container {
-    padding: 1em;
+.container, iframe {
+    margin: 0 auto;
+    display: block;
 }
 
-div.container, iframe {
-    margin-left: 2em;
+div.container {
+    padding: 1em;
 }
 
 label, input {
@@ -50,7 +52,7 @@ label, input {
 }
 
 .nested-container {
-    width: 250px;
+    width: 90%;
     height: 250px;
     padding: 1em;
     box-sizing: border-box;
@@ -63,8 +65,16 @@ label, input {
     user-select: none;
 }
 
-h2 {
+h2, h3 {
     margin: 1em;
+    text-align: center;
+}
+
+hr {
+    margin: 2em 0;
+    width: 100%;
+    color: lightgray;
+    box-sizing: border-box;
 }
 </style>
 <script>
@@ -73,6 +83,7 @@ addEventListener("load", () => {
     let editableSwitch = document.getElementById("editable-switch");
     let overflowContainer = document.querySelector("div.container");
     let subframe = document.querySelector("iframe");
+    let divider = document.querySelector("hr");
 
     editableSwitch.addEventListener("change", () => {
         overflowContainer.contentEditable = editableSwitch.checked;
@@ -82,10 +93,12 @@ addEventListener("load", () => {
     fixedSwitch.addEventListener("change", () => {
         if (fixedSwitch.checked) {
             overflowContainer.style = "position: fixed; top: 0; left: 0; margin-left: 0;";
-            subframe.style = "position: fixed; top: 310px; left: 0; margin-left: 0;";
+            subframe.style = "position: fixed; top: 410px; left: 0; margin-left: 0;";
+            divider.style = "display: none;"
         } else {
             overflowContainer.style = "position: static;";
             subframe.style = "position: static;";
+            divider.style = "display: block;"
         }
     });
 });
@@ -97,7 +110,7 @@ addEventListener("load", () => {
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
-        <h2>Nested overflow</h2>
+        <h3>Nested overflow</h3>
         <div class='nested-container'>
             <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
             <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
@@ -107,6 +120,7 @@ addEventListener("load", () => {
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
     </div>
+    <hr>
     <h2 class="nonselectable">Subframe</h2>
     <iframe frameborder="0" class="container" srcdoc="
         <head>
@@ -123,12 +137,16 @@ addEventListener("load", () => {
             }
 
             .container {
-                width: 250px;
+                width: 90%;
                 height: 250px;
                 padding: 1em;
                 box-sizing: border-box;
                 overflow-y: scroll;
                 border: 1px solid gray;
+            }
+
+            h3 {
+                text-align: center;
             }
             </style>
         </head>
@@ -136,7 +154,7 @@ addEventListener("load", () => {
             <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
             <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
             <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
-            <h2>Nested overflow</h2>
+            <h3>Nested overflow</h3>
             <div class='container'>
                 <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
                 <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
