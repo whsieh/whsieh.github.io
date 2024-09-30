@@ -24,11 +24,17 @@ body, html {
     z-index: 1;
     background-color: white;
     outline: none;
-}
-
-.container, iframe {
     margin: 0 auto;
     display: block;
+}
+
+.container, .settings {
+    box-shadow:
+        0 1px 1px hsl(0deg 0% 0% / 0.08),
+        0 2px 2px hsl(0deg 0% 0% / 0.08),
+        0 4px 4px hsl(0deg 0% 0% / 0.08),
+        0 8px 8px hsl(0deg 0% 0% / 0.08),
+        0 16px 16px hsl(0deg 0% 0% / 0.08);
 }
 
 div.container {
@@ -49,6 +55,7 @@ label, input {
     border-radius: 6px;
     background-color: white;
     border: 1px solid lightgray;
+    z-index: 1000;
 }
 
 .nested-container {
@@ -84,16 +91,19 @@ addEventListener("load", () => {
     let overflowContainer = document.querySelector("div.container");
     let subframe = document.querySelector("iframe");
     let divider = document.querySelector("hr");
+    let titles = [...document.querySelectorAll("h2")];
 
     function applySettings() {
         if (fixedSwitch.checked) {
             overflowContainer.style = "position: fixed; top: 0; left: 0; margin-left: 0;";
             subframe.style = "position: fixed; top: 410px; left: 0; margin-left: 0;";
-            divider.style = "display: none;"
+            divider.style = "display: none;";
+            titles.map(title => title.style = "display: none;");
         } else {
             overflowContainer.style = "position: static;";
             subframe.style = "position: static;";
-            divider.style = "display: block;"
+            divider.style = "display: block;";
+            titles.map(title => title.style = "display: block;");
         }
         overflowContainer.contentEditable = editableSwitch.checked;
         subframe.contentDocument.designMode = editableSwitch.checked ? "on" : "off";
