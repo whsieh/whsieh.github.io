@@ -118,6 +118,10 @@ addEventListener("load", () => {
         subframe.contentDocument.designMode = editableSwitch.checked ? "on" : "off";
     }
 
+    document.body.addEventListener("click", event => {
+        // Empty click event handler to make the keyboard dismiss when tapping elsewhere.
+    });
+
     editableSwitch.addEventListener("change", applySettings);
     fixedSwitch.addEventListener("change", applySettings);
 
