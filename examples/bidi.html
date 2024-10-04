@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<head>
+<style>
+body, html {
+    font-family: system-ui;
+    width: 100%;
+    height: 3000px;
+    font-size: 16px;
+    margin: 0;
+    background-color: #eee;
+    overflow-x: hidden;
+}
+
+.container {
+    width: calc(min(80%, 600px));
+    border-radius: 6px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    line-height: 1.8em;
+    z-index: 1;
+    background-color: white;
+    outline: none;
+    margin: 0 auto;
+    display: block;
+    margin-top: 1em;
+}
+
+.container, .settings {
+    box-shadow:
+        0 1px 1px hsl(0deg 0% 0% / 0.08),
+        0 2px 2px hsl(0deg 0% 0% / 0.08),
+        0 4px 4px hsl(0deg 0% 0% / 0.08),
+        0 8px 8px hsl(0deg 0% 0% / 0.08),
+        0 16px 16px hsl(0deg 0% 0% / 0.08);
+}
+
+div.container {
+    padding: 1.5em;
+}
+
+.settings {
+    padding: 1em;
+    position: fixed;
+    display: inline-block;
+    bottom: 1em;
+    right: 1em;
+    text-align: right;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid lightgray;
+    z-index: 1000;
+}
+</style>
+<script>
+addEventListener("load", () => {
+    let editableSwitch = document.getElementById("editable-switch");
+    let container = document.querySelector("div.container");
+
+    function applySettings() {
+        container.contentEditable = editableSwitch.checked;
+    }
+
+    document.body.addEventListener("click", event => {
+        // Empty click event handler to make the keyboard dismiss when tapping elsewhere.
+    });
+
+    editableSwitch.addEventListener("change", applySettings);
+    applySettings();
+});
+</script>
+</head>
+<body>
+    <title>BiDi Text Example 1</title>
+    <div class="container">
+        <p>English text is written left to right, which is typical for most Western languages. For example, “The quick brown fox jumps over the lazy dog.” However, Arabic text, مثل هذا النص, is written from right to left. This difference in directionality creates unique challenges in typography and text layout, particularly when both types of text are used together.</p>
+        <p>Imagine a document where both English and Arabic are combined: “The quick brown fox, والثعلب السريع البني.” Notice how the direction changes dynamically as you switch between languages. This seamless integration is important for a natural reading experience in multilingual documents.</p>
+        <p>In addition to Arabic, other languages like Hebrew, כתיבה עברית, also follow the right-to-left pattern. This is often handled using Unicode standards, where bidirectional text processing ensures that text from different languages aligns correctly. For example, “She sells sea shells by the sea shore, ומוכרת צדפים ליד החוף.” Proper layout systems detect the language and adjust the direction of flow accordingly.</p>
+        <p>Bidirectional text layout algorithms ensure that punctuation, numbers, and other symbols are properly aligned regardless of the language direction. For instance, “He scored 100 points, וניצח את המשחק.” or “הוא קיבל 100 נקודות, and won the game.” These examples show how essential it is for text systems to correctly interpret the direction of adjacent texts.</p>
+    </div>
+    <div class="settings">
+        <label for="editable-switch">Editable </label><input type=checkbox switch id="editable-switch">
+    </div>
+</body>
+</html>
