@@ -59,11 +59,15 @@ label, input {
 span.rtl {
     direction: rtl;
     unicode-bidi: bidi-override;
-    font-weight: bold;
+    color: rgb(255, 59, 48);
 }
 
-h2 {
+h2, h5 {
     text-align: center;
+}
+
+h5 {
+    margin-top: 0;
 }
 </style>
 <script>
@@ -87,6 +91,7 @@ addEventListener("load", () => {
 <body>
     <title>BiDi Text Example 2</title>
     <h2>bidi-override</h2>
+    <h5>Right-to-left text in <span class="rtl">der</span></h5>
     <div class="container">
         <p>Here’s to the crazy ones. <span class="rtl">The misfits. The rebels.</span> The troublemakers. The round pegs in the square holes. <span class="rtl">The ones who see things differently.</span> They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, <span class="rtl">glorify or vilify them</span>. About the only thing you can’t do is ignore them.</p>
