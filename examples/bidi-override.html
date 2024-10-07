@@ -56,9 +56,17 @@ label, input {
     vertical-align: middle;
 }
 
-span.rtl {
+.rtl {
     direction: rtl;
     unicode-bidi: bidi-override;
+}
+
+.ltr {
+    direction: ltr;
+    unicode-bidi: bidi-override;
+}
+
+.red {
     color: rgb(255, 59, 48);
 }
 
@@ -89,19 +97,20 @@ addEventListener("load", () => {
 </script>
 </head>
 <body>
-    <title>BiDi Text Example 2</title>
-    <h2>bidi-override</h2>
-    <h5>Right-to-left text in <span class="rtl">der</span></h5>
+    <title>BiDi Overrides</title>
+    <h2>Left to right</h2>
+    <h5>Right-to-left text in <span class="red">red</span></h5>
     <div class="container">
-        <p>Here’s to the crazy ones. <span class="rtl">The misfits. The rebels.</span> The troublemakers. The round pegs in the square holes. <span class="rtl">The ones who see things differently.</span> They’re not fond of rules. And they have no respect for the status quo.</p>
-        <p>You can quote them, disagree with them, <span class="rtl">glorify or vilify them</span>. About the only thing you can’t do is ignore them.</p>
-        <p><span class="rtl">Because they change things.</span> They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, <span class="rtl">are the ones who do.</span></p>
+        <p>Here’s to the crazy ones. <span class="rtl red">The misfits. The rebels.</span> The troublemakers. The round pegs in the square holes. <span class="rtl red">The ones who see things differently.</span> They’re not fond of rules. And they have no respect for the status quo.</p>
+        <p>You can quote them, disagree with them, <span class="rtl red">glorify or vilify them</span>. About the only thing you can’t do is ignore them.</p>
+        <p><span class="rtl red">Because they change things.</span> They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, <span class="rtl red">are the ones who do.</span></p>
     </div>
-    <h2>dir=rtl</h2>
-    <div class="container" dir="rtl">
-        <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
-        <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
-        <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    <h2>Right to left</h2>
+    <h5>Left-to-right text in <span class="red">red</span></h5>
+    <div class="container">
+        <p class="rtl">Here’s to the crazy ones. <span class="ltr red">The misfits. The rebels.</span> The troublemakers. The round pegs in the square holes. <span class="ltr red">The ones who see things differently.</span> They’re not fond of rules. And they have no respect for the status quo.</p>
+        <p class="rtl">You can quote them, disagree with them, <span class="ltr red">glorify or vilify them</span>. About the only thing you can’t do is ignore them.</p>
+        <p class="rtl"><span class="ltr red">Because they change things.</span> They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, <span class="ltr red">are the ones who do.</span></p>
     </div>
     <h2>Natural Text</h2>
     <div class="container">
