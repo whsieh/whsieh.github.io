@@ -81,10 +81,11 @@ h5 {
 <script>
 addEventListener("load", () => {
     let editableSwitch = document.getElementById("editable-switch");
-    let container = document.querySelector("div.container");
+    let containers = [...document.querySelectorAll("div.container")];
 
     function applySettings() {
-        container.contentEditable = editableSwitch.checked;
+        for (const container of containers)
+            container.contentEditable = editableSwitch.checked;
     }
 
     document.body.addEventListener("click", event => {
