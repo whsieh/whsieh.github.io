@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        let composited = true;
+
+        addEventListener("load", () => {
+            const button = document.querySelector("button");
+            const container = document.getElementById("container");
+
+            button.addEventListener("mousedown", (event) => {
+                composited = !composited;
+                container.style.position = composited ? "fixed" : "static";
+                button.textContent = composited ? "Composited" : "Not composited";
+                event.preventDefault();
+            });
+        });
+    </script>
+    <style>
+        body, html {
+            font-family: system-ui;
+            margin: 0;
+        }
+
+        input, button {
+            font-size: 18px;
+            outline: none;
+        }
+
+        section + section {
+            margin-top: 1em;
+        }
+
+        label, input {
+            vertical-align: middle;
+        }
+
+        #container {
+            width: 300px;
+            height: 200px;
+            border: 2px solid black;
+            border-radius: 1em;
+            padding: 1em;
+            position: fixed;
+            margin: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <section>
+            <input autofocus placeholder="Name" type="text" />
+        </section>
+        <section>
+            <button>Composited</button>
+        </section>
+    </div>
+</body>
+</html>
