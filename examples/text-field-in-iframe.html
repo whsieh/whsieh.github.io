@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: system-ui;
+}
+
+input {
+    width: 200px;
+    height: 1.5em;
+    padding: 0.5em;
+    font-size: 16px;
+    outline: none;
+    margin: 0.5em;
+    border: 0.5px solid gray;
+    border-radius: 1em;
+    box-shadow:
+        0 1px 1px hsl(0deg 0% 0% / 0.08),
+        0 2px 2px hsl(0deg 0% 0% / 0.08),
+        0 4px 4px hsl(0deg 0% 0% / 0.08);
+}
+
+iframe {
+    border: 1px solid tomato;
+    margin-top: 1em;
+}
+</style>
+</head>
+<body>
+    <div>
+        <h3>Text field in main frame</h3>
+        <input value="The quick brown fox jumped over the lazy dog.">
+    </div>
+    <iframe srcdoc="
+        <style>
+        input {
+            width: 200px;
+            height: 1.5em;
+            padding: 0.5em;
+            font-size: 16px;
+            outline: none;
+            margin: 0.5em;
+            border: 0.5px solid gray;
+            border-radius: 1em;
+            box-shadow:
+                0 1px 1px hsl(0deg 0% 0% / 0.08),
+                0 2px 2px hsl(0deg 0% 0% / 0.08),
+                0 4px 4px hsl(0deg 0% 0% / 0.08);
+        }
+        body, html {
+            font-family: system-ui;
+        }
+        </style>
+        <h3>Text field in subframe</h3>
+        <input value='The quick brown fox jumped over the lazy dog.' />"></iframe>
+</body>
+</html>
