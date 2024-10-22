@@ -34,7 +34,7 @@ iframe {
 <body>
     <div>
         <h3>Text field in main frame</h3>
-        <input value="The quick brown fox jumped over the lazy dog.">
+        <input id="main-input" value="The quick brown fox jumped over the lazy dog.">
     </div>
     <iframe srcdoc="
         <style>
@@ -57,6 +57,6 @@ iframe {
         }
         </style>
         <h3>Text field in subframe</h3>
-        <input value='The quick brown fox jumped over the lazy dog.' />"></iframe>
+        <input id='sub-input' value='The quick brown fox jumped over the lazy dog.' />"></iframe>
 </body>
 </html>
