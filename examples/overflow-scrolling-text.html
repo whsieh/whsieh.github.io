@@ -46,16 +46,21 @@ label, input {
 }
 
 .settings {
-    padding: 1em;
+    padding: 28px;
     position: fixed;
     display: inline-block;
-    bottom: 1em;
-    right: 1em;
-    text-align: right;
+    top: 10px;
+    left: 10px;
     border-radius: 6px;
     background-color: white;
     border: 1px solid lightgray;
     z-index: 1000;
+    width: 250px;
+    cursor: grab;
+}
+
+.settings > p {
+    cursor: text;
 }
 
 .nested-container {
@@ -98,25 +103,14 @@ input.textfield {
 </style>
 <script>
 addEventListener("load", () => {
-    let fixedSwitch = document.getElementById("fixed-switch");
     let editableSwitch = document.getElementById("editable-switch");
     let overflowContainer = document.querySelector("div.container");
     let subframe = document.querySelector("iframe");
     let divider = document.querySelector("hr");
     let titles = [...document.querySelectorAll("h2")];
+    let settings = document.querySelector(".settings");
 
     function applySettings() {
-        if (fixedSwitch.checked) {
-            overflowContainer.style = "position: fixed; top: 0; left: 0; margin-left: 0;";
-            subframe.style = "position: fixed; top: 410px; left: 0; margin-left: 0;";
-            divider.style = "display: none;";
-            titles.map(title => title.style = "display: none;");
-        } else {
-            overflowContainer.style = "position: static;";
-            subframe.style = "position: static;";
-            divider.style = "display: block;";
-            titles.map(title => title.style = "display: block;");
-        }
         overflowContainer.contentEditable = editableSwitch.checked;
         subframe.contentDocument.designMode = editableSwitch.checked ? "on" : "off";
     }
@@ -125,8 +119,43 @@ addEventListener("load", () => {
         // Empty click event handler to make the keyboard dismiss when tapping elsewhere.
     });
 
+    let isDragging = false;
+    let pointerDownLocation = { x: 0, y: 0 };
+    let containerOffset = { x: 0, y: 0 };
+
+    settings.addEventListener("touchstart", (event) => {
+        if (event.target === settings)
+            event.preventDefault();
+    });
+
+    document.body.addEventListener("pointerdown", (event) => {
+        if (event.target !== settings || isDragging)
+            return;
+
+        isDragging = true;
+        pointerDownLocation = { x: event.clientX, y: event.clientY };
+        containerOffset = {
+            x: parseInt(getComputedStyle(settings).left),
+            y: parseInt(getComputedStyle(settings).top)
+        };
+        event.preventDefault();
+    });
+
+    document.body.addEventListener("pointermove", (event) => {
+        if (!isDragging)
+            return;
+
+        let deltaX = event.clientX - pointerDownLocation.x;
+        let deltaY = event.clientY - pointerDownLocation.y;
+        settings.style.left = `${containerOffset.x + deltaX}px`;
+        settings.style.top = `${containerOffset.y + deltaY}px`;
+    });
+
+    document.body.addEventListener("pointerup", (event) => {
+        isDragging = false;
+    });
+
     editableSwitch.addEventListener("change", applySettings);
-    fixedSwitch.addEventListener("change", applySettings);
 
     applySettings();
 });
@@ -212,8 +241,7 @@ addEventListener("load", () => {
     </iframe>
     <div class="settings">
         <label for="editable-switch">Editable </label><input type=checkbox switch id="editable-switch">
-        <div><br></div>
-        <label for="fixed-switch">Fixed </label><input type=checkbox switch id="fixed-switch">
+        <p>Drag the edges of this container to reposition it.</p>
     </div>
 </body>
 </html>
