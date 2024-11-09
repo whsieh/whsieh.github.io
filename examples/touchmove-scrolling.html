@@ -11,6 +11,11 @@ html, body {
     line-height: 300%;
 }
 
+h1 {
+    box-sizing: border-box;
+    padding: 1em;
+}
+
 hr {
     width: 100%;
 }
@@ -44,13 +49,13 @@ addEventListener("load", () => {
             current = position;
         scrollStartTimerID = setTimeout(() => current = position, 100);
 
-        const max = Math.max(position, current);
-        const min = Math.min(position, current);
+        const delta = Math.max(position, current) - Math.min(position, current)
         const direction = (current > position) ? "up" : "down";
+        console.log(`Scrolling ${direction} by ${delta}`);
         if (direction === "up")
-            scrollTo(0, top + (max - min))
+            scrollTo(0, top + delta);
         else
-            scrollTo(0, top - (max - min))
+            scrollTo(0, top - delta);
     });
 });
 </script>
