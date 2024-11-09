@@ -26,10 +26,34 @@ hr {
     height: 3000px;
     display: inline-block;
 }
+
+.settings {
+    box-shadow:
+        0 1px 1px hsl(0deg 0% 0% / 0.08),
+        0 2px 2px hsl(0deg 0% 0% / 0.08),
+        0 4px 4px hsl(0deg 0% 0% / 0.08),
+        0 8px 8px hsl(0deg 0% 0% / 0.08),
+        0 16px 16px hsl(0deg 0% 0% / 0.08);
+    padding: 0 10px;
+    position: fixed;
+    display: inline-block;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid lightgray;
+    z-index: 1000;
+}
+
+label, input {
+    font-size: 16px;
+    vertical-align: middle;
+}
 </style>
 <script>
 addEventListener("load", () => {
     const container = document.querySelector(".container");
+    const scrollableSwitch = document.getElementById("scrollable-switch");
     let scrollStartTimerID = null;
     let startPosition = 0;
     container.addEventListener("touchstart", (event) => {
@@ -53,6 +77,9 @@ addEventListener("load", () => {
         const delta = Math.max(currentPosition, startPosition) - Math.min(currentPosition, startPosition)
         const direction = (startPosition > currentPosition) ? "up" : "down";
         console.log(`Scrolling ${direction} by ${delta}`);
+        if (!scrollableSwitch.checked)
+            return;
+
         if (direction === "up")
             scrollTo(0, top + delta);
         else
@@ -65,5 +92,8 @@ addEventListener("load", () => {
     <h1>Try to scroll by swiping on the container below</h1>
     <hr>
     <div class="container"></div>
+    <div class="settings">
+        <label for="scrollable-switch">Scrollable </label><input checked type=checkbox switch id="scrollable-switch">
+    </div>
 </body>
 </html>
