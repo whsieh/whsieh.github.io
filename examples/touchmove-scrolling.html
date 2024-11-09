@@ -75,12 +75,12 @@ addEventListener("load", () => {
         scrollStartTimerID = setTimeout(() => startPosition = currentPosition, 100);
 
         const delta = Math.max(currentPosition, startPosition) - Math.min(currentPosition, startPosition)
-        const direction = (startPosition > currentPosition) ? "up" : "down";
-        console.log(`Scrolling ${direction} by ${delta}`);
+        const scrollDown = startPosition > currentPosition;
+        console.log(`Scroll ${scrollDown ? "DOWN" : "UP"} by ${delta}`);
         if (!scrollableSwitch.checked)
             return;
 
-        if (direction === "up")
+        if (scrollDown)
             scrollTo(0, top + delta);
         else
             scrollTo(0, top - delta);
