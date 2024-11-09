@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<style>
+html, body {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    font-family: system-ui;
+    line-height: 300%;
+}
+
+hr {
+    width: 100%;
+}
+
+.container {
+    background: linear-gradient(to bottom, red 0%, green 50%, blue 100%);
+    width: 240px;
+    height: 3000px;
+    display: inline-block;
+}
+</style>
+<script>
+addEventListener("load", () => {
+    const container = document.querySelector(".container");
+    container.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+    });
+
+    let scrollStartTimerID = null;
+    let current = 0;
+    container.addEventListener("touchmove", (event) => {
+        event.preventDefault();
+
+        const top = window.pageYOffset || document.documentElement.scrollTop;
+        const position = Math.round(event.touches[0].pageY);
+
+        if (scrollStartTimerID)
+            clearTimeout(scrollStartTimerID);
+
+        if (!current)
+            current = position;
+        scrollStartTimerID = setTimeout(() => current = position, 100);
+
+        const max = Math.max(position, current);
+        const min = Math.min(position, current);
+        const direction = (current > position) ? "up" : "down";
+        if (direction === "up")
+            scrollTo(0, top + (max - min))
+        else
+            scrollTo(0, top - (max - min))
+    });
+});
+</script>
+</head>
+<body>
+    <h1>Try to scroll by swiping on the container below</h1>
+    <hr>
+    <div class="container"></div>
+</body>
+</html>
