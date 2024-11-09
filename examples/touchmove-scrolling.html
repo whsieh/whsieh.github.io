@@ -30,27 +30,28 @@ hr {
 <script>
 addEventListener("load", () => {
     const container = document.querySelector(".container");
+    let scrollStartTimerID = null;
+    let startPosition = 0;
     container.addEventListener("touchstart", (event) => {
+        startPosition = event.touches[0].pageY;
+        if (scrollStartTimerID)
+            clearTimeout(scrollStartTimerID);
         event.preventDefault();
     });
 
-    let scrollStartTimerID = null;
-    let current = 0;
     container.addEventListener("touchmove", (event) => {
         event.preventDefault();
 
         const top = window.pageYOffset || document.documentElement.scrollTop;
-        const position = Math.round(event.touches[0].pageY);
+        const currentPosition = Math.round(event.touches[0].pageY);
 
         if (scrollStartTimerID)
             clearTimeout(scrollStartTimerID);
 
-        if (!current)
-            current = position;
-        scrollStartTimerID = setTimeout(() => current = position, 100);
+        scrollStartTimerID = setTimeout(() => startPosition = currentPosition, 100);
 
-        const delta = Math.max(position, current) - Math.min(position, current)
-        const direction = (current > position) ? "up" : "down";
+        const delta = Math.max(currentPosition, startPosition) - Math.min(currentPosition, startPosition)
+        const direction = (startPosition > currentPosition) ? "up" : "down";
         console.log(`Scrolling ${direction} by ${delta}`);
         if (direction === "up")
             scrollTo(0, top + delta);
