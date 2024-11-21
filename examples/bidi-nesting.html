@@ -7,6 +7,7 @@
 body, html {
     font-family: monospace;
     width: 100%;
+    height: 100%;
     font-size: 24px;
     margin: 0;
     background-color: #eee;
@@ -44,7 +45,7 @@ body, html {
 }
 </style>
 </head>
-<body>
+<body onclick="return false;">
     <div class="container" contenteditable>
         <p dir="ltr" class="level1">Outermost <span dir="rtl" class="level2">nested right to left <span dir="ltr" class="level3"> nested left to right</span></span> text</p>
     </div>
