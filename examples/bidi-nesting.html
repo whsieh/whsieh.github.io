@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<head>
+<style>
+body, html {
+    font-family: monospace;
+    width: 100%;
+    font-size: 24px;
+    margin: 0;
+    background-color: #eee;
+    overflow-x: hidden;
+}
+
+.container {
+    border-radius: 6px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    line-height: 2em;
+    z-index: 1;
+    background-color: white;
+    outline: none;
+    margin: 0 auto;
+    display: block;
+    padding: 1em 50px;
+}
+
+[dir="ltr"],[dir="rtl"] {
+    border-radius: 2px;
+    margin: 5px;
+    box-sizing: border-box;
+    unicode-bidi: bidi-override;
+}
+
+.level2 {
+    background: rgb(235, 235, 235);
+    display: inline-block;
+}
+
+.level3 {
+    background: rgba(225, 50, 0, 0.25);
+    padding: 4px;
+}
+</style>
+</head>
+<body>
+    <div class="container" contenteditable>
+        <p dir="ltr" class="level1">Outermost <span dir="rtl" class="level2">nested right to left <span dir="ltr" class="level3"> nested left to right</span></span> text</p>
+    </div>
+</body>
+</html>
