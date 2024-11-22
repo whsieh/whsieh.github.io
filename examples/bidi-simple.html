@@ -7,6 +7,7 @@
 body, html {
     font-family: monospace;
     width: 100%;
+    height: 100%;
     font-size: 24px;
     margin: 0;
     background-color: #eee;
@@ -27,10 +28,12 @@ body, html {
 }
 </style>
 </head>
-<body>
-    <div class="container">
-        <p>Arabic text, مثل هذا النص, is written from right to left.</p>
+<body onclick="return false">
+    <div class="container" contenteditable>
+        <p>Arabic text, مثل هذا النص, is written from right to left</p>
         <p dir="rtl">ومع ذلك، يتم كتابة النص العربي، مثل العبارة ‘such as this sentence’، من اليمين إلى اليسار</p>
+        <p>This is a sentence in Arabic: عادة ما يكون هناك 365 يومًا في السنة</p>
+        <p dir="rtl">قال المعلم: The student wrote ‘قصة جميلة’ in his notebook</p>
     </div>
 </body>
 </html>
