@@ -26,6 +26,16 @@ body, html {
     display: block;
     padding: 1em 50px;
 }
+
+.start {
+    border: 1px solid tomato;
+    padding: 4px;
+}
+
+.stop {
+    border: 1px solid orange;
+    padding: 4px;
+}
 </style>
 </head>
 <body onclick="return false">
@@ -34,6 +44,7 @@ body, html {
         <p dir="rtl">ومع ذلك، يتم كتابة النص العربي، مثل العبارة ‘such as this sentence’، من اليمين إلى اليسار</p>
         <p>This is a sentence in Arabic: هناك 364,742 يومًا في 1,000 عام</p>
         <p dir="rtl">قال المعلم: The student wrote ‘قصة جميلة’ in his notebook</p>
+        <p>Arabic, مثل هذا <span class="stop">النص</span>, is right to <span class="start">left</span>.</p>
     </div>
 </body>
 </html>
