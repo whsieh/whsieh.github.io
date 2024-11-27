@@ -75,11 +75,6 @@ label, input {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px inset;
 }
 
-.nonselectable {
-    -webkit-user-select: none;
-    user-select: none;
-}
-
 h2, h3 {
     margin: 1em;
     text-align: center;
@@ -163,7 +158,7 @@ addEventListener("load", () => {
 </head>
 <body>
     <title>Overflow Scrolling Examples</title>
-    <h2 class="nonselectable">Overflow</h2>
+    <h2>Overflow</h2>
     <div class="container">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
@@ -181,7 +176,7 @@ addEventListener("load", () => {
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
     </div>
     <hr>
-    <h2 class="nonselectable">Subframe</h2>
+    <h2>Subframe</h2>
     <iframe frameborder="0" class="container" srcdoc="
         <head>
             <style>
