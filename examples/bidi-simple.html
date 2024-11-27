@@ -18,13 +18,17 @@ body, html {
     border-radius: 6px;
     box-sizing: border-box;
     overflow-y: scroll;
-    line-height: 2em;
+    line-height: 1.25em;
     z-index: 1;
     background-color: white;
     outline: none;
     margin: 0 auto;
     display: block;
     padding: 1em 50px;
+}
+
+p {
+    margin: 0;
 }
 
 .start {
@@ -42,8 +46,10 @@ body, html {
     <div class="container" contenteditable>
         <p>Arabic text, مثل هذا النص, is written from right to left</p>
         <p dir="rtl">ومع ذلك، يتم كتابة النص العربي، مثل العبارة ‘such as this sentence’، من اليمين إلى اليسار</p>
+        <div><br></div>
         <p>This is a sentence in Arabic: هناك 364,742 يومًا في 1,000 عام</p>
         <p dir="rtl">قال المعلم: The student wrote ‘قصة جميلة’ in his notebook</p>
+        <div><br></div>
         <p>Arabic, مثل هذا <span class="stop">النص</span>, is right to <span class="start">left</span>.</p>
     </div>
 </body>
