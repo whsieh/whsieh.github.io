@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<style>
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overscroll-behavior: none;
+    font-family: system-ui;
+    font-size: 16px;
+}
+
+.scroller {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.tall {
+    width: 100px;
+    height: 5000px;
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #ff8888),
+        color-stop(1, #ffff00)
+    );
+}
+
+.delta {
+    width: 150px;
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    text-align: right;
+}
+</style>
+<script>
+addEventListener("load", () => {
+    let scroller = document.querySelector(".scroller");
+    let lastDelta = document.querySelector(".delta");
+
+    scroller.addEventListener("wheel", (event) => {
+        lastDelta.textContent = `(${event.deltaX.toFixed(1)}, ${event.deltaY.toFixed(1)})`;
+    });
+});
+</script>
+</head>
+<body>
+<div class="scroller">
+    <div class="tall"></div>
+</div>
+<div class="delta">N/A</div>
+</body>
+</html>
