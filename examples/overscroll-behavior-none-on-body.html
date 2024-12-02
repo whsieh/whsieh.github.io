@@ -37,15 +37,50 @@ body, html {
     right: 1em;
     text-align: right;
 }
+
+.settings {
+    padding: 1em;
+    position: fixed;
+    display: inline-block;
+    bottom: 1em;
+    right: 1em;
+    text-align: right;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid lightgray;
+    z-index: 1000;
+    box-shadow:
+        0 1px 1px hsl(0deg 0% 0% / 0.08),
+        0 2px 2px hsl(0deg 0% 0% / 0.08),
+        0 4px 4px hsl(0deg 0% 0% / 0.08),
+        0 8px 8px hsl(0deg 0% 0% / 0.08),
+        0 16px 16px hsl(0deg 0% 0% / 0.08);
+}
+
+label, input {
+    vertical-align: middle;
+}
 </style>
 <script>
 addEventListener("load", () => {
+    let preventWheelEvents = false;
     let scroller = document.querySelector(".scroller");
     let lastDelta = document.querySelector(".delta");
 
     scroller.addEventListener("wheel", (event) => {
         lastDelta.textContent = `(${event.deltaX.toFixed(1)}, ${event.deltaY.toFixed(1)})`;
+        if (preventWheelEvents)
+            event.preventDefault();
     });
+
+    let preventDefaultSwitch = document.getElementById("preventDefault-switch");
+
+    function applySettings() {
+        preventWheelEvents = preventDefaultSwitch.checked;
+    }
+
+    preventDefaultSwitch.addEventListener("change", applySettings);
+    applySettings();
 });
 </script>
 </head>
@@ -54,5 +89,8 @@ addEventListener("load", () => {
     <div class="tall"></div>
 </div>
 <div class="delta">N/A</div>
+<div class="settings">
+    <label for="preventDefault-switch">Prevent wheel </label><input type="checkbox" switch id="preventDefault-switch">
+</div>
 </body>
 </html>
