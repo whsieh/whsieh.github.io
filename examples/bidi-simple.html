@@ -17,7 +17,7 @@ body, html {
 .container {
     display: flex;
     flex-direction: column;
-    font-size: 24px;
+    font-size: 32px;
     font-family: system-ui;
     padding: 1em;
     border: 1px solid lightgray;
@@ -29,6 +29,10 @@ body, html {
     position: relative;
 }
 
+.container > p {
+    margin: 0;
+}
+
 .resize {
     margin: 0 auto;
     box-sizing: border-box;
@@ -37,7 +41,7 @@ body, html {
     position: absolute;
     right: 0;
     bottom: 0;
-    text-align: center;
+    text-align: right;
     cursor: ew-resize;
     touch-action: none;
 }
@@ -88,10 +92,10 @@ addEventListener("load", () => {
         <p>Arabic text, مثل هذا النص, is written from right to left</p>
         <p dir="rtl">ومع ذلك، يتم كتابة النص العربي، مثل العبارة ‘such as this sentence’، من اليمين إلى اليسار</p>
         <div class="resize">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1">
-                <line x1="1" y1="11" x2="11" y2="1" />
-                <line x1="5" y1="11" x2="11" y2="5" />
-                <line x1="9" y1="11" x2="11" y2="9" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" stroke="gray" stroke-width="1" viewbox="0 0 15 15">
+                <line x1="1" y1="11" x2="11" y2="1"></line>
+                <line x1="5" y1="11" x2="11" y2="5"></line>
+                <line x1="9" y1="11" x2="11" y2="9"></line>
             </svg>
         </div>
     </div>
