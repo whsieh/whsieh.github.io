@@ -5,52 +5,95 @@
 <head>
 <style>
 body, html {
-    font-family: monospace;
     width: 100%;
     height: 100%;
-    font-size: 24px;
     margin: 0;
-    background-color: #eee;
-    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eee;
 }
 
 .container {
-    border-radius: 6px;
-    box-sizing: border-box;
-    overflow-y: scroll;
-    line-height: 1.25em;
-    z-index: 1;
-    background-color: white;
+    display: flex;
+    flex-direction: column;
+    font-size: 24px;
+    font-family: system-ui;
+    padding: 1em;
+    border: 1px solid lightgray;
+    border-radius: 10px;
     outline: none;
+    margin: 1em;
+    box-sizing: border-box;
+    background: white;
+    position: relative;
+}
+
+.resize {
     margin: 0 auto;
-    display: block;
-    padding: 1em 50px;
-}
-
-p {
-    margin: 0;
-}
-
-.start {
-    border: 1px solid tomato;
-    padding: 4px;
-}
-
-.stop {
-    border: 1px solid orange;
-    padding: 4px;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    cursor: ew-resize;
+    touch-action: none;
 }
 </style>
+<script>
+addEventListener("load", () => {
+    const resizeHandle = document.querySelector(".resize");
+    const container = document.querySelector(".container");
+    let isResizing = false;
+    let initialPointerX = 0;
+    let initialWidth = parseInt(getComputedStyle(container).width);
+
+    resizeHandle.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        isResizing = true;
+        initialPointerX = event.clientX;
+        initialWidth = parseInt(getComputedStyle(container).width);
+        getSelection().removeAllRanges();
+        container.style.webkitUserSelect = "none";
+    });
+
+    document.body.addEventListener("click", (event) => {
+        if (event.target !== document.body)
+            return;
+
+        getSelection().removeAllRanges();
+        document.activeElement.blur();
+    });
+
+    addEventListener("pointermove", (event) => {
+        if (!isResizing)
+            return;
+
+        let adjustedWidth = initialWidth + 2 * (event.clientX - initialPointerX);
+        adjustedWidth = Math.max(240, Math.min(1000, adjustedWidth));
+        container.style.width = `${adjustedWidth}px`;
+    });
+
+    addEventListener("pointerup", (event) => {
+        isResizing = false;
+        container.style.webkitUserSelect = "";
+    });
+});
+</script>
 </head>
-<body onclick="return false">
+<body>
     <div class="container" contenteditable>
         <p>Arabic text, مثل هذا النص, is written from right to left</p>
         <p dir="rtl">ومع ذلك، يتم كتابة النص العربي، مثل العبارة ‘such as this sentence’، من اليمين إلى اليسار</p>
-        <div><br></div>
-        <p>This is a sentence in Arabic: هناك 364,742 يومًا في 1,000 عام</p>
-        <p dir="rtl">قال المعلم: The student wrote ‘قصة جميلة’ in his notebook</p>
-        <div><br></div>
-        <p>Arabic, مثل هذا <span class="stop">النص</span>, is right to <span class="start">left</span>.</p>
+        <div class="resize">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1">
+                <line x1="1" y1="11" x2="11" y2="1" />
+                <line x1="5" y1="11" x2="11" y2="5" />
+                <line x1="9" y1="11" x2="11" y2="9" />
+            </svg>
+        </div>
     </div>
 </body>
 </html>
