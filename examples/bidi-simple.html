@@ -12,6 +12,8 @@ body, html {
     justify-content: center;
     align-items: center;
     background: #eee;
+    font-size: 16px;
+    font-family: system-ui;
 }
 
 .container {
@@ -45,11 +47,47 @@ body, html {
     cursor: ew-resize;
     touch-action: none;
 }
+
+.container, .settings {
+    box-shadow:
+        0 1px 1px hsl(0deg 0% 0% / 0.08),
+        0 2px 2px hsl(0deg 0% 0% / 0.08),
+        0 4px 4px hsl(0deg 0% 0% / 0.08),
+        0 8px 8px hsl(0deg 0% 0% / 0.08),
+        0 16px 16px hsl(0deg 0% 0% / 0.08);
+}
+
+.settings {
+    padding: 1em;
+    position: fixed;
+    display: inline-block;
+    bottom: 1em;
+    right: 1em;
+    text-align: right;
+    border-radius: 6px;
+    background-color: white;
+    border: 1px solid lightgray;
+    z-index: 1000;
+    font-size: 18px;
+}
+
+label, input {
+    vertical-align: middle;
+}
 </style>
 <script>
 addEventListener("load", () => {
+    const editableSwitch = document.getElementById("editable-switch");
+    const container = document.querySelector("div.container");
+
+    function applySettings() {
+        container.contentEditable = editableSwitch.checked;
+    }
+
+    editableSwitch.addEventListener("change", applySettings);
+    applySettings();
+
     const resizeHandle = document.querySelector(".resize");
-    const container = document.querySelector(".container");
     let isResizing = false;
     let initialPointerX = 0;
     let initialWidth = parseInt(getComputedStyle(container).width);
@@ -99,6 +137,9 @@ addEventListener("load", () => {
                 <line x1="9" y1="11" x2="11" y2="9"></line>
             </svg>
         </div>
+    </div>
+    <div class="settings">
+        <label for="editable-switch">Editable </label><input type=checkbox switch id="editable-switch">
     </div>
 </body>
 </html>
