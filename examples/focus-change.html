@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<meta charset="utf-8">
+<head>
+<style>
+input {
+    font-size: 18px;
+    margin: 0.5em;
+    border: 0.5px solid gray;
+    border-radius: 5px;
+    outline: none;
+    padding: 0.5em;
+}
+</style>
+</head>
+<body>
+<input id="first" placeholder="Moves focus ↓" type="email" />
+<br>
+<input id="second" placeholder="Password" type="password" />
+<script>
+document.getElementById("first").addEventListener("focus", () => {
+    document.getElementById("second").focus();
+});
+</script>
+</body>
+</html>
