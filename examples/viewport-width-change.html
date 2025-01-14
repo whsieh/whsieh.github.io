@@ -4,21 +4,30 @@
 <meta charset="utf-8" />
 <meta name=viewport content="width=device-width" />
 <style>
-p {
-    min-height: 300px;
+body, html {
     font-size: 24px;
     font-family: system-ui;
     text-align: center;
 }
+
+p {
+    min-height: 300px;
+}
+
+label, input {
+    vertical-align: middle;
+}
 </style>
 </head>
 <body>
+    <label for="switch">Set width? </label><input type="checkbox" checked switch id="switch">
     <p>Rotate to landscape and back</p>
     <script>
     let currentWidth = "device-width";
 
     function computeUpdatedWidth() {
         const scaledWidth = Math.round(visualViewport.width * visualViewport.scale);
+        console.log(`width ${visualViewport.width} * scale ${visualViewport.scale.toFixed(3)} → ${scaledWidth}`);
         if (scaledWidth <= 300)
             return 300;
 
@@ -33,9 +42,11 @@ p {
         if (currentWidth === updatedWidth)
             return;
 
-        console.log(`Updating width: ${currentWidth} → ${updatedWidth}`);
+        console.log(`Updated width: ${currentWidth} → ${updatedWidth}`);
         currentWidth = updatedWidth;
-        document.querySelector("meta[name=viewport]").content = `width=${updatedWidth}`;
+
+        if (document.querySelector("input").checked)
+            document.querySelector("meta[name=viewport]").content = `width=${updatedWidth}`;
     });
     </script>
 </body>
