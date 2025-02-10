@@ -1,76 +1,140 @@
-<!-- webkit-test-runner [ textExtractionEnabled=true useFlexibleViewport=true ] -->
-<!DOCTYPE html>
 <html>
-<head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-html, body {
-    margin: 0;
-    font-family: system-ui;
-    font-size: 16px;
-    width: 100%;
-}
+<meta charset="utf8">
+<head>
+    <style>
+    html {
+        padding: 0;
+        margin: 0;
+    }
 
-body {
-    width: 100%;
-    position: relative;
-}
+    body {
+        padding: 0;
+        margin: 2em;
+        background-color: #F8F8F8;
+        overflow: hidden;
+        font-family: -apple-system;
+        font-size: 1em;
+    }
 
-.container {
-    margin: 20px;
-    border: 1px solid red;
-    width: calc(100% - 40px);
-    height: 300px;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 300px;
-    font-size: 24px;
-    -webkit-text-size-adjust: none;
-}
+    #editor {
+        padding: 2em;
+        width: 80%;
+        min-width: 320px;
+        height: calc(40% - 2em);
+        margin: 2em auto;
+        box-sizing: border-box;
+        background-color: white;
+        border-right: 1px solid #DFDFDF;
+        border-bottom: 1px solid #DFDFDF;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
 
-.image-wrapper {
-    text-align: center;
-}
+    #editor:focus {
+        outline: none;
+    }
 
-img {
-    height: 44px;
-}
-</style>
-<script src="../../resources/ui-helper.js"></script>
+    button#paste {
+        border: 2px rgb(0, 122, 255) solid;
+        background-color: rgb(0, 122, 255);
+    }
+
+    button#copy {
+        border: 2px rgb(90, 200, 250) solid;
+        background-color: rgb(90, 200, 250);
+    }
+
+    button {
+        border-radius: 4px;
+        color: white;
+        font-size: 16px;
+        padding: 0.5em;
+    }
+
+    #controls {
+        text-align: center;
+    }
+
+    .flash-begin {
+        transform: translateY(-25px);
+        opacity: 0;
+    }
+
+    .flash {
+        position: absolute;
+        font-size: 20px;
+        transition: 2s cubic-bezier(0.5, 0, 0, 0);
+    }
+    </style>
+</head>
+
+<body>
+<div id="editor" contenteditable></div>
+<div id="controls">
+    <button id="paste">Click here to paste</button>
+    <button id="copy">Click here to copy</button>
+</div>
+</body>
 <script>
-addEventListener("load", async () => {
-    window.internals?.setUsesOverlayScrollbars(true);
-    window.testRunner?.waitUntilDone();
+    const paste = document.getElementById("paste");
+    const copy = document.getElementById("copy");
+    const editor = document.getElementById("editor");
+    const output = document.getElementById("output");
 
-    document.body.textContent = await UIHelper.requestTextExtraction({
-        clipToBounds: true,
-        includeRects: true
+    function isSelectionInsideEditor() {
+        if (getSelection().type === "None")
+            return false;
+        const commonAncestor = getSelection().getRangeAt(0).commonAncestorContainer;
+        for (let ancestor = commonAncestor; ancestor; ancestor = ancestor.parentElement) {
+            if (ancestor == editor)
+                return true;
+        }
+        return false;
+    }
+
+    function moveSelectionIntoEditorIfNecessary() {
+        if (!isSelectionInsideEditor())
+            getSelection().setPosition(editor, 1);
+    }
+
+    paste.addEventListener("click", event => {
+        moveSelectionIntoEditorIfNecessary();
+
+        const result = document.execCommand("Paste", true);
+        flashMessage(result ? "Successfully pasted." : "Did not paste.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
+        if (result) {
+            event.preventDefault();
+            editor.focus();
+        }
     });
 
-    window.testRunner?.notifyDone();
-});
+    copy.addEventListener("click", event => {
+        moveSelectionIntoEditorIfNecessary();
+
+        const result = document.execCommand("Copy", true);
+        flashMessage(result ? "Successfully copied." : "Did not copy.", result ? "rgb(76, 217, 100)" : "rgb(255, 59, 48)");
+        if (result) {
+            event.preventDefault();
+            editor.focus();
+        }
+    });
+
+    function flashMessage(message, color) {
+        const div = document.createElement("div");
+        const code = document.createElement("code");
+        code.textContent = message;
+        div.appendChild(code);
+        div.style.color = color;
+        const editorBounds = editor.getBoundingClientRect();
+        div.style.top = `${(editorBounds.bottom - editorBounds.top) / 2}px`;
+        div.style.left = `${(editorBounds.right - editorBounds.left) / 2}px`;
+        div.classList.add("flash");
+        div.addEventListener("transitionend", () => div.remove());
+        setTimeout(() => div.classList.add("flash-begin"), 100);
+        document.body.appendChild(div);
+    }
+
+    editor.focus();
 </script>
-</head>
-<body>
-    <div class="container">One</div>
-    <div class="image-wrapper"><img alt="Image one" src="../images/resources/dice.png"></div>
-    <div class="container">Two</div>
-    <div class="image-wrapper"><img alt="Image two" src="../images/resources/dice.png"></div>
-    <div class="container">Three</div>
-    <div class="image-wrapper"><img alt="Image three" src="../images/resources/dice.png"></div>
-    <div class="container">Four</div>
-    <div class="image-wrapper"><img alt="Image four" src="../images/resources/dice.png"></div>
-    <div class="container">Five</div>
-    <div class="image-wrapper"><img alt="Image five" src="../images/resources/dice.png"></div>
-    <div class="container">Six</div>
-    <div class="image-wrapper"><img alt="Image six" src="../images/resources/dice.png"></div>
-    <div class="container">Seven</div>
-    <div class="image-wrapper"><img alt="Image seven" src="../images/resources/dice.png"></div>
-    <div class="container">Eight</div>
-    <div class="image-wrapper"><img alt="Image eight" src="../images/resources/dice.png"></div>
-    <div class="container">Nine</div>
-    <div class="image-wrapper"><img alt="Image nine" src="../images/resources/dice.png"></div>
-    <div class="container">Ten</div>
-    <div class="image-wrapper"><img alt="Image ten" src="../images/resources/dice.png"></div>
-</body>
 </html>
