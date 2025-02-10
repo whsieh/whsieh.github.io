@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Capture</title>
+<style>
+body {
+    font-family: system-ui;
+    text-align: center;
+    margin: 20px;
+}
+
+video {
+    display: block;
+    margin: 10px auto;
+    border: 2px solid #333;
+    width: 320px;
+    height: 240px;
+}
+</style>
+<script>
+addEventListener("load", async () => {
+    try {
+        const video = document.getElementById("video");
+        video.srcObject = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    } catch (exception) {
+        console.error("Error accessing webcam:", exception);
+    }
+});
+</script>
+</head>
+<body>
+<h1>Video Capture</h1>
+<video id="video" width="640" height="480" autoplay playsinline="true"></video>
+</body>
+</html>
