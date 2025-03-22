@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Location Access Test</title>
+<style>
+body {
+    font-family: sans-serif;
+    padding: 2em;
+    max-width: 600px;
+    margin: auto;
+}
+
+#status {
+    margin-top: 1em;
+}
+
+input {
+    font-size: 16px;
+    padding: 4px;
+    border-radius: 4px;
+    border: 1px solid lightgray;
+}
+</style>
+</head>
+<body>
+<h1>Location Access Test</h1>
+<input placeholder="Focus me" />
+<button onclick="getLocation()">Request Location</button>
+<div id="status"></div>
+<script>
+let requestLocationButton = document.querySelector("button");
+requestLocationButton.addEventListener("mousedown", (event) => {
+    event.preventDefault();
+    const status = document.getElementById("status");
+
+    if (!navigator.geolocation) {
+        status.textContent = "Geolocation is not supported by your browser.";
+        return;
+    }
+
+    status.textContent = "Requesting location…";
+
+    navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        const locationDescription = `Latitude: ${latitude}, Longitude: ${longitude}`;
+        status.textContent = locationDescription;
+        alert(`Your location is: ${locationDescription}`);
+    }, error => {
+        status.textContent = `Error: ${error.message}`;
+        alert("Location access denied");
+    });
+});
+</script>
+</body>
+</html>
