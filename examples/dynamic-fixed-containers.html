@@ -7,6 +7,7 @@
         padding: 0;
         margin: 0;
         font-family: system-ui;
+        background-color: #f4f4f4;
     }
 
     .fixed {
@@ -22,8 +23,8 @@
     }
 
     #top {
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transition: opacity 0.3s ease;
+        transform: translateY(-100%);
+        transition: transform 0.1s ease;
     }
 
     #top > .text-content {
@@ -36,60 +37,37 @@
         bottom: 0;
         background: #DF4C50;
         transform: translateY(100%);
-        transition: transform 0.3s ease;
-        box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.2);
+        transition: transform 0.1s ease;
     }
 
     .content {
-        padding: 84px 10px;
-        height: 5000px;
-        background-color: #f4f4f4;
-    }
-
-    .sizing {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        z-index: -100;
-    }
-
-    .svh {
-        height: 100svh;
-    }
-
-    .dvh {
-        height: 100dvh;
-    }
-
-    .lvh {
-        height: 100lvh;
+        padding: 84px 1em;
+        height: 1000px;
     }
     </style>
     <script>
     function setBottomVisible(visible) {
-        document.getElementById("bottom").style.transform = visible ? "translateY(0)" : "translateY(100%)";
+        let bottom = document.getElementById("bottom");
+        if (bottom._visible === visible)
+            return;
+
+        bottom._visible = visible;
+        bottom.style.transform = visible ? "translateY(0)" : "translateY(100%)";
     }
 
-    function computeSVH() {
-        return Math.round(document.querySelector(".svh.sizing").getBoundingClientRect().height);
-    }
+    function setTopVisible(visible) {
+        let top = document.getElementById("top");
+        if (visible === top._visible)
+            return;
 
-    function computeDVH() {
-        return Math.round(document.querySelector(".dvh.sizing").getBoundingClientRect().height);
-    }
-
-    function computeLVH() {
-        return Math.round(document.querySelector(".lvh.sizing").getBoundingClientRect().height);
+        top._visible = visible;
+        top.style.transform = visible ? "translateY(0)" : "translateY(-100%)";
     }
 
     function updateFixedContainers() {
-        let lvh = computeLVH(),
-            svh = computeSVH();
-        setBottomVisible(svh != computeDVH() || svh == lvh);
-        let header = document.getElementById("top");
-        header.style.bottom = `${lvh - 84}px`;
-        header.style.opacity = lvh == computeDVH() || svh == lvh ? 1 : 0;
+        const visible = pageYOffset > 1000;
+        setBottomVisible(visible);
+        setTopVisible(visible);
     }
 
     addEventListener("load", () => {
@@ -107,8 +85,15 @@
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
     </div>
-    <div class="svh sizing"></div>
-    <div class="lvh sizing"></div>
-    <div class="dvh sizing"></div>
+    <div class="content">
+        <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+        <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+        <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    </div>
+    <div class="content">
+        <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+        <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+        <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    </div>
 </body>
 </html>
