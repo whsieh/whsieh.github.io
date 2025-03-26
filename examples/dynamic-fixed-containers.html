@@ -44,36 +44,67 @@
         padding: 84px 1em;
         height: 1000px;
     }
+
+    .controls {
+        margin: 2em auto;
+        text-align: center;
+    }
+
+    input {
+        vertical-align: middle;
+    }
+
+    label {
+        height: 40px;
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    label + input {
+        margin-left: 4px;
+        margin-right: 1em;
+    }
     </style>
     <script>
-    function setBottomVisible(visible) {
-        let bottom = document.getElementById("bottom");
-        if (bottom._visible === visible)
-            return;
-
-        bottom._visible = visible;
-        bottom.style.transform = visible ? "translateY(0)" : "translateY(100%)";
-    }
-
-    function setTopVisible(visible) {
-        let top = document.getElementById("top");
-        if (visible === top._visible)
-            return;
-
-        top._visible = visible;
-        top.style.transform = visible ? "translateY(0)" : "translateY(-100%)";
-    }
-
-    function updateFixedContainers() {
-        const visible = pageYOffset > 1000;
-        setBottomVisible(visible);
-        setTopVisible(visible);
-    }
-
     addEventListener("load", () => {
+        const footer = document.getElementById("bottom");
+        const header = document.getElementById("top");
+        const headerCheck = document.querySelector(".header-check");
+        const footerCheck = document.querySelector(".footer-check");
+
         updateFixedContainers();
         addEventListener("resize", updateFixedContainers);
         addEventListener("scroll", updateFixedContainers);
+
+        function setHeaderVisible(visible) {
+            if (header._visible === visible)
+                return;
+
+            header._visible = visible;
+            header.style.transform = visible ? "translateY(0)" : "translateY(-100%)";
+        }
+
+        function setFooterVisible(visible) {
+            if (footer._visible === visible)
+                return;
+
+            footer._visible = visible;
+            footer.style.transform = visible ? "translateY(0)" : "translateY(100%)";
+        }
+
+        function updateFixedContainers() {
+            const visible = pageYOffset > 1000;
+            setFooterVisible(visible);
+            setHeaderVisible(visible);
+        }
+
+        headerCheck.addEventListener("change", () => {
+            header.style.display = headerCheck.checked ? "block" : "none";
+        });
+
+        footerCheck.addEventListener("change", () => {
+            footer.style.display = footerCheck.checked ? "block" : "none";
+        });
     });
     </script>
 </head>
@@ -84,6 +115,10 @@
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+        <div class="controls">
+            <label>Show header</label><input type="checkbox" switch checked class="header-check" />
+            <label>Show footer</label><input type="checkbox" switch checked class="footer-check" />
+        </div>
     </div>
     <div class="content">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
