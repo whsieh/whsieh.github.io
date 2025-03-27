@@ -23,6 +23,13 @@
         z-index: 100;
     }
 
+    .close {
+        position: absolute;
+        top: -20px;
+        right: -7px;
+        width: 40px;
+    }
+
     #top {
         transform: translateY(-100%);
         transition: transform 0.1s ease;
@@ -90,6 +97,7 @@
         const headerCheck = document.querySelector(".header-check");
         const footerCheck = document.querySelector(".footer-check");
         const showHideCheck = document.querySelector(".show-hide-check");
+        const closeButton = document.querySelector(".close");
 
         updateFixedContainers();
         addEventListener("resize", updateFixedContainers);
@@ -109,6 +117,7 @@
 
             footer._visible = visible;
             footer.style.transform = visible ? "translateY(0)" : "translateY(100%)";
+            closeButton.style.display = visible ? "block" : "none";
         }
 
         function updateFixedContainers() {
@@ -131,7 +140,7 @@
 </head>
 <body>
     <header class="fixed" id="top"><div class="text-content">Top Bar</div></header>
-    <footer class="fixed" id="bottom">Bottom Bar</footer>
+    <footer class="fixed" id="bottom"><img class="close" src="./images/close-button.png" />Bottom Bar</footer>
     <div class="content">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
