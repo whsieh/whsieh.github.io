@@ -20,6 +20,7 @@
         line-height: 84px;
         font-size: 20px;
         font-weight: bold;
+        z-index: 100;
     }
 
     #top {
@@ -41,13 +42,23 @@
     }
 
     .content {
-        padding: 84px 1em;
-        height: 1000px;
+        padding: 1em;
+        min-height: 300px;
+        line-height: 1.8;
+        margin-bottom: 84px;
     }
 
     .controls {
+        width: 250px;
         margin: 2em auto;
-        text-align: center;
+        text-align: right;
+        border: 1px solid lightgray;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .control + .control {
+        margin-top: 12px;
     }
 
     input {
@@ -61,8 +72,15 @@
     }
 
     label + input {
-        margin-left: 4px;
+        margin-left: 1em;
         margin-right: 1em;
+    }
+
+    .arrow {
+        transform: scaleY(-1);
+        max-width: 100px;
+        display: block;
+        margin: 50px auto;
     }
     </style>
     <script>
@@ -71,6 +89,7 @@
         const header = document.getElementById("top");
         const headerCheck = document.querySelector(".header-check");
         const footerCheck = document.querySelector(".footer-check");
+        const showHideCheck = document.querySelector(".show-hide-check");
 
         updateFixedContainers();
         addEventListener("resize", updateFixedContainers);
@@ -93,7 +112,7 @@
         }
 
         function updateFixedContainers() {
-            const visible = pageYOffset > 1000;
+            const visible = pageYOffset > 500 || !showHideCheck.checked;
             setFooterVisible(visible);
             setHeaderVisible(visible);
         }
@@ -105,6 +124,8 @@
         footerCheck.addEventListener("change", () => {
             footer.style.display = footerCheck.checked ? "block" : "none";
         });
+
+        showHideCheck.addEventListener("change", updateFixedContainers);
     });
     </script>
 </head>
@@ -115,15 +136,27 @@
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
-        <div class="controls">
-            <label>Show header</label><input type="checkbox" switch checked class="header-check" />
-            <label>Show footer</label><input type="checkbox" switch checked class="footer-check" />
-        </div>
+    </div>
+    <div class="controls">
+        <div class="control"><label>Show header</label><input type="checkbox" switch checked class="header-check" /></div>
+        <div class="control"><label>Show footer</label><input type="checkbox" switch checked class="footer-check" /></div>
+        <div class="control"><label>Only when scrolled</label><input type="checkbox" switch checked class="show-hide-check" /></div>
     </div>
     <div class="content">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
         <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    </div>
+    <div>
+        <img class="arrow" src="images/up-arrow.png"></img>
+    </div>
+    <div class="content">
+        <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+        <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+        <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+    </div>
+    <div>
+        <img class="arrow" src="images/up-arrow.png"></img>
     </div>
     <div class="content">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
