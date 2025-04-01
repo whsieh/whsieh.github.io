@@ -7,7 +7,6 @@
 <style>
 body {
     margin: 0;
-    height: 300vh;
     font-family: sans-serif;
     background: #f0f0f0;
 }
@@ -28,6 +27,10 @@ h1 {
     background: rgb(255, 59, 48);
     margin: 0 auto;
     transition: width 1s ease;
+    font-size: 24px;
+    color: white;
+    line-height: 150px;
+    text-align: center;
 }
 
 .fade-box.visible {
@@ -97,6 +100,7 @@ h1 {
             });
         });
         observer.observe(box);
+        box.textContent = box.id;
     }
     </script>
 </body>
