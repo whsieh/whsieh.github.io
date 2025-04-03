@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <style>
+            html, body {
+                font-family: system-ui;
+                font-size: 16px;
+            }
+
+            .container {
+                margin: 1em 0;
+            }
+        </style>
+    </head>
+    <body>
+        <title>Credit Card AutoFill Test</title>
+        <h1>Checkout</h1>
+        <h2>Credit Card Info</h2>
+        <form name="credit card info" id="credit card info" action="" method="post">
+            <div class="container">Credit Card Number <input type="text" name="credit card number" autocomplete="cc-number"></div>
+            <div class="container">Cardholder name <input type="text" name="credit cardholder name" autocomplete="cc-name"></div>
+            <div class="container">
+                Card Type
+                <select name="card type" autocomplete="cc-type">
+                    <option value=""></option>
+                    <option value="Visa">Visa</option>
+                    <option value="Mastercard">Mastercard</option>
+                    <option value="Discover">Discover</option>
+                    <option value="Amex">Amex</option>
+                </select>
+            </div>
+            <div class="container">Security Code <input type="text" name="security code" autocomplete="cc-csc"></div>
+            <div class="container">Expiration Date <input type="text" name="expiration date" autocomplete="cc-exp"></div>
+            <div class="container"><input type="submit" ></div>
+        </form>
+    </body>
+</html>
