@@ -81,11 +81,12 @@ addEventListener("load", async () => {
         const details = {
             screenWidth: screen.width,
             screenHeight: screen.height,
-            windowOuterWidth: window.outerWidth,
             windowOuterHeight: window.outerHeight,
-            windowInnerWidth: window.innerWidth,
             windowInnerHeight: window.innerHeight,
             userAgent: navigator.userAgent,
+            plugins: [...navigator.plugins].map(plugin => plugin.name),
+            hardwareConcurrency: navigator.hardwareConcurrency,
+            speechSynthesisVoices: speechSynthesis.getVoices().map(voice => voice.voiceURI),
             language: navigator.language,
             timezoneOffset: new Date().getTimezoneOffset(),
             colorDepth: screen.colorDepth,
@@ -112,33 +113,31 @@ addEventListener("load", async () => {
 
     const navigationStrategies = [
         {
-            name: "window-open",
+            name: "window_open",
             handler: url => window.open(url)
         },
         {
-            name: "location-href",
+            name: "location_href",
             handler: url => window.location.href = url
         },
         {
-            name: "click-anchor",
+            name: "click_anchor",
             handler: url => {
                 let newLink = document.createElement("a");
                 newLink.href = url;
-                document.body.appendChild(newLink);
                 newLink.click();
-                newLink.remove();
             }
         },
         {
-            name: "window-location",
+            name: "window_location",
             handler: url => window.location = url
         },
         {
-            name: "location-assign",
+            name: "location_assign",
             handler: url => window.location.assign(url)
         },
         {
-            name: "document-location",
+            name: "document_location",
             handler: url => document.location = url
         },
     ];
@@ -149,10 +148,11 @@ addEventListener("load", async () => {
         if (!link.hasAttribute("href"))
             continue;
 
+        const { name, handler } = navigationStrategies[index++ % navigationStrategies.length];
         const linkURL = URL.parse(link.getAttribute("href"));
         link.setAttribute("href", "javascript:0");
+        link.setAttribute("title", `${linkURL.origin} - ${name}`);
         link.addEventListener("click", () => {
-            const { name, handler } = navigationStrategies[index++ % navigationStrategies.length];
             linkURL.searchParams.set("nvsrc", name);
             linkURL.searchParams.set("userfpvers", 1);
             linkURL.searchParams.set("userfp", fingerprint);
@@ -161,4 +161,9 @@ addEventListener("load", async () => {
             handler(linkURL.href);
         });
     }
+
+    console.log(`Got fingerprint: ${fingerprint}`);
+    let paragraph = document.createElement("p");
+    paragraph.innerHTML = `<code>${fingerprint}</code>`;
+    document.body.appendChild(paragraph);
 });
