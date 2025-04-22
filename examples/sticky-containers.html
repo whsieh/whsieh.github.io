@@ -17,6 +17,7 @@
 
     html {
         height: 5000px;
+        overflow-x: hidden;
     }
 
     .sticky {
@@ -114,6 +115,7 @@
         height: 100vh;
         box-sizing: border-box;
         border: 1px solid lightgray;
+        pointer-events: none;
     }
     </style>
     <script>
@@ -173,7 +175,7 @@
         }
 
         function updateContainers() {
-            const visible = pageYOffset > 600 || !showHideCheck.checked;
+            const visible = pageYOffset > 500 || !showHideCheck.checked;
             setFooterVisible(visible);
             setHeaderVisible(visible);
             header.style.display = headerCheck.checked ? "block" : "none";
