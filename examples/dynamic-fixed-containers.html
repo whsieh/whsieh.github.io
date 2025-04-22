@@ -100,6 +100,32 @@
         const showHideCheck = document.querySelector(".show-hide-check");
         const closeButton = document.querySelector(".close");
 
+        const switchStatesToRestore = {};
+        for (let keyAndValue of document.cookie.split("; ")) {
+            if (!keyAndValue.includes("="))
+                continue;
+
+            let [key, value] = keyAndValue.split("=");
+            switchStatesToRestore[key] = value;
+        }
+
+        function getChecked(key) {
+            const valueToRestore = switchStatesToRestore[key];
+            if (valueToRestore === null || valueToRestore === undefined)
+                return true;
+
+            return valueToRestore === "true";
+        }
+
+        if (getChecked("headerChecked"))
+            headerCheck.checked = true;
+
+        if (getChecked("footerChecked"))
+            footerCheck.checked = true;
+
+        if (getChecked("showHideChecked"))
+            showHideCheck.checked = true;
+
         updateFixedContainers();
         addEventListener("resize", updateFixedContainers);
         addEventListener("scroll", updateFixedContainers);
@@ -125,17 +151,24 @@
             const visible = pageYOffset > 500 || !showHideCheck.checked;
             setFooterVisible(visible);
             setHeaderVisible(visible);
+            header.style.display = headerCheck.checked ? "block" : "none";
+            footer.style.display = footerCheck.checked ? "block" : "none";
         }
 
+        for (const control of [headerCheck, footerCheck, showHideCheck])
+            control.addEventListener("change", updateFixedContainers);
+
         headerCheck.addEventListener("change", () => {
-            header.style.display = headerCheck.checked ? "block" : "none";
+            document.cookie = `headerChecked=${headerCheck.checked};`;
         });
 
         footerCheck.addEventListener("change", () => {
-            footer.style.display = footerCheck.checked ? "block" : "none";
+            document.cookie = `footerChecked=${footerCheck.checked};`;
         });
 
-        showHideCheck.addEventListener("change", updateFixedContainers);
+        showHideCheck.addEventListener("change", () => {
+            document.cookie = `showHideChecked=${showHideCheck.checked};`;
+        });
     });
     </script>
 </head>
@@ -148,9 +181,9 @@
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
     </div>
     <div class="controls">
-        <div class="control"><label>Show header</label><input type="checkbox" switch checked class="header-check" /></div>
-        <div class="control"><label>Show footer</label><input type="checkbox" switch checked class="footer-check" /></div>
-        <div class="control"><label>Only when scrolled</label><input type="checkbox" switch checked class="show-hide-check" /></div>
+        <div class="control"><label>Show header</label><input type="checkbox" switch class="header-check" /></div>
+        <div class="control"><label>Show footer</label><input type="checkbox" switch class="footer-check" /></div>
+        <div class="control"><label>Only when scrolled</label><input type="checkbox" switch class="show-hide-check" /></div>
     </div>
     <div class="content">
         <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
