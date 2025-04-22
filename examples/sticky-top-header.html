@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body, html {
+        padding: 0;
+        margin: 0;
+        font-family: system-ui;
+        background-color: #f4f4f4;
+    }
+
+    .sticky {
+        position: sticky;
+        left: 0;
+        width: 100%;
+        color: white;
+        height: 84px;
+        text-align: center;
+        line-height: 84px;
+        font-size: 20px;
+        font-weight: bold;
+        z-index: 100;
+        top: -84px;
+        transition: top 0.1s ease;
+    }
+
+    .sticky > .text-content {
+        width: 100%;
+        height: 100%;
+        background: #4CAF50;
+    }
+
+    .container {
+        width: 100%;
+        height: 300px;
+        line-height: 300px;
+        font-size: 24px;
+        text-align: center;
+        background-color: lightgray;
+    }
+
+    .vertical-space {
+        width: 100%;
+        height: 2000px;
+    }
+    </style>
+    <script>
+    addEventListener("load", () => {
+        const header = document.querySelector("header");
+        const recentDeltas = [];
+        const recentDeltaLimit = 20;
+
+        function updateHeaderVisibility() {
+            if (recentDeltas.length < recentDeltaLimit)
+                return;
+
+            const deltaY = recentDeltas[recentDeltas.length - 1] - recentDeltas[0];
+            if (Math.abs(deltaY) < 10)
+                return;
+
+            const isScrollingDown = deltaY > 0;
+            header.style.top = isScrollingDown ? "-84px" : "0";
+        }
+
+        addEventListener("scroll", event => {
+            if (recentDeltas.length >= recentDeltaLimit)
+                recentDeltas.shift(0);
+            recentDeltas.push(pageYOffset);
+            updateHeaderVisibility();
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="container">Scroll up to show header</div>
+    <header class="sticky"><div class="text-content">position: sticky;</div></header>
+    <div class="vertical-space"></div>
+</body>
+</html>
