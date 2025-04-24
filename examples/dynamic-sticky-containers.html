@@ -38,14 +38,6 @@
         height: 84px;
     }
 
-    .close {
-        position: absolute;
-        top: -20px;
-        right: -7px;
-        width: 40px;
-        will-change: transform;
-    }
-
     #top {
         top: 0;
         transform: translateY(-100%);
@@ -125,7 +117,6 @@
         const headerCheck = document.querySelector(".header-check");
         const footerCheck = document.querySelector(".footer-check");
         const showHideCheck = document.querySelector(".show-hide-check");
-        const closeButton = document.querySelector(".close");
 
         const switchStatesToRestore = {};
         for (let keyAndValue of document.cookie.split("; ")) {
@@ -171,7 +162,7 @@
 
             footer._visible = visible;
             footer.style.transform = visible ? "translateY(0)" : "translateY(100%)";
-            closeButton.style.display = visible ? "block" : "none";
+
         }
 
         function updateContainers() {
@@ -235,6 +226,6 @@
         <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
     </div>
     <div class="vertical-space"></div>
-    <footer class="sticky" id="bottom"><img class="close" src="./images/close-button.png" />Bottom Bar</footer>
+    <footer class="sticky" id="bottom">Bottom Bar</footer>
 </body>
 </html>
