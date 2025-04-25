@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body, html {
+        padding: 0;
+        margin: 0;
+        font-family: system-ui;
+        background-color: #f4f4f4;
+    }
+
+    h2 {
+        margin: 1em;
+        text-align: center;
+    }
+
+    .scroller {
+        width: calc(min(80%, 640px));
+        height: 480px;
+        border-radius: 6px;
+        box-sizing: border-box;
+        overflow-y: scroll;
+        line-height: 1.8em;
+        z-index: 1;
+        background-color: white;
+        outline: none;
+        margin: 1em auto;
+        display: block;
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.08),
+            0 2px 2px hsl(0deg 0% 0% / 0.08),
+            0 4px 4px hsl(0deg 0% 0% / 0.08),
+            0 8px 8px hsl(0deg 0% 0% / 0.08),
+            0 16px 16px hsl(0deg 0% 0% / 0.08);
+    }
+
+    .scroller > .content {
+        margin: 1em;
+    }
+
+    .sticky {
+        position: sticky;
+        left: 0;
+        right: 0;
+        color: white;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .top {
+        top: 0;
+        z-index: 101;
+    }
+
+    .bottom {
+        bottom: 0;
+        z-index: 100;
+    }
+
+    .sticky > .text-content {
+        width: 100%;
+        height: 100%;
+    }
+
+    .top > .text-content {
+        background: #4CAF50;
+    }
+
+    .bottom > .text-content {
+        background: #DF4C50;
+    }
+
+    .vertical-space {
+        width: 100%;
+        height: 300px;
+    }
+
+    .large-vertical-space {
+        width: 100%;
+        height: 1000px;
+    }
+    </style>
+</head>
+<body>
+    <h2>Scroller + sticky elements</h2>
+    <div class="scroller">
+        <div class="vertical-space"></div>
+        <header class="sticky top"><div class="text-content">Top Sticky</div></header>
+        <div class="content">
+            <p>Here’s to the crazy ones. The misfits. The rebels. The troublemakers. The round pegs in the square holes. The ones who see things differently. They’re not fond of rules. And they have no respect for the status quo.</p>
+            <p>You can quote them, disagree with them, glorify or vilify them. About the only thing you can’t do is ignore them.</p>
+            <p>Because they change things. They push the human race forward. And while some may see them as the crazy ones, we see genius. Because the people who are crazy enough to think they can change the world, are the ones who do.</p>
+        </div>
+        <header class="sticky bottom"><div class="text-content">Bottom Sticky</div></header>
+        <div class="vertical-space"></div>
+    </div>
+    <div class="large-vertical-space"></div>
+</body>
+</html>
