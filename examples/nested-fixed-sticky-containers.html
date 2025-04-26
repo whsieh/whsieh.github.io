@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<head>
+    <title>Sticky in fixed container</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    body, html {
+        padding: 0;
+        margin: 0;
+        font-family: system-ui;
+        background-color: #f4f4f4;
+    }
+
+    .fixed {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        width: calc(min(80%, 640px));
+        height: 480px;
+        border-radius: 6px;
+        box-sizing: border-box;
+        overflow-y: scroll;
+        line-height: 1.8em;
+        z-index: 1;
+        background-color: white;
+        outline: none;
+        margin: 1em auto;
+        display: block;
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.08),
+            0 2px 2px hsl(0deg 0% 0% / 0.08),
+            0 4px 4px hsl(0deg 0% 0% / 0.08),
+            0 8px 8px hsl(0deg 0% 0% / 0.08),
+            0 16px 16px hsl(0deg 0% 0% / 0.08);
+        overflow: hidden;
+    }
+
+    .content {
+        text-align: center;
+        font-size: 24px;
+        line-height: 328px;
+    }
+
+    .sticky {
+        position: sticky;
+        left: 0;
+        right: 0;
+        color: white;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .top {
+        top: 0;
+        z-index: 101;
+    }
+
+    .bottom {
+        bottom: 0;
+        z-index: 100;
+    }
+
+    .sticky > .text-content {
+        width: 100%;
+        height: 100%;
+    }
+
+    .top > .text-content {
+        background: #4CAF50;
+    }
+
+    .bottom > .text-content {
+        background: #DF4C50;
+    }
+
+    .large-vertical-space {
+        width: 100%;
+        height: 2000px;
+    }
+    </style>
+</head>
+<body>
+    <div class="fixed">
+        <header class="sticky top"><div class="text-content">Top Sticky</div></header>
+        <div class="content">
+            <p>position: fixed;</p>
+        </div>
+        <header class="sticky bottom"><div class="text-content">Bottom Sticky</div></header>
+    </div>
+    <div class="large-vertical-space"></div>
+</body>
+</html>
