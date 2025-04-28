@@ -22,6 +22,7 @@
         font-size: 20px;
         font-weight: bold;
         z-index: 100;
+        box-shadow: 1px 1px 1px rgba(200, 200, 200, 0.1);
     }
 
     .vertical-space {
@@ -38,7 +39,7 @@
     }
 
     #top {
-        transform: translateY(-83.5px);
+        transform: translateY(-84px);
         transition: transform 0.1s ease;
     }
 
@@ -51,7 +52,7 @@
     #bottom {
         bottom: 0;
         background: #DF4C50;
-        transform: translateY(83.5px);
+        transform: translateY(84px);
         transition: transform 0.1s ease;
     }
 
@@ -141,7 +142,7 @@
                 return;
 
             header._visible = visible;
-            header.style.transform = visible ? "translateY(0)" : "translateY(-83.5px)";
+            header.style.transform = visible ? "translateY(0)" : "translateY(-84px)";
         }
 
         function setFooterVisible(visible) {
@@ -149,7 +150,7 @@
                 return;
 
             footer._visible = visible;
-            footer.style.transform = visible ? "translateY(0)" : "translateY(83.5px)";
+            footer.style.transform = visible ? "translateY(0)" : "translateY(84px)";
             closeButton.style.display = visible ? "block" : "none";
         }
 
