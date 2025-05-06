@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<style>
+body, html {
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    font-family: system-ui;
+    text-align: center;
+}
+
+iframe {
+    width: 300px;
+    height: 300px;
+}
+
+div[draggable] {
+    border: 1px solid tomato;
+    display: inline-block;
+    padding: 2em;
+    background: tomato;
+    margin: 1em;
+    color: white;
+}
+</style>
+</head>
+<body>
+    <div draggable="true">
+        <p>Drag this outer box</p>
+        <iframe src="https://whsieh.github.io/examples/draggable-emojis"></iframe>
+    </div>
+    <script>
+        [...document.querySelectorAll("div[draggable]")].forEach(subframe => {
+            subframe.addEventListener("dragstart", (event) => {
+                event.dataTransfer.setData("text/uri-list", "https://whsieh.github.io");
+                event.dataTransfer.setData("text/plain", "https://whsieh.github.io");
+            });
+        });
+    </script>
+</body>
+</html>
