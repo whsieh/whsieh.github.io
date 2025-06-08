@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width">
+<head>
+<style>
+.container {
+    width: 400px;
+    height: 400px;
+    border: 1px solid lightgray;
+}
+
+button {
+    font-size: 18px;
+    padding: 0.5em;
+    margin: 1em;
+}
+</style>
+<script>
+addEventListener("load", () => {
+    const template = document.querySelector("template");
+    document.body.appendChild(template.content.cloneNode(true));
+
+    document.querySelector("button").addEventListener("click", () => {
+        let container = document.querySelector(".container");
+        container.style = container.getAttribute("style");
+    });
+});
+</script>
+</head>
+<body>
+    <template>
+        <div class="container" style="background-image: url('images/webkit.png');"></div>
+    </template>
+    <button>Click to re-parse style</button>
+</body>
+</html>
