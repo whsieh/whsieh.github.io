@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+   <meta name="viewport" content="width=240, user-scalable=no"/>
+   <meta name="apple-mobile-web-app-capable" content="yes"/>
+   <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+   <meta name="format-detection" content="telephone=no"/>
+   <link rel="apple-touch-icon" href="applogo"/>
+  </head>
+  <body>
+    <style>
+      div{
+        height:70px;
+        width: 100%;
+        margin-top: 7px;
+        background-color: #f7f7f7;
+      }
+    </style>
+    <div id="Feedback" style="background-color:white;font-size:10px;"></div>
+    <div id="A" ontouchstart="insertTouchFeedback">Element A</div>
+    <div id="B">Element B</div>
+    <div id="C">Element C</div>
+    <div id="D">Element D</div>
+    <div id="E">Element E</div>
+    <div id="F">Element F</div>
+    <div id="G">Element G</div>
+    <script>
+      const feedback = document.getElementById("Feedback");
+      
+      function insertTouchFeedback(event){
+        const offsetX = event.pageX - event.targetTouches[0].pageX;
+        const offsetY = event.pageY - event.targetTouches[0].pageY;
+        
+        feedback.innerHTML = `
+        Hit on ${event.pageX}x${event.pageY} 
+        <br/> Actually triggers "${event.target.innerHTML}" at ${event.targetTouches[0].pageX}x${event.targetTouches[0].pageY}
+        <br/> Offset ${offsetX}x${offsetY} 
+        <br/> Factor ${event.targetTouches[0].pageX / event.pageX} x ${event.targetTouches[0].pageY / event.pageY}
+        `;
+      }
+      
+      document.getElementById("A").addEventListener("touchstart", insertTouchFeedback);
+      document.getElementById("B").addEventListener("touchstart", insertTouchFeedback);
+      document.getElementById("C").addEventListener("touchstart", insertTouchFeedback);
+      document.getElementById("D").addEventListener("touchstart", insertTouchFeedback);
+      document.getElementById("E").addEventListener("touchstart", insertTouchFeedback);
+      document.getElementById("F").addEventListener("touchstart", insertTouchFeedback);
+      document.getElementById("G").addEventListener("touchstart", insertTouchFeedback);
+    </script>
+  </body> 
+</html>
