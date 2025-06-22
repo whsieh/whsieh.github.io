@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body, html {
@@ -17,42 +19,77 @@
         div + div {
             margin-top: 0.5em 0;
         }
+
+        hr {
+            width: 100%;
+            height: 0.5px;
+            background-color: #aaa;
+            border: none;
+        }
     </style>
 </head>
 <body>
     <title>Fixed and sticky headers</title>
-    <div><a href="https://www.amazon.com">amazon.com</a></div>
-    <div><a href="https://www.amossweets.com">amossweets.com</a></div>
-    <div><a href="https://www.androidauthority.com">androidauthority.com</a></div>
-    <div><a href="https://arstechnica.com">arstechnica.com</a></div>
-    <div><a href="https://www.hotplate.com/bakesum">hotplate.com/bakesum</a></div>
-    <div><a href="https://coffeebar.com">coffeebar.com</a></div>
-    <div><a href="http://showcase.commercialtype.com">showcase.commercialtype.com</a></div>
-    <div><a href="https://www.coursera.org">coursera.org</a></div>
-    <div><a href="https://www.dunekitchen.com/menu/food/">dunekitchen.com</a></div>
-    <div><a href="https://www.economist.com">economist.com</a></div>
-    <div><a href="https://www.espn.com">espn.com</a></div>
-    <div><a href="https://www.goodreads.com">goodreads.com</a></div>
-    <div><a href="https://ground.news">ground.news</a></div>
-    <div><a href="https://imgur.com">imgur.com</a></div>
-    <div><a href="https://www.instructure.com">instructure.com</a></div>
-    <div><a href="https://www.margaritaville.com">margaritaville.com</a></div>
-    <div><a href="https://www.mocanashville.org">mocanashville.org</a></div>
-    <div><a href="https://www.momoshop.com.tw/main/Main.jsp">momoshop.com.tw</a></div>
-    <div><a href="https://www.nytimes.com/athletic/">nytimes.com/athletic/</a></div>
-    <div><a href="https://play.date">play.date</a></div>
-    <div><a href="https://www.premierleague.com">premierleague.com</a></div>
-    <div><a href="https://www2.purpleair.com">www2.purpleair.com</a></div>
-    <div><a href="https://www.quantamagazine.org">quantamagazine.org</a></div>
-    <div><a href="https://www.science.org">science.org</a></div>
-    <div><a href="https://www.solidcore.com">solidcore.com</a></div>
-    <div><a href="https://www.southlakebeer.com">southlakebeer.com</a></div>
-    <div><a href="https://www.sweetgreen.com">sweetgreen.com</a></div>
-    <div><a href="https://www.bmj.com/content/389/bmj.r862">bmj.com</a></div>
-    <div><a href="https://www.theverge.com/video/663196/oh-no-i-turned-everything-into-an-ai-podcast">theverge.com</a></div>
-    <div><a href="https://news.uchicago.edu">news.uchicago.edu</a></div>
-    <div><a href="https://vimeo.com">vimeo.com</a></div>
-    <div><a href="https://wallflowersanfrancisco.com">wallflowersanfrancisco.com</a></div>
-    <div><a href="https://webbtelescope.org/home">webbtelescope.org</a></div>
+    <section>
+        <h3>Solid color</h3>
+        <div><a href="https://www.coffeebar.com">coffeebar.com</a></div>
+        <div><a href="https://www.goodreads.com">goodreads.com</a></div>
+        <div><a href="https://www.hotplate.com/bakesum">hotplate.com/bakesum</a></div>
+        <div><a href="https://www.ground.news">ground.news</a></div>
+        <div><a href="https://www.imgur.com">imgur.com</a></div>
+        <div><a href="https://www.instructure.com">instructure.com</a></div>
+        <div><a href="https://www.margaritaville.com">margaritaville.com</a></div>
+        <div><a href="https://www.momoshop.com.tw/main/Main.jsp">momoshop.com.tw</a></div>
+        <div><a href="https://www.science.org">science.org</a></div>
+        <div><a href="https://www.southlakebeer.com">southlakebeer.com</a></div>
+        <div><a href="https://www.sweetgreen.com">sweetgreen.com</a></div>
+        <div><a href="https://news.uchicago.edu">news.uchicago.edu</a></div>
+        <div><a href="https://www.webbtelescope.org/home">webbtelescope.org</a></div>
+    </section>
+    <section>
+        <hr>
+        <h3>Sticky headers</h3>
+        <div><a href="https://www.espn.com">espn.com</a></div>
+        <div><a href="https://www.premierleague.com">premierleague.com</a></div>
+        <div><a href="https://www.bmj.com/content/389/bmj.r862">bmj.com</a></div>
+    </section>
+    <section>
+        <hr>
+        <h3>Viewport clipping</h3>
+        <div><a href="https://www.androidauthority.com">androidauthority.com</a></div>
+        <div><a href="https://www.amossweets.com">amossweets.com</a></div>
+        <div><a href="https://www.arstechnica.com">arstechnica.com</a></div>
+        <div><a href="https://www.economist.com">economist.com</a></div>
+    </section>
+    <section>
+        <hr>
+        <h3>Appears after scrolling</h3>
+        <div><a href="https://www.amazon.com">amazon.com</a></div>
+        <div><a href="https://www.dunekitchen.com/menu/food/">dunekitchen.com</a></div>
+        <div><a href="https://www.mocanashville.org">mocanashville.org</a></div>
+        <div><a href="https://www.nytimes.com/athletic/">nytimes.com/athletic/</a></div>
+        <div><a href="https://www2.purpleair.com">www2.purpleair.com</a></div>
+        <div><a href="https://www.theverge.com/video/663196/oh-no-i-turned-everything-into-an-ai-podcast">theverge.com</a></div>
+        <div><a href="https://www.wallflowersanfrancisco.com">wallflowersanfrancisco.com</a></div>
+    </section>
+    <section>
+        <hr>
+        <h3>Blur filters</h3>
+        <div><a href="https://www.apple.com">apple.com</a></div>
+        <div><a href="https://www.vimeo.com">vimeo.com</a></div>
+    </section>
+    <section>
+        <hr>
+        <h3>Dynamic colors</h3>
+        <div><a href="https://www.coursera.org">coursera.org</a></div>
+        <div><a href="https://play.date">play.date</a></div>
+        <div><a href="https://www.quantamagazine.org">quantamagazine.org</a></div>
+        <div><a href="https://www.solidcore.com">solidcore.com</a></div>
+    </section>
+    <section>
+        <hr>
+        <h3>¯\_(ツ)_/¯</h3>
+        <div><a href="http://showcase.commercialtype.com">showcase.commercialtype.com</a></div>
+    </section>
 </body>
 </html>
