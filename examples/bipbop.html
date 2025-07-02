@@ -1,32 +1,60 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    video {
-        width: calc(min(100vw, 480px));
-    }
-
     body, html {
         margin: 0;
         text-align: center;
+        font-size: 16px;
+        font-family: system-ui;
     }
 
-    .container + .container {
+    video {
+        width: calc(min(90vw, 480px));
+    }
+
+    .container {
         margin: 1em auto;
+    }
+
+    input {
+        font-size: 18px;
+        width: 60px;
+        height: 30px;
+        vertical-align: middle;
+    }
+
+    label {
+        vertical-align: middle;
+    }
+
+    h3 {
+        margin-top: 1em;
     }
 </style>
 <script>
     function setup() {
-        var video = document.querySelector("video");
+        const audio = document.querySelector("audio");
+        const video = document.querySelector("video");
         video.volume = 0.01;
         setTimeout(function() {
             video.pause();
         }, 3000);
+
+        const toggleControls = document.getElementById("toggle-controls");
+        toggleControls.addEventListener("click", () => {
+            video.controls = toggleControls.checked;
+            audio.controls = toggleControls.checked;
+        });
     }
 </script>
 </head>
-<body onload=setup()>
+<body onload="setup()">
+    <h3>Simple HTML video</h3>
     <div class="container">
         <video autoplay controls src="bipbop.mp4"></video>
+    </div>
+    <div>
+        <label for="toggle-controls">Show controls</label> <input id="toggle-controls" type="checkbox" checked switch>
     </div>
     <div class="container">
         <audio controls src="bipbop.mp4"></audio>
