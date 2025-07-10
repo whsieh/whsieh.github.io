@@ -8,6 +8,7 @@
             font-size: 20px;
             font-family: system-ui;
             padding: 10px;
+            background-color: #e8e8e8;
         }
 
         a {
@@ -15,6 +16,15 @@
             color: blue;
             text-decoration: none;
             display: inline-block;
+        }
+
+        h3 {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: inline-block;
+            padding: 0.5em;
+            border-radius: 0.5em;
         }
 
         div + div {
@@ -28,8 +38,24 @@
             border: none;
         }
 
+        a {
+            color: rgb(0, 100, 255);
+            text-decoration: none;
+        }
+
         .mobile {
             color: lightgray;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body, html {
+                background-color: #222;
+            }
+
+            h3 {
+                background-color: rgba(40, 40, 40, 0.9);
+                color: white;
+            }
         }
     </style>
 </head>
