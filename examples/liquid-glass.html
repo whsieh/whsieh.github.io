@@ -9,6 +9,7 @@
             font-family: system-ui;
             padding: 10px;
             background-color: #e8e8e8;
+            width: 100%;
         }
 
         a {
@@ -16,6 +17,19 @@
             color: blue;
             text-decoration: none;
             display: inline-block;
+        }
+
+        h1, h2 {
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 10px;
+        }
+
+        h2 {
+            color: #888;
         }
 
         h3 {
@@ -47,9 +61,22 @@
             color: lightgray;
         }
 
+        img {
+            width: 26px;
+            border-radius: 15px;
+            vertical-align: bottom;
+            padding: 4px;
+            background-color: white;
+            margin: 0 4px;
+        }
+
         @media (prefers-color-scheme: dark) {
             body, html {
                 background-color: #222;
+            }
+
+            h1 {
+                color: white;
             }
 
             h3 {
@@ -61,7 +88,10 @@
 </head>
 <body>
     <title>Liquid Glass • Color Sampling</title>
+    <h1>Liquid Glass</h1>
+    <h2><img src="images/webkit.png" /> Color Sampling</h2>
     <section>
+        <hr>
         <h3>Solid color</h3>
         <div><a href="https://www.coffeebar.com">coffeebar.com</a></div>
         <div><a href="https://www.goodreads.com">goodreads.com</a><span class="mobile">(mobile)</span></div>
@@ -103,6 +133,7 @@
         <hr>
         <h3>Appears after scrolling</h3>
         <div><a href="https://www.amazon.com">amazon.com</a></div>
+        <div><a href="https://asia.nikkei.com">asia.nikkei.com</a></div>
         <div><a href="https://www.dunekitchen.com/menu/food/">dunekitchen.com</a></div>
         <div><a href="https://www.engadget.com">engadget.com</a></div>
         <div><a href="https://www.mocanashville.org">mocanashville.org</a></div>
