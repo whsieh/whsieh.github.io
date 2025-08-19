@@ -1,0 +1,33 @@
+<!DOCTYPE>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Super deep DOM structure</title>
+    <style>
+        body, html {
+            font-family: system-ui;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        const container = document.getElementById("container");
+        let currentElement = container;
+        
+        for (let depth = 1; depth <= 250; depth++) {
+            const section = document.createElement("section");
+            section.textContent = `Depth: ${depth}`;
+            section.style.marginLeft = "2px";
+            section.style.borderLeft = "1px solid #ccc";
+            section.style.paddingLeft = "2px";
+
+            currentElement.appendChild(section);
+            currentElement = section;
+        }
+    </script>
+</body>
+</html>
