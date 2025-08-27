@@ -62,18 +62,18 @@ function modifierString(event) {
 
 function makeRow(event) {
     const row = document.createElement("tr");
-    const typeData = document.createElement("td");
-    const keyData = document.createElement("td");
+    const type = document.createElement("td");
+    const key = document.createElement("td");
     const keyCode = document.createElement("td");
     const code = document.createElement("td");
     const modifiers = document.createElement("td");
-    typeData.textContent = event.type;
-    keyData.textContent = event.key;
+    type.textContent = event.type;
+    key.textContent = event.key;
     keyCode.textContent = event.keyCode;
     code.textContent = event.code;
     modifiers.textContent = modifierString(event);
-    row.appendChild(typeData);
-    row.appendChild(keyData);
+    row.appendChild(type);
+    row.appendChild(key);
     row.appendChild(keyCode);
     row.appendChild(code);
     row.appendChild(modifiers);
