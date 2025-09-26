@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autofill Hidden Editable Test</title>
+    <style>
+        body {
+            font-family: system-ui;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .field-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .visible-field {
+            width: 90%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+
+        .visible-field:focus {
+            outline: none;
+            border-color: #007AFF;
+        }
+
+        .hidden-editable {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            z-index: -1;
+            border: none;
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .hidden-editable:focus {
+            z-index: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="field-group">
+            <label for="name">Name:</label>
+            <input type="text" class="visible-field" readonly placeholder="Tap to focus hidden editable" data-target="name-hidden">
+            <input type="text" class="hidden-editable" id="name-hidden" autocomplete="name">
+        </div>
+        <div class="field-group">
+            <label for="email">Email:</label>
+            <input type="email" class="visible-field" readonly placeholder="Tap to focus hidden editable" data-target="email-hidden">
+            <input type="email" class="hidden-editable" id="email-hidden" autocomplete="email">
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.visible-field').forEach(visibleField => {
+            visibleField.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                const hiddenField = document.getElementById(targetId);
+
+                if (hiddenField)
+                    hiddenField.focus();
+            });
+
+            visibleField.addEventListener('focus', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                const hiddenField = document.getElementById(targetId);
+
+                if (hiddenField)
+                    hiddenField.focus();
+            });
+        });
+
+        document.querySelectorAll('.hidden-editable').forEach(hiddenField => {
+            const visibleField = document.querySelector(`[data-target="${hiddenField.id}"]`);
+            if (visibleField) {
+                hiddenField.addEventListener('input', function() {
+                    visibleField.value = this.value;
+                });
+            }
+        });
+
+        document.addEventListener("click", () => {
+            // Empty event listener, only so that the keyboard can dismiss when
+            // tapping in the margins.
+        });
+    </script>
+</body>
+</html>
