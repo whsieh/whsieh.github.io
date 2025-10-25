@@ -95,13 +95,24 @@ h3 {
         });
     }
 
+    function logDataTransferItems(event) {
+        console.log(event.type, [...event.dataTransfer.items].map(item => {
+            return {
+                kind: item.kind,
+                type: item.type,
+            };
+        }));
+    }
+
     droparea.addEventListener("dragenter", event => {
+        logDataTransferItems(event);
         droparea.style.borderColor = "#8E8";
         event.dataTransfer.dropEffect = "copy";
         event.preventDefault();
     });
 
     droparea.addEventListener("dragover", event => {
+        logDataTransferItems(event);
         event.dataTransfer.dropEffect = "copy";
         event.preventDefault();
     });
@@ -111,6 +122,7 @@ h3 {
     });
 
     droparea.addEventListener("drop", event => {
+        logDataTransferItems(event);
         droparea.style.borderColor = "#EFEFEF";
         updateOutputForFiles(event.dataTransfer.files, event.dataTransfer.items);
         event.preventDefault();
@@ -179,7 +191,7 @@ h3 {
 
         if (items) {
             for (let index = 0; index < items.length; index++) {
-                let item = items.item(index);
+                let item = items[index];
                 itemsOutput.innerHTML += `<strong><div><code>Found data transfer item (kind: ${item.kind}, type: ${item.type})</code></div></strong>\n`;
                 let entry = item.webkitGetAsEntry();
                 if (entry)
