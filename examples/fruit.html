@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fruit of the Day</title>
+    <title>Fruit of the Hour</title>
     <style>
         body {
             margin: 0;
@@ -25,18 +25,51 @@
     <p id="message"></p>
     <script>
         const fruits = [
-            "🍓 Strawberry",
-            "🥭 Mango",
-            "🫐 Blueberry",
-            "🍍 Pineapple",
-            "🍉 Watermelon",
+            "🍌 Banana",
             "🍑 Peach",
-            "🍌 Banana"
+            "🍉 Watermelon",
+            "🍍 Pineapple",
+            "🫐 Blueberry",
+            "🥭 Mango",
+            "🍓 Strawberry",
+            "🍎 Apple",
+            "🍐 Pear",
+            "🍊 Orange",
+            "🍋 Lemon",
+            "🍇 Grapes",
+            "🍒 Cherry",
+            "🥝 Kiwi",
+            "🍈 Melon",
+            "🥥 Coconut",
+            "🍏 Green Apple",
+            "🍅 Tomato",
+            "🫒 Olive",
+            "🥑 Avocado",
+            "🍆 Eggplant",
+            "🫑 Bell Pepper",
+            "🌽 Corn",
+            "🌶️ Chili Pepper",
         ];
-        const today = new Date();
-        const dayOfWeek = today.getDay();
-        document.getElementById("message").textContent =
-            "The fruit of the day is " + fruits[dayOfWeek];
+        function render() {
+            const now = new Date();
+            const dayOfWeek = now.getDay();
+            const hour = now.getHours();
+            // fruits.length is 24 and gcd(24, 1) === 1, so:
+            //   - Within a single day, hours 0..23 map to all 24 distinct fruits.
+            //   - At a fixed hour, days 0..6 produce 7 distinct residues mod 24.
+            const index = (hour + dayOfWeek) % fruits.length;
+            document.getElementById("message").textContent =
+                "The fruit of the hour is " + fruits[index];
+        }
+        render();
+        // Re-render at the top of the next hour, then hourly after that.
+        const now = new Date();
+        const msUntilNextHour =
+            (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000 - now.getMilliseconds();
+        setTimeout(() => {
+            render();
+            setInterval(render, 60 * 60 * 1000);
+        }, msUntilNextHour);
     </script>
 </body>
 </html>
