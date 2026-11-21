@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Drawing</title>
+<style>
+:root {
+    --red: rgb(255, 56, 60);
+    --orange: rgb(255, 141, 40);
+    --yellow: rgb(255, 204, 0);
+    --green: rgb(52, 199, 89);
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    font-family: -apple-system, system-ui, sans-serif;
+    background: #fff;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+    background: #f7f7f7;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px #ccc;
+    padding: 0;
+}
+
+.swatch[aria-pressed="true"] {
+    box-shadow: 0 0 0 3px #222;
+}
+
+.thickness {
+    width: 40px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.thickness span {
+    display: block;
+    width: 22px;
+    background: #222;
+    border-radius: 3px;
+}
+
+.thickness[aria-pressed="true"] {
+    border-color: #222;
+    box-shadow: 0 0 0 1px #222;
+}
+
+#clear {
+    width: 40px;
+    height: 32px;
+    padding: 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#clear svg {
+    width: 20px;
+    height: 20px;
+}
+
+#canvas {
+    flex: 1;
+    width: 100%;
+    display: block;
+    touch-action: none;
+    cursor: crosshair;
+}
+</style>
+</head>
+<body>
+<div id="toolbar">
+    <div class="group" role="group" aria-label="Color">
+        <button class="swatch" data-color="rgb(255, 56, 60)" style="background: var(--red)" aria-label="Red" aria-pressed="true"></button>
+        <button class="swatch" data-color="rgb(255, 141, 40)" style="background: var(--orange)" aria-label="Orange" aria-pressed="false"></button>
+        <button class="swatch" data-color="rgb(255, 204, 0)" style="background: var(--yellow)" aria-label="Yellow" aria-pressed="false"></button>
+        <button class="swatch" data-color="rgb(52, 199, 89)" style="background: var(--green)" aria-label="Green" aria-pressed="false"></button>
+    </div>
+    <div class="group" role="group" aria-label="Stroke thickness">
+        <button class="thickness" data-width="1" aria-label="1 pixel" aria-pressed="false"><span style="height: 1px"></span></button>
+        <button class="thickness" data-width="3" aria-label="3 pixels" aria-pressed="true"><span style="height: 3px"></span></button>
+        <button class="thickness" data-width="5" aria-label="5 pixels" aria-pressed="false"><span style="height: 5px"></span></button>
+    </div>
+    <button id="clear" aria-label="Clear">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 7h16"/>
+            <path d="M10 4h4"/>
+            <path d="M6 7l1 13h10l1-13"/>
+            <path d="M10 11v6M14 11v6"/>
+        </svg>
+    </button>
+</div>
+<canvas id="canvas"></canvas>
+<script>
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+const strokes = new Map();
+let color = "rgb(255, 56, 60)";
+let lineWidth = 3;
+
+function selectButton(selector, button) {
+    for (const other of document.querySelectorAll(selector))
+        other.setAttribute("aria-pressed", other === button ? "true" : "false");
+}
+
+for (const button of document.querySelectorAll(".swatch")) {
+    button.addEventListener("click", () => {
+        color = button.dataset.color;
+        selectButton(".swatch", button);
+    });
+}
+
+for (const button of document.querySelectorAll(".thickness")) {
+    button.addEventListener("click", () => {
+        lineWidth = Number(button.dataset.width);
+        selectButton(".thickness", button);
+    });
+}
+
+document.getElementById("clear").addEventListener("click", () => {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+function resizeCanvas() {
+    const scale = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.round(rect.width * scale);
+    const height = Math.round(rect.height * scale);
+    if (canvas.width === width && canvas.height === height)
+        return;
+
+    const previous = document.createElement("canvas");
+    previous.width = canvas.width;
+    previous.height = canvas.height;
+    if (canvas.width && canvas.height)
+        previous.getContext("2d").drawImage(canvas, 0, 0);
+
+    canvas.width = width;
+    canvas.height = height;
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    if (previous.width && previous.height)
+        context.drawImage(previous, 0, 0, previous.width / scale, previous.height / scale);
+}
+
+function pointFromEvent(event) {
+    const rect = canvas.getBoundingClientRect();
+    return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+}
+
+function drawDot(point, stroke) {
+    context.beginPath();
+    context.fillStyle = stroke.color;
+    context.arc(point.x, point.y, stroke.width / 2, 0, Math.PI * 2);
+    context.fill();
+}
+
+function extendStroke(stroke, point) {
+    const midpoint = { x: (stroke.last.x + point.x) / 2, y: (stroke.last.y + point.y) / 2 };
+    context.beginPath();
+    context.strokeStyle = stroke.color;
+    context.lineWidth = stroke.width;
+    context.moveTo(stroke.lastMidpoint.x, stroke.lastMidpoint.y);
+    context.quadraticCurveTo(stroke.last.x, stroke.last.y, midpoint.x, midpoint.y);
+    context.stroke();
+    stroke.last = point;
+    stroke.lastMidpoint = midpoint;
+}
+
+canvas.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse" && event.button !== 0)
+        return;
+    canvas.setPointerCapture(event.pointerId);
+    const point = pointFromEvent(event);
+    const stroke = { color, width: lineWidth, last: point, lastMidpoint: point };
+    strokes.set(event.pointerId, stroke);
+    drawDot(point, stroke);
+    event.preventDefault();
+});
+
+canvas.addEventListener("pointermove", event => {
+    const stroke = strokes.get(event.pointerId);
+    if (!stroke)
+        return;
+    const events = event.getCoalescedEvents ? event.getCoalescedEvents() : [];
+    for (const sample of events.length ? events : [event])
+        extendStroke(stroke, pointFromEvent(sample));
+    event.preventDefault();
+});
+
+function endStroke(event) {
+    const stroke = strokes.get(event.pointerId);
+    if (!stroke)
+        return;
+    extendStroke(stroke, pointFromEvent(event));
+    strokes.delete(event.pointerId);
+}
+
+canvas.addEventListener("pointerup", endStroke);
+canvas.addEventListener("pointercancel", endStroke);
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+</script>
+</body>
+</html>
